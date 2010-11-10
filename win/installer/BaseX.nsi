@@ -15,7 +15,7 @@ RequestExecutionLevel admin
 
 ; MUI Settings
 !define MUI_ABORTWARNING
-!define MUI_ICON "..\..\..\basex\etc\images\Basex.ico"
+!define MUI_ICON "..\..\images\Basex.ico"
 !define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\modern-uninstall.ico"
 !define MUI_FINISHPAGE_NOAUTOCLOSE
 Function .onInit
@@ -56,9 +56,9 @@ Function OptionsLeave
 # second password field
 !insertmacro MUI_INSTALLOPTIONS_READ $R1 "Options" "Field 6" "State"
 # webport field
-!insertmacro MUI_INSTALLOPTIONS_READ $R2 "Options" "Field 15" "State"
+!insertmacro MUI_INSTALLOPTIONS_READ $R2 "Options" "Field 14" "State"
 # port field
-!insertmacro MUI_INSTALLOPTIONS_READ $R3 "Options" "Field 14" "State"
+!insertmacro MUI_INSTALLOPTIONS_READ $R3 "Options" "Field 15" "State"
 # dbpath field
 !insertmacro MUI_INSTALLOPTIONS_READ $R4 "Options" "Field 13" "State"
 # Admin password modification
@@ -174,11 +174,11 @@ Section "Hauptgruppe" SEC01
   File "${JAR}"
   File "..\..\..\basex\license.txt"
   File ".basex"
-  File "..\..\..\basex\etc\images\BaseX.ico"
-  File "..\..\..\basex\etc\images\xml.ico"
-  File "..\..\..\basex\etc\images\shell.ico"
-  File "..\..\..\basex\etc\images\start.ico"
-  File "..\..\..\basex\etc\images\stop.ico"
+  File "..\..\images\BaseX.ico"
+  File "..\..\images\xml.ico"
+  File "..\..\images\shell.ico"
+  File "..\..\images\start.ico"
+  File "..\..\images\stop.ico"
   # set dbpath, port and webport
   nsExec::Exec '$INSTDIR\bin\basex.bat -Wc set dbpath $INSTDIR\$R4; set serverport $R3; set restport $R2';
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BaseX" \
@@ -190,8 +190,10 @@ Section "Hauptgruppe" SEC01
 SectionEnd
 
 Section -AdditionalIcons
-  !insertmacro MUI_INSTALLOPTIONS_READ $R7 "Options" "Field 9" "State"
-  !insertmacro MUI_INSTALLOPTIONS_READ $R8 "Options" "Field 10" "State"
+  # desktop shortcut
+  !insertmacro MUI_INSTALLOPTIONS_READ $R7 "Options" "Field 10" "State"
+  # startmenu
+  !insertmacro MUI_INSTALLOPTIONS_READ $R8 "Options" "Field 12" "State"
   ${If} $R7 == 1
     CreateShortCut "$DESKTOP\BaseX.lnk" "$INSTDIR\${PRODUCT_NAME}.exe" "" "$INSTDIR\BaseX.ico" 0
   ${EndIf}
