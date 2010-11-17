@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<functions name="File" pref="file" namespace="http://basex.org/file">
+  <text>The file module contains extension functions to perform file system related operations, such as listing, reading, or writing files. All functions are preceded by the <code>file:</code> prefix. Some changes might happen to this module, as it is currently aligned with the upcoming <a href="http://expath.org/spec/file">EXPath</a> specification.</text>
+  <function name="exists" type="xs:boolean">
+    <signature>
+      <arg name="path" type="xs:string"/>
+    </signature>
+    <summary>Checks if a path exist.</summary>
+    <rule>This function checks if a path is already used in the file system. The function returns <code>true</code> if the file or directory pointed by the <code>$path</code> parameter already exists. Otherwise it returns <code>false</code>.</rule>
+  </function>
+  <function name="is-directory" type="xs:boolean">
+    <signature>
+      <arg name="path" type="xs:string"/>
+    </signature>
+    <summary>Checks if a path points to a directory.</summary>
+    <rule>This function checks if a path points to a directory. The function returns <code>true</code> if the path points to a directory. Otherwise, it returns <code>false</code>.</rule>
+  </function>
+  <function name="is-file" type="xs:boolean">
+    <signature>
+      <arg name="path" type="xs:string"/>
+    </signature>
+    <summary>Checks if a path points to a file.</summary>
+    <rule>This function checks if a path points to a file. The function returns <code>true</code> if the path points to a file. Otherwise, it returns <code>false</code>.</rule>
+  </function>
+  <function name="is-readable" type="xs:boolean">
+    <signature>
+      <arg name="path" type="xs:string"/>
+    </signature>
+    <summary>Checks if a file is readable.</summary>
+    <rule>This function checks if the file pointed by <code>$path</code> is readable. The function returns <code>true</code> if the file is readable. Otherwise it returns <code>false</code>.</rule>
+  </function>
+  <function name="is-writable" type="xs:boolean">
+    <signature>
+      <arg name="path" type="xs:string"/>
+    </signature>
+    <summary>Checks if a file is writeable.</summary>
+    <rule>This function checks if the file pointed by <code>$path</code> is writeable. The function returns <code>true</code> if the file is writeable. Otherwise it returns <code>false</code>.</rule>
+  </function>
+  <function name="last-modified" type="xs:dateTime">
+    <signature>
+      <arg name="path" type="xs:string"/>
+    </signature>
+    <summary>Returns the timestamp of a path.</summary>
+    <rule>This function retrieves the timestamp of the last modification of the item pointed by the path provided by the parameter<code>$path</code>.</rule>
+  </function>
+  <function name="files" type="xs:string*">
+    <signature>
+      <arg name="path" type="xs:string"/>
+    </signature>
+    <signature>
+      <arg name="path" type="xs:string"/>
+      <arg name="recursive" type="xs:boolean"/>
+    </signature>
+    <signature>
+      <arg name="path" type="xs:string"/>
+      <arg name="recursive" type="xs:boolean"/>
+      <arg name="pattern" type="xs:string"/>
+    </signature>
+    <summary>Lists files of a directory.</summary>
+    <rule>This function lists all files in a given directory. The special files "." and ".." are never returned.</rule>
+    <rule>The optional parameter <code>$recursive</code> indicates whether the search shall recurse in the subdirectories.</rule>
+    <rule>The optional parameter <code>$pattern</code> defines a pattern and if it is present, only the files, which names match the given pattern, will be returned.</rule>
+    <error code="FOFL0003">is raised if files in the given directory cannot be returned.</error>
+    <error code="FOFL0004">is raised for an invalid file pattern.</error>
+  </function>
+  <function name="read" type="xs:string">
+    <signature>
+      <arg name="path" type="xs:string"/>
+    </signature>
+    <summary>Reads a file.</summary>
+    <rule>This function reads the content of the file pointed by <code>$path</code> and returns it as a string.</rule>
+    <rule>The optional parameter <code>$encoding</code> defines the encoding type of the file.</rule>
+    <error code="FOFL0017">is raised if the provided encoding is not supported.</error>
+  </function>
+  <function name="read-binary" type="xs:base64Binary">
+    <signature>
+      <arg name="path" type="xs:string"/>
+    </signature>
+    <summary>Reads a binary file.</summary>
+    <rule>This function reads the content of the file pointed by <code>$path</code> and returns it as a string.</rule>
+    <rule>This function reads the content of the file pointed by <code>$path</code> and returns it in Base64 representation.</rule>
+    <error code="FOFL0001">is raised if the file cannot be read.</error>
+  </function>
+  <function name="size" type="xs:integer">
+    <signature>
+      <arg name="path" type="xs:string"/>
+    </signature>
+    <summary>Returns the file size.</summary>
+    <rule>This function returns the size, in bytes, of the file pointed by <code>$path</code>.</rule>
+  </function>
+  <function name="write" type="empty-sequence()">
+    <signature>
+      <arg name="path" type="xs:string"/>
+      <arg name="items" type="xs:item()*"/>
+      <arg name="params" type="xs:node()*"/>
+    </signature>
+    <signature>
+      <arg name="path" type="xs:string"/>
+      <arg name="items" type="xs:item()*"/>
+      <arg name="params" type="xs:node()*"/>
+      <arg name="append" type="xs:boolean"/>
+    </signature>
+    <summary>Writes a sequence of items to a file.</summary>
+    <rule>This function writes a sequence of <code>items</code> to a file. It either creates a new file, or appends the serialized content to the file pointed by <code>$path</code>.</rule>
+    <rule>The <code>$params</code> parameter is used to set the serialization parameters as defined in <a href="http://www.w3.org/TR/xslt-xquery-serialization/">XSLT 2.0 and XQuery 1.0 Serialization</a>.</rule>
+    <rule>If the <code>$append</code> flag is true and the file does not exist, a new one is created.</rule>
+    <error code="FOFL0002">is raised if the file cannot be written.</error>
+    <error code="FOFL0008">is raised if the <code>$append</code> flag is <code>false</code> and a file  with the same path already exists.</error>
+  </function>
+  <function name="write-binary" type="empty-sequence()">
+    <signature>
+      <arg name="path" type="xs:string"/>
+      <arg name="items" type="xs:base64Binary"/>
+    </signature>
+    <signature>
+      <arg name="path" type="xs:string"/>
+      <arg name="items" type="xs:base64Binary"/>
+      <arg name="append" type="xs:boolean"/>
+    </signature>
+    <summary>Writes a sequence of items to a file.</summary>
+    <rule>This function writes binary data into a file. It either creates a new file or appends the content to the file pointed by <code>$path</code>.</rule>
+    <rule>If the <code>$append</code> flag is true and the file does not exist, a new one is created.</rule>
+    <error code="FOFL0002">is raised if the file cannot be written.</error>
+    <error code="FOFL0008">is raised if the <code>$append</code> flag is <code>false</code> and a file  with the same path already exists.</error>
+  </function>
+  <function name="mkdir" type="empty-sequence()">
+    <signature>
+      <arg name="path" type="xs:string"/>
+      <arg name="recursive" type="xs:boolean"/>
+    </signature>
+    <summary>Creates a newwdirectory.</summary>
+    <rule>This function creates a directory.</rule>
+    <rule>The optional parameter <code>$recursive</code> indicates whether parent directories are to be created recursively.</rule>
+    <error code="FOFL0008">is raised if a file with the same path already exists in the file system.</error>
+    <error code="FOFL0011">is raised if the directory in which the new sub-directory is to be created is write protected.</error>
+    <error code="FOFL0012">is raised if the directory cannot be created for some other reason.</error>
+  </function>
+  <function name="delete" type="empty-sequence()">
+    <signature>
+      <arg name="path" type="xs:string"/>
+    </signature>
+    <signature>
+      <arg name="path" type="xs:string"/>
+      <arg name="recursive" type="xs:boolean"/>
+    </signature>
+    <summary>Deletes a file.</summary>
+    <rule>This function deletes a file or directory from the file system.</rule>
+    <rule>If the optional parameter <code>$recursive</code> is provided, the operation is performed recursively for all sub-directories of the given directory.</rule>
+    <error code="FOFL0005">is raised if the file/directory pointed by <code>$path</code> is write-protected and cannot be deleted.</error>
+    <error code="FOFL0006">is raised if the file/directory pointed by <code>$path</code> does not exist.</error>
+    <error code="FOFL0013">is raised if the file/directory pointed by <code>$path</code> cannot be deleted for some other reason.</error>
+  </function>
+  <function name="copy" type="empty-sequence()">
+    <signature>
+      <arg name="source" type="xs:string"/>
+      <arg name="target" type="xs:string"/>
+    </signature>
+    <signature>
+      <arg name="source" type="xs:string"/>
+      <arg name="target" type="xs:string"/>
+      <arg name="overwrite" type="xs:boolean"/>
+    </signature>
+    <summary>Copies a file.</summary>
+    <rule>This function copies a file specified by <code>$source</code> to <code>$target</code>.</rule>
+    <rule>If the optional parameter <code>$overwrite</code> is provided and evaluates to <code>true</code>, the target file, if it exists, will be overwritten.</rule>
+    <error code="FOFL0006">is raised if the file pointed by <code>$source</code> does not exist.</error>
+    <error code="FOFL0008"> is raised if the file to be copied already exists in the specified target and the <code>$overwrite</code> parameter is missing or evaluates to <code>false</code>.</error>
+    <error code="FOFL0016"> is raised if the source file cannot be copied because of some other reason.</error>
+  </function>
+  <function name="move" type="empty-sequence()">
+    <signature>
+      <arg name="source" type="xs:string"/>
+      <arg name="target" type="xs:string"/>
+    </signature>
+    <summary>Moves a file.</summary>
+    <rule>This function moves/renames the file pointed by <code>$source</code> to <code>$target</code>.</rule>
+    <error code="FOFL0006">is raised if the file pointed by <code>$source</code> does not exist.</error>
+    <error code="FOFL0008">is raised if a file/directory with the same name already exists in the given target.</error>
+    <error code="FOFL0009">is raised if the item pointed by <code>$source</code> is a directory.</error>
+    <error code="FOFL0010">is raised if the file pointed by <code>$source</code> is write-protected and cannot be moved.</error>
+    <error code="FOFL0014">is raised if the file cannot be moved for some other reason.</error>
+  </function>
+  <function name="path-separator" type="xs:string">
+    <signature/>
+    <summary>Returns the path separator.</summary>
+    <rule>This function returns the path separator used by the operating system.</rule>
+  </function>
+  <function name="path-to-full-path" type="xs:string">
+    <signature>
+      <arg name="path" type="xs:string"/>
+    </signature>
+    <summary>Returns a full path representation.</summary>
+    <rule>This function transforms a path into a full operating system path.</rule>
+  </function>
+  <function name="path-to-uri" type="xs:string">
+    <signature>
+      <arg name="path" type="xs:string"/>
+    </signature>
+    <summary>Returns a URI representation.</summary>
+    <rule>This function transforms a file system path into a URI with the file:// scheme.</rule>
+  </function>
+</functions>

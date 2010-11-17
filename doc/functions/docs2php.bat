@@ -1,1 +1,1 @@
- @basex -w docs2php.xq
+@basex -w docs2php.xq

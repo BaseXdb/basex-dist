@@ -1,5 +1,5 @@
 declare variable $test := false();
-declare variable $module := '';
+declare variable $module := 'file';
 declare option output:method "xhtml";
 
 (: Converts the XML documentation to an HTML representation. :)
