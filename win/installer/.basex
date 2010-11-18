@@ -1,8 +1,8 @@
 # Property File.
 # You can set additional options at the end of the file.
 
-DBPATH = C:\
-RESTPATH = C:\
+DBPATH = 
+RESTPATH =
 LANG = English
 LANGKEYS = false
 HOST = localhost
