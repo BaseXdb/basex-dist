@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <functions name="Database" pref="db" namespace="http://basex.org/db">
   <text>This module contains methods to list and open databases, explicitly apply available index structures, or get information on the database structure. All functions are introduced with the <code>db:</code> prefix.</text>
-  <function name="system" type="xs:string*">
+  <function name="system" type="xs:string">
     <signature/>
     <summary>Lists information on the database system.</summary>
-    <rule>This function returns general information on the database system, such as the database path and current database settings.</rule>
+    <rule>This function returns a simple string with general information on the database system, such as the database path and current database settings.</rule>
   </function>
   <function name="list" type="xs:string*">
     <signature/>
@@ -15,7 +15,7 @@
     <signature>
       <arg name="name" type="xs:string"/>
     </signature>
-    <summary>Returns documents from a database.</summary>
+    <summary>Retrieves documents from a database.</summary>
     <rule>This function opens the documents of the database specified by <code>$name</code>. The name of the database may be extended by a collection path.</rule>
     <example>The expression <code>db:open("docs")</code> returns all documents from the database named <code>docs</code>.</example>
     <example>The expression <code>db:open("docs/one")</code> returns all documents from the database named <code>docs</code> in the subpath <code>one</code>.</example>
@@ -47,6 +47,8 @@
     </signature>
     <summary>Returns results from a text index request.</summary>
     <rule>This function accesses the text index and returns all text nodes that have <code>$string</code> as string value.</rule>
+    <example>The expression <code>db:text-index("QUERY")</code> returns all text nodes of the currently opened database that match the string <code>QUERY</code>.</example>
+    <example>The expression <code>db:open("DB")/db:text-index("QUERY")/..</code> returns the parents of all text nodes of the database <code>DB</code> that match the string <code>QUERY</code>.</example>
     <error code="BASX0001">is raised if the index is not available.</error>
     <error code="BASX0002">is raised if the context item does not represent a database node.</error>
   </function>
@@ -61,6 +63,7 @@
     <summary>Returns results from a attribute index request.</summary>
     <rule>This function accesses the attribute index and returns all attribute nodes that have <code>$string</code> as string value.</rule>
     <rule>If <code>$name</code> is specified, the resulting attribute nodes are filtered by their attribute name.</rule>
+    <example>The expression <code>db:open("DB")/db:attribute-index("QUERY", "id")/..</code> returns the parents of all attribute nodes of the database <code>DB</code> that have <code>QUERY</code> as string value.</example>
     <error code="BASX0001">is raised if the index is not available.</error>
     <error code="BASX0002">is raised if the context item does not represent a database node.</error>
   </function>
@@ -69,9 +72,27 @@
       <arg name="text" type="xs:string"/>
     </signature>
     <summary>Returns results from a full-text index request.</summary>
-    <rule>This function accesses the full-text index and returns all text nodes that contain <code>$text</code>.</rule>
+    <rule>This function accesses the full-text index and returns all text nodes that contain the string <code>$text</code>. The default full-text options are used for searching, i.e., if the index terms were stemmed, the search string will be stemmed as well.</rule>
+    <example>The expression <code>db:fulltext-index("QUERY")</code> returns all text nodes of the currently opened database that contain the string <code>QUERY</code>.</example>
     <error code="BASX0001">is raised if the index is not available.</error>
     <error code="BASX0002">is raised if the context item does not represent a database node.</error>
+  </function>
+  <function name="fulltext-mark" type="text()">
+    <signature>
+      <arg name="expr" type="node()*"/>
+    </signature>
+    <signature>
+      <arg name="nodes" type="node()*"/>
+      <arg name="name" type="xs:string"/>
+    </signature>
+    <summary>Marks results from a full-text index request.</summary>
+    <rule>This function puts a marker element around the resulting <code>$nodes</code> of a full-text index request.</rule>
+    <rule>The default tag name of the marker element is <code>mark</code>.</rule>
+    <rule>An alternative tag name can be chosen via the optional <code>$name</code> argument.</rule>
+    <example>The expression <code>db:fulltext-mark(db:open('DB')/XML[text() contains text 'hello')</code> returns <code>&lt;XML&gt;&lt;mark&gt;hello&lt;/mark&gt; world&lt;/XML&gt;</code>, if the document text of the database <code>DB</code> contains <code>hello world</code>.</example>
+    <error code="BASX0001">is raised if the index is not available.</error>
+    <error code="BASX0002">is raised if the context item does not represent a database node.</error>
+    <error code="FOCA0002">is raised is <code>$name</code> is no valid QName.</error>
   </function>
   <function name="info" type="xs:string">
     <signature/>
