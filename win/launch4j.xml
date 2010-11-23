@@ -1,8 +1,8 @@
 <launch4jConfig>
   <dontWrapJar>false</dontWrapJar>
   <headerType>gui</headerType>
-  <jar>BaseX61.jar</jar>
-  <outfile>BaseX61.exe</outfile>
+  <jar>BaseX.jar</jar>
+  <outfile>BaseX.exe</outfile>
   <errTitle></errTitle>
   <cmdLine></cmdLine>
   <chdir></chdir>
@@ -12,7 +12,7 @@
   <customProcName>false</customProcName>
   <stayAlive>false</stayAlive>
   <manifest></manifest>
-  <icon>BaseX.ico</icon>
+  <icon>../images/BaseX.ico</icon>
   <jre>
     <path></path>
     <minVersion>1.6.0</minVersion>
@@ -21,15 +21,15 @@
     <maxHeapSize>1024</maxHeapSize>
   </jre>
   <versionInfo>
-    <fileVersion>6.1.0.0</fileVersion>
-    <txtFileVersion>BaseX 6.1</txtFileVersion>
+    <fileVersion>$f</fileVersion>
+    <txtFileVersion>BaseX $v</txtFileVersion>
     <fileDescription>Native XML Database and XQuery Processor</fileDescription>
     <copyright>(c) University of Konstanz, 2010</copyright>
-    <productVersion>6.1.0.0</productVersion>
-    <txtProductVersion>BaseX 6.1</txtProductVersion>
+    <productVersion>$f</productVersion>
+    <txtProductVersion>BaseX $v</txtProductVersion>
     <productName>BaseX</productName>
     <companyName>University of Konstanz</companyName>
     <internalName>BaseX</internalName>
-    <originalFilename>BaseX6.exe</originalFilename>
+    <originalFilename>BaseX.exe</originalFilename>
   </versionInfo>
 </launch4jConfig>

@@ -140,7 +140,7 @@ ShowUnInstDetails show
 Section "Hauptgruppe" SEC01
   SetOutPath "$INSTDIR"
   SetOverwrite ifnewer
-  File "${PRODUCT_NAME}.exe"
+  File "..\${PRODUCT_NAME}.exe"
   CreateDirectory "$INSTDIR\bin"
   SetOutPath "$INSTDIR\bin"
   File "bin\*.*"
@@ -171,7 +171,7 @@ Section "Hauptgruppe" SEC01
   File "..\..\..\basex-api\lib\xmldb-api-1.0.jar"
   File "..\..\..\basex-api\lib\xqj-api-1.0.jar"
   SetOutPath "$INSTDIR"
-  File "${JAR}"
+  File "..\${JAR}"
   File "..\..\..\basex\license.txt"
   File ".basex"
   File "..\..\images\BaseX.ico"
