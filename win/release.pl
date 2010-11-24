@@ -5,14 +5,10 @@
 use warnings;
 use strict;
 
-#home of programs
-my $programs = "C:/Programme";
-# home of basex projects
-my $basexh = "C:\\JPs";
 # home of launch4j
-my $launch4j = "$programs/Launch4j/launch4jc.exe";
+my $launch4j = "tools\\launch4j\\launch4jc.exe";
 # home of nsis
-my $nsis = "$programs/NSIS/makensis.exe /V1";
+my $nsis = "tools\\nsis\\makensis.exe /V1";
 # versions
 my $f = "";
 my $v = "";
@@ -35,7 +31,7 @@ exc("del BaseX.exe");
 
 # gets version from pom file
 sub version {
-  open(POM, "$basexh\\BaseX\\pom.xml");
+  open(POM, "..\\..\\BaseX\\pom.xml");
   my @raw_data=<POM>;
   my $c = 1;
   foreach my $line (@raw_data) {
@@ -56,8 +52,8 @@ sub version {
 # packages both projects
 sub pkg {
   my $name = shift;
-  exc("del $basexh\\$name\\target\\*.jar");
-  exc("cd $basexh\\$name && mvn package -DskipTests=true");
+  exc("del ..\\..\\$name\\target\\*.jar");
+  exc("cd ..\\..\\$name && mvn package -DskipTests=true");
 }
 
 # modifies the launch4j xml
@@ -76,7 +72,7 @@ sub modl4J {
 
 # launch launch4J
 sub launch4J {
-exc("copy $basexh\\basex\\target\\basex-$v.jar");
+exc("copy ..\\..\\basex\\target\\basex-$v.jar");
 exc("ren basex-$v.jar BaseX.jar");
 exc($launch4j." launch4jtmp.xml");
 }

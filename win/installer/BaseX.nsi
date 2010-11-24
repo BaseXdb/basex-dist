@@ -52,15 +52,15 @@ FunctionEnd
 Function OptionsLeave
 # Get the user entered values.
 # first password field
-!insertmacro MUI_INSTALLOPTIONS_READ $R0 "Options" "Field 5" "State"
+!insertmacro MUI_INSTALLOPTIONS_READ $R0 "Options" "Field 6" "State"
 # second password field
-!insertmacro MUI_INSTALLOPTIONS_READ $R1 "Options" "Field 6" "State"
-# webport field
-!insertmacro MUI_INSTALLOPTIONS_READ $R2 "Options" "Field 14" "State"
-# port field
-!insertmacro MUI_INSTALLOPTIONS_READ $R3 "Options" "Field 15" "State"
+!insertmacro MUI_INSTALLOPTIONS_READ $R1 "Options" "Field 7" "State"
+# serverport field
+!insertmacro MUI_INSTALLOPTIONS_READ $R2 "Options" "Field 8" "State"
+# rest port field
+!insertmacro MUI_INSTALLOPTIONS_READ $R3 "Options" "Field 9" "State"
 # dbpath field
-!insertmacro MUI_INSTALLOPTIONS_READ $R4 "Options" "Field 13" "State"
+!insertmacro MUI_INSTALLOPTIONS_READ $R4 "Options" "Field 5" "State"
 # Admin password modification
 ${If} $R1 == $R0
   Push "$R1"
@@ -77,7 +77,7 @@ ${Else}
   MessageBox MB_OK "Passwords do not match."
   Abort
 ${EndIf}
-# Port check
+# Server port check
 ${If} $R2 != "1984"
   Push "$R2"
   Push "${NUMERIC}"
@@ -88,7 +88,7 @@ ${If} $R2 != "1984"
     Abort
   ${EndIf}
 ${EndIf}
-# WebPort check
+# REST port check
 ${If} $R3 != "8984"
   Push "$R3"
   Push "${NUMERIC}"
@@ -101,9 +101,9 @@ ${If} $R3 != "8984"
 ${EndIf}
 CreateDirectory "$INSTDIR\$R4"
 # xq field
-!insertmacro MUI_INSTALLOPTIONS_READ $R5 "Options" "Field 9" "State"
+!insertmacro MUI_INSTALLOPTIONS_READ $R5 "Options" "Field 2" "State"
 # xml field
-!insertmacro MUI_INSTALLOPTIONS_READ $R6 "Options" "Field 11" "State"
+!insertmacro MUI_INSTALLOPTIONS_READ $R6 "Options" "Field 4" "State"
 # .xq file Association
         ${If} $R5 == 1
           WriteRegStr HKCR ".xq" "" "xqfile"
@@ -191,9 +191,9 @@ SectionEnd
 
 Section -AdditionalIcons
   # desktop shortcut
-  !insertmacro MUI_INSTALLOPTIONS_READ $R7 "Options" "Field 10" "State"
+  !insertmacro MUI_INSTALLOPTIONS_READ $R7 "Options" "Field 1" "State"
   # startmenu
-  !insertmacro MUI_INSTALLOPTIONS_READ $R8 "Options" "Field 12" "State"
+  !insertmacro MUI_INSTALLOPTIONS_READ $R8 "Options" "Field 3" "State"
   ${If} $R7 == 1
     CreateShortCut "$DESKTOP\BaseX.lnk" "$INSTDIR\${PRODUCT_NAME}.exe" "" "$INSTDIR\BaseX.ico" 0
   ${EndIf}

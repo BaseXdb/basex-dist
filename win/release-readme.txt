@@ -2,10 +2,6 @@ RELAESE ======================================================================
 
 The release script creates the BaseX.jar, BaseX-API.jar, BaseX.exe using
 Launch4J and the installer using NSIS.
- 
-RUNNING RELEASE ------------------------------------------------------------
-
-Modify pathes to BaseX Projects, Launch4J and NSIS and run the release.pl.
 
 NOTES --------------------------------------------------------------------------
 
