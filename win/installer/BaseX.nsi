@@ -150,7 +150,7 @@ Section "Hauptgruppe" SEC01
   File "bin\basexrest.bat"
   CreateDirectory "$INSTDIR\lib"
   SetOutPath "$INSTDIR\lib"
-  File "lib\basex-api.jar"
+  File "..\basex-api.jar"
   File "..\..\..\basex-api\lib\asm-3.1.jar"
   File "..\..\..\basex-api\lib\asm-LICENSE.txt"
   File "..\..\..\basex-api\lib\jax-rx-1.2.7.jar"

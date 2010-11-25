@@ -4,6 +4,7 @@
 
 use warnings;
 use strict;
+use File::Copy;
 
 # home of launch4j
 my $launch4j = "tools\\launch4j\\launch4jc.exe";
@@ -13,7 +14,8 @@ my $nsis = "tools\\nsis\\makensis.exe /V1";
 my $f = "";
 my $v = "";
 
-clean();
+# start methods
+drop();
 version();
 pkg("basex");
 pkg("basex-api");
@@ -21,13 +23,6 @@ modl4J();
 launch4J();
 nsis();
 drop();
-
-# cleans possible files
-sub clean {
-exc("del BaseX.jar");
-exc("del launch4jtmp.xml");
-exc("del BaseX.exe");
-}
 
 # gets version from pom file
 sub version {
@@ -52,15 +47,15 @@ sub version {
 # packages both projects
 sub pkg {
   my $name = shift;
-  exc("del ..\\..\\$name\\target\\*.jar");
-  exc("cd ..\\..\\$name && mvn package -DskipTests=true");
+  unlink("..\\..\\$name\\target\\*.jar");
+  exc("cd ..\\..\\$name && mvn install");
 }
 
 # modifies the launch4j xml
 sub modl4J {
   open(L4J, "launch4j.xml");
   my @raw_data=<L4J>;
-  open (L4JTMP, '>>launch4jtmp.xml');
+  open(L4JTMP, '>>launch4jtmp.xml');
   foreach my $line (@raw_data) {
     $line =~ s/\$f/$f/g;
     $line =~ s/\$v/$v/g; 
@@ -72,21 +67,22 @@ sub modl4J {
 
 # launch launch4J
 sub launch4J {
-exc("copy ..\\..\\basex\\target\\basex-$v.jar");
-exc("ren basex-$v.jar BaseX.jar");
+copy("..\\..\\basex\\target\\basex-$v.jar", "BaseX.jar");
 exc($launch4j." launch4jtmp.xml");
 }
 
 # launch nsis
 sub nsis {
+copy("..\\..\\basex-api\\target\\basex-api-$v.jar", "basex-api.jar");
 exc($nsis." installer/BaseX.nsi");
 }
 
 # deletes tmp files
 sub drop {
-exc("del BaseX.jar");
-exc("del launch4jtmp.xml");
-exc("del BaseX.exe");  
+unlink("BaseX.jar");
+unlink("launch4jtmp.xml");
+unlink("BaseX.exe");
+unlink("basex-api.jar");  
 }
 
 # executes a command
