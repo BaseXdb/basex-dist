@@ -1,5 +1,5 @@
 declare variable $test := false();
-declare variable $module := 'file';
+declare variable $module := '';
 declare option output:method "xhtml";
 
 (: Converts the XML documentation to an HTML representation. :)
@@ -40,7 +40,7 @@ declare function local:links($doc as document-node()) as node()+ {
     for $name at $pos in $names
     return (
       if($pos = 1) then '' else ' | ',
-      <a href="{ concat('xq', $pref, '#', $name) }">{ $name }</a>
+      <a href="{ concat('xq-', $pref, '#', $name) }">{ $name }</a>
     )
   }</p>)
 };
@@ -131,7 +131,7 @@ for $file at $pos in file:files('.', false(), '*.xml')
 let $doc := doc($file)
 let $pref := $doc/functions/@pref
 let $out := local:convert($doc)
-let $file := concat('xq', $pref, '.', 'php')
+let $file := concat('xq-', $pref, '.', 'php')
 where not($module) or contains($file, $module)
 return
   if($test)

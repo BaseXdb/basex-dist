@@ -1,0 +1,27 @@
+<functions name="Functions" pref="fn">
+  <function name="partial-apply" type="function()">
+    <signature>
+      <arg name="func" type="function()"/>
+      <arg name="arg" type="item()*"/>
+    </signature>
+    <signature>
+      <arg name="func" type="function()"/>
+      <arg name="arg" type="item()*"/>
+      <arg name="argNum" type="xs:integer"/>
+    </signature>
+    <summary>Returns the new function item obtained by binding one of the
+arguments of a supplied function item to a value. That is, it
+curries the supplied function.</summary>
+    <rule>The effect of calling the 2-argument version of this function is
+the same as calling the 3-argument version with
+<code>$argNum</code> set to 1 (one).</rule>
+    <rule>The result of the function is a new function item with the
+following properties:</rule>
+    <example>The expression <code>let $f := fn:partial-apply(fn:contains#2,
+"e", 2) return ($f("Mike"), $f("John"))</code> returns
+<code>(true(), false())</code>.</example>
+    <example>The expression <code>let $tail := fn:partial-apply(fn:remove#2,
+1, 2) return $tail((1,2,3,4))</code> returns
+<code>(2,3,4)</code>.</example>
+  </function>
+</functions>
