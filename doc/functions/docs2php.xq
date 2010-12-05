@@ -127,7 +127,7 @@ declare function local:footer($doc as document-node()) as node() {
 };
 
 (: Parses all XML files and generates the PHP files. :)
-for $file at $pos in file:files('.', false(), '*.xml')
+for $file at $pos in file:list('.', false(), '*.xml')
 let $doc := doc($file)
 let $pref := $doc/functions/@pref
 let $out := local:convert($doc)
@@ -137,9 +137,7 @@ return
   if($test)
   then $out
   else (
-    if(file:file-exists($file)) then 
-    file:delete($file) else ()
-   ,file:write($file, $out, <method>xhtml</method>),
-    concat('Writing ', $file, '... 
+   file:write($file, $out, <method>xhtml</method>),
+   concat('Writing ', $file, '... 
   ')
 )
