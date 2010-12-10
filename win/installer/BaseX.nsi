@@ -84,7 +84,7 @@ ${If} $R2 != "1984"
   Call Validate
   Pop $0
   ${If} $0 == 0
-    MessageBox MB_OK "PORT contains invalid characters."
+    MessageBox MB_OK "Server Port contains invalid characters."
     Abort
   ${EndIf}
 ${EndIf}
@@ -95,7 +95,7 @@ ${If} $R3 != "8984"
   Call Validate
   Pop $0
   ${If} $0 == 0
-    MessageBox MB_OK "WEBPORT contains invalid characters."
+    MessageBox MB_OK "REST Port contains invalid characters."
     Abort
   ${EndIf}
 ${EndIf}
@@ -180,7 +180,7 @@ Section "Hauptgruppe" SEC01
   File "..\..\images\start.ico"
   File "..\..\images\stop.ico"
   # set dbpath, port and webport
-  nsExec::Exec '$INSTDIR\bin\basex.bat -Wc set dbpath $INSTDIR\$R4; set serverport $R2; set restport $R3';
+  nsExec::Exec '$INSTDIR\bin\basex.bat -Wc set dbpath $INSTDIR\$R4; set serverport $R2; set restport $R3; set port $R2';
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BaseX" \
                  "DisplayName" "BaseX"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BaseX" \
