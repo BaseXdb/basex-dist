@@ -48,7 +48,7 @@ sub version {
 sub pkg {
   my $name = shift;
   unlink("..\\..\\$name\\target\\*.jar");
-  exc("cd ..\\..\\$name && mvn install");
+  exc("cd ..\\..\\$name && mvn install -DskipTests=true");
 }
 
 # modifies the launch4j xml
