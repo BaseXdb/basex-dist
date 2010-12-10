@@ -200,7 +200,7 @@ Section -AdditionalIcons
   ${If} $R8 == 1
     CreateDirectory "$SMPROGRAMS\BaseX"
     CreateShortCut "$SMPROGRAMS\BaseX\BaseX.lnk" "$INSTDIR\${PRODUCT_NAME}.exe" "" "$INSTDIR\BaseX.ico" 0
-    CreateShortCut "$SMPROGRAMS\BaseX\BaseX Server (Start).lnk" "$INSTDIR\bin\basexserver.bat" "-s" "$INSTDIR\start.ico" 0
+    CreateShortCut "$SMPROGRAMS\BaseX\BaseX Server (Start).lnk" "$INSTDIR\bin\basexserver.bat" "" "$INSTDIR\start.ico" 0
     CreateShortCut "$SMPROGRAMS\BaseX\BaseX Server (Stop).lnk" "$INSTDIR\bin\basexserverstop.bat" "" "$INSTDIR\stop.ico" 0
     CreateShortCut "$SMPROGRAMS\BaseX\BaseXClient.lnk" "$INSTDIR\bin\basexclient.bat" "" "$INSTDIR\BaseX.ico" 0
     CreateShortCut "$SMPROGRAMS\BaseX\BaseX Standalone.lnk" "$INSTDIR\bin\basex.bat" "" "$INSTDIR\shell.ico" 0

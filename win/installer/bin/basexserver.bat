@@ -12,6 +12,6 @@ REM Options for virtual machine
 set VM=-Xmx1g
 
 REM Run BaseX server
-java -cp "%BXPATH%" %VM% org.basex.BaseXServer %*
+java -cp "%BXPATH%" %VM% org.basex.BaseXServer -s %*
 
 @endlocal
