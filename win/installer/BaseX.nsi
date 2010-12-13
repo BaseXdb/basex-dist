@@ -12,6 +12,7 @@ RequestExecutionLevel admin
 ; MUI 1.67 compatible ------
 !include "MUI.nsh"
 !include "FileFunc.nsh"
+!include "FileAssociation.nsh"
 
 ; MUI Settings
 !define MUI_ABORTWARNING
@@ -24,6 +25,8 @@ FunctionEnd
 
 ; Welcome page
 !insertmacro MUI_PAGE_WELCOME
+; check jre page
+Page custom CheckInstalledJRE
 ; License page
 !define MUI_LICENSEPAGE_RADIOBUTTONS
 !insertmacro MUI_PAGE_LICENSE "..\..\..\basex\license.txt"
@@ -40,6 +43,13 @@ Page custom OptionsPage OptionsLeave
 
 Function run_basex
         nsExec::Exec '$INSTDIR\${PRODUCT_NAME}.exe'
+FunctionEnd
+
+Function CheckInstalledJRE
+  ReadRegStr $1 HKLM "SOFTWARE\JavaSoft\Java Runtime Environment" "CurrentVersion"
+  ${If} $1 == ""
+    MessageBox MB_OK "Please install Java before executing the installer."
+    Quit
 FunctionEnd
 
 # CUSTOM PAGE.
@@ -106,19 +116,11 @@ CreateDirectory "$INSTDIR\$R4"
 !insertmacro MUI_INSTALLOPTIONS_READ $R6 "Options" "Field 4" "State"
 # .xq file Association
         ${If} $R5 == 1
-          WriteRegStr HKCR ".xq" "" "xqfile"
-          WriteRegStr HKCR "xqfile" "" "XQuery File"
-          WriteRegStr HKCR "xqfile\shell" "" "Open"
-          WriteRegStr HKCR "xqfile\shell\Open\command" "" '"$INSTDIR\${PRODUCT_NAME}.exe" "%1"'
-          WriteRegStr HKCR "xqfile\DefaultIcon" "" "$INSTDIR\xml.ico"
+	  ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xq" "XQ File"
         ${EndIf}
 # .xml file Association
         ${If} $R6 == 1
-          WriteRegStr HKCR ".xml" "" "xmlfile"
-          WriteRegStr HKCR "xmlfile" "" "XML File"
-          WriteRegStr HKCR "xmlfile\shell" "" "Open"
-          WriteRegStr HKCR "xmlfile\shell\Open\command" "" '"$INSTDIR\${PRODUCT_NAME}.exe" "%1"'
-          WriteRegStr HKCR "xmlfile\DefaultIcon" "" "$INSTDIR\xml.ico"
+          ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xml" "XML File"
         ${EndIf}
         ${RefreshShellIcons}
 FunctionEnd
@@ -239,14 +241,8 @@ Section Uninstall
   DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BaseX"
   DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
   DeleteRegKey HKLM "${PRODUCT_DIR_REGKEY}"
-  DeleteRegKey HKCR ".xq"
-  DeleteRegKey HKCR "File.xq\shell\Open\command"
-  DeleteRegKey HKCR "File.xq\DefaultIcon"
-  DeleteRegKey HKCR "File.xq"
-  DeleteRegKey HKCR ".xml"
-  DeleteRegKey HKCR "File.xml\shell\Open\command"
-  DeleteRegKey HKCR "File.xml\DefaultIcon"
-  DeleteRegKey HKCR "File.xml"
+  ${unregisterExtension} ".xq" "XQ File"
+  ${unregisterExtension} ".xml" "XML File"
   ${RefreshShellIcons}
   SetAutoClose true
 SectionEnd
