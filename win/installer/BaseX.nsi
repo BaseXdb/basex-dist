@@ -50,6 +50,7 @@ Function CheckInstalledJRE
   ${If} $1 == ""
     MessageBox MB_OK "Please install Java before executing the installer."
     Quit
+  ${EndIf}
 FunctionEnd
 
 # CUSTOM PAGE.
