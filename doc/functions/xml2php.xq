@@ -132,7 +132,7 @@ let $doc := doc($file)
 let $pref := $doc/functions/@pref
 let $out := local:convert($doc)
 let $file := concat('xq-', $pref, '.', 'php')
-where not($module) or contains($file, $module)
+where not($module) or starts-with($file, $module)
 return
   if($test)
   then $out

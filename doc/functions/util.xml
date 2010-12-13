@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <functions name="Utility" pref="util" namespace="http://basex.org/util">
   <text>This module offers utility methods, which can be used for testing and profiling the code. All functions are preceded by the <code>util:</code> prefix. </text>
   <function name="eval" type="item()*">

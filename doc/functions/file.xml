@@ -73,7 +73,7 @@
       <arg name="recursive" type="xs:boolean"/>
       <arg name="pattern" type="xs:string"/>
     </signature>
-    <summary>Lists he contents of a directory.</summary>
+    <summary>Lists the contents of a directory.</summary>
     <rule>This function lists all files and directories found in the directory that is specified by <code>$path</code>. The returned paths are relative to the provided path.</rule>
     <rule>The optional parameter <code>$recursive</code> specifies whether the sub-directories are to be recursed as well.</rule>
     <rule>The optional parameter <code>$pattern</code> defines a file name pattern. If present, only those files and directories are returned that correspond to the pattern. A pattern may contain asterisks (<code>*</code>) to match zero or more characters, and question marks (<code>?</code>) to match single characters. Several patterns can be separated with a comma (<code>,</code>).</rule>

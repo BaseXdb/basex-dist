@@ -1,4 +1,4 @@
-<functions name="Functions" pref="fn-math">
+<functions name="Standard Math" pref="fn-math">
   <function name="pi" type="xs:double">
     <signature/>
     <summary>Returns the value of the mathematical constant <span style="font-family:Times; font-style:italic">π</span>.</summary>

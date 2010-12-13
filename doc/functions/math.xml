@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <functions name="Math" pref="math" namespace="http://www.w3.org/2005/xpath-functions/math">
   <text>The math module defines extension functions to perform mathematical operations, such as <code>pi</code>, <code>asin</code> and <code>acos</code>. All functions are preceded by the <code>math:</code> prefix. Some of the functions have also been specified in the <a href="http://www.w3.org/TR/xpath-functions-11/">Functions and Operators Specification</a> of the upcoming XQuery 1.1 Recommendation.</text>
   <function name="pi" type="xs:double">
