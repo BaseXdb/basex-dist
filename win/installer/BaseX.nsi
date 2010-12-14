@@ -16,7 +16,7 @@ RequestExecutionLevel admin
 
 ; MUI Settings
 !define MUI_ABORTWARNING
-!define MUI_ICON "..\..\images\Basex.ico"
+!define MUI_ICON "..\..\images\BaseX.ico"
 !define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\modern-uninstall.ico"
 !define MUI_FINISHPAGE_NOAUTOCLOSE
 Function .onInit
@@ -60,6 +60,7 @@ Function OptionsPage
 # Display the page.
 !insertmacro MUI_INSTALLOPTIONS_DISPLAY "Options"
 FunctionEnd
+
 Function OptionsLeave
 # Get the user entered values.
 # first password field
@@ -177,13 +178,17 @@ Section "Hauptgruppe" SEC01
   File "..\${JAR}"
   File "..\..\..\basex\license.txt"
   File ".basex"
+  CreateDirectory "$INSTDIR\ico"
+  SetOutPath "$INSTDIR\ico"
   File "..\..\images\BaseX.ico"
   File "..\..\images\xml.ico"
   File "..\..\images\shell.ico"
   File "..\..\images\start.ico"
   File "..\..\images\stop.ico"
   # set dbpath, port and webport
-  nsExec::Exec '$INSTDIR\bin\basex.bat -Wc set dbpath $INSTDIR\$R4; set serverport $R2; set restport $R3; set port $R2';
+  nsExec::ExecToLog '$INSTDIR\bin\basex.bat -Wc "set dbpath \"\$INSTDIR\$R4\""'
+  nsExec::Exec '$INSTDIR\bin\basex.bat -Wc "set port $R2; set serverport $R2; set webport $R3"'
+
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BaseX" \
                  "DisplayName" "BaseX"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BaseX" \
@@ -198,16 +203,16 @@ Section -AdditionalIcons
   # startmenu
   !insertmacro MUI_INSTALLOPTIONS_READ $R8 "Options" "Field 3" "State"
   ${If} $R7 == 1
-    CreateShortCut "$DESKTOP\BaseX GUI.lnk" "$INSTDIR\${PRODUCT_NAME}.exe" "" "$INSTDIR\BaseX.ico" 0
+    CreateShortCut "$DESKTOP\BaseX GUI.lnk" "$INSTDIR\${PRODUCT_NAME}.exe" "" "$INSTDIR\ico\BaseX.ico" 0
   ${EndIf}
   ${If} $R8 == 1
     CreateDirectory "$SMPROGRAMS\BaseX"
-    CreateShortCut "$SMPROGRAMS\BaseX\BaseX GUI.lnk" "$INSTDIR\${PRODUCT_NAME}.exe" "" "$INSTDIR\BaseX.ico" 0
-    CreateShortCut "$SMPROGRAMS\BaseX\BaseX Server (Start).lnk" "$INSTDIR\bin\basexserver.bat" "" "$INSTDIR\start.ico" 0
-    CreateShortCut "$SMPROGRAMS\BaseX\BaseX Server (Stop).lnk" "$INSTDIR\bin\basexserverstop.bat" "" "$INSTDIR\stop.ico" 0
-    CreateShortCut "$SMPROGRAMS\BaseX\BaseXClient.lnk" "$INSTDIR\bin\basexclient.bat" "" "$INSTDIR\BaseX.ico" 0
-    CreateShortCut "$SMPROGRAMS\BaseX\BaseX Standalone.lnk" "$INSTDIR\bin\basex.bat" "" "$INSTDIR\shell.ico" 0
-    CreateShortCut "$SMPROGRAMS\BaseX\BaseX REST.lnk" "$INSTDIR\bin\basexrest.bat" "" "$INSTDIR\BaseX.ico" 0
+    CreateShortCut "$SMPROGRAMS\BaseX\BaseX GUI.lnk" "$INSTDIR\${PRODUCT_NAME}.exe" "" "$INSTDIR\ico\BaseX.ico" 0
+    CreateShortCut "$SMPROGRAMS\BaseX\BaseX Server (Start).lnk" "$INSTDIR\bin\basexserver.bat" "" "$INSTDIR\ico\start.ico" 0
+    CreateShortCut "$SMPROGRAMS\BaseX\BaseX Server (Stop).lnk" "$INSTDIR\bin\basexserverstop.bat" "" "$INSTDIR\ico\stop.ico" 0
+    CreateShortCut "$SMPROGRAMS\BaseX\BaseX Client.lnk" "$INSTDIR\bin\basexclient.bat" "" "$INSTDIR\ico\shell.ico" 0
+    CreateShortCut "$SMPROGRAMS\BaseX\BaseX.lnk" "$INSTDIR\bin\basex.bat" "" "$INSTDIR\ico\shell.ico" 0
+    CreateShortCut "$SMPROGRAMS\BaseX\BaseX REST.lnk" "$INSTDIR\bin\basexrest.bat" "" "$INSTDIR\ico\BaseX.ico" 0
     WriteINIStr "$SMPROGRAMS\BaseX\Website.url" "InternetShortcut" "URL" "${PRODUCT_WEB_SITE}"
     CreateShortCut "$SMPROGRAMS\BaseX\Uninstall.lnk" "$INSTDIR\uninst.exe"
   ${EndIf}
@@ -228,12 +233,12 @@ Function un.onUninstSuccess
 FunctionEnd
 
 Function un.onInit
-  MessageBox MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 "All components of $(^Name) will be uninstalled??" IDYES +2
+  MessageBox MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 "Uninstall all components of $(^Name) ?" IDYES +2
   Abort
 FunctionEnd
 
 Section Uninstall
-  Delete "$DESKTOP\BaseX.lnk"
+  Delete "$DESKTOP\BaseX GUI.lnk"
   RMDir /r "$SMPROGRAMS\BaseX"
   RMDir /r "$INSTDIR"
   DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BaseX"

@@ -128,7 +128,7 @@ NoBackup:
   StrCmp $0 "" 0 Skip
     WriteRegStr HKCR "$R0" "" "$R0"
     WriteRegStr HKCR "$R0\shell" "" "open"
-    WriteRegStr HKCR "$R0\DefaultIcon" "" "$INSTDIR\xml.ico"
+    WriteRegStr HKCR "$R0\DefaultIcon" "" "$INSTDIR\ico\xml.ico"
 Skip:
   WriteRegStr HKCR "$R0\shell\open\command" "" '"$R2" "%1"'
   WriteRegStr HKCR "$R0\shell\edit" "" "Edit $R0"
