@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<functions name="HTTP Client" pref="http" namespace="http://basex.org/http">
+  <text>The HTTP client module supports sending of HTTP requests and handling of HTTP responses. It defines just one function - <code>send-request</code>, preceded by the <code>http:</code> prefix, which is based on the <a href="http://expath.org/spec/http-client">EXPath</a> specification. As the module is currently under development, it does not support all features described in the specification. Here are listed only the ones currently supported and most probably the documentation will change over time.</text>
+  
+  <function name="send-request" type="item()+">
+    <signature>
+      <arg name="request" type="element(http:request)"/>
+    </signature>
+    <signature>
+      <arg name="request" type="element(http:request)?"/>
+      <arg name="href" type="xs:string?"/>
+    </signature>
+    <summary>Sends an HTTP request and interprets the corresponding response.</summary>
+    <rule><code>$request</code> contains the parameters of the HTTP request like HTTP method and headers. In addition to this it can also contain the URI to which the request will be sent and the body of the HTTP method. If the URI is not given with the parameter<code>$href</code>, its value in <code>$request</code> is used instead. The structures of <code>http:request</code>, <code>http:header</code> and <code>http:body</code> elements follow the <a href="http://expath.org/spec/http-client">EXPath</a> specification. The attribute <code>auth-method</code> of <code>$request</code> is not considered in our implementation because we are handling only basic authentication. Furthermore, currently if any serialization parameters are provided in the <code>http:body</code> child of <code>$request</code>, they are always considered, i.e. the case when the <code>src</code> attribute is set, is not handled. Sending of multipart HTTP requests and handling of responses with content different from XML, HTML and text is not supported.</rule>
+  </function>
+</functions>
