@@ -185,9 +185,19 @@ Section "Hauptgruppe" SEC01
   File "..\..\images\shell.ico"
   File "..\..\images\start.ico"
   File "..\..\images\stop.ico"
+  CreateDirectory "$INSTDIR\$R4"
+  AccessControl::GrantOnFile \
+    "$INSTDIR\$R4" "(BU)" "GenericRead + GenericWrite"
+  AccessControl::GrantOnFile \
+    "$INSTDIR\.basex" "(BU)" "GenericRead + GenericWrite"
+  CreateDirectory "$INSTDIR\rest"
+  AccessControl::GrantOnFile \
+    "$INSTDIR\rest" "(BU)" "GenericRead + GenericWrite"
   # set dbpath, port and webport
-  nsExec::ExecToLog '$INSTDIR\bin\basex.bat -Wc "set dbpath \"\$INSTDIR\$R4\""'
-  nsExec::Exec '$INSTDIR\bin\basex.bat -Wc "set port $R2; set serverport $R2; set webport $R3"'
+  nsExec::Exec '$INSTDIR\bin\basex.bat -Wc "set dbpath \"$INSTDIR\$R4\"; set restpath \"$INSTDIR\rest\""'
+  nsExec::Exec '$INSTDIR\bin\basex.bat -Wc "set port $R2; set serverport $R2; set restport $R3"'
+  AccessControl::GrantOnFile \
+    "$INSTDIR\.basexperm" "(BU)" "GenericRead + GenericWrite"
 
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BaseX" \
                  "DisplayName" "BaseX"
