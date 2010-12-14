@@ -81,9 +81,7 @@ ${If} $R1 == $R0
   Pop $0
   ${If} $0 == 0
     MessageBox MB_OK "Passwords contain invalid characters."
-    Abort
-  ${ElseIf} $R0 != "admin"
-      nsExec::Exec '$INSTDIR\bin\basex.bat -c alter user admin $R0'
+    Abort    
   ${EndIf}
 ${Else}
   MessageBox MB_OK "Passwords do not match."
@@ -198,7 +196,7 @@ Section "Hauptgruppe" SEC01
   nsExec::Exec '$INSTDIR\bin\basex.bat -Wc "set port $R2; set serverport $R2; set restport $R3"'
   AccessControl::GrantOnFile \
     "$INSTDIR\.basexperm" "(BU)" "GenericRead + GenericWrite"
-
+  nsExec::Exec '$INSTDIR\bin\basex.bat -c alter user admin $R0'
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BaseX" \
                  "DisplayName" "BaseX"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BaseX" \
