@@ -23,6 +23,13 @@ Function .onInit
 !insertmacro MUI_INSTALLOPTIONS_EXTRACT_AS "Options.ini" "Options"
 FunctionEnd
 
+!macro IndexOf Var Str Char
+Push "${Char}"
+Push "${Str}"
+ Call IndexOf
+Pop "${Var}"
+!macroend
+
 ; Welcome page
 !insertmacro MUI_PAGE_WELCOME
 ; check jre page
@@ -109,7 +116,6 @@ ${If} $R3 != "8984"
     Abort
   ${EndIf}
 ${EndIf}
-CreateDirectory "$INSTDIR\$R4"
 # xq field
 !insertmacro MUI_INSTALLOPTIONS_READ $R5 "Options" "Field 2" "State"
 # xml field
@@ -183,16 +189,24 @@ Section "Hauptgruppe" SEC01
   File "..\..\images\shell.ico"
   File "..\..\images\start.ico"
   File "..\..\images\stop.ico"
-  CreateDirectory "$INSTDIR\$R4"
-  AccessControl::GrantOnFile \
-    "$INSTDIR\$R4" "(BU)" "GenericRead + GenericWrite"
   AccessControl::GrantOnFile \
     "$INSTDIR\.basex" "(BU)" "GenericRead + GenericWrite"
   CreateDirectory "$INSTDIR\rest"
   AccessControl::GrantOnFile \
     "$INSTDIR\rest" "(BU)" "GenericRead + GenericWrite"
   # set dbpath, port and webport
+  !insertmacro IndexOf $9 "$R4" ":"
+  ${If} $9 == -1
+  CreateDirectory "$INSTDIR\$R4"
+  AccessControl::GrantOnFile \
+    "$INSTDIR\$R4" "(BU)" "GenericRead + GenericWrite"
   nsExec::Exec '$INSTDIR\bin\basex.bat -Wc "set dbpath \"$INSTDIR\$R4\"; set restpath \"$INSTDIR\rest\""'
+  ${Else}
+  CreateDirectory "$R4"
+  AccessControl::GrantOnFile \
+    "$R4" "(BU)" "GenericRead + GenericWrite"
+  nsExec::Exec '$INSTDIR\bin\basex.bat -Wc "set dbpath \"$R4\"; set restpath \"$INSTDIR\rest\""'
+  ${EndIf}
   nsExec::Exec '$INSTDIR\bin\basex.bat -Wc "set port $R2; set serverport $R2; set restport $R3"'
   AccessControl::GrantOnFile \
     "$INSTDIR\.basexperm" "(BU)" "GenericRead + GenericWrite"
@@ -303,4 +317,26 @@ Function Validate
   Pop $7
   Pop $8
   Exch $0
+FunctionEnd
+
+Function IndexOf
+Exch $0
+Exch
+Exch $1
+Push $2
+Push $3
+ 
+ StrCpy $3 $0
+ StrCpy $0 -1
+ IntOp $0 $0 + 1
+  StrCpy $2 $3 1 $0
+  StrCmp $2 "" +2
+  StrCmp $2 $1 +2 -3
+ 
+ StrCpy $0 -1
+ 
+Pop $3
+Pop $2
+Pop $1
+Exch $0
 FunctionEnd
