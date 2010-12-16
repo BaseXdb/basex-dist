@@ -64,6 +64,7 @@ FunctionEnd
 # =========================================================================
 #
 Function OptionsPage
+!insertmacro MUI_HEADER_TEXT "Installation Options" "Choose optional settings for the BaseX installation."
 # Display the page.
 !insertmacro MUI_INSTALLOPTIONS_DISPLAY "Options"
 FunctionEnd
