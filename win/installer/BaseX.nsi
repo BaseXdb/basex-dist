@@ -6,6 +6,7 @@
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
 !define ALPHA "abcdefghijklmnopqrstuvwxyz1234567890"
+!define BETA "abcdefghijklmnopqrstuvwxyz1234567890\/:"
 !define NUMERIC "1234567890"
 RequestExecutionLevel admin
 
@@ -60,6 +61,27 @@ Function CheckInstalledJRE
   ${EndIf}
 FunctionEnd
 
+Function WriteToFile
+ Exch $0 ;file to write to
+ Exch
+ Exch $1 ;text to write
+ 
+  FileOpen $0 $0 a #open file
+   FileSeek $0 0 END #go to end
+   FileWrite $0 $1 #write to file
+  FileClose $0
+ 
+ Pop $1
+ Pop $0
+FunctionEnd
+ 
+!macro WriteToFile String File
+ Push "${String}"
+ Push "${File}"
+  Call WriteToFile
+!macroend
+!define WriteToFile "!insertmacro WriteToFile"
+
 # CUSTOM PAGE.
 # =========================================================================
 #
@@ -72,15 +94,15 @@ FunctionEnd
 Function OptionsLeave
 # Get the user entered values.
 # first password field
-!insertmacro MUI_INSTALLOPTIONS_READ $R0 "Options" "Field 6" "State"
+!insertmacro MUI_INSTALLOPTIONS_READ $R0 "Options" "Field 7" "State"
 # second password field
-!insertmacro MUI_INSTALLOPTIONS_READ $R1 "Options" "Field 7" "State"
+!insertmacro MUI_INSTALLOPTIONS_READ $R1 "Options" "Field 8" "State"
 # serverport field
-!insertmacro MUI_INSTALLOPTIONS_READ $R2 "Options" "Field 8" "State"
+!insertmacro MUI_INSTALLOPTIONS_READ $R2 "Options" "Field 9" "State"
 # rest port field
-!insertmacro MUI_INSTALLOPTIONS_READ $R3 "Options" "Field 9" "State"
+!insertmacro MUI_INSTALLOPTIONS_READ $R3 "Options" "Field 10" "State"
 # dbpath field
-!insertmacro MUI_INSTALLOPTIONS_READ $R4 "Options" "Field 5" "State"
+!insertmacro MUI_INSTALLOPTIONS_READ $R4 "Options" "Field 6" "State"
 # Admin password modification
 ${If} $R1 == $R0
   Push "$R1"
@@ -117,10 +139,21 @@ ${If} $R3 != "8984"
     Abort
   ${EndIf}
 ${EndIf}
+# DBPATH check
+${If} $R4 != "data"
+  Push "$R4"
+  Push "${BETA}"
+  Call Validate
+  Pop $0
+  ${If} $0 == 0
+    MessageBox MB_OK "Database Path contains invalid characters."
+    Abort
+  ${EndIf}
+${EndIf}
 # xq field
-!insertmacro MUI_INSTALLOPTIONS_READ $R5 "Options" "Field 2" "State"
+!insertmacro MUI_INSTALLOPTIONS_READ $R5 "Options" "Field 3" "State"
 # xml field
-!insertmacro MUI_INSTALLOPTIONS_READ $R6 "Options" "Field 4" "State"
+!insertmacro MUI_INSTALLOPTIONS_READ $R6 "Options" "Field 5" "State"
 # .xq file Association
         ${If} $R5 == 1
 	  ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xq" "XQ File"
@@ -196,22 +229,29 @@ Section "Hauptgruppe" SEC01
   AccessControl::GrantOnFile \
     "$INSTDIR\rest" "(BU)" "GenericRead + GenericWrite"
   # set dbpath, port and webport
+  StrLen $0 $R4
+  IntOp $0 $0 - 1
+  StrCpy $2 $R4 1 $0
+  ${If} $2 == "\"
+    StrCpy $R4 $R4 -1
+  ${EndIf}
   !insertmacro IndexOf $9 "$R4" ":"
   ${If} $9 == -1
-  CreateDirectory "$INSTDIR\$R4"
-  AccessControl::GrantOnFile \
-    "$INSTDIR\$R4" "(BU)" "GenericRead + GenericWrite"
-  nsExec::ExecToLog '"$INSTDIR\bin\basex.bat" "-Wc" "set dbpath \"$INSTDIR\$R4\"; set restpath \"$INSTDIR\rest\""'
+    CreateDirectory "$INSTDIR\$R4"
+    AccessControl::GrantOnFile \
+      "$INSTDIR\$R4" "(BU)" "GenericRead + GenericWrite"
+    nsExec::Exec '"$INSTDIR\bin\basex.bat" "-Wc" "set dbpath \"$INSTDIR\$R4\"; set restpath \"$INSTDIR\rest\""'
   ${Else}
-  CreateDirectory "$R4"
-  AccessControl::GrantOnFile \
-    "$R4" "(BU)" "GenericRead + GenericWrite"
-  nsExec::ExecToLog '"$INSTDIR\bin\basex.bat" "-Wc" "set dbpath \"$R4\"; set restpath \"$INSTDIR\rest\""'
+    CreateDirectory "$R4"
+    AccessControl::GrantOnFile \
+      "$R4" "(BU)" "GenericRead + GenericWrite"
+    nsExec::Exec '"$INSTDIR\bin\basex.bat" "-Wc" "set dbpath \"$R4\"; set restpath \"$INSTDIR\rest\""'
   ${EndIf}
-  nsExec::ExecToLog '"$INSTDIR\bin\basex.bat" "-Wc" "set port $R2; set serverport $R2; set restport $R3"'
+  nsExec::Exec '"$INSTDIR\bin\basex.bat" "-Wc" "set port $R2; set serverport $R2; set restport $R3"'
   AccessControl::GrantOnFile \
     "$INSTDIR\.basexperm" "(BU)" "GenericRead + GenericWrite"
-  nsExec::ExecToLog '"$INSTDIR\bin\basex.bat" "-c" "alter user admin $R0"'
+  nsExec::Exec '"$INSTDIR\bin\basex.bat" "-c" "alter user admin $R0"'
+  ${WriteToFile} "java -cp $\"%CP%;.$\" %VM% org.basex.api.jaxrx.JaxRxServer -P$R0 %*" "$INSTDIR\bin\basexrest.bat"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BaseX" \
                  "DisplayName" "BaseX"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BaseX" \
@@ -222,9 +262,9 @@ SectionEnd
 
 Section -AdditionalIcons
   # desktop shortcut
-  !insertmacro MUI_INSTALLOPTIONS_READ $R7 "Options" "Field 1" "State"
+  !insertmacro MUI_INSTALLOPTIONS_READ $R7 "Options" "Field 2" "State"
   # startmenu
-  !insertmacro MUI_INSTALLOPTIONS_READ $R8 "Options" "Field 3" "State"
+  !insertmacro MUI_INSTALLOPTIONS_READ $R8 "Options" "Field 4" "State"
   ${If} $R7 == 1
     CreateShortCut "$DESKTOP\BaseX GUI.lnk" "$INSTDIR\${PRODUCT_NAME}.exe" "" "$INSTDIR\ico\BaseX.ico" 0
   ${EndIf}

@@ -16,4 +16,3 @@ REM Options for virtual machine
 set VM=-Xmx1g
 
 REM Run REST server
-java -cp "%CP%;." %VM% org.basex.api.jaxrx.JaxRxServer %*
