@@ -201,17 +201,17 @@ Section "Hauptgruppe" SEC01
   CreateDirectory "$INSTDIR\$R4"
   AccessControl::GrantOnFile \
     "$INSTDIR\$R4" "(BU)" "GenericRead + GenericWrite"
-  nsExec::Exec '$INSTDIR\bin\basex.bat -Wc "set dbpath \"$INSTDIR\$R4\"; set restpath \"$INSTDIR\rest\""'
+  nsExec::ExecToLog '"$INSTDIR\bin\basex.bat" "-Wc" "set dbpath \"$INSTDIR\$R4\"; set restpath \"$INSTDIR\rest\""'
   ${Else}
   CreateDirectory "$R4"
   AccessControl::GrantOnFile \
     "$R4" "(BU)" "GenericRead + GenericWrite"
-  nsExec::Exec '$INSTDIR\bin\basex.bat -Wc "set dbpath \"$R4\"; set restpath \"$INSTDIR\rest\""'
+  nsExec::ExecToLog '"$INSTDIR\bin\basex.bat" "-Wc" "set dbpath \"$R4\"; set restpath \"$INSTDIR\rest\""'
   ${EndIf}
-  nsExec::Exec '$INSTDIR\bin\basex.bat -Wc "set port $R2; set serverport $R2; set restport $R3"'
+  nsExec::ExecToLog '"$INSTDIR\bin\basex.bat" "-Wc" "set port $R2; set serverport $R2; set restport $R3"'
   AccessControl::GrantOnFile \
     "$INSTDIR\.basexperm" "(BU)" "GenericRead + GenericWrite"
-  nsExec::Exec '$INSTDIR\bin\basex.bat -c alter user admin $R0'
+  nsExec::ExecToLog '"$INSTDIR\bin\basex.bat" "-c" "alter user admin $R0"'
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BaseX" \
                  "DisplayName" "BaseX"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BaseX" \
