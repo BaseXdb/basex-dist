@@ -2,7 +2,7 @@
   <dontWrapJar>false</dontWrapJar>
   <headerType>gui</headerType>
   <jar>BaseX.jar</jar>
-  <outfile>BaseX.exe</outfile>
+  <outfile>BaseX GUI.exe</outfile>
   <errTitle></errTitle>
   <cmdLine></cmdLine>
   <chdir></chdir>
@@ -13,6 +13,12 @@
   <stayAlive>false</stayAlive>
   <manifest></manifest>
   <icon>../images/BaseX.ico</icon>
+   <classPath>
+    <mainClass>org.basex.BaseXGUI</mainClass>
+    <cp>.\lib\tagsoup-1.2.jar</cp>
+    <cp>.\lib\lucene-analyzers-3.0.2.jar</cp>
+    <cp>.\lib\snowball.jar</cp>
+  </classPath>
   <jre>
     <path></path>
     <minVersion>1.6.0</minVersion>
@@ -27,9 +33,9 @@
     <copyright>(c) University of Konstanz, 2010</copyright>
     <productVersion>$f</productVersion>
     <txtProductVersion>BaseX $v</txtProductVersion>
-    <productName>BaseX</productName>
+    <productName>BaseX GUI</productName>
     <companyName>University of Konstanz</companyName>
-    <internalName>BaseX</internalName>
+    <internalName>BaseX GUI</internalName>
     <originalFilename>BaseX.exe</originalFilename>
   </versionInfo>
 </launch4jConfig>

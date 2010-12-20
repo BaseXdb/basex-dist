@@ -5,13 +5,9 @@ REM Path to this script
 set PWD=%~dp0
 
 REM Paths to distributed files or source directories
-set BXPATH=%PWD%/../BaseX.jar
-REM set BXPATH=%PWD%/../target/classes
-
-REM Options for virtual machine
-set VM=
+set BASEX=%PWD%/../BaseX.jar
 
 REM Run BaseX client
-java -cp "%BXPATH%" %VM% org.basex.BaseXClient %*
+java -cp "%BASEX%" org.basex.BaseXClient %*
 
 @endlocal

@@ -50,7 +50,7 @@ Page custom OptionsPage OptionsLeave
 !insertmacro MUI_PAGE_FINISH
 
 Function run_basex
-        nsExec::Exec '$INSTDIR\${PRODUCT_NAME}.exe'
+        nsExec::Exec '"$INSTDIR\BaseX GUI.exe"'
 FunctionEnd
 
 Function CheckInstalledJRE
@@ -86,6 +86,7 @@ FunctionEnd
 # =========================================================================
 #
 Function OptionsPage
+Delete $INSTDIR\bin\basexrest.bat
 !insertmacro MUI_HEADER_TEXT "Installation Options" "Choose optional settings for the BaseX installation."
 # Display the page.
 !insertmacro MUI_INSTALLOPTIONS_DISPLAY "Options"
@@ -182,7 +183,7 @@ ShowUnInstDetails show
 Section "Hauptgruppe" SEC01
   SetOutPath "$INSTDIR"
   SetOverwrite ifnewer
-  File "..\${PRODUCT_NAME}.exe"
+  File "..\BaseX GUI.exe"
   CreateDirectory "$INSTDIR\bin"
   SetOutPath "$INSTDIR\bin"
   File "bin\*.*"
@@ -261,16 +262,18 @@ Section "Hauptgruppe" SEC01
 SectionEnd
 
 Section -AdditionalIcons
+  SetOutPath "$INSTDIR"
+  SetOverwrite try
   # desktop shortcut
   !insertmacro MUI_INSTALLOPTIONS_READ $R7 "Options" "Field 2" "State"
   # startmenu
   !insertmacro MUI_INSTALLOPTIONS_READ $R8 "Options" "Field 4" "State"
   ${If} $R7 == 1
-    CreateShortCut "$DESKTOP\BaseX GUI.lnk" "$INSTDIR\${PRODUCT_NAME}.exe" "" "$INSTDIR\ico\BaseX.ico" 0
+    CreateShortCut "$DESKTOP\BaseX GUI.lnk" "$INSTDIR\BaseX GUI.exe" "" "$INSTDIR\ico\BaseX.ico" 0
   ${EndIf}
   ${If} $R8 == 1
     CreateDirectory "$SMPROGRAMS\BaseX"
-    CreateShortCut "$SMPROGRAMS\BaseX\BaseX GUI.lnk" "$INSTDIR\${PRODUCT_NAME}.exe" "" "$INSTDIR\ico\BaseX.ico" 0
+    CreateShortCut "$SMPROGRAMS\BaseX\BaseX GUI.lnk" "$INSTDIR\BaseX GUI.exe" "" "$INSTDIR\ico\BaseX.ico" 0
     CreateShortCut "$SMPROGRAMS\BaseX\BaseX Server (Start).lnk" "$INSTDIR\bin\basexserver.bat" "" "$INSTDIR\ico\start.ico" 0
     CreateShortCut "$SMPROGRAMS\BaseX\BaseX Server (Stop).lnk" "$INSTDIR\bin\basexserverstop.bat" "" "$INSTDIR\ico\stop.ico" 0
     CreateShortCut "$SMPROGRAMS\BaseX\BaseX Client.lnk" "$INSTDIR\bin\basexclient.bat" "" "$INSTDIR\ico\shell.ico" 0

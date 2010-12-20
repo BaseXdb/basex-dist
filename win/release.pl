@@ -81,7 +81,7 @@ exc($nsis." installer/BaseX.nsi");
 sub drop {
 unlink("BaseX.jar");
 unlink("launch4jtmp.xml");
-unlink("BaseX.exe");
+unlink("BaseX GUI.exe");
 unlink("basex-api.jar");  
 }
 
