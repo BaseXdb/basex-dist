@@ -1,4 +1,3 @@
-
 REDMINE CONNECTOR ==============================================================
 
  1. Install Mylyn from the eclipse update site, if not installed anyway:
@@ -31,6 +30,6 @@ REDMINE CONNECTOR ==============================================================
 
  Thanks to Sebastian Graf for the tutorial!
 
- BaseX Team, 2010
+ BaseX Team, 2011
 
-============================================= DBIS Group, University of Konstanz
+================================================================================
