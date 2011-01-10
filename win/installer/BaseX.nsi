@@ -1,6 +1,6 @@
 !define JAR "BaseX.jar"
 !define PRODUCT_NAME "BaseX"
-!define PRODUCT_PUBLISHER "DBIS Group, University of Konstanz"
+!define PRODUCT_PUBLISHER "BaseX Team"
 !define PRODUCT_WEB_SITE "http://www.basex.org"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\${JAR}"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"

@@ -2,7 +2,7 @@
   <dontWrapJar>false</dontWrapJar>
   <headerType>gui</headerType>
   <jar>BaseX.jar</jar>
-  <outfile>BaseX GUI.exe</outfile>
+  <outfile>BaseX.exe</outfile>
   <errTitle></errTitle>
   <cmdLine></cmdLine>
   <chdir></chdir>
@@ -30,11 +30,11 @@
     <fileVersion>$f</fileVersion>
     <txtFileVersion>BaseX $v</txtFileVersion>
     <fileDescription>Native XML Database and XQuery Processor</fileDescription>
-    <copyright>(c) University of Konstanz, 2010</copyright>
+    <copyright>(c) BaseX Team, 2011</copyright>
     <productVersion>$f</productVersion>
     <txtProductVersion>BaseX $v</txtProductVersion>
     <productName>BaseX GUI</productName>
-    <companyName>University of Konstanz</companyName>
+    <companyName>BaseX Team</companyName>
     <internalName>BaseX GUI</internalName>
     <originalFilename>BaseX.exe</originalFilename>
   </versionInfo>

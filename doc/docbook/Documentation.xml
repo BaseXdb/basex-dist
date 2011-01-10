@@ -7,18 +7,19 @@
       <surname>BaseX Team</surname>
     </author>
     <copyright>
-      <year>2005-09</year>
-      <holder>DBIS, University of Konstanz</holder>
+      <year>2005-11</year>
+      <holder>BaseX Team</holder>
     </copyright>
   </articleinfo>
   <sect1>
     <title>Introduction</title>
-    <para>BaseX is a native, open-source XML database and efficient 
-    XPath/XQuery Full Text processor. It supports very large XML 
-    instances and offers a visual, interactive frontend. BaseX is 
-    written in Java and freely available for download. It is developed 
-    by the Database and Information Systems Group at the University of 
-    Konstanz.</para>
+    <para>BaseX is a very fast and powerful, yet light-weight XML database
+    system and XPath/XQuery processor, including highly conformant support for
+    the latest W3C Update and Full Text Recommendations. A client/server
+    architecture and a user-friendly frontend with various tree visualizations
+    facilitate the processing of very large XML documents and collections.
+    BaseX is Open Source and BSD-licensed, written in Java and runs
+    out of the box.</para>
     <sect2>
       <title>Prerequisites</title>
       <sect3>
@@ -65,7 +66,7 @@
       <title>Installation</title>
       <para>BaseX works without any installation. The following files 
       can be 
-      <ulink url="http://www.inf.uni-konstanz.de/dbis/basex/download.php"> downloaded</ulink> from the homepage:</para>
+      <ulink url="http://basex.org/download"> downloaded</ulink> from the homepage:</para>
       <itemizedlist>
         <listitem><emphasis>BaseX.jar</emphasis>: simple JAR file</listitem>
         <listitem><emphasis>BaseX.exe</emphasis>: a JAR file, which is wrapped into a Windows executable</listitem>
@@ -196,7 +197,7 @@ java -cp BaseX.jar org.basex.BaseXClient</programlisting>
       </info>
       <para>Enter java -cp BaseX.jar org.basex.BaseX -h to get all 
       available flags.</para>
-      <programlisting>BaseX 5.6; DBIS, University of Konstanz
+      <programlisting>BaseX 5.6; BaseX Team
 Usage: BaseX [options] [query]
   [query]    specify query file
   -c         chop whitespaces
@@ -798,9 +799,7 @@ import org.basex.io.*;
 /**
  * This class demonstrates how new are created and deleted.
  *
- * @author Workgroup DBIS, University of Konstanz 2005-09,
- * ISC License
- * @author BaseX Team
+ * @author BaseX Team 2005-11, ISC License
  */
 public final class DBExample {
   /** Private constructor. */
@@ -878,9 +877,7 @@ import org.basex.query.iter.Iter;
  * requests
  * with BaseX.
  *
- * @author Workgroup DBIS, University of Konstanz 2005-09,
- * ISC License
- * @author BaseX Team
+ * @author BaseX Team 2005-11, ISC License
  */
 public final class XQueryExample {
   /** Sample query. */
@@ -962,9 +959,7 @@ import org.basex.io.*;
  * This class demonstrates how updates can be performed
  * on a database.
  *
- * @author Workgroup DBIS, University of Konstanz 2005-09,
- * ISC License
- * @author BaseX Team
+ * @author BaseX Team 2005-11, ISC License
  */
 public final class UpdateExample {
   /** Private constructor. */
@@ -1061,9 +1056,7 @@ import org.xmldb.api.*;
  * This class serves an example for executing XPath requests
  * with the XML:DB API.
  *
- * @author Workgroup DBIS, University of Konstanz 2005-09,
- * ISC License
- * @author BaseX Team
+ * @author BaseX Team 2005-11, ISC License
  */
 public final class XMLDBQuery {
   /** Database Driver. */
@@ -1129,9 +1122,7 @@ import org.xmldb.api.*;
  * This class serves an example for inserting a XML Document
  * into a Databaseusing the XML:DB API.
  *
- * @author Workgroup DBIS, University of Konstanz 2005-09,
- * ISC License
- * @author BaseX Team
+ * @author BaseX Team 2005-11, ISC License
  */
 public final class XMLDBInsert {
   /** Database Driver. */
@@ -1203,9 +1194,7 @@ import javax.xml.xquery.XQResultSequence;
  * This class serves an example for executing XQuery requests
  * using the XQuery for Java (XQJ) API.
  *
- * @author Workgroup DBIS, University of Konstanz 2005-09,
- * ISC License
- * @author BaseX Team
+ * @author BaseX Team 2005-11, ISC License
  */
 public final class XQJQuery {
   /** Database Driver. */
