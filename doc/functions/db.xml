@@ -41,6 +41,21 @@
     <rule>In contrast to the <i>pre</i> value, the <i>id</i> will remain valid after update operations.</rule>
     <error code="BASX0004">is raised if the specified <code>$id</code> does not exist in the database.</error>
   </function>
+  <function name="node-pre" type="xs:integer*">
+    <signature>
+      <arg name="nodes" type="node()*"/>
+    </signature>
+    <summary>Returns the <code>pre</code> values of database nodes.</summary>
+    <rule>This function returns the <code>pre</code> values of all database nodes specified by <code>$nodes</code>. <code>pre</code> values are direct, internal pointers to database nodes, which might be changed by updates.</rule>
+    <example>The expression <code>db:node-pre(doc("input"))</code> returns <code>0</code> if the database <code>input</code> contains a single document.</example>
+  </function>
+  <function name="node-pre" type="xs:integer*">
+    <signature>
+      <arg name="nodes" type="node()*"/>
+    </signature>
+    <summary>Returns the <code>id</code> values of database nodes.</summary>
+    <rule>This function returns the <code>id</code> values of all database nodes specified by <code>$nodes</code>. <code>id</code> values are pointers to database nodes, which are not changed by updates.</rule>
+  </function>
   <function name="text" type="text()*">
     <signature>
       <arg name="string" type="item()"/>
