@@ -33,7 +33,7 @@
     <copyright>(c) BaseX Team, 2011</copyright>
     <productVersion>$f</productVersion>
     <txtProductVersion>BaseX $v</txtProductVersion>
-    <productName>BaseX GUI</productName>
+    <productName>BaseX</productName>
     <companyName>BaseX Team</companyName>
     <internalName>BaseX GUI</internalName>
     <originalFilename>BaseX.exe</originalFilename>

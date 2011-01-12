@@ -14,6 +14,7 @@ RequestExecutionLevel admin
 !include "MUI.nsh"
 !include "FileFunc.nsh"
 !include "FileAssociation.nsh"
+!include "Environment.nsh"
 
 ; MUI Settings
 !define MUI_ABORTWARNING
@@ -50,7 +51,7 @@ Page custom OptionsPage OptionsLeave
 !insertmacro MUI_PAGE_FINISH
 
 Function run_basex
-        nsExec::Exec '"$INSTDIR\BaseX GUI.exe"'
+        nsExec::Exec '"$INSTDIR\BaseX.exe"'
 FunctionEnd
 
 Function CheckInstalledJRE
@@ -183,7 +184,8 @@ ShowUnInstDetails show
 Section "Hauptgruppe" SEC01
   SetOutPath "$INSTDIR"
   SetOverwrite ifnewer
-  File "..\BaseX GUI.exe"
+  File "..\BaseX.exe"
+  File "..\..\factbook.xml"
   CreateDirectory "$INSTDIR\bin"
   SetOutPath "$INSTDIR\bin"
   File "bin\*.*"
@@ -191,6 +193,7 @@ Section "Hauptgruppe" SEC01
   File "bin\basexclient.bat"
   File "bin\basex.bat"
   File "bin\basexrest.bat"
+  File "bin\basexgui.bat"
   CreateDirectory "$INSTDIR\lib"
   SetOutPath "$INSTDIR\lib"
   File "..\basex-api.jar"
@@ -259,6 +262,8 @@ Section "Hauptgruppe" SEC01
                  "DisplayIcon" "$\"$INSTDIR\BaseX.ico$\""
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BaseX" \
                  "UninstallString" "$\"$INSTDIR\uninstall.exe$\""
+  ${EnvVarUpdate} $0 "PATH" "R" "HKLM" "$INSTDIR\bin"  ; Remove path of old rev
+  ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$INSTDIR\bin"  ; Append the new one
 SectionEnd
 
 Section -AdditionalIcons
@@ -269,11 +274,11 @@ Section -AdditionalIcons
   # startmenu
   !insertmacro MUI_INSTALLOPTIONS_READ $R8 "Options" "Field 4" "State"
   ${If} $R7 == 1
-    CreateShortCut "$DESKTOP\BaseX GUI.lnk" "$INSTDIR\BaseX GUI.exe" "" "$INSTDIR\ico\BaseX.ico" 0
+    CreateShortCut "$DESKTOP\BaseX GUI.lnk" "$INSTDIR\BaseX.exe" "" "$INSTDIR\ico\BaseX.ico" 0
   ${EndIf}
   ${If} $R8 == 1
     CreateDirectory "$SMPROGRAMS\BaseX"
-    CreateShortCut "$SMPROGRAMS\BaseX\BaseX GUI.lnk" "$INSTDIR\BaseX GUI.exe" "" "$INSTDIR\ico\BaseX.ico" 0
+    CreateShortCut "$SMPROGRAMS\BaseX\BaseX GUI.lnk" "$INSTDIR\BaseX.exe" "" "$INSTDIR\ico\BaseX.ico" 0
     CreateShortCut "$SMPROGRAMS\BaseX\BaseX Server (Start).lnk" "$INSTDIR\bin\basexserver.bat" "" "$INSTDIR\ico\start.ico" 0
     CreateShortCut "$SMPROGRAMS\BaseX\BaseX Server (Stop).lnk" "$INSTDIR\bin\basexserverstop.bat" "" "$INSTDIR\ico\stop.ico" 0
     CreateShortCut "$SMPROGRAMS\BaseX\BaseX Client.lnk" "$INSTDIR\bin\basexclient.bat" "" "$INSTDIR\ico\shell.ico" 0
@@ -313,6 +318,7 @@ Section Uninstall
   DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BaseX"
   DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
   DeleteRegKey HKLM "${PRODUCT_DIR_REGKEY}"
+  ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "$INSTDIR\bin"
   ${unregisterExtension} ".xq" "XQ File"
   ${unregisterExtension} ".xml" "XML File"
   ${RefreshShellIcons}

@@ -5,6 +5,7 @@
 use warnings;
 use strict;
 use File::Copy;
+use Archive::Zip qw( :ERROR_CODES :CONSTANTS );
 
 # home of launch4j
 my $launch4j = "tools\\launch4j\\launch4jc.exe";
@@ -22,6 +23,7 @@ pkg("basex-api");
 modl4J();
 launch4J();
 nsis();
+zip();
 drop();
 
 # gets version from pom file
@@ -77,11 +79,58 @@ copy("..\\..\\basex-api\\target\\basex-api-$v.jar", "basex-api.jar");
 exc($nsis." installer/BaseX.nsi");
 }
 
+# creates zip archive
+sub zip {
+my $zip = Archive::Zip->new();
+
+# Add directories
+$zip->addDirectory("lib/");
+$zip->addDirectory("bin/");
+
+# Add files from disk
+$zip->addFile("BaseX.jar");
+$zip->addFile("..\\factbook.xml", "factbook.xml");
+$zip->addFile("basex-api.jar", "lib/basex-api.jar");
+
+# bin folder
+my @files = dir("basex\\etc");
+my $file;
+
+foreach $file(@files) {
+  if(substr($file, 0, 5) eq "basex") {
+    $zip->addFile("..\\..\\basex\\etc\\$file", "bin\\$file");
+  }	
+}
+
+# lib folder
+@files = dir("basex-api\\lib");
+
+foreach $file(@files) {
+  if(substr($file, 0, 1) ne ".") {
+    $zip->addFile("..\\..\\basex-api\\lib\\$file", "lib\\$file");
+  }	
+}
+
+# Save the Zip file
+unless ($zip->writeToFileNamed("BaseX.zip") == AZ_OK ) {
+  die "write error";
+  }
+}
+
+sub dir {
+my $dir = shift;
+opendir DIR, "..\\..\\$dir" or die "cannot open dir $dir: $!";
+my @file = readdir DIR;
+closedir DIR;
+return @file;
+}
+
 # deletes tmp files
 sub drop {
+unlink("BaseX.zip");
 unlink("BaseX.jar");
 unlink("launch4jtmp.xml");
-unlink("BaseX GUI.exe");
+unlink("BaseX.exe");
 unlink("basex-api.jar");  
 }
 
