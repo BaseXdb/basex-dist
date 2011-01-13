@@ -185,6 +185,8 @@ Section "Hauptgruppe" SEC01
   SetOutPath "$INSTDIR"
   SetOverwrite ifnewer
   File "..\BaseX.exe"
+  CreateDirectory "$INSTDIR\etc"
+  SetOutPath "$INSTDIR\etc"
   File "..\..\factbook.xml"
   CreateDirectory "$INSTDIR\bin"
   SetOutPath "$INSTDIR\bin"

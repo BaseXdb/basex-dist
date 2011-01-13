@@ -1,7 +1,10 @@
 RELEASE ======================================================================
 
- The release script creates the BaseX.jar, BaseX-API.jar, BaseX.exe using
- Launch4J and the installer using NSIS.
+ The release script creates a folder release in the dist folder with the following
+ content:
+ -> Jar archives using Maven: BaseX.jar and baseX-api.jar
+ -> Executable file using Launch4J: BaseX.exe
+ -> Setup.exe installer using NSIS: Setup.exe
 
 NOTES --------------------------------------------------------------------------
 
@@ -9,7 +12,7 @@ NOTES --------------------------------------------------------------------------
 
 FILES --------------------------------------------------------------------------
 
- release.pl: Script for creating a lot of stuff for new releases.
+ release.pl: Script for creating all the above versions for new releases.
 
 --------------------------------------------------------------------------------
  

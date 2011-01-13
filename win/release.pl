@@ -24,24 +24,19 @@ modl4J();
 launch4J();
 nsis();
 zip();
-drop();
+movefiles();
 
 # gets version from pom file
 sub version {
   open(POM, "..\\..\\BaseX\\pom.xml");
   my @raw_data=<POM>;
-  my $c = 1;
-  foreach my $line (@raw_data) {
-    if($c == 7) {
-      my $pos = index($line, "</version>") - 11;
-      $v = substr $line, 11, $pos;
-      if (length($v) == 3) {
-      $f = $v . ".0.0";
-      } elsif (length($v) == 5) {
-      $f = $v . ".0";
-      } 
-    }
-    $c++;
+  my $line = $raw_data[6];
+  my $pos = index($line, "</version>") - 11;
+  $v = substr $line, 11, $pos;
+  if (length($v) == 3) {
+    $f = $v . ".0.0";
+  } elsif (length($v) == 5) {
+    $f = $v . ".0";
   }
   close(POM);
 }
@@ -86,10 +81,11 @@ my $zip = Archive::Zip->new();
 # Add directories
 $zip->addDirectory("lib");
 $zip->addDirectory("bin");
+$zip->addDirectory("etc");
 
 # Add files from disk
 $zip->addFile("BaseX.jar");
-$zip->addFile("..\\factbook.xml", "factbook.xml");
+$zip->addFile("..\\factbook.xml", "etc\\factbook.xml");
 $zip->addFile("basex-api.jar", "lib\\basex-api.jar");
 $zip->addFile("..\\..\\basex-api\\etc\\basexrest", "bin\\basexrest");
 $zip->addFile("..\\..\\basex-api\\etc\\basexrest.bat", "bin\\basexrest.bat");
@@ -127,13 +123,25 @@ closedir DIR;
 return @file;
 }
 
+# moves all files to release folder
+sub movefiles {
+mkdir "..\\release";
+move("BaseX.zip","..\\release\\");
+move("BaseX.jar","..\\release\\");
+move("BaseX.exe","..\\release\\");
+move("basex-api.jar","..\\release\\");
+move("installer\\Setup.exe","..\\release\\");
+unlink("launch4jtmp.xml");
+}
+
 # deletes tmp files
 sub drop {
-unlink("BaseX.zip");
-unlink("BaseX.jar");
-unlink("launch4jtmp.xml");
-unlink("BaseX.exe");
-unlink("basex-api.jar");  
+unlink("..\\release\\BaseX.zip");
+unlink("..\\release\\BaseX.jar");
+unlink("..\\release\\BaseX.exe");
+unlink("..\\release\\basex-api.jar");
+unlink("..\\release\\Setup.exe");
+unlink("launch4jtmp.xml");  
 }
 
 # executes a command
