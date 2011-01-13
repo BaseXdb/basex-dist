@@ -128,9 +128,9 @@ sub movefiles {
 mkdir "..\\release";
 move("BaseX.zip","..\\release\\");
 move("BaseX.jar","..\\release\\");
-move("BaseX.exe","..\\release\\");
-move("basex-api.jar","..\\release\\");
 move("installer\\Setup.exe","..\\release\\");
+unlink("BaseX.exe");
+unlink("basex-api.jar");
 unlink("launch4jtmp.xml");
 }
 
@@ -138,9 +138,9 @@ unlink("launch4jtmp.xml");
 sub drop {
 unlink("..\\release\\BaseX.zip");
 unlink("..\\release\\BaseX.jar");
-unlink("..\\release\\BaseX.exe");
-unlink("..\\release\\basex-api.jar");
 unlink("..\\release\\Setup.exe");
+unlink("BaseX.exe");
+unlink("basex-api.jar");
 unlink("launch4jtmp.xml");  
 }
 
