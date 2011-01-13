@@ -5,6 +5,7 @@
 use warnings;
 use strict;
 use File::Copy;
+use File::Remove qw(remove);
 use Archive::Zip qw( :ERROR_CODES :CONSTANTS );
 
 # home of launch4j
@@ -125,10 +126,11 @@ return @file;
 
 # moves all files to release folder
 sub movefiles {
+$v =~ s/\.//g;
 mkdir "..\\release";
-move("BaseX.zip","..\\release\\");
-move("BaseX.jar","..\\release\\");
-move("installer\\Setup.exe","..\\release\\");
+move("BaseX.zip","..\\release\\BaseX$v.zip");
+move("BaseX.jar","..\\release\\BaseX$v.jar");
+move("installer\\Setup.exe","..\\release\\BaseX$v.exe");
 unlink("BaseX.exe");
 unlink("basex-api.jar");
 unlink("launch4jtmp.xml");
@@ -136,9 +138,7 @@ unlink("launch4jtmp.xml");
 
 # deletes tmp files
 sub drop {
-unlink("..\\release\\BaseX.zip");
-unlink("..\\release\\BaseX.jar");
-unlink("..\\release\\Setup.exe");
+remove \1, "..\\release";
 unlink("BaseX.exe");
 unlink("basex-api.jar");
 unlink("launch4jtmp.xml");  
