@@ -84,13 +84,15 @@ sub zip {
 my $zip = Archive::Zip->new();
 
 # Add directories
-$zip->addDirectory("lib/");
-$zip->addDirectory("bin/");
+$zip->addDirectory("lib");
+$zip->addDirectory("bin");
 
 # Add files from disk
 $zip->addFile("BaseX.jar");
 $zip->addFile("..\\factbook.xml", "factbook.xml");
-$zip->addFile("basex-api.jar", "lib/basex-api.jar");
+$zip->addFile("basex-api.jar", "lib\\basex-api.jar");
+$zip->addFile("..\\..\\basex-api\\etc\\basexrest", "bin\\basexrest");
+$zip->addFile("..\\..\\basex-api\\etc\\basexrest.bat", "bin\\basexrest.bat");
 
 # bin folder
 my @files = dir("basex\\etc");
