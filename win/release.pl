@@ -5,7 +5,6 @@
 use warnings;
 use strict;
 use File::Copy;
-use File::Remove qw(remove);
 use Archive::Zip qw( :ERROR_CODES :CONSTANTS );
 
 # home of launch4j
@@ -65,83 +64,87 @@ sub modl4J {
 
 # launch launch4J
 sub launch4J {
-copy("..\\..\\basex\\target\\basex-$v.jar", "BaseX.jar");
-exc($launch4j." launch4jtmp.xml");
+  copy("..\\..\\basex\\target\\basex-$v.jar", "BaseX.jar");
+  exc($launch4j." launch4jtmp.xml");
 }
 
 # launch nsis
 sub nsis {
-copy("..\\..\\basex-api\\target\\basex-api-$v.jar", "basex-api.jar");
-exc($nsis." installer/BaseX.nsi");
+  copy("..\\..\\basex-api\\target\\basex-api-$v.jar", "basex-api.jar");
+  exc($nsis." installer/BaseX.nsi");
 }
 
 # creates zip archive
 sub zip {
-my $zip = Archive::Zip->new();
+  my $zip = Archive::Zip->new();
 
-# Add directories
-$zip->addDirectory("lib");
-$zip->addDirectory("bin");
-$zip->addDirectory("etc");
+  # Add directories
+  $zip->addDirectory("lib");
+  $zip->addDirectory("bin");
+  $zip->addDirectory("etc");
 
-# Add files from disk
-$zip->addFile("BaseX.jar");
-$zip->addFile("..\\factbook.xml", "etc\\factbook.xml");
-$zip->addFile("basex-api.jar", "lib\\basex-api.jar");
-$zip->addFile("..\\..\\basex-api\\etc\\basexrest", "bin\\basexrest");
-$zip->addFile("..\\..\\basex-api\\etc\\basexrest.bat", "bin\\basexrest.bat");
+  # Add files from disk
+  $zip->addFile("BaseX.jar");
+  $zip->addFile("..\\factbook.xml", "etc\\factbook.xml");
+  $zip->addFile("basex-api.jar", "lib\\basex-api.jar");
+  $zip->addFile("..\\..\\basex-api\\etc\\basexrest", "bin\\basexrest");
+  $zip->addFile("..\\..\\basex-api\\etc\\basexrest.bat", "bin\\basexrest.bat");
 
-# bin folder
-my @files = dir("basex\\etc");
-my $file;
+  # bin folder
+  my @files = dir("basex\\etc");
+  my $file;
 
-foreach $file(@files) {
-  if(substr($file, 0, 5) eq "basex") {
-    $zip->addFile("..\\..\\basex\\etc\\$file", "bin\\$file");
-  }	
-}
-
-# lib folder
-@files = dir("basex-api\\lib");
-
-foreach $file(@files) {
-  if(substr($file, 0, 1) ne ".") {
-    $zip->addFile("..\\..\\basex-api\\lib\\$file", "lib\\$file");
-  }	
-}
-
-# Save the Zip file
-unless ($zip->writeToFileNamed("BaseX.zip") == AZ_OK ) {
-  die "write error";
+  foreach $file(@files) {
+    if(substr($file, 0, 5) eq "basex") {
+      $zip->addFile("..\\..\\basex\\etc\\$file", "bin\\$file");
+    }	
   }
+
+  # lib folder
+  @files = dir("basex-api\\lib");
+
+  foreach $file(@files) {
+    if(substr($file, 0, 1) ne ".") {
+      $zip->addFile("..\\..\\basex-api\\lib\\$file", "lib\\$file");
+    }	
+  }
+
+  # Save the Zip file
+  unless ($zip->writeToFileNamed("BaseX.zip") == AZ_OK ) {
+    die "write error";
+    }
 }
 
 sub dir {
-my $dir = shift;
-opendir DIR, "..\\..\\$dir" or die "cannot open dir $dir: $!";
-my @file = readdir DIR;
-closedir DIR;
-return @file;
+  my $dir = shift;
+  opendir DIR, "..\\..\\$dir" or die "cannot open dir $dir: $!";
+  my @file = readdir DIR;
+  closedir DIR;
+  return @file;
 }
 
 # moves all files to release folder
 sub movefiles {
-$v =~ s/\.//g;
-mkdir "..\\release";
-move("BaseX.zip","..\\release\\BaseX$v.zip");
-move("BaseX.jar","..\\release\\BaseX$v.jar");
-move("installer\\Setup.exe","..\\release\\BaseX$v.exe");
-unlink("BaseX.exe");
-unlink("basex-api.jar");
-unlink("launch4jtmp.xml");
+  $v =~ s/\.//g;
+  mkdir "..\\release";
+  move("BaseX.zip","..\\release\\BaseX$v.zip");
+  move("BaseX.jar","..\\release\\BaseX$v.jar");
+  move("installer\\Setup.exe","..\\release\\BaseX$v.exe");
+  unlink("BaseX.exe");
+  unlink("basex-api.jar");
+  unlink("launch4jtmp.xml");
 }
 
 # deletes tmp files
 sub drop {
-remove \1, "..\\release";
-unlink("BaseX.exe");
-unlink("basex-api.jar");
-unlink("launch4jtmp.xml");  
+  foreach my $file(glob("../release/*")) {
+    unlink($file);
+  }
+  unlink("../release/*");
+  rmdir("../release");
+  unlink("BaseX.exe");
+  unlink("basex-api.jar");
+  unlink("launch4jtmp.xml");  
 }
 
 # executes a command

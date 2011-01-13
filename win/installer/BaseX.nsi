@@ -201,7 +201,7 @@ Section "Hauptgruppe" SEC01
   File "..\basex-api.jar"
   File "..\..\..\basex-api\lib\asm-3.1.jar"
   File "..\..\..\basex-api\lib\asm-LICENSE.txt"
-  File "..\..\..\basex-api\lib\jax-rx-1.2.7.jar"
+  File "..\..\..\basex-api\lib\jax-rx-1.2.8.jar"
   File "..\..\..\basex-api\lib\jersey-core-1.4.jar"
   File "..\..\..\basex-api\lib\jersey-LICENSE.txt"
   File "..\..\..\basex-api\lib\jersey-server-1.4.jar"
