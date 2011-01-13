@@ -229,10 +229,11 @@ Section "Hauptgruppe" SEC01
   File "..\..\images\shell.ico"
   File "..\..\images\start.ico"
   File "..\..\images\stop.ico"
-  AccessControl::GrantOnFile \
+  AccessControl::GrantOnFile "$INSTDIR" "(S-1-1-0)" "GenericRead + GenericWrite + GenericExecute + Delete"
+  #AccessControl::GrantOnFile \
     "$INSTDIR\.basex" "(BU)" "GenericRead + GenericWrite"
   CreateDirectory "$INSTDIR\rest"
-  AccessControl::GrantOnFile \
+  #AccessControl::GrantOnFile \
     "$INSTDIR\rest" "(BU)" "GenericRead + GenericWrite"
   # set dbpath, port and webport
   StrLen $0 $R4
@@ -244,17 +245,17 @@ Section "Hauptgruppe" SEC01
   !insertmacro IndexOf $9 "$R4" ":"
   ${If} $9 == -1
     CreateDirectory "$INSTDIR\$R4"
-    AccessControl::GrantOnFile \
+    #AccessControl::GrantOnFile \
       "$INSTDIR\$R4" "(BU)" "GenericRead + GenericWrite"
     nsExec::Exec '"$INSTDIR\bin\basex.bat" "-Wc" "set dbpath \"$INSTDIR\$R4\"; set restpath \"$INSTDIR\rest\""'
   ${Else}
     CreateDirectory "$R4"
-    AccessControl::GrantOnFile \
+    #AccessControl::GrantOnFile \
       "$R4" "(BU)" "GenericRead + GenericWrite"
     nsExec::Exec '"$INSTDIR\bin\basex.bat" "-Wc" "set dbpath \"$R4\"; set restpath \"$INSTDIR\rest\""'
   ${EndIf}
   nsExec::Exec '"$INSTDIR\bin\basex.bat" "-Wc" "set port $R2; set serverport $R2; set restport $R3"'
-  AccessControl::GrantOnFile \
+  #AccessControl::GrantOnFile \
     "$INSTDIR\.basexperm" "(BU)" "GenericRead + GenericWrite"
   nsExec::Exec '"$INSTDIR\bin\basex.bat" "-c" "alter user admin $R0"'
   ${WriteToFile} "java -cp $\"%CP%;.$\" %VM% org.basex.api.jaxrx.JaxRxServer -P$R0 %*" "$INSTDIR\bin\basexrest.bat"
