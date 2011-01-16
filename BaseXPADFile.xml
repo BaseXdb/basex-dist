@@ -36,7 +36,7 @@
 		<Program_Name>BaseX</Program_Name>
 		<Program_Version>6.5</Program_Version>
 		<Program_Release_Month>01</Program_Release_Month>
-		<Program_Release_Day>10</Program_Release_Day>
+		<Program_Release_Day>17</Program_Release_Day>
 		<Program_Release_Year>2011</Program_Release_Year>
 		<Program_Cost_Dollars>0</Program_Cost_Dollars>
 		<Program_Cost_Other_Code />
@@ -68,11 +68,11 @@
 	<Program_Descriptions>
 		<English>
 			<Keywords>XML, Database, XQuery, Full-Text</Keywords>
-			<Char_Desc_45>BaseX is an XML database and XQuery Processor</Char_Desc_45>
-			<Char_Desc_80>BaseX is a fast and compact XML database and efficient XPath/XQuery processor.</Char_Desc_80>
-			<Char_Desc_250>BaseX is a fast and compact Open Source XML database and efficient XPath/XQuery processor, including support for the latest W3C Full Text and Update Recommendations. It supports very large XML instances and offers a highly interactive frontend.</Char_Desc_250>
-			<Char_Desc_450>BaseX is a fast and compact Open Source XML database and efficient XPath/XQuery processor, including support for the latest W3C Full Text and Update Recommendations. It supports very large XML instances and offers a highly interactive frontend. BaseX is Open Source, written in Java and runs out of the box.</Char_Desc_450>
-			<Char_Desc_2000>BaseX is a fast and compact Open Source XML database and efficient XPath/XQuery processor, including support for the latest W3C Full Text and Update Recommendations. It supports very large XML instances and offers a highly interactive frontend. BaseX is Open Source, written in Java and runs out of the box. Get more info at http://basex.org.</Char_Desc_2000>
+			<Char_Desc_45>BaseX is an XML Database and XQuery Processor</Char_Desc_45>
+			<Char_Desc_80>BaseX is a fast and compact XML Database and efficient XPath/XQuery Processor.</Char_Desc_80>
+			<Char_Desc_250>BaseX is a fast and powerful, yet light-weight XML database system and XPath/XQuery processor, including support for the latest W3C Full Text and Update Recommendations. It supports very large XML instances and offers a highly interactive frontend.</Char_Desc_250>
+			<Char_Desc_450>BaseX is a fast and powerful, yet light-weight XML database system and XPath/XQuery processor, including support for the latest W3C Full Text and Update Recommendations. It supports very large XML instances and offers a highly interactive frontend. BaseX is Open Source (BSD licensed), written in Java and runs out of the box. Get more info at http://basex.org.</Char_Desc_450>
+			<Char_Desc_2000>BaseX is a fast and powerful, yet light-weight XML database system and XPath/XQuery processor, including support for the latest W3C Full Text and Update Recommendations. It supports very large XML instances and offers a highly interactive frontend. BaseX is Open Source (BSD licensed), written in Java and runs out of the box. Get more info at http://basex.org.</Char_Desc_2000>
 		</English>
 	</Program_Descriptions>
 	<Web_Info>
