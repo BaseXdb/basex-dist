@@ -6,7 +6,7 @@
 		<MASTER_PAD_INFO>Portable Application Description, or PAD for short, is a data set that is used by shareware authors to disseminate information to anyone interested in their software products. To find out more go to http://www.asp-shareware.org/pad</MASTER_PAD_INFO>
 	</MASTER_PAD_VERSION_INFO>
 	<Company_Info>
-		<Company_Name>BaseX Team</Company_Name>
+		<Company_Name>BaseX</Company_Name>
 		<Address_1 />
 		<Address_2 />
 		<City_Town />
@@ -44,16 +44,16 @@
 		<Program_Type>Freeware</Program_Type>
 		<Program_Release_Status>New Release</Program_Release_Status>
 		<Program_Install_Support>No Install Support</Program_Install_Support>
-		<Program_OS_Support>Win98,WinME,WinNT 3.x,WinNT 4.x,Windows2000,WinXP,Windows2003,Windows Vista Starter,Windows Vista Home Basic,Windows Vista Home Premium,Windows Vista Business,Windows Vista Enterprise,Windows Vista Ultimate,Windows Vista Home Basic x64,Windows Vista Home Premium x64,Windows Vista Business x64,Windows Vista Enterprise x64,Windows Vista Ultimate x64,Unix,Linux,Linux Console,Linux Gnome,Linux GPL,Linux Open Source,MS-DOS,Mac OS X,Mac OS X 10.1,Mac OS X 10.2,Mac OS X 10.3,Mac OS X 10.4,Mac OS X 10.5,Mac Other,Java</Program_OS_Support>
-		<Program_Language>English,German,Italian,Japanese,Vietnamese</Program_Language>
+		<Program_OS_Support>Win98,WinME,WinNT 3.x,WinNT 4.x,Windows2000,WinXP,Windows2003,Windows Vista Starter,Windows Vista Home Basic,Windows Vista Home Premium,Windows Vista Business,Windows Vista Enterprise,Windows Vista Ultimate,Windows Vista Home Basic x64,Windows Vista Home Premium x64,Windows Vista Business x64,Windows Vista Enterprise x64,Windows Vista Ultimate x64,Windows 7 Professional x64,Windows 7 Professional x86,Windows 7 Home Premium x64,Windows 7 Home Premium x86,Windows 7 Ultimate x64, Windows 7 Ultimate x86,Unix,Linux,Linux Console,Linux Gnome,Linux GPL,Linux Open Source,MS-DOS,Mac OS X,Mac OS X 10.1,Mac OS X 10.2,Mac OS X 10.3,Mac OS X 10.4,Mac OS X 10.5,Mac Other,Java</Program_OS_Support>
+		<Program_Language>English,German,French,Dutch,Italian,Japanese,Vietnamese</Program_Language>
 		<Program_Change_Info />
 		<Program_Specific_Category>Business</Program_Specific_Category>
 		<Program_Category_Class>Business::Databases &amp; Tools</Program_Category_Class>
 		<Program_System_Requirements>Java 6 or later</Program_System_Requirements>
 		<File_Info>
-			<File_Size_Bytes>1875566</File_Size_Bytes>
-			<File_Size_K>1820</File_Size_K>
-			<File_Size_MB>1.7</File_Size_MB>
+			<File_Size_Bytes>2251951</File_Size_Bytes>
+			<File_Size_K>2199</File_Size_K>
+			<File_Size_MB>2.3</File_Size_MB>
 		</File_Info>
 		<Expire_Info>
 			<Has_Expire_Info>N</Has_Expire_Info>
@@ -79,15 +79,15 @@
 		<Application_URLs>
 			<Application_Info_URL>http://basex.org</Application_Info_URL>
 			<Application_Order_URL />
-			<Application_Screenshot_URL>http://basex.org/gfx/basex-scatter.png</Application_Screenshot_URL>
-			<Application_Icon_URL>http://basex.org/gfx/BaseX.png</Application_Icon_URL>
-			<Application_XML_File_URL>http://basex.org/BaseXPADFile.xml</Application_XML_File_URL>
+			<Application_Screenshot_URL>http://files.basex.org/BaseX_Screenshot.png</Application_Screenshot_URL>
+			<Application_Icon_URL>http://files.basex.org/BaseX_Icon.png</Application_Icon_URL>
+			<Application_XML_File_URL>http://files.basex.org/BaseXPADFile.xml</Application_XML_File_URL>
 		</Application_URLs>
 		<Download_URLs>
-			<Primary_Download_URL>http://basex.org/download/BaseX61.jar</Primary_Download_URL>
-			<Secondary_Download_URL>http://basex.org/download/BaseX61.exe</Secondary_Download_URL>
-			<Additional_Download_URL_1>http://basex.org/download/BaseX61.dmg</Additional_Download_URL_1>
-			<Additional_Download_URL_2>http://basex.org/download/BaseX61-api.zip</Additional_Download_URL_2>
+			<Primary_Download_URL>http://files.basex.org/BaseX.jar</Primary_Download_URL>
+			<Secondary_Download_URL>http://files.basex.org/BaseX.exe</Secondary_Download_URL>
+			<Additional_Download_URL_1>http://files.basex.org/BaseX.dmg</Additional_Download_URL_1>
+			<Additional_Download_URL_2>http://files.basex.org/BaseX.zip</Additional_Download_URL_2>
 		</Download_URLs>
 	</Web_Info>
 	<Permissions>
