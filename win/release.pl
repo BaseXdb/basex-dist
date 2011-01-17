@@ -96,7 +96,7 @@ sub zip {
 
   foreach $file(@files) {
     if(substr($file, 0, 5) eq "basex") {
-      $zip->addFile("../../basex/etc/$file", "bin/$file");
+      $zip->addFile("../scripts/$file", "bin/$file");
     }	
   }
 

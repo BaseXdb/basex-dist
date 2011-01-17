@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Path to this script
+PWD=`dirname $0`
+
+# Paths to distributed files or source directories
+BXPATH=$PWD/../BaseX.jar
+
+# Options for virtual machine
+VM=
+
+# Run BaseX
+java -cp "$BXPATH" $VM org.basex.BaseXClient "$@"
