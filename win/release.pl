@@ -87,21 +87,28 @@ sub zip {
   $zip->addFile("BaseX.jar");
   $zip->addFile("../factbook.xml", "etc/factbook.xml");
   $zip->addFile("basex-api.jar", "lib/basex-api.jar");
-  $zip->addFile("../../basex-api/etc/basexrest", "bin/basexrest");
-  $zip->addFile("../../basex-api/etc/basexrest.bat", "bin/basexrest.bat");
+
+  # write to the rest file
+  mkdir "../release";
+  copy("../scripts/basexrest.bat", "basexrest.bat");
+  open (REST,'>> basexrest.bat');
+  print REST 'java -cp "%CP%;." %VM% org.basex.api.jaxrx.JaxRxServer %*';
+  close(REST);
+
+  $zip->addFile("basexrest.bat", "bin/basexrest.bat");
 
   # bin folder
-  my @files = dir("basex/etc");
+  my @files = dir("../scripts");
   my $file;
 
   foreach $file(@files) {
-    if(substr($file, 0, 5) eq "basex") {
+    if(substr($file, 0, 5) eq "basex" && $file ne "basexrest.bat") {
       $zip->addFile("../scripts/$file", "bin/$file");
     }	
   }
 
   # lib folder
-  @files = dir("basex-api/lib");
+  @files = dir("../../basex-api/lib");
 
   foreach $file(@files) {
     if(substr($file, 0, 1) ne ".") {
@@ -113,11 +120,12 @@ sub zip {
   unless ($zip->writeToFileNamed("BaseX.zip") == AZ_OK ) {
     die "write error";
     }
+  unlink("basexrest.bat");
 }
 
 sub dir {
   my $dir = shift;
-  opendir DIR, "../../$dir" or die "cannot open dir $dir: $!";
+  opendir DIR, "$dir" or die "cannot open dir $dir: $!";
   my @file = readdir DIR;
   closedir DIR;
   return @file;
@@ -126,7 +134,6 @@ sub dir {
 # moves all files to release folder
 sub movefiles {
   $v =~ s/\.//g;
-  mkdir "../release";
   move("BaseX.zip","../release/BaseX$v.zip");
   move("BaseX.jar","../release/BaseX$v.jar");
   move("installer/Setup.exe","../release/BaseX$v.exe");
