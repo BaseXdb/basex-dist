@@ -184,7 +184,7 @@ ShowUnInstDetails show
 Section "Hauptgruppe" SEC01
   SetOutPath "$INSTDIR"
   SetOverwrite ifnewer
-  File "..\BaseX.exe"
+  File "..\..\BaseX.exe"
   CreateDirectory "$INSTDIR\etc"
   SetOutPath "$INSTDIR\etc"
   File "..\..\etc\factbook.xml"
@@ -198,10 +198,10 @@ Section "Hauptgruppe" SEC01
   File "..\..\scripts\basexserverstop.bat"
   CreateDirectory "$INSTDIR\lib"
   SetOutPath "$INSTDIR\lib"
-  File "..\basex-api.jar"
+  File "..\..\basex-api.jar"
   File "..\..\..\basex-api\lib\*"
   SetOutPath "$INSTDIR"
-  File "..\${JAR}"
+  File "..\..\${JAR}"
   File "..\..\..\basex\license.txt"
   File ".basex"
   CreateDirectory "$INSTDIR\ico"

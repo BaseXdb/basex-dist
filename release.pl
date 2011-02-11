@@ -8,9 +8,9 @@ use File::Copy;
 use Archive::Zip qw( :ERROR_CODES :CONSTANTS );
 
 # home of launch4j
-my $launch4j = "tools/launch4j/launch4jc.exe";
+my $launch4j = "win/tools/launch4j/launch4jc.exe";
 # home of nsis
-my $nsis = "tools/nsis/makensis.exe /V1";
+my $nsis = "win/tools/nsis/makensis.exe /V1";
 # versions
 my $f = "";
 my $v = "";
@@ -28,7 +28,7 @@ movefiles();
 
 # gets version from pom file
 sub version {
-  open(POM, "../../BaseX/pom.xml");
+  open(POM, "../BaseX/pom.xml");
   my @raw_data=<POM>;
   my $line = $raw_data[6];
   my $pos = index($line, "</version>") - 11;
@@ -44,13 +44,13 @@ sub version {
 # packages both projects
 sub pkg {
   my $name = shift;
-  unlink("../../$name/target/*.jar");
-  exc("cd ../../$name && mvn install -DskipTests=true");
+  unlink("../$name/target/*.jar");
+  exc("cd ../$name && mvn install -DskipTests=true");
 }
 
 # modifies the launch4j xml
 sub modl4J {
-  open(L4J, "launch4j.xml");
+  open(L4J, "win/launch4j.xml");
   my @raw_data=<L4J>;
   open(L4JTMP, '>>launch4jtmp.xml');
   foreach my $line (@raw_data) {
@@ -64,14 +64,14 @@ sub modl4J {
 
 # launch launch4J
 sub launch4J {
-  copy("../../basex/target/basex-$v.jar", "BaseX.jar");
+  copy("../basex/target/basex-$v.jar", "BaseX.jar");
   exc($launch4j." launch4jtmp.xml");
 }
 
 # launch nsis
 sub nsis {
-  copy("../../basex-api/target/basex-api-$v.jar", "basex-api.jar");
-  exc($nsis." installer/BaseX.nsi");
+  copy("../basex-api/target/basex-api-$v.jar", "basex-api.jar");
+  exc($nsis." win/installer/BaseX.nsi");
 }
 
 # creates zip archive
@@ -85,12 +85,12 @@ sub zip {
 
   # Add files from disk
   $zip->addFile("BaseX.jar");
-  $zip->addFile("../etc/factbook.xml", "etc/factbook.xml");
+  $zip->addFile("etc/factbook.xml", "etc/factbook.xml");
   $zip->addFile("basex-api.jar", "lib/basex-api.jar");
 
   # write to the rest file
-  mkdir "../release";
-  copy("../scripts/basexrest.bat", "basexrest.bat");
+  mkdir "release";
+  copy("scripts/basexrest.bat", "basexrest.bat");
   open (REST,'>> basexrest.bat');
   print REST 'java -cp "%CP%;." %VM% org.basex.api.jaxrx.JaxRxServer %*';
   close(REST);
@@ -98,21 +98,21 @@ sub zip {
   $zip->addFile("basexrest.bat", "bin/basexrest.bat");
 
   # bin folder
-  my @files = dir("../scripts");
+  my @files = dir("scripts");
   my $file;
 
   foreach $file(@files) {
     if(substr($file, 0, 5) eq "basex" && $file ne "basexrest.bat") {
-      $zip->addFile("../scripts/$file", "bin/$file");
+      $zip->addFile("scripts/$file", "bin/$file");
     }	
   }
 
   # lib folder
-  @files = dir("../../basex-api/lib");
+  @files = dir("../basex-api/lib");
 
   foreach $file(@files) {
     if(substr($file, 0, 1) ne ".") {
-      $zip->addFile("../../basex-api/lib/$file", "lib/$file");
+      $zip->addFile("../basex-api/lib/$file", "lib/$file");
     }	
   }
 
@@ -134,9 +134,9 @@ sub dir {
 # moves all files to release folder
 sub movefiles {
   $v =~ s/\.//g;
-  move("BaseX.zip","../release/BaseX$v.zip");
-  move("BaseX.jar","../release/BaseX$v.jar");
-  move("installer/Setup.exe","../release/BaseX$v.exe");
+  move("BaseX.zip","release/BaseX$v.zip");
+  move("BaseX.jar","release/BaseX$v.jar");
+  move("installer/Setup.exe","release/BaseX$v.exe");
   unlink("BaseX.exe");
   unlink("basex-api.jar");
   unlink("launch4jtmp.xml");
@@ -144,11 +144,11 @@ sub movefiles {
 
 # deletes tmp files
 sub drop {
-  foreach my $file(glob("../release/*")) {
+  foreach my $file(glob("release/*")) {
     unlink($file);
   }
-  unlink("../release/*");
-  rmdir("../release");
+  unlink("release/*");
+  rmdir("release");
   unlink("BaseX.exe");
   unlink("basex-api.jar");
   unlink("launch4jtmp.xml");  
