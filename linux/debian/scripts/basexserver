@@ -1,0 +1,12 @@
+#!/bin/sh
+# Wrapper to start basex as database server.
+#
+# (c) 2011 Alexander Holupirek <alex@holupirek.de>, BSD
+#
+
+#DEBUG_WRAPPER=1 
+
+. /usr/lib/java-wrappers/java-wrappers.sh
+find_java_runtime java6
+find_jars /usr/share/java/basex.jar
+run_java org.basex.BaseXServer "$@"

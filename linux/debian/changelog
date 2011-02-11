@@ -1,0 +1,5 @@
+basex (6.5-1) unstable; urgency=low
+
+  * Initial release (Closes: #588216)
+
+ -- Alexander Holupirek <alex@holupirek.de>  Tue, 08 Feb 2011 12:29:16 +0100

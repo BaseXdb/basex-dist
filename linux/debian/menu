@@ -1,0 +1,5 @@
+?package(basex): needs="X11" \
+	section="Applications/Data Management" \
+	title="BaseX" command="/usr/bin/basexgui" \
+	icon16x16="/usr/share/pixmaps/basex_16x16.xpm" \
+	icon32x32="/usr/share/pixmaps/basex_32x32.xpm"

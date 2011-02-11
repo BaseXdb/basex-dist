@@ -1,0 +1,38 @@
+NAME
+  basexgui - XML database system and XPath/XQuery processor (graphical mode)
+
+SYNOPSIS
+  basexgui [file]
+
+DESCRIPTION
+  basexgui starts a standalone locally running instance of the BaseX database system.
+
+  In addition to the main database functionality of basex(1), the graphical mode offers innovative graphical frontends to visualize XML data.
+  An advanced embedded XQuery Editor is coupled to the visualizations, providing instant result feedback.
+
+  XML and XQuery files can be passed on as parameters. If an XML file is passed, a database instance is created from this file. If an XQuery file is passed on, it is opened in the XQuery editor.
+
+SEE ALSO
+  basex(1), basexserver(1), basexclient(1)
+
+  ~/.basex                BaseX (standalone and server) properties
+  ~/.basexgui             BaseX additional GUI properties 
+  ~/.basexperm            user name, passwords, and permissions
+  ~/BaseXData             Default database directory
+  ~/BaseXData/.logs       Server logs
+
+  BaseX Documentation Wiki: http://docs.basex.org
+
+HISTORY
+  BaseX started as a research project of the Database and Information Systems
+  Group (DBIS) at the University of Konstanz in 2005 and soon turned into a
+  feature-rich open source XML database and XPath/XQuery processor.
+ 
+LICENSE
+  New (3-clause) BSD License
+
+AUTHOR
+  BaseX is primarily developed by Christian Gruen <christian.gruen@gmail.com> with the help of others listed as
+  The BaseX Team on <http://basex.org/about-us/> 
+
+  The man page was written by Alexander Holupirek <alex@holupirek.de> in the progress of packaging BaseX for Debian GNU/Linux.

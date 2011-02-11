@@ -1,0 +1,4 @@
+debian/man/basex.1
+debian/man/basexgui.1
+debian/man/basexclient.1
+debian/man/basexserver.1

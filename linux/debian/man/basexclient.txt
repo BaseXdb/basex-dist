@@ -1,0 +1,55 @@
+NAME
+  basexclient - XML database system and XPath/XQuery processor (client mode)
+
+SYNOPSIS
+  basexclient [-npPU] [-dovVwz] [-cq] [file]
+
+DESCRIPTION
+  basexclient starts a basex(1) XML database client in order to connect to a
+  running instance of basexserver(1).
+
+  Per default basexclient tries to connect to a basexserver(1) running on localhost port 1984.
+
+  Connecting to a basexserver(1) requires the knowledge of a username and its corresponding credentials.
+  For user management refer to basexserver(1) or the BaseX Documentation Wiki (http://docs.basex.org/wiki/User_Management)
+
+OPTIONS
+  [file]     Execute the specified XQuery file.
+  -c<cmd>    Launch database commands and skip interactive mode. The flag should be placed last, all remaining characters are interpreted as commands. Several commands can be separated by semicolons. (-c"list;info") 
+  -d         Turn on debugging. Debugging information is output to standard error. 
+  -n<name>   Specify the server name on which the server is running. (default: localhost, -nserver.basex.org)
+  -o<file>   Command and query output is written to the specified <file>. 
+  -p<num>    Specify the port on which the server is running. (default: 1984, -p9999)
+  -P<pass>   Specify the user password (-Uadmin -Padmin)
+  -q<expr>   Execute the specified string as XQuery expression. The flag should be placed last, as all remaining characters are interpreted as XQuery. (-q"doc('input')//head")
+  -s<pars>   Specify parameters for serializing XQuery results; This flag may be specified multiple times; key/value pairs are separated by equality signs (=). (-smethod=text)
+  -U<name>   Specify the user name (-Uadmin)
+  -v         Process information is written to standard output.
+  -V         Detailed query information is written to standard output, including compilation and profiling steps.		
+  -w         By default, whitespaces around text nodes are chopped when a database is created. This flag can be specified to suppress chopping.		
+  -z         Skip the serialization of XQuery results. This flag is useful for analyzing query plans.
+
+SEE ALSO
+  basexserver(1), basex(1), basexgui(1)
+
+  ~/.basex                BaseX (standalone and server) properties
+  ~/.basexgui             BaseX additional GUI properties 
+  ~/.basexperm            user name, passwords, and permissions
+  ~/BaseXData             Default database directory
+  ~/BaseXData/.logs       Server logs
+
+  BaseX Documentation Wiki: http://docs.basex.org
+
+HISTORY
+  BaseX started as a research project of the Database and Information Systems
+  Group (DBIS) at the University of Konstanz in 2005 and soon turned into a
+  feature-rich open source XML database and XPath/XQuery processor.
+ 
+LICENSE
+  New (3-clause) BSD License
+
+AUTHOR
+  BaseX is primarily developed by Christian Gruen <christian.gruen@gmail.com> with the help of others listed as
+  The BaseX Team on <http://basex.org/about-us/> 
+
+  The man page was written by Alexander Holupirek <alex@holupirek.de> in the progress of packaging BaseX for Debian GNU/Linux.

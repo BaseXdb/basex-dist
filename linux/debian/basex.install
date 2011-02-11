@@ -1,0 +1,6 @@
+debian/scripts/basex 		/usr/bin
+debian/scripts/basexgui		/usr/bin
+debian/scripts/basexclient	/usr/bin
+debian/scripts/basexserver	/usr/bin
+debian/images/basex_16x16.xpm	/usr/share/pixmaps
+debian/images/basex_32x32.xpm	/usr/share/pixmaps
