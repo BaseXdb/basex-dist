@@ -85,7 +85,7 @@ sub zip {
 
   # Add files from disk
   $zip->addFile("BaseX.jar");
-  $zip->addFile("../factbook.xml", "etc/factbook.xml");
+  $zip->addFile("../etc/factbook.xml", "etc/factbook.xml");
   $zip->addFile("basex-api.jar", "lib/basex-api.jar");
 
   # write to the rest file

@@ -187,7 +187,7 @@ Section "Hauptgruppe" SEC01
   File "..\BaseX.exe"
   CreateDirectory "$INSTDIR\etc"
   SetOutPath "$INSTDIR\etc"
-  File "..\..\factbook.xml"
+  File "..\..\etc\factbook.xml"
   CreateDirectory "$INSTDIR\bin"
   SetOutPath "$INSTDIR\bin"
   File "..\..\scripts\basex.bat"
