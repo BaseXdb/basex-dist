@@ -1,0 +1,3 @@
+<catalog prefer="system" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+  <rewriteSystem systemIdStartString="http://www.nitf.org/IPTC/NITF/3.3/specification/dtd/nitf-3-3.dtd" rewritePrefix="nitf-3-3.dtd" />
+</catalog>

@@ -12,12 +12,12 @@
   <customProcName>false</customProcName>
   <stayAlive>false</stayAlive>
   <manifest></manifest>
-  <icon>images/BaseX.ico</icon>
+  <icon>../images/BaseX.ico</icon>
    <classPath>
     <mainClass>org.basex.BaseXGUI</mainClass>
-    <cp>.\lib\tagsoup-1.2.jar</cp>
-    <cp>.\lib\lucene-analyzers-3.0.2.jar</cp>
-    <cp>.\lib\snowball.jar</cp>
+    <cp>../lib/tagsoup-1.2.jar</cp>
+    <cp>../lib/lucene-analyzers-3.0.2.jar</cp>
+    <cp>../lib/snowball.jar</cp>
   </classPath>
   <jre>
     <path></path>

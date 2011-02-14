@@ -51,7 +51,7 @@ Page custom OptionsPage OptionsLeave
 !insertmacro MUI_PAGE_FINISH
 
 Function run_basex
-        nsExec::Exec '"$INSTDIR\BaseX.exe"'
+  nsExec::Exec '"$INSTDIR\BaseX.exe"'
 FunctionEnd
 
 Function CheckInstalledJRE
@@ -184,24 +184,24 @@ ShowUnInstDetails show
 Section "Hauptgruppe" SEC01
   SetOutPath "$INSTDIR"
   SetOverwrite ifnewer
-  File "..\..\BaseX.exe"
+  File "..\..\release\BaseX.exe"
   CreateDirectory "$INSTDIR\etc"
   SetOutPath "$INSTDIR\etc"
   File "..\..\etc\factbook.xml"
   CreateDirectory "$INSTDIR\bin"
   SetOutPath "$INSTDIR\bin"
-  File "..\..\scripts\basex.bat"
-  File "..\..\scripts\basexclient.bat"
-  File "..\..\scripts\basexgui.bat"
-  File "..\..\scripts\basexrest.bat"
-  File "..\..\scripts\basexserver.bat"
-  File "..\..\scripts\basexserverstop.bat"
+  File "..\..\bin\basex.bat"
+  File "..\..\bin\basexclient.bat"
+  File "..\..\bin\basexgui.bat"
+  File "..\..\bin\basexrest.bat"
+  File "..\..\bin\basexserver.bat"
+  File "..\..\bin\basexserverstop.bat"
   CreateDirectory "$INSTDIR\lib"
   SetOutPath "$INSTDIR\lib"
-  File "..\..\basex-api.jar"
+  File "..\..\release\basex-api.jar"
   File "..\..\..\basex-api\lib\*"
   SetOutPath "$INSTDIR"
-  File "..\..\${JAR}"
+  File "..\..\release\${JAR}"
   File "..\..\..\basex\license.txt"
   File ".basex"
   CreateDirectory "$INSTDIR\ico"
@@ -240,7 +240,7 @@ Section "Hauptgruppe" SEC01
   #AccessControl::GrantOnFile \
     "$INSTDIR\.basexperm" "(BU)" "GenericRead + GenericWrite"
   nsExec::Exec '"$INSTDIR\bin\basex.bat" "-c" "alter user admin $R0"'
-  ${WriteToFile} "java -cp $\"%CP%;.$\" %VM% org.basex.api.jaxrx.JaxRxServer -P$R0 %*" "$INSTDIR\bin\basexrest.bat"
+  ${WriteToFile} "java -cp $\"%CP%$\" %VM% org.basex.api.jaxrx.JaxRxServer -P$R0 %*" "$INSTDIR\bin\basexrest.bat"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BaseX" \
                  "DisplayName" "BaseX"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BaseX" \

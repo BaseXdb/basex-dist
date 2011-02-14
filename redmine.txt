@@ -9,7 +9,7 @@ REDMINE CONNECTOR ==============================================================
   - Mylyn Task-Focused Interface
 
  2. Install the Redmine Connection:
-    Work With: http://redmin-mylyncon.sourceforge.net/update-site/nightly
+    http://redmin-mylyncon.sourceforge.net/update-site/N/
 
  3. Add new Task Repository:
     Window -> Show View -> Other -> "Task Repositories" -> OK
