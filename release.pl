@@ -60,7 +60,7 @@ sub version {
 # packages both projects
 sub pkg {
   my $name = shift;
-  print "* Create $name packages\n";
+  print "* Create $name package\n";
 
   unlink("../$name/target/*.jar");
   system("cd ../$name && mvn install -q -DskipTests=true");

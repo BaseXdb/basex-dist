@@ -212,11 +212,9 @@ Section "Hauptgruppe" SEC01
   File "..\..\images\start.ico"
   File "..\..\images\stop.ico"
   AccessControl::GrantOnFile "$INSTDIR" "(S-1-1-0)" "GenericRead + GenericWrite + GenericExecute + Delete"
-  #AccessControl::GrantOnFile \
-    "$INSTDIR\.basex" "(BU)" "GenericRead + GenericWrite"
+  #AccessControl::GrantOnFile "$INSTDIR\.basex" "(BU)" "GenericRead + GenericWrite"
   CreateDirectory "$INSTDIR\rest"
-  #AccessControl::GrantOnFile \
-    "$INSTDIR\rest" "(BU)" "GenericRead + GenericWrite"
+  #AccessControl::GrantOnFile "$INSTDIR\rest" "(BU)" "GenericRead + GenericWrite"
   # set dbpath, port and webport
   StrLen $0 $R4
   IntOp $0 $0 - 1
@@ -227,18 +225,15 @@ Section "Hauptgruppe" SEC01
   !insertmacro IndexOf $9 "$R4" ":"
   ${If} $9 == -1
     CreateDirectory "$INSTDIR\$R4"
-    #AccessControl::GrantOnFile \
-      "$INSTDIR\$R4" "(BU)" "GenericRead + GenericWrite"
+    #AccessControl::GrantOnFile "$INSTDIR\$R4" "(BU)" "GenericRead + GenericWrite"
     nsExec::Exec '"$INSTDIR\bin\basex.bat" "-Wc" "set dbpath \"$INSTDIR\$R4\"; set restpath \"$INSTDIR\rest\""'
   ${Else}
     CreateDirectory "$R4"
-    #AccessControl::GrantOnFile \
-      "$R4" "(BU)" "GenericRead + GenericWrite"
+    #AccessControl::GrantOnFile "$R4" "(BU)" "GenericRead + GenericWrite"
     nsExec::Exec '"$INSTDIR\bin\basex.bat" "-Wc" "set dbpath \"$R4\"; set restpath \"$INSTDIR\rest\""'
   ${EndIf}
   nsExec::Exec '"$INSTDIR\bin\basex.bat" "-Wc" "set port $R2; set serverport $R2; set restport $R3"'
-  #AccessControl::GrantOnFile \
-    "$INSTDIR\.basexperm" "(BU)" "GenericRead + GenericWrite"
+  #AccessControl::GrantOnFile "$INSTDIR\.basexperm" "(BU)" "GenericRead + GenericWrite"
   nsExec::Exec '"$INSTDIR\bin\basex.bat" "-c" "alter user admin $R0"'
   ${WriteToFile} "java -cp $\"%CP%$\" %VM% org.basex.api.jaxrx.JaxRxServer -P$R0 %*" "$INSTDIR\bin\basexrest.bat"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BaseX" \
@@ -264,7 +259,7 @@ Section -AdditionalIcons
   ${If} $R8 == 1
     CreateDirectory "$SMPROGRAMS\BaseX"
     CreateShortCut "$SMPROGRAMS\BaseX\BaseX GUI.lnk" "$INSTDIR\BaseX.exe" "" "$INSTDIR\ico\BaseX.ico" 0
-    CreateShortCut "$SMPROGRAMS\BaseX\BaseX Server (Start).lnk" "$INSTDIR\bin\basexserver.bat -s" "" "$INSTDIR\ico\start.ico" 0
+    CreateShortCut "$SMPROGRAMS\BaseX\BaseX Server (Start).lnk" "$INSTDIR\bin\basexserver.bat" -s"" "$INSTDIR\ico\start.ico" 0
     CreateShortCut "$SMPROGRAMS\BaseX\BaseX Server (Stop).lnk" "$INSTDIR\bin\basexserverstop.bat" "" "$INSTDIR\ico\stop.ico" 0
     CreateShortCut "$SMPROGRAMS\BaseX\BaseX Client.lnk" "$INSTDIR\bin\basexclient.bat" "" "$INSTDIR\ico\shell.ico" 0
     CreateShortCut "$SMPROGRAMS\BaseX\BaseX.lnk" "$INSTDIR\bin\basex.bat" "" "$INSTDIR\ico\shell.ico" 0
