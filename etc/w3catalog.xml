@@ -1,5 +1,0 @@
-<?xml version="1.0"?>
-<catalog prefer="system" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
-   <!-- W3 DTDs should be included by default. to be completed... -->
-   <rewriteSystem systemIdStartString="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" rewritePrefix="xhtml1-strict.dtd" />
-</catalog>
