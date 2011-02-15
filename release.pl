@@ -110,18 +110,18 @@ sub zip {
 
   # bin folder
   foreach my $file(glob("bin/*")) {
-    next if $file =~ /basexrest.bat/;
+    next if $file =~ /basexjaxrx.bat/;
     $zip->addFile($file, $file);
   }
 
-  # add the start call in rest script
+  # add the start call in jax-rx script
   # (needs to be done manually, as file is also modified by .nsi script)
-  copy("bin/basexrest.bat", "release/basexrest.bat");
-  open (REST,'>> release/basexrest.bat');
-  print REST 'java -cp "%CP%;." %VM% org.basex.api.jaxrx.JaxRxServer %*';
-  close(REST);
+  copy("bin/basexjaxrx.bat", "release/basexjaxrx.bat");
+  open (JAXRX,'>> release/basexjaxrx.bat');
+  print JAXRX 'java -cp "%CP%;." %VM% org.basex.api.jaxrx.JaxRxServer %*';
+  close(JAXRX);
 
-  $zip->addFile("release/basexrest.bat", "bin/basexrest.bat");
+  $zip->addFile("release/basexjaxrx.bat", "bin/basexjaxrx.bat");
 
   # lib folder
   foreach my $file(glob("../basex-api/lib/*")) {
@@ -133,7 +133,7 @@ sub zip {
   unless ($zip->writeToFileNamed("release/BaseX.zip") == AZ_OK ) {
     die "Could not write ZIP file.";
   }
-  unlink("release/basexrest.bat");
+  unlink("release/basexjaxrx.bat");
 }
 
 # finishes the new release
