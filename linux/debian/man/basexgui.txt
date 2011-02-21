@@ -35,4 +35,4 @@ AUTHOR
   BaseX is primarily developed by Christian Gruen <christian.gruen@gmail.com> with the help of others listed as
   The BaseX Team on <http://basex.org/about-us/> 
 
-  The man page was written by Alexander Holupirek <alex@holupirek.de> in the progress of packaging BaseX for Debian GNU/Linux.
+  The man page was written by Alexander Holupirek <alex@holupirek.de> while packaging BaseX for Debian GNU/Linux.

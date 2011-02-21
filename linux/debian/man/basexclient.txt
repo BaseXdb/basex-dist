@@ -15,6 +15,9 @@ DESCRIPTION
 
 OPTIONS
   [file]     Execute the specified XQuery file.
+  -b<pars>   Bind external variables to XQuery expression. Flag may be specified
+             multiple times; key/value pairs are separated by equality signs (=)
+             (-bv=example -q"declare variable $v external; $v")
   -c<cmd>    Launch database commands and skip interactive mode. The flag should be placed last, all remaining characters are interpreted as commands. Several commands can be separated by semicolons. (-c"list;info") 
   -d         Turn on debugging. Debugging information is output to standard error. 
   -n<name>   Specify the server name on which the server is running. (default: localhost, -nserver.basex.org)
@@ -52,4 +55,4 @@ AUTHOR
   BaseX is primarily developed by Christian Gruen <christian.gruen@gmail.com> with the help of others listed as
   The BaseX Team on <http://basex.org/about-us/> 
 
-  The man page was written by Alexander Holupirek <alex@holupirek.de> in the progress of packaging BaseX for Debian GNU/Linux.
+  The man page was written by Alexander Holupirek <alex@holupirek.de> while packaging BaseX for Debian GNU/Linux.

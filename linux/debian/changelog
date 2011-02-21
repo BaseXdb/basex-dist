@@ -1,5 +1,12 @@
-basex (6.5-1) unstable; urgency=low
+basex (6.5.1-1ubuntu1~ppa3) maverick; urgency=low
+
+  * Update packaging, use symbolic version 6.x for Maven
+  * Refresh patches
+
+ -- Ludovic Claude <ludovic.claude@laposte.net>  Sun, 20 Feb 2011 21:13:49 +0100
+
+basex (6.5.1-1) unstable; urgency=low
 
   * Initial release (Closes: #588216)
 
- -- Alexander Holupirek <alex@holupirek.de>  Tue, 08 Feb 2011 12:29:16 +0100
+ -- Alexander Holupirek <alex@holupirek.de>  Tue, 15 Feb 2011 21:13:25 +0100

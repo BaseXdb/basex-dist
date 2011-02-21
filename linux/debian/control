@@ -6,13 +6,13 @@ Build-Depends: debhelper (>= 7), cdbs, default-jdk, maven-debian-helper
 Build-Depends-Indep: libmaven-compiler-plugin-java (>= 2.0.2), libmaven-jar-plugin-java (>= 2.2),  
  libsurefire-java (>= 2.4.3) 
 Standards-Version: 3.9.1
-Vcs-Svn: https://svn.uni-konstanz.de/dbis/basex/tags/6.5/basex
-Vcs-Browser: https://svn.uni-konstanz.de/dbis/basex/tags/6.5/basex
+Vcs-Svn: https://svn.uni-konstanz.de/dbis/basex/tags/6.5.1/basex
+Vcs-Browser: https://svn.uni-konstanz.de/dbis/basex/tags/6.5.1/basex
 Homepage: http://basex.org
 
 Package: basex
 Architecture: all
-Depends: ${misc:Depends}, ${maven:Depends}, java-wrappers, default-jre
+Depends: ${misc:Depends}, ${maven:Depends}, java-wrappers, default-jre | java6-runtime
 Recommends: ${maven:OptionalDepends}
 Description: XML database and XPath/XQuery processor
  BaseX is a very fast and light-weight, yet powerful XML database and
@@ -23,8 +23,8 @@ Description: XML database and XPath/XQuery processor
  .
  The package provides following commands:
   * basexgui  .......  Standalone local XML database. 
-                        Graphical User Interface (GUI) mode.
-                        Includes data visualizations and XQuery editor.
+                           Graphical User Interface (GUI) mode.
+                           Includes data visualizations and XQuery editor.
   * basex  ..........  Standalone local XML database. Command line mode.
   * basexserver  ....  XML database server
   * basexclient  ....  XML database client
