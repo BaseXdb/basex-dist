@@ -1,0 +1,74 @@
+Roll-out a new version of BaseX (here 6.6.1):
+
+- Follow advice from http://www.debian.org/doc/maint-guide/update.en.html#newupstream
+
+- Get old release
+  $ cat /etc/apt/sources.list
+  deb-src http://mentors.debian.net/debian unstable main contrib non-free
+  $ apt-get source basex
+  $ ls 
+  basex-6.5.1/
+  basex_6.5.1-1ubuntu1~ppa3.debian.tar.gz
+  basex_6.5.1-1ubuntu1~ppa3.dsc
+  basex_6.5.1.orig.tar.gz
+
+- Get new upstream version (TODO: we can now simple use uscan instead via ./debian/rules get-orig-source)
+  $ wget --no-check-certificate http://githubredir.debian.net/github/BaseXdb/basex/6.6.1.tar.gz
+  $ mv 6.6.1.tar.gz basex_6.6.1.tar.gz 
+  $ cd basex-6.5.1/
+
+  $ uupdate -v 6.6.1 ../basex_6.6.1.tar.gz 
+  New Release will be 6.6.1-1.
+  Symlinking to pristine source from basex_6.6.1.orig.tar.gz...
+  -- Untarring the new sourcecode archive ../basex_6.6.1.tar.gz
+  Unpacking the debian/ directory from version 6.5.1-1ubuntu1~ppa3 worked fine.
+  Remember: Your current directory is the OLD sourcearchive!
+  Do a "cd ../basex-6.6.1" to see the new package
+
+  $ cd ../basex-6.6.1
+
+- Adopt debian/changelog
+
+- man pages need to be adopted?
+	- new flags?
+	- new commands?
+
+(- Rebuild package )
+  $ dpkg-buildpackage
+
+- Debuild
+	- /etc/devscripts.conf needs to be configured 
+	http://www.debian.org/doc/maint-guide/build.en.html#completebuild
+	$ debuild -sa
+
+- Verifying package for install
+
+You must test your package if it installs without problem. The debi(1) command
+helps you to test to install all the generated binary packages.
+
+	$ sudo debi basex_6.6.1-1_i386.changes 
+
+- Upload to mentors
+	- Configure upload 
+	http://mentors.debian.net/cgi-bin/maintainer-intro
+	$ cat ~/.dupload.conf
+	----- 8< ------
+	package config;
+	
+	$cfg{'mentors'} =
+	{
+	   fqdn => 'mentors.debian.net',
+	   incoming => '/',
+	   dinstall_runs => 1,
+	   passive => 1,
+	};
+	
+	1;
+	----- 8< ------
+
+	- Perform upload
+	$ dupload -t mentors basex_6.6.1-1_i386.changes
+
+- Upload to basex.org
+	- 
+

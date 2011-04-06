@@ -1,4 +1,2 @@
 version=3
-opts="uversionmangle=s/-(alpha|beta)-/~$1/" \
-  https://svn.uni-konstanz.de/dbis/basex/tags/ \
-  (\d.*)/ debian debian/orig-tar.sh
+http://githubredir.debian.net/github/BaseXdb/basex/ (.*).tar.gz

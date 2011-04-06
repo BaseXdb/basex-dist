@@ -1,3 +1,22 @@
+basex (6.6.1-1) unstable; urgency=low
+
+  * New upstream release
+    - XQuery:
+      [ADD] index rewritings added for .../text()[. = ..] syntax
+      [ADD] optimizations of mixed axis path expressions, e.g.: //x/name()
+      [MOD] index rewritings on collections fixed and generalized
+      [MOD] faster evaluation of filters with pos. predicates, e.g.: $x[5]
+      [FIX] fixed relocation of let clauses in GFLWOR expressions
+      [FIX] trace function returned wrong original results
+      [FIX] variables in catch clauses were discarded
+      [FIX] HOF optimizations and fixes
+    - GUI:
+      [FIX] language option (for Japanese, German, etc. interface) fixed
+  * Upstream moved to github, https://github.com/BaseXdb/basex 
+    - Adopted debian/watch file
+
+ -- Alexander Holupirek <alex@holupirek.de>  Wed, 06 Apr 2011 10:37:11 +0200
+
 basex (6.5.1-1ubuntu1~ppa3) maverick; urgency=low
 
   * Update packaging, use symbolic version 6.x for Maven
