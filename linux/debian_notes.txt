@@ -5,6 +5,7 @@ Roll-out a new version of BaseX (here 6.6.1):
 - Get old release
   $ cat /etc/apt/sources.list
   deb-src http://mentors.debian.net/debian unstable main contrib non-free
+  $ mkdir build
   $ apt-get source basex
   $ ls 
   basex-6.5.1/
@@ -49,26 +50,62 @@ helps you to test to install all the generated binary packages.
 	$ sudo debi basex_6.6.1-1_i386.changes 
 
 - Upload to mentors
-	- Configure upload 
+	- Configure upload  ~/.dput.cf
 	http://mentors.debian.net/cgi-bin/maintainer-intro
-	$ cat ~/.dupload.conf
+
 	----- 8< ------
-	package config;
-	
-	$cfg{'mentors'} =
-	{
-	   fqdn => 'mentors.debian.net',
-	   incoming => '/',
-	   dinstall_runs => 1,
-	   passive => 1,
-	};
-	
-	1;
+	[mentors]
+	fqdn = mentors.debian.net
+	method = ftp
+	login = anonymous
+	incoming = .
+	allow_unsigned_uploads = 0
+	run_dinstall = 0
+	progress_indicator = 2
+	passive_ftp = 1
 	----- 8< ------
 
 	- Perform upload
-	$ dupload -t mentors basex_6.6.1-1_i386.changes
+	$ dput mentors basex_6.6.1-1_i386.changes 
 
-- Upload to basex.org
-	- 
+	- Verify upload
+	$ vim basex_6.6.1-1_i386.upload
+
+- Upload to phobos103.inf.uni-konstanz.de
+	- Configure ~/.mini-dinstall
+	http://upsilon.cc/~zack/blog/posts/2009/04/howto:_uploading_to_people.d.o_using_dput/
+	----- 8< ------
+	[DEFAULT]
+	mail_to = alex@holupirek.de
+	incoming_permissions = 0750
+	architectures = all
+	archive_style = flat
+	dynamic_reindex = 1
+	archivedir = /var/www/debian
+	generate_release = 1
+	release_origin = BaseX
+	release_label = BaseX
+	release_description = Unofficial Debian BaseX packages maintained by Alexander Holupirek
+	
+	[unstable]
+	release_suite = unstable
+	----- 8< ------
+
+	- Configure ~/.dput.cf
+	----- 8< ------
+	[phobos103]
+	fqdn = phobos103.inf.uni-konstanz.de
+	method = scp
+	login = *
+	incoming = /var/www//debian/mini-dinstall/incoming
+	post_upload_command = ssh phobos103.inf.uni-konstanz.de mini-dinstall -b
+	----- 8< ------
+
+	- Upload
+	$ dput phobos103 basex_6.6.1-1_i386.changes
+
+- People can update their /etc/apt/sources.list
+
+	deb     http://phobos103.inf.uni-konstanz.de/debian unstable/
+	deb-src http://phobos103.inf.uni-konstanz.de/debian unstable/ 
 
