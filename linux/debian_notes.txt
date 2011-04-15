@@ -29,6 +29,7 @@ Roll-out a new version of BaseX (here 6.6.1):
   $ cd ../basex-6.6.1
 
 - Adopt debian/changelog
+	$ dch -i
 
 - man pages need to be adopted?
 	- new flags?
@@ -41,6 +42,13 @@ Roll-out a new version of BaseX (here 6.6.1):
 	- /etc/devscripts.conf needs to be configured 
 	http://www.debian.org/doc/maint-guide/build.en.html#completebuild
 	$ debuild -sa
+
+- Build in chroot'ed environment
+	http://www.debian.org/doc/maint-guide/build.en.html#pbuilder
+	$ sudo pbuilder --build --debbuildopts -sa basex_6.6.1-2.dsc
+	( $ script -c 'sudo pbuilder --build --debbuildopts -sa basex_6.6.1-2.dsc' build.log )
+	Results are placed in:
+	$ ll /var/cache/pbuilder/result/
 
 - Verifying package for install
 
@@ -104,8 +112,20 @@ helps you to test to install all the generated binary packages.
 	- Upload
 	$ dput phobos103 basex_6.6.1-1_i386.changes
 
+	- Sign Release
+	$ cd /var/www/debian
+	$ gpg --detach-sign -o Release.gpg unstable/Release
+
+- Sync it to files.basex.org
+	$ scp Release.gpg basex:~/files/debian 
+	$ scp -r unstable basex:~/files/debian/
+
 - People can update their /etc/apt/sources.list
 
 	deb     http://phobos103.inf.uni-konstanz.de/debian unstable/
 	deb-src http://phobos103.inf.uni-konstanz.de/debian unstable/ 
 
+	deb     http://files.basex.org/debian unstable/
+	deb-src http://files.basex.org/debian unstable/
+
+- TODO: apt-key add
