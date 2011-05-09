@@ -44,15 +44,16 @@ sub prepare {
 sub version {
   print "* Extract version from POM file\n";
 
-  open(POM, "../BaseX/pom.xml");
-  my @raw_data=<POM>;
-  my $line = $raw_data[6];
-  my $pos = index($line, "</version>") - 11;
-  $v = substr $line, 11, $pos;
-  if (length($v) == 3) {
-    $f = $v . ".0.0";
-  } elsif (length($v) == 5) {
-    $f = $v . ".0";
+  open(POM, "../basex/pom.xml") or die "pom.xml not found";
+  while(my $l = <POM>) {
+    next if $l !~ m|<version>(.*)</version>|;
+    $v = $1;
+    if (length($v) == 3) {
+      $f = $v . ".0.0";
+    } elsif (length($v) == 5) {
+      $f = $v . ".0";
+    }
+    last;
   }
   close(POM);
 }
@@ -60,7 +61,7 @@ sub version {
 # packages both projects
 sub pkg {
   my $name = shift;
-  print "* Create $name package\n";
+  print "* Create $name-$v package\n";
 
   unlink("../$name/target/*.jar");
   system("cd ../$name && mvn install -q -DskipTests=true");
@@ -82,7 +83,7 @@ sub exe {
   close(L4J);
   close(L4JTMP);
 
-  system($launch4j." release/launch4j.xml");
+  system("$launch4j release/launch4j.xml");
   unlink("release/launch4j.xml");
   move("BaseX.exe", "release/BaseX.exe");
 
