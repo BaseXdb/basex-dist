@@ -1,49 +1,50 @@
-Packaging a new release
-=======================
+Packaging a new BaseX release
+=============================
 
-In general follow advice from http://www.debian.org/doc/maint-guide/update.en.html#newupstream
+In general, follow advice from http://www.debian.org/doc/maint-guide/update.en.html#newupstream
 
 * Tagging a new release
 
-$ git tag -a 6.6.2 -m 'version 6.6.2 linuxtag release'
-$ git push --tags
+  $ git tag -a 6.6.2 -m 'version 6.6.2 linuxtag release'
+  $ git push --tags
 
 * Get basex
 
-$ mkdir build
-$ cd build
-$ apt-get source basex
-$ ll
-basex-6.6.1
-basex_6.6.1-3.debian.tar.gz
-basex_6.6.1-3.dsc
-basex_6.6.1.orig.tar.gz
-$ cd basex-6.6.1
-basex-6.6.1$ uscan
-basex: Newer version (6.6.2) available on remote site:
-  http://githubredir.debian.net/github/BaseXdb/basex/6.6.2.tar.gz
-  (local version is 6.6.1)
-basex: Successfully downloaded updated package 6.6.2.tar.gz
-    and symlinked basex_6.6.2.orig.tar.gz to it
-basex-6.6.1$ ll ../
-total 1996
--rw-r--r-- 1 holu holu 1016987 May 13 16:02 6.6.2.tar.gz
-drwxr-xr-x 7 holu holu    4096 May 13 16:01 basex-6.6.1
--rw-r--r-- 1 holu holu   15619 May  3 00:17 basex_6.6.1-3.debian.tar.gz
--rw-r--r-- 1 holu holu    1893 May  3 00:17 basex_6.6.1-3.dsc
--rw-r--r-- 1 holu holu  987217 May  3 00:17 basex_6.6.1.orig.tar.gz
-lrwxrwxrwx 1 holu holu      12 May 13 16:02 basex_6.6.2.orig.tar.gz -> 6.6.2.tar.gz
-basex-6.6.1$ uupdate -v 6.6.2 ../basex_6.6.2.orig.tar.gz 
-New Release will be 6.6.2-1.
-Symlinking to pristine source from basex_6.6.2.orig.tar.gz...
--- Untarring the new sourcecode archive ../../build/basex_6.6.2.orig.tar.gz
-Unpacking the debian/ directory from version 6.6.1-3 worked fine.
-Remember: Your current directory is the OLD sourcearchive!
-Do a "cd ../basex-6.6.2" to see the new package
-$ cd ../basex-6.6.2
-$ dch -i
-...
-[ man pages, new commands, new examples, patches OK, new authors ... ]
+  $ mkdir build
+  $ cd build
+  $ apt-get source basex
+  $ ll
+  basex-6.6.1
+  basex_6.6.1-3.debian.tar.gz
+  basex_6.6.1-3.dsc
+  basex_6.6.1.orig.tar.gz
+  $ cd basex-6.6.1
+  basex-6.6.1$ uscan
+  basex: Newer version (6.6.2) available on remote site:
+    http://githubredir.debian.net/github/BaseXdb/basex/6.6.2.tar.gz
+    (local version is 6.6.1)
+  basex: Successfully downloaded updated package 6.6.2.tar.gz
+      and symlinked basex_6.6.2.orig.tar.gz to it
+  basex-6.6.1$ ll ../
+  total 1996
+  -rw-r--r-- 1 holu holu 1016987 May 13 16:02 6.6.2.tar.gz
+  drwxr-xr-x 7 holu holu    4096 May 13 16:01 basex-6.6.1
+  -rw-r--r-- 1 holu holu   15619 May  3 00:17 basex_6.6.1-3.debian.tar.gz
+  -rw-r--r-- 1 holu holu    1893 May  3 00:17 basex_6.6.1-3.dsc
+  -rw-r--r-- 1 holu holu  987217 May  3 00:17 basex_6.6.1.orig.tar.gz
+  lrwxrwxrwx 1 holu holu      12 May 13 16:02 basex_6.6.2.orig.tar.gz -> 6.6.2.tar.gz
+  basex-6.6.1$ uupdate -v 6.6.2 ../basex_6.6.2.orig.tar.gz 
+  New Release will be 6.6.2-1.
+  Symlinking to pristine source from basex_6.6.2.orig.tar.gz...
+  -- Untarring the new sourcecode archive ../../build/basex_6.6.2.orig.tar.gz
+  Unpacking the debian/ directory from version 6.6.1-3 worked fine.
+  Remember: Your current directory is the OLD sourcearchive!
+  Do a "cd ../basex-6.6.2" to see the new package
+  $ cd ../basex-6.6.2
+  $ dch -i
+  ...
+  [ man pages, new commands, new examples, patches OK, new authors ... ]
+  ...
 * Check author list
  $ grep -hr '@author' . | grep -v BaseX | awk '{print $3, $4 }' | tr -d '\r' | sort | uniq
 
@@ -83,7 +84,8 @@ $ dch -i
   $ fakeroot ./debian/rules clean
   $ rm -rf ~/basex-dist/linux/debian/ 
   $ cp -r debian/ ~/basex-dist/linux/
-  (Commit and push)
+  $ git commit -a 
+  $ git push origin master
 
 * Upload to mentors
 	- Configure upload  ~/.dput.cf
@@ -102,7 +104,7 @@ $ dch -i
 	----- 8< ------
 
   - Perform upload
-  $ dput mentors basex_6.6.1-1_i386.changes 
+  $ dput mentors ../basex_6.6.2-1_i386.changes
   
   - Verify upload
   $ vim basex_6.6.1-1_i386.upload
@@ -137,29 +139,29 @@ $ dch -i
 	post_upload_command = ssh phobos103.inf.uni-konstanz.de mini-dinstall -b
 	----- 8< ------
 
-	- Upload
-	$ dput phobos103 basex_6.6.1-1_i386.changes
+   - Upload
+   $ dput phobos103 basex_6.6.1-1_i386.changes
+   
+   - Sign Release
+   $ cd /var/www/debian
+   $ gpg --detach-sign -o Release.gpg unstable/Release
 
-	- Sign Release
-	$ cd /var/www/debian
-	$ gpg --detach-sign -o Release.gpg unstable/Release
+* Sync it to files.basex.org
+   $ scp Release.gpg basex:~/files/debian 
+   $ scp -r unstable basex:~/files/debian/
 
-- Sync it to files.basex.org
-	$ scp Release.gpg basex:~/files/debian 
-	$ scp -r unstable basex:~/files/debian/
+* People can update their /etc/apt/sources.list
 
-- People can update their /etc/apt/sources.list
+   deb     http://phobos103.inf.uni-konstanz.de/debian unstable/
+   deb-src http://phobos103.inf.uni-konstanz.de/debian unstable/ 
 
-	deb     http://phobos103.inf.uni-konstanz.de/debian unstable/
-	deb-src http://phobos103.inf.uni-konstanz.de/debian unstable/ 
+   deb     http://files.basex.org/debian unstable/
+   deb-src http://files.basex.org/debian unstable/
 
-	deb     http://files.basex.org/debian unstable/
-	deb-src http://files.basex.org/debian unstable/
+* Kindly ask Tony Mancill to be so kind to upload basex to ftp.debian.org for us
+
 TODO
 ====
 
-[ ] Tagging with debtags
 [ ] screenshot
-
-MISC
-====
+[ ] Tagging with debtags
