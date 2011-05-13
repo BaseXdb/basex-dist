@@ -2,7 +2,4 @@
   <rewriteSystem systemIdStartString="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" rewritePrefix="xhtml1-strict.dtd" />
   <rewriteSystem systemIdStartString="http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd" rewritePrefix="xhtml1-frameset.dtd" />
   <rewriteSystem systemIdStartString="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" rewritePrefix="xhtml1-transitional.dtd" />
-  <rewriteSystem systemIdStartString="http://www.w3.org/TR/xhtml1/DTD/xhtml-lat1.ent" rewritePrefix="xhtml-lat1.ent" />
-  <rewriteSystem systemIdStartString="http://www.w3.org/TR/xhtml1/DTD/xhtml-special.ent" rewritePrefix="xhtml-special.ent" />
-  <rewriteSystem systemIdStartString="http://www.w3.org/TR/xhtml1/DTD/xhtml-symbol.ent" rewritePrefix="xhtml-symbol.ent" />
 </catalog>
