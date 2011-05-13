@@ -1,35 +1,75 @@
 Format-Specification: http://dep.debian.net/deps/dep5/
-Name: BaseX
-Maintainer: BaseX Team
-Source: http://basex.org
+Upstream-Name: basex
+Upstream-Contact: Christian Grün <cg@basex.org>
+Source: https://github.com/BaseXdb/basex
 
 Files: *
-Copyright:  2011, Christian Grün <christian.gruen@uni-konstanz.de>
+Copyright:  2005, BaseX Team <info@basex.org>
 License: BSD
+Comment:
+	Following persons contributed to the project and form the 
+	'BaseX Team': 
+	Christian Grün <cg@basex.org>
+	Alexander Holupirek
+	Andreas Weiler
+	Bastian Lemke
+	Christian Gruen
+	Dimitar Popov
+	Jens Erat
+	Joerg Hauser
+	Leo Woerteler
+	Lukas Kircher
+	Michael Seiferle
+	Oliver Egli
+	Philipp Ziemer
+	Rositsa Shadura
+	Sebastian Gath
+	Tim Petrowsky
+	Wolfgang Miller
+
+Files: src/main/java/org/basex/query/item/Fun.java
+Copyright: 2005, Workgroup DBIS, University of Konstanz
+License: BSD or ISC
+
+Files: src/main/java/org/basex/query/expr/DynFunCall.java
+Copyright: 2005, Workgroup DBIS, University of Konstanz
+License: BSD or ISC
+
+Files: src/main/java/org/basex/query/expr/InlineFunc.java
+Copyright: 2005, Workgroup DBIS, University of Konstanz
+License: BSD or ISC
+
+Files: src/main/java/org/basex/query/expr/PartFunApp.java
+Copyright: 2005, Workgroup DBIS, University of Konstanz
+License: BSD or ISC
+
+Files: src/main/java/org/basex/query/expr/LitFunc.java
+Copyright: 2005, Workgroup DBIS, University of Konstanz
+License: BSD or ISC
 
 Files: debian/*
 Copyright: 2011, Alexander Holupirek <alex@holupirek.de>
 License: BSD
 
 License: BSD
- Copyright (c) 2005-11 BaseX Team <info@basex.org>
+ Copyright (c) 2005-11, BaseX Team <info@basex.org>
  All rights reserved.
- 
+ . 
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions
  are met:
- 
+ . 
  1. Redistributions of source code must retain the above copyright
     notice, this list of conditions and the following disclaimer.
  
  2. Redistributions in binary form must reproduce the above copyright
     notice, this list of conditions and the following disclaimer in the
     documentation and/or other materials provided with the distribution.
- 
+ . 
  3. Neither the name of the copyright holders nor the names of its
     contributors may be used to endorse or promote products derived
     from this software without specific prior written permission.
- 
+ . 
  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -41,3 +81,18 @@ License: BSD
  ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+License: ISC
+ Copyright (c) 2005-11, BaseX Team <info@basex.org>
+ .
+ Permission to use, copy, modify, and/or distribute this software for any
+ purpose with or without fee is hereby granted, provided that the above
+ copyright notice and this permission notice appear in all copies.
+ .
+ THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+ WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+ MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+ WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.

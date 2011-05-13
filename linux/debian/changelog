@@ -1,3 +1,55 @@
+basex (6.6.2-1) unstable; urgency=low
+
+  * New upstream release
+    - API:
+      [ADD] JAX-RX API now supports basic user authentication:
+            http://docs.basex.org/wiki/JAX-RX_API
+      [ADD] The COPY creates identical database copies:
+            http://docs.basex.org/wiki/Commands#COPY
+      [ADD] The OPTIMIZE ALL command minimizes all database structures:
+            http://docs.basex.org/wiki/Commands#OPTIMIZE
+    - XQuery:
+      [ADD] map expressions and functions added:
+            http://docs.basex.org/wiki/Map_Functions
+      [MOD] File module aligned with latest EXPath specification:
+            http://docs.basex.org/wiki/File_Functions
+      [MOD] Speedup of full-text queries with keyword lists.
+            Example: $x contains text { 'a', 'b', 'c', ...}
+      [MOD] XQuery Update optimizations for replacing nodes;
+            tree-aware updates.
+      [MOD] XQuery optimizations to avoid materialization of sequences.
+    - GUI:
+      [ADD] Multiple editor tabs added
+      [ADD] Database management: copy databases
+    - Core:
+      [ADD] Internal XML parser: HTML entities added
+      [FIX] Glob syntax: support for multiple file suffixes
+  * Added new database commands to man pages.
+  * Adopted debian/copyright file.  ISC licensed files are gone now.
+  * Adopted debian/control file to reflect correct packaging Vcs-Git entry.
+  * Removed patch for build problem in 6.6.1-2.  Upstream incorporated the fix.
+
+ -- Alexander Holupirek <alex@holupirek.de>  Fri, 13 May 2011 16:36:01 +0200
+
+basex (6.6.1-3) unstable; urgency=low
+
+  * Provides more details on copyright and authorship in debian/copyright.
+    Thanks to Tony Mancill <tmancill@debian.org>.
+
+ -- Alexander Holupirek <alex@holupirek.de>  Wed, 27 Apr 2011 12:06:02 +0200
+
+basex (6.6.1-2) unstable; urgency=low
+
+  * Fix for build problem.
+    org/basex/gui/GUIMacOSX.java:[133,23] cannot find symbol
+    symbol  : method execute(org.basex.gui.GUI)
+    location: class org.basex.gui.GUICommands
+    Solution:
+    // explicit cast to circumvent Java compiler bug
+    ((GUICommand) GUICommands.PREFS).execute(main);
+
+ -- Alexander Holupirek <alex@holupirek.de>  Fri, 15 Apr 2011 16:54:33 +0200
+
 basex (6.6.1-1) unstable; urgency=low
 
   * New upstream release
@@ -15,7 +67,7 @@ basex (6.6.1-1) unstable; urgency=low
   * Upstream moved to github, https://github.com/BaseXdb/basex 
     - Adopted debian/watch file
 
- -- Alexander Holupirek <alex@holupirek.de>  Wed, 06 Apr 2011 10:37:11 +0200
+ -- Alexander Holupirek <alex@holupirek.de>  Fri, 15 Apr 2011 16:23:19 +0200
 
 basex (6.5.1-1ubuntu1~ppa3) maverick; urgency=low
 

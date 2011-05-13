@@ -2,7 +2,7 @@ NAME
   basex - XML database system and XPath/XQuery processor (command line mode)
 
 SYNOPSIS
-  basex [-diosuvVwz] [-cq] [file]
+  basex [-bdiosuvVwz] [-cq] [file]
 
 DESCRIPTION
   basex is a fast and powerful, yet light-weight and platform independent XML
@@ -47,6 +47,7 @@ DATABASE COMMANDS
   ALTER [USER|DATABASE] [...]            Alter user password or database name.
   BACKUP [name]                          Backup database.
   CLOSE                                  Close current database.
+  COPY [name] [newname]                  Copy database.
   CREATE [DATABASE|FS|INDEX|USER] [...]  Create database, index or user.
   CS [query]                             Evaluate XQuery and set result as new context set.
   DELETE [name]                          Delete documents from database.
@@ -61,7 +62,7 @@ DATABASE COMMANDS
   KILL [name]                            Kill user sessions.
   LIST ([path])                          List databases or documents in database.
   OPEN [path]                            Open database.
-  OPTIMIZE                               Optimize the database.
+  OPTIMIZE (ALL)                         Optimize the database.
   PASSWORD ([password])                  Change password.
   RESTORE [name]                         Restore database.
   RUN [path]                             Evaluate file as XQuery.
@@ -196,7 +197,7 @@ LICENSE
   New (3-clause) BSD License
 
 AUTHOR
-  BaseX is primarily developed by Christian Gruen <christian.gruen@gmail.com> with the help of others listed as
-  The BaseX Team on <http://basex.org/about-us/> 
+  BaseX is developed by a bunch of people called 'The BaseX Team'
+  <http://basex.org/about-us/> led by Christian Gruen <cg@basex.org>.
 
   The man page was written by Alexander Holupirek <alex@holupirek.de> while packaging BaseX for Debian GNU/Linux.

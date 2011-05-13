@@ -2,7 +2,7 @@ NAME
   basexserver - XML database system and XPath/XQuery processor (server mode)
 
 SYNOPSIS
-  basexserver [-s] [-dpz] [-c] [stop]
+  basexserver [-dpsz] [-c] [stop]
 
 DESCRIPTION
   basexserver starts the server mode of the native XML database system basex(1) on default port 1984.
@@ -112,7 +112,7 @@ LICENSE
   New (3-clause) BSD License
 
 AUTHOR
-  BaseX is primarily developed by Christian Gruen <christian.gruen@gmail.com> with the help of others listed as
-  The BaseX Team on <http://basex.org/about-us/> 
+  BaseX is developed by a bunch of people called 'The BaseX Team'
+  <http://basex.org/about-us/> led by Christian Gruen <cg@basex.org>.
 
   The man page was written by Alexander Holupirek <alex@holupirek.de> while packaging BaseX for Debian GNU/Linux.

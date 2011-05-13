@@ -32,7 +32,7 @@ LICENSE
   New (3-clause) BSD License
 
 AUTHOR
-  BaseX is primarily developed by Christian Gruen <christian.gruen@gmail.com> with the help of others listed as
-  The BaseX Team on <http://basex.org/about-us/> 
+  BaseX is developed by a bunch of people called 'The BaseX Team'
+  <http://basex.org/about-us/> led by Christian Gruen <cg@basex.org>.
 
   The man page was written by Alexander Holupirek <alex@holupirek.de> while packaging BaseX for Debian GNU/Linux.

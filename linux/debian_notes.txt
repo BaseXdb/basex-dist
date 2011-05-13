@@ -1,63 +1,91 @@
-Roll-out a new version of BaseX (here 6.6.1):
+Packaging a new release
+=======================
 
-- Follow advice from http://www.debian.org/doc/maint-guide/update.en.html#newupstream
+In general follow advice from http://www.debian.org/doc/maint-guide/update.en.html#newupstream
 
-- Get old release
-  $ cat /etc/apt/sources.list
-  deb-src http://mentors.debian.net/debian unstable main contrib non-free
-  $ mkdir build
-  $ apt-get source basex
-  $ ls 
-  basex-6.5.1/
-  basex_6.5.1-1ubuntu1~ppa3.debian.tar.gz
-  basex_6.5.1-1ubuntu1~ppa3.dsc
-  basex_6.5.1.orig.tar.gz
+* Tagging a new release
 
-- Get new upstream version (TODO: we can now simple use uscan instead via ./debian/rules get-orig-source)
-  $ wget --no-check-certificate http://githubredir.debian.net/github/BaseXdb/basex/6.6.1.tar.gz
-  $ mv 6.6.1.tar.gz basex_6.6.1.tar.gz 
-  $ cd basex-6.5.1/
+$ git tag -a 6.6.2 -m 'version 6.6.2 linuxtag release'
+$ git push --tags
 
-  $ uupdate -v 6.6.1 ../basex_6.6.1.tar.gz 
-  New Release will be 6.6.1-1.
-  Symlinking to pristine source from basex_6.6.1.orig.tar.gz...
-  -- Untarring the new sourcecode archive ../basex_6.6.1.tar.gz
-  Unpacking the debian/ directory from version 6.5.1-1ubuntu1~ppa3 worked fine.
-  Remember: Your current directory is the OLD sourcearchive!
-  Do a "cd ../basex-6.6.1" to see the new package
+* Get basex
 
-  $ cd ../basex-6.6.1
+$ mkdir build
+$ cd build
+$ apt-get source basex
+$ ll
+basex-6.6.1
+basex_6.6.1-3.debian.tar.gz
+basex_6.6.1-3.dsc
+basex_6.6.1.orig.tar.gz
+$ cd basex-6.6.1
+basex-6.6.1$ uscan
+basex: Newer version (6.6.2) available on remote site:
+  http://githubredir.debian.net/github/BaseXdb/basex/6.6.2.tar.gz
+  (local version is 6.6.1)
+basex: Successfully downloaded updated package 6.6.2.tar.gz
+    and symlinked basex_6.6.2.orig.tar.gz to it
+basex-6.6.1$ ll ../
+total 1996
+-rw-r--r-- 1 holu holu 1016987 May 13 16:02 6.6.2.tar.gz
+drwxr-xr-x 7 holu holu    4096 May 13 16:01 basex-6.6.1
+-rw-r--r-- 1 holu holu   15619 May  3 00:17 basex_6.6.1-3.debian.tar.gz
+-rw-r--r-- 1 holu holu    1893 May  3 00:17 basex_6.6.1-3.dsc
+-rw-r--r-- 1 holu holu  987217 May  3 00:17 basex_6.6.1.orig.tar.gz
+lrwxrwxrwx 1 holu holu      12 May 13 16:02 basex_6.6.2.orig.tar.gz -> 6.6.2.tar.gz
+basex-6.6.1$ uupdate -v 6.6.2 ../basex_6.6.2.orig.tar.gz 
+New Release will be 6.6.2-1.
+Symlinking to pristine source from basex_6.6.2.orig.tar.gz...
+-- Untarring the new sourcecode archive ../../build/basex_6.6.2.orig.tar.gz
+Unpacking the debian/ directory from version 6.6.1-3 worked fine.
+Remember: Your current directory is the OLD sourcearchive!
+Do a "cd ../basex-6.6.2" to see the new package
+$ cd ../basex-6.6.2
+$ dch -i
+...
+[ man pages, new commands, new examples, patches OK, new authors ... ]
+* Check author list
+ $ grep -hr '@author' . | grep -v BaseX | awk '{print $3, $4 }' | tr -d '\r' | sort | uniq
 
-- Adopt debian/changelog
-	$ dch -i
+* Build package
+ $ dpkg-buildpackage
 
-- man pages need to be adopted?
-	- new flags?
-	- new commands?
+* Quick check generated files
+ $ tree debian/basex
 
-(- Rebuild package )
-  $ dpkg-buildpackage
+* Lintian check
+ $ lintian -i -I --show-overrides --pedantic ../basex_6.6.2-1_all.deb
 
-- Debuild
+* Clean build
+ $ fakeroot ./debian/rules clean
+
+* Debuild
 	- /etc/devscripts.conf needs to be configured 
 	http://www.debian.org/doc/maint-guide/build.en.html#completebuild
-	$ debuild -sa
+  $ debuild -sa
 
-- Build in chroot'ed environment
+* Build in chroot'ed environment
 	http://www.debian.org/doc/maint-guide/build.en.html#pbuilder
-	$ sudo pbuilder --build --debbuildopts -sa basex_6.6.1-2.dsc
+  $ sudo pbuilder --build --debbuildopts -sa ../basex_6.6.2-1.dsc
 	( $ script -c 'sudo pbuilder --build --debbuildopts -sa basex_6.6.1-2.dsc' build.log )
 	Results are placed in:
-	$ ll /var/cache/pbuilder/result/
+  $ ll /var/cache/pbuilder/result/
 
-- Verifying package for install
+* Verify package installation
+  $ sudo debi ../
 
-You must test your package if it installs without problem. The debi(1) command
-helps you to test to install all the generated binary packages.
+* Check maintainer scripts
+  $ sudo dpkg -r basex
+  $ sudo dpkg -P basex
+  $ sudo dpkg -i ../basex_6.6.2-1_all.deb
 
-	$ sudo debi basex_6.6.1-1_i386.changes 
+* Commit debian/ to basex-dist
+  $ fakeroot ./debian/rules clean
+  $ rm -rf ~/basex-dist/linux/debian/ 
+  $ cp -r debian/ ~/basex-dist/linux/
+  (Commit and push)
 
-- Upload to mentors
+* Upload to mentors
 	- Configure upload  ~/.dput.cf
 	http://mentors.debian.net/cgi-bin/maintainer-intro
 
@@ -73,11 +101,11 @@ helps you to test to install all the generated binary packages.
 	passive_ftp = 1
 	----- 8< ------
 
-	- Perform upload
-	$ dput mentors basex_6.6.1-1_i386.changes 
-
-	- Verify upload
-	$ vim basex_6.6.1-1_i386.upload
+  - Perform upload
+  $ dput mentors basex_6.6.1-1_i386.changes 
+  
+  - Verify upload
+  $ vim basex_6.6.1-1_i386.upload
 
 - Upload to phobos103.inf.uni-konstanz.de
 	- Configure ~/.mini-dinstall
@@ -127,5 +155,11 @@ helps you to test to install all the generated binary packages.
 
 	deb     http://files.basex.org/debian unstable/
 	deb-src http://files.basex.org/debian unstable/
+TODO
+====
 
-- TODO: apt-key add
+[ ] Tagging with debtags
+[ ] screenshot
+
+MISC
+====
