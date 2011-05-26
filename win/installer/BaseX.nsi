@@ -57,8 +57,12 @@ FunctionEnd
 Function CheckInstalledJRE
   ReadRegStr $1 HKLM "SOFTWARE\JavaSoft\Java Runtime Environment" "CurrentVersion"
   ${If} $1 == ""
-    MessageBox MB_OK "Please install Java before executing the installer."
-    Quit
+    SetRegView 64 
+    ReadRegStr $1 HKLM "SOFTWARE\JavaSoft\Java Runtime Environment" "CurrentVersion"
+    ${If} $1 == ""
+      MessageBox MB_OK "Please install Java before executing the installer."
+      Quit
+    ${EndIf}
   ${EndIf}
 FunctionEnd
 
