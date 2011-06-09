@@ -147,7 +147,7 @@ EXAMPLES
 
   * Retrieve XML from the web and perform XPath query: 
 
-    $ basex -q "doc('https://svn.uni-konstanz.de/dbis/basex/tags/6.5/basex/etc/test/input.xml')//li"
+    $ basex -q "doc('https://svn.uni-konstanz.de/dbis/basex/tags/6.5/basex/etc/xml/input.xml')//li"
     <li>Exercise 1</li>
     <li>Exercise 2</li>
 
