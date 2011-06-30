@@ -35,8 +35,8 @@
 	<Program_Info>
 		<Program_Name>BaseX</Program_Name>
 		<Program_Version>6.7</Program_Version>
-		<Program_Release_Month>04</Program_Release_Month>
-		<Program_Release_Day>10</Program_Release_Day>
+		<Program_Release_Month>06</Program_Release_Month>
+		<Program_Release_Day>30</Program_Release_Day>
 		<Program_Release_Year>2011</Program_Release_Year>
 		<Program_Cost_Dollars>0</Program_Cost_Dollars>
 		<Program_Cost_Other_Code />
@@ -51,9 +51,9 @@
 		<Program_Category_Class>Business::Databases &amp; Tools</Program_Category_Class>
 		<Program_System_Requirements>Java 6 or later</Program_System_Requirements>
 		<File_Info>
-			<File_Size_Bytes>2251951</File_Size_Bytes>
-			<File_Size_K>2199</File_Size_K>
-			<File_Size_MB>2.3</File_Size_MB>
+			<File_Size_Bytes>7021815</File_Size_Bytes>
+			<File_Size_K>6862</File_Size_K>
+			<File_Size_MB>6.6</File_Size_MB>
 		</File_Info>
 		<Expire_Info>
 			<Has_Expire_Info>N</Has_Expire_Info>
@@ -84,10 +84,10 @@
 			<Application_XML_File_URL>http://files.basex.org/BaseXPADFile.xml</Application_XML_File_URL>
 		</Application_URLs>
 		<Download_URLs>
-			<Primary_Download_URL>http://files.basex.org/BaseX.jar</Primary_Download_URL>
+			<Primary_Download_URL>http://files.basex.org/BaseX.zip</Primary_Download_URL>
 			<Secondary_Download_URL>http://files.basex.org/BaseX.exe</Secondary_Download_URL>
-			<Additional_Download_URL_1>http://files.basex.org/BaseX.dmg</Additional_Download_URL_1>
-			<Additional_Download_URL_2>http://files.basex.org/BaseX.zip</Additional_Download_URL_2>
+			<Additional_Download_URL_1>http://files.basex.org/BaseX.jar</Additional_Download_URL_1>
+			<Additional_Download_URL_2>http://files.basex.org/BaseX.dmg</Additional_Download_URL_2>
 		</Download_URLs>
 	</Web_Info>
 	<Permissions>
