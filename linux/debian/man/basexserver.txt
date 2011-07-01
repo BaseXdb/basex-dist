@@ -11,6 +11,7 @@ OPTIONS
   stop     Stop an existing server instance; remaining input is ignored. 
   -c<cmd>  Launch database commands before the server itself is started; all remaining text is interpreted as command input. Several commands can be separated by semicolons. (-c"open database;info")
   -d       Turn on debugging. Debugging information is output to standard error. 
+  -e<num>  Set event port
   -i       Interactively enter commands on the console, similar to standalone and client mode. 
   -p<num>  Specify the port on which the server will be addressable (default 1984, -p9999). 
   -s       Start as daemon.
@@ -57,7 +58,7 @@ USER MANAGEMENT
 DATABASE COMMANDS
   A list of supported Database commands can be obtained from
 
-    $ basexserver -i help
+    $ basexserver \-i help
 
   or by browsing http://docs.basex.org/wiki/Commands
 
