@@ -5,45 +5,50 @@ In general, follow advice from http://www.debian.org/doc/maint-guide/update.en.h
 
 * Tagging a new release
 
-  $ git tag -a 6.6.2 -m 'version 6.6.2 linuxtag release'
+  $ git tag -a 6.7 -m 'Version 6.7 (June 30, 2011) Wikipedia release'
   $ git push --tags
 
-* Get basex
+* To delete a tag
+  $ git tag -d help
+  Deleted tag 'help' (was 961dfe0)
+  $ git push origin :help
+  To git@github.com:BaseXdb/basex.git
+  - [deleted]     help 
+
+* Get basex source and package stub
 
   $ mkdir build
   $ cd build
   $ apt-get source basex
-  $ ll
-  basex-6.6.1
-  basex_6.6.1-3.debian.tar.gz
-  basex_6.6.1-3.dsc
-  basex_6.6.1.orig.tar.gz
-  $ cd basex-6.6.1
-  basex-6.6.1$ uscan
-  basex: Newer version (6.6.2) available on remote site:
-    http://githubredir.debian.net/github/BaseXdb/basex/6.6.2.tar.gz
-    (local version is 6.6.1)
-  basex: Successfully downloaded updated package 6.6.2.tar.gz
-      and symlinked basex_6.6.2.orig.tar.gz to it
-  basex-6.6.1$ ll ../
-  total 1996
-  -rw-r--r-- 1 holu holu 1016987 May 13 16:02 6.6.2.tar.gz
-  drwxr-xr-x 7 holu holu    4096 May 13 16:01 basex-6.6.1
-  -rw-r--r-- 1 holu holu   15619 May  3 00:17 basex_6.6.1-3.debian.tar.gz
-  -rw-r--r-- 1 holu holu    1893 May  3 00:17 basex_6.6.1-3.dsc
-  -rw-r--r-- 1 holu holu  987217 May  3 00:17 basex_6.6.1.orig.tar.gz
-  lrwxrwxrwx 1 holu holu      12 May 13 16:02 basex_6.6.2.orig.tar.gz -> 6.6.2.tar.gz
-  basex-6.6.1$ uupdate -v 6.6.2 ../basex_6.6.2.orig.tar.gz 
-  New Release will be 6.6.2-1.
-  Symlinking to pristine source from basex_6.6.2.orig.tar.gz...
-  -- Untarring the new sourcecode archive ../../build/basex_6.6.2.orig.tar.gz
-  Unpacking the debian/ directory from version 6.6.1-3 worked fine.
+  $ ls
+  basex-6.6.2
+  basex_6.6.2-1.debian.tar.gz
+  basex_6.6.2-1.dsc
+  basex_6.6.2.orig.tar.gz
+  $ cd basex-6.6.2
+  $ uscan
+  basex: Newer version (6.7) available on remote site:
+  http://githubredir.debian.net/github/BaseXdb/basex/6.7.tar.gz
+  (local version is 6.6.2)
+  basex: Successfully downloaded updated package 6.7.tar.gz
+    and symlinked basex_6.7.orig.tar.gz to it
+  $ ls ../
+  6.7.tar.gz
+  basex_6.7.orig.tar.gz
+  basex-6.6.2
+  basex_6.6.2-1.debian.tar.gz
+  basex_6.6.2-1.dsc
+  basex_6.6.2.orig.tar.gz
+  $ uupdate -v 6.7 ../basex_6.7.orig.tar.gz 
+  New Release will be 6.7-1.
+  -- Untarring the new sourcecode archive ../basex_6.7.orig.tar.gz
+  Unpacking the debian/ directory from version 6.6.2-1 worked fine.
   Remember: Your current directory is the OLD sourcearchive!
-  Do a "cd ../basex-6.6.2" to see the new package
-  $ cd ../basex-6.6.2
+  Do a "cd ../basex-6.7" to see the new package  
+  $ cd ../basex-6.7
   $ dch -i
   ...
-  [ man pages, new commands, new examples, patches OK, new authors ... ]
+  [ man pages (!! RESTORE and missing hyphen), new commands, new examples, patches OK, new authors ... ]
   ...
 * Check author list
  $ grep -hr '@author' . | grep -v BaseX | awk '{print $3, $4 }' | tr -d '\r' | sort | uniq
@@ -55,7 +60,7 @@ In general, follow advice from http://www.debian.org/doc/maint-guide/update.en.h
  $ tree debian/basex
 
 * Lintian check
- $ lintian -i -I --show-overrides --pedantic ../basex_6.6.2-1_all.deb
+ $ lintian -i -I --show-overrides --pedantic ../basex_6.7-1_all.deb
 
 * Clean build
  $ fakeroot ./debian/rules clean
@@ -67,21 +72,25 @@ In general, follow advice from http://www.debian.org/doc/maint-guide/update.en.h
 
 * Build in chroot'ed environment
 	http://www.debian.org/doc/maint-guide/build.en.html#pbuilder
-  $ sudo pbuilder --build --debbuildopts -sa ../basex_6.6.2-1.dsc
+  $ sudo pbuilder --build --debbuildopts -sa ../basex_6.7-1.dsc
 	( $ script -c 'sudo pbuilder --build --debbuildopts -sa basex_6.6.1-2.dsc' build.log )
 	Results are placed in:
   $ ll /var/cache/pbuilder/result/
 
 * Verify package installation
-  $ sudo debi ../
+  $ sudo debi ../basex_6.7-1_i386.changes
+  $ sudo debi /var/cache/pbuilder/result/basex_6.7-1_i386.changes
+
 
 * Check maintainer scripts
   $ sudo dpkg -r basex
   $ sudo dpkg -P basex
-  $ sudo dpkg -i ../basex_6.6.2-1_all.deb
+  $ sudo dpkg -i ../basex_6.7-1_all.deb
 
 * Commit debian/ to basex-dist
   $ fakeroot ./debian/rules clean
+  $ cd ~/basex-dist
+  $ git pull
   $ rm -rf ~/basex-dist/linux/debian/ 
   $ cp -r debian/ ~/basex-dist/linux/
   $ git commit -a 
@@ -104,10 +113,10 @@ In general, follow advice from http://www.debian.org/doc/maint-guide/update.en.h
 	----- 8< ------
 
   - Perform upload
-  $ dput mentors ../basex_6.6.2-1_i386.changes
+  $ dput mentors ../basex_6.7-1_i386.changes
   
   - Verify upload
-  $ vim basex_6.6.1-1_i386.upload
+  $ vim ../basex_6.7-1_i386.upload
 
 - Upload to phobos103.inf.uni-konstanz.de
 	- Configure ~/.mini-dinstall
@@ -140,7 +149,7 @@ In general, follow advice from http://www.debian.org/doc/maint-guide/update.en.h
 	----- 8< ------
 
    - Upload
-   $ dput phobos103 basex_6.6.1-1_i386.changes
+   $ dput phobos103 ./basex_6.7-1_i386.changes
    
    - Sign Release
    $ cd /var/www/debian
@@ -163,5 +172,9 @@ In general, follow advice from http://www.debian.org/doc/maint-guide/update.en.h
 TODO
 ====
 
-[ ] screenshot
-[ ] Tagging with debtags
+[X] screenshot: http://screenshots.debian.net/package/basex
+[X] Tagging with debtags: http://debtags.alioth.debian.org/edit.html?pkg=basex
+[ ] Get rid of warnings:
+    dpkg-gencontrol: warning: package basex: unused substitution variable ${maven:CompileDepends}
+    dpkg-gencontrol: warning: package basex: unused substitution variable ${maven:TestDepends}
+[ ] Think about what to do if a basex server is running while installing a new version?
