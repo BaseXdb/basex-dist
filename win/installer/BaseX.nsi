@@ -229,11 +229,11 @@ Section "Hauptgruppe" SEC01
   ${If} $9 == -1
     CreateDirectory "$INSTDIR\$R4"
     #AccessControl::GrantOnFile "$INSTDIR\$R4" "(BU)" "GenericRead + GenericWrite"
-    nsExec::Exec '"$INSTDIR\bin\basex.bat" "-Wc" "set dbpath \"$INSTDIR\$R4\"; set jaxrxpath \"$INSTDIR\jaxrx\""'
+    nsExec::Exec '"$INSTDIR\bin\basex.bat" "-Wc" "set dbpath \"$INSTDIR\$R4\"; set jaxrxpath \"$INSTDIR\jaxrx\"; set repopath \"$INSTDIR\repo\""'
   ${Else}
     CreateDirectory "$R4"
     #AccessControl::GrantOnFile "$R4" "(BU)" "GenericRead + GenericWrite"
-    nsExec::Exec '"$INSTDIR\bin\basex.bat" "-Wc" "set dbpath \"$R4\"; set jaxrxpath \"$INSTDIR\jaxrx\""'
+    nsExec::Exec '"$INSTDIR\bin\basex.bat" "-Wc" "set dbpath \"$R4\"; set jaxrxpath \"$INSTDIR\jaxrx\"; set repopath \"$INSTDIR\repo\""'
   ${EndIf}
   nsExec::Exec '"$INSTDIR\bin\basex.bat" "-Wc" "set port $R2; set serverport $R2; set jaxrxport $R3"'
   #AccessControl::GrantOnFile "$INSTDIR\.basexperm" "(BU)" "GenericRead + GenericWrite"
