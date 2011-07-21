@@ -81,7 +81,6 @@ In general, follow advice from http://www.debian.org/doc/maint-guide/update.en.h
   $ sudo debi ../basex_6.7-1_i386.changes
   $ sudo debi /var/cache/pbuilder/result/basex_6.7-1_i386.changes
 
-
 * Check maintainer scripts
   $ sudo dpkg -r basex
   $ sudo dpkg -P basex

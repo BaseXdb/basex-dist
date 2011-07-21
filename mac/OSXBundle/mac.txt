@@ -9,7 +9,6 @@ Content:
 	3. Building_a_dmg_from_BaseX.app
 	4. How-to_create_a_Mac_icon_(.icns_file)
 
-
 ----------------------------------------
 1. Launch_BaseX_with_icon_and_nice_title
 ----------------------------------------
