@@ -5,7 +5,7 @@ In general, follow advice from http://www.debian.org/doc/maint-guide/update.en.h
 
 * Tagging a new release
 
-  $ git tag -a 6.7 -m 'Version 6.7 (June 30, 2011) Wikipedia release'
+  $ git tag -a 6.7.1 -m 'Version 6.7.1 (July 28, 2011) Balisage release'
   $ git push --tags
 
 * To delete a tag
