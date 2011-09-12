@@ -8,7 +8,7 @@ LANGKEYS = false
 HOST = localhost
 PORT = 1984
 SERVERPORT = 1984
-JAXRXPORT = 8984
+HTTPPORT = 8984
 TIMEOUT = 0
 
 # User defined section
