@@ -2,7 +2,7 @@
 # You can set additional options at the end of the file.
 
 DBPATH =
-JAXRXPATH =
+HTTPPATH =
 LANG = English
 LANGKEYS = false
 HOST = localhost

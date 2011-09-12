@@ -91,7 +91,7 @@ FunctionEnd
 # =========================================================================
 #
 Function OptionsPage
-Delete $INSTDIR\bin\basexjaxrx.bat
+Delete $INSTDIR\bin\basexhttp.bat
 !insertmacro MUI_HEADER_TEXT "Installation Options" "Choose optional settings for the BaseX installation."
 # Display the page.
 !insertmacro MUI_INSTALLOPTIONS_DISPLAY "Options"
@@ -105,7 +105,7 @@ Function OptionsLeave
 !insertmacro MUI_INSTALLOPTIONS_READ $R1 "Options" "Field 8" "State"
 # serverport field
 !insertmacro MUI_INSTALLOPTIONS_READ $R2 "Options" "Field 9" "State"
-# jax-rx port field
+# HTTP port field
 !insertmacro MUI_INSTALLOPTIONS_READ $R3 "Options" "Field 10" "State"
 # dbpath field
 !insertmacro MUI_INSTALLOPTIONS_READ $R4 "Options" "Field 6" "State"
@@ -134,14 +134,14 @@ ${If} $R2 != "1984"
     Abort
   ${EndIf}
 ${EndIf}
-# JAX-RX port check
+# HTTP port check
 ${If} $R3 != "8984"
   Push "$R3"
   Push "${NUMERIC}"
   Call Validate
   Pop $0
   ${If} $0 == 0
-    MessageBox MB_OK "JAX-RX port contains invalid characters."
+    MessageBox MB_OK "HTTP port contains invalid characters."
     Abort
   ${EndIf}
 ${EndIf}
@@ -197,7 +197,7 @@ Section "Hauptgruppe" SEC01
   File "..\..\bin\basex.bat"
   File "..\..\bin\basexclient.bat"
   File "..\..\bin\basexgui.bat"
-  File "..\..\bin\basexjaxrx.bat"
+  File "..\..\bin\basexhttp.bat"
   File "..\..\bin\basexserver.bat"
   CreateDirectory "$INSTDIR\lib"
   SetOutPath "$INSTDIR\lib"
@@ -216,8 +216,8 @@ Section "Hauptgruppe" SEC01
   File "..\..\images\stop.ico"
   AccessControl::GrantOnFile "$INSTDIR" "(S-1-1-0)" "GenericRead + GenericWrite + GenericExecute + Delete"
   #AccessControl::GrantOnFile "$INSTDIR\.basex" "(BU)" "GenericRead + GenericWrite"
-  CreateDirectory "$INSTDIR\jaxrx"
-  #AccessControl::GrantOnFile "$INSTDIR\jaxrx" "(BU)" "GenericRead + GenericWrite"
+  CreateDirectory "$INSTDIR\http"
+  #AccessControl::GrantOnFile "$INSTDIR\http" "(BU)" "GenericRead + GenericWrite"
   # set dbpath, port and webport
   StrLen $0 $R4
   IntOp $0 $0 - 1
@@ -229,16 +229,16 @@ Section "Hauptgruppe" SEC01
   ${If} $9 == -1
     CreateDirectory "$INSTDIR\$R4"
     #AccessControl::GrantOnFile "$INSTDIR\$R4" "(BU)" "GenericRead + GenericWrite"
-    nsExec::Exec '"$INSTDIR\bin\basex.bat" "-Wc" "set dbpath \"$INSTDIR\$R4\"; set jaxrxpath \"$INSTDIR\jaxrx\"; set repopath \"$INSTDIR\repo\""'
+    nsExec::Exec '"$INSTDIR\bin\basex.bat" "-Wc" "set dbpath \"$INSTDIR\$R4\"; set httppath \"$INSTDIR\http\"; set repopath \"$INSTDIR\repo\""'
   ${Else}
     CreateDirectory "$R4"
     #AccessControl::GrantOnFile "$R4" "(BU)" "GenericRead + GenericWrite"
-    nsExec::Exec '"$INSTDIR\bin\basex.bat" "-Wc" "set dbpath \"$R4\"; set jaxrxpath \"$INSTDIR\jaxrx\"; set repopath \"$INSTDIR\repo\""'
+    nsExec::Exec '"$INSTDIR\bin\basex.bat" "-Wc" "set dbpath \"$R4\"; set httppath \"$INSTDIR\http\"; set repopath \"$INSTDIR\repo\""'
   ${EndIf}
-  nsExec::Exec '"$INSTDIR\bin\basex.bat" "-Wc" "set port $R2; set serverport $R2; set jaxrxport $R3"'
+  nsExec::Exec '"$INSTDIR\bin\basex.bat" "-Wc" "set port $R2; set serverport $R2; set httpport $R3"'
   #AccessControl::GrantOnFile "$INSTDIR\.basexperm" "(BU)" "GenericRead + GenericWrite"
   nsExec::Exec '"$INSTDIR\bin\basex.bat" "-c" "alter user admin $R0"'
-  ${WriteToFile} "java -cp $\"%CP%$\" %VM% org.basex.api.jaxrx.JaxRxServer -P$R0 %*" "$INSTDIR\bin\basexjaxrx.bat"
+  ${WriteToFile} "java -cp $\"%CP%$\" %VM% org.basex.api.BaseXHTTP -P$R0 %*" "$INSTDIR\bin\basexhttp.bat"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BaseX" \
                  "DisplayName" "BaseX"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BaseX" \
@@ -262,8 +262,8 @@ Section -AdditionalIcons
   ${If} $R8 == 1
     CreateDirectory "$SMPROGRAMS\BaseX"
     CreateShortCut "$SMPROGRAMS\BaseX\BaseX GUI.lnk" "$INSTDIR\BaseX.exe" "" "$INSTDIR\ico\BaseX.ico" 0
-    CreateShortCut "$SMPROGRAMS\BaseX\BaseX Server (Start).lnk" "$INSTDIR\bin\basexjaxrx.bat" "-s" "$INSTDIR\ico\start.ico" 0
-    CreateShortCut "$SMPROGRAMS\BaseX\BaseX Server (Stop).lnk" "$INSTDIR\bin\basexjaxrx.bat" "stop" "$INSTDIR\ico\stop.ico" 0
+    CreateShortCut "$SMPROGRAMS\BaseX\BaseX Server (Start).lnk" "$INSTDIR\bin\basexhttp.bat" "-s" "$INSTDIR\ico\start.ico" 0
+    CreateShortCut "$SMPROGRAMS\BaseX\BaseX Server (Stop).lnk" "$INSTDIR\bin\basexhttp.bat" "stop" "$INSTDIR\ico\stop.ico" 0
     CreateShortCut "$SMPROGRAMS\BaseX\BaseX Client.lnk" "$INSTDIR\bin\basexclient.bat" "" "$INSTDIR\ico\shell.ico" 0
     CreateShortCut "$SMPROGRAMS\BaseX\BaseX.lnk" "$INSTDIR\bin\basex.bat" "" "$INSTDIR\ico\shell.ico" 0
     WriteINIStr "$SMPROGRAMS\BaseX\Website.url" "InternetShortcut" "URL" "${PRODUCT_WEB_SITE}"

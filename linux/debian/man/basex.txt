@@ -82,7 +82,7 @@ SERIALIZATION
   * by using the -s flag of the BaseX command-line clients,
   * by setting the SERIALIZER option before running a query,
   * by setting the EXPORTER option before exporting a database,
-  * by setting them via the Output Parameter of the JAX-RX API,
+  * by setting them as Output Parameter of the REST API,
   * by including them in the prolog of the XQuery expression (since XQuery 3.0), or
   * by specifying them in the XQuery function file:write().
 
