@@ -1,7 +1,7 @@
-Packaging a new BaseX release
-=============================
+==================================================== BASEX ON DEBIAN ===
 
-In general, follow advice from http://www.debian.org/doc/maint-guide/update.en.html#newupstream
+In general, follow advice from
+http://www.debian.org/doc/maint-guide/update.en.html#newupstream
 
 * Tagging a new release
 
@@ -66,15 +66,15 @@ In general, follow advice from http://www.debian.org/doc/maint-guide/update.en.h
  $ fakeroot ./debian/rules clean
 
 * Debuild
-	- /etc/devscripts.conf needs to be configured 
-	http://www.debian.org/doc/maint-guide/build.en.html#completebuild
+  - /etc/devscripts.conf needs to be configured 
+  http://www.debian.org/doc/maint-guide/build.en.html#completebuild
   $ debuild -sa
 
 * Build in chroot'ed environment
-	http://www.debian.org/doc/maint-guide/build.en.html#pbuilder
+  http://www.debian.org/doc/maint-guide/build.en.html#pbuilder
   $ sudo pbuilder --build --debbuildopts -sa ../basex_6.7-1.dsc
-	( $ script -c 'sudo pbuilder --build --debbuildopts -sa basex_6.6.1-2.dsc' build.log )
-	Results are placed in:
+  ( $ script -c 'sudo pbuilder --build --debbuildopts -sa basex_6.6.1-2.dsc' build.log )
+  Results are placed in:
   $ ll /var/cache/pbuilder/result/
 
 * Verify package installation
@@ -96,20 +96,20 @@ In general, follow advice from http://www.debian.org/doc/maint-guide/update.en.h
   $ git push origin master
 
 * Upload to mentors
-	- Configure upload  ~/.dput.cf
-	http://mentors.debian.net/cgi-bin/maintainer-intro
+  - Configure upload  ~/.dput.cf
+  http://mentors.debian.net/cgi-bin/maintainer-intro
 
-	----- 8< ------
-	[mentors]
-	fqdn = mentors.debian.net
-	method = ftp
-	login = anonymous
-	incoming = .
-	allow_unsigned_uploads = 0
-	run_dinstall = 0
-	progress_indicator = 2
-	passive_ftp = 1
-	----- 8< ------
+  ----- 8< ------
+  [mentors]
+  fqdn = mentors.debian.net
+  method = ftp
+  login = anonymous
+  incoming = .
+  allow_unsigned_uploads = 0
+  run_dinstall = 0
+  progress_indicator = 2
+  passive_ftp = 1
+  ----- 8< ------
 
   - Perform upload
   $ dput mentors ../basex_6.7-1_i386.changes
@@ -118,34 +118,34 @@ In general, follow advice from http://www.debian.org/doc/maint-guide/update.en.h
   $ vim ../basex_6.7-1_i386.upload
 
 - Upload to phobos103.inf.uni-konstanz.de
-	- Configure ~/.mini-dinstall
-	http://upsilon.cc/~zack/blog/posts/2009/04/howto:_uploading_to_people.d.o_using_dput/
-	----- 8< ------
-	[DEFAULT]
-	mail_to = alex@holupirek.de
-	incoming_permissions = 0750
-	architectures = all
-	archive_style = flat
-	dynamic_reindex = 1
-	archivedir = /var/www/debian
-	generate_release = 1
-	release_origin = BaseX
-	release_label = BaseX
-	release_description = Unofficial Debian BaseX packages maintained by Alexander Holupirek
-	
-	[unstable]
-	release_suite = unstable
-	----- 8< ------
+  - Configure ~/.mini-dinstall
+  http://upsilon.cc/~zack/blog/posts/2009/04/howto:_uploading_to_people.d.o_using_dput/
+  ----- 8< ------
+  [DEFAULT]
+  mail_to = alex@holupirek.de
+  incoming_permissions = 0750
+  architectures = all
+  archive_style = flat
+  dynamic_reindex = 1
+  archivedir = /var/www/debian
+  generate_release = 1
+  release_origin = BaseX
+  release_label = BaseX
+  release_description = Unofficial Debian BaseX packages maintained by Alexander Holupirek
+  
+  [unstable]
+  release_suite = unstable
+  ----- 8< ------
 
-	- Configure ~/.dput.cf
-	----- 8< ------
-	[phobos103]
-	fqdn = phobos103.inf.uni-konstanz.de
-	method = scp
-	login = *
-	incoming = /var/www//debian/mini-dinstall/incoming
-	post_upload_command = ssh phobos103.inf.uni-konstanz.de mini-dinstall -b
-	----- 8< ------
+  - Configure ~/.dput.cf
+  ----- 8< ------
+  [phobos103]
+  fqdn = phobos103.inf.uni-konstanz.de
+  method = scp
+  login = *
+  incoming = /var/www//debian/mini-dinstall/incoming
+  post_upload_command = ssh phobos103.inf.uni-konstanz.de mini-dinstall -b
+  ----- 8< ------
 
    - Upload
    $ dput phobos103 ./basex_6.7-1_i386.changes
@@ -177,3 +177,5 @@ TODO
     dpkg-gencontrol: warning: package basex: unused substitution variable ${maven:CompileDepends}
     dpkg-gencontrol: warning: package basex: unused substitution variable ${maven:TestDepends}
 [ ] Think about what to do if a basex server is running while installing a new version?
+
+========================================================================
