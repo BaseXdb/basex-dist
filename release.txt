@@ -1,25 +1,10 @@
-RELEASE ========================================================================
+====================================================== BASEX RELEASE ===
 
- The release.pl script creates a "release" folder with the following content:
+ The release.pl script creates a "release" folder with the following
+ contents:
 
  -> JAR archive, using Maven: BaseX$v.jar
  -> ZIP archive, containing scripts: BaseX$v.zip
  -> Windows Installer, using Launch4J and NSIS: BaseX$v.exe
 
-NOTES --------------------------------------------------------------------------
-
- This script gets the version from pom.xml from the BaseX project folder.
-
-FILES --------------------------------------------------------------------------
-
- release.pl: Script for creating all the above versions for new releases.
-
---------------------------------------------------------------------------------
-
- Any kind of feedback is welcome; please check out the online documentation at
- http://docs.basex.org and tell us if you run into any troubles while installing
- and running BaseX: basex-talk@mailman.uni-konstanz.de
-
- BaseX Team, 2011
-
-================================================================================
+========================================================================
