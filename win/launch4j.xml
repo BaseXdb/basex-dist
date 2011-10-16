@@ -15,20 +15,22 @@
   <icon>../images/BaseX.ico</icon>
    <classPath>
     <mainClass>org.basex.BaseXGUI</mainClass>
-    <cp>../lib/tagsoup-1.2.jar</cp>
-    <cp>../lib/lucene-stemmers-3.4.0.jar</cp>
+    <cp>lib/tagsoup-1.2.jar</cp>
+    <cp>lib/lucene-stemmers-3.4.0.jar</cp>
+    <cp>lib/xml-resolver-1.2.jar</cp>
+    <cp>lib/igo-0.4.3.jar</cp>
   </classPath>
   <jre>
     <path></path>
     <minVersion>1.6.0</minVersion>
     <maxVersion></maxVersion>
     <jdkPreference>preferJre</jdkPreference>
-    <maxHeapSize>1024</maxHeapSize>
+    <maxHeapSize>512</maxHeapSize>
   </jre>
   <versionInfo>
     <fileVersion>$f</fileVersion>
     <txtFileVersion>BaseX $v</txtFileVersion>
-    <fileDescription>Native XML Database and XQuery Processor</fileDescription>
+    <fileDescription>XML Database and XPath/XQuery Processor</fileDescription>
     <copyright>(c) BaseX Team, 2011</copyright>
     <productVersion>$f</productVersion>
     <txtProductVersion>BaseX $v</txtProductVersion>
