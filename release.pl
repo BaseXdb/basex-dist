@@ -38,6 +38,9 @@ sub prepare {
   # create packages
   pkg("basex");
   pkg("basex-api");
+  # create WAR file
+  system("cd ../basex-api && mvn compile war:war");
+  move("../basex-api/target/basex-api-$v.war", "release/basex.war");
 }
 
 # gets version from pom file
@@ -48,10 +51,14 @@ sub version {
   while(my $l = <POM>) {
     next if $l !~ m|<version>(.*)</version>|;
     $v = $1;
-    if (length($v) == 3) {
+    if (length($v) == 1) {
+      $f = $v . ".0.0.0";
+    } elsif (length($v) == 3) {
       $f = $v . ".0.0";
     } elsif (length($v) == 5) {
       $f = $v . ".0";
+    } else {
+      $f = substr($v, 0, 5).".".time();
     }
     last;
   }
@@ -75,9 +82,11 @@ sub exe {
   open(L4J, "win/launch4j.xml");
   my @raw_data=<L4J>;
   open(L4JTMP, '>>release/launch4j.xml');
+  (my $ff = $f) =~ s/-.*//;
+  (my $vv = $v) =~ s/-.*//;
   foreach my $line (@raw_data) {
-    $line =~ s/\$f/$f/g;
-    $line =~ s/\$v/$v/g; 
+    $line =~ s/\$f/$ff/g;
+    $line =~ s/\$v/$vv/g; 
     print L4JTMP $line;
   }
   close(L4J);
@@ -98,21 +107,29 @@ sub zip {
   my $zip = Archive::Zip->new();
 
   # Add directories
-  $zip->addDirectory("lib");
-  $zip->addDirectory("bin");
-  $zip->addDirectory("etc");
+  my $name = "basex";
+  $zip->addDirectory("$name/");
+  $zip->addDirectory("$name/lib");
+  $zip->addDirectory("$name/bin");
+  $zip->addDirectory("$name/etc");
+  $zip->addString("", "$name/.basex");
 
   # Add files from disk
-  $zip->addFile("release/basex.jar", "BaseX.jar");
+  $zip->addFile("release/basex.jar", "$name/BaseX.jar");
+  $zip->addFile("../$name/readme.txt", "$name/readme.txt");
+  $zip->addFile("../$name/license.txt", "$name/license.txt");
+  $zip->addFile("../$name/changelog.txt", "$name/changelog.txt");
+
   foreach my $file(glob("etc/*")) {
-    $zip->addFile($file, $file);
+    $zip->addFile($file, "$name/$file");
   }
-  $zip->addFile("release/basex-api.jar", "lib/basex-api.jar");
+  $zip->addFile("release/basex-api.jar", "$name/lib/basex-api.jar");
 
   # bin folder
   foreach my $file(glob("bin/*")) {
     next if $file =~ /basexhttp.bat/;
-    $zip->addFile($file, $file);
+    my $m = $zip->addFile($file, "$name/$file");
+    $m->unixFileAttributes($file =~ /.bat$/ ? 0400 : 0700);
   }
 
   # add the start call in REST script
@@ -122,12 +139,12 @@ sub zip {
   print REST 'java -cp "%CP%;." %VM% org.basex.api.BaseXHTTP %*';
   close(REST);
 
-  $zip->addFile("release/basexhttp.bat", "bin/basexhttp.bat");
+  $zip->addFile("release/basexhttp.bat", "$name/bin/basexhttp.bat");
 
   # lib folder
   foreach my $file(glob("../basex-api/lib/*")) {
     (my $target = $file) =~ s|.*/|lib/|;
-    $zip->addFile($file, $target);
+    $zip->addFile($file, "$name/$target");
   }
 
   # save the zip file
@@ -144,6 +161,7 @@ sub finish {
   $v =~ s/\.//g;
   move("release/BaseX.zip","release/BaseX$v.zip");
   move("release/basex.jar","release/BaseX$v.jar");
+  move("release/basex.war","release/BaseX$v.war");
   move("win/installer/Setup.exe","release/BaseX$v.exe");
   unlink("release/basex-api.jar");
 }
