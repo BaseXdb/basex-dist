@@ -7,6 +7,9 @@ use strict;
 use File::Copy;
 use Archive::Zip qw( :ERROR_CODES :CONSTANTS );
 
+# static directories
+my $release = "release";
+
 # home of launch4j
 my $launch4j = "win/tools/launch4j/launch4jc.exe";
 # home of nsis
@@ -21,6 +24,8 @@ prepare();
 exe();
 # create zip file
 zip();
+# create app file
+app();
 # finish release
 finish();
 
@@ -28,10 +33,10 @@ finish();
 sub prepare {
   print "* Prepare release\n";
 
-  foreach my $file(glob("release/*")) {
+  foreach my $file(glob("$release/*")) {
     unlink($file);
   }
-  mkdir("release");
+  mkdir("$release");
 
   # extract pom version
   version();
@@ -40,7 +45,7 @@ sub prepare {
   pkg("basex-api");
   # create WAR file
   system("cd ../basex-api && mvn compile war:war");
-  move("../basex-api/target/basex-api-$v.war", "release/basex.war");
+  move("../basex-api/target/basex-api-$v.war", "$release/basex.war");
 }
 
 # gets version from pom file
@@ -72,32 +77,32 @@ sub pkg {
 
   unlink("../$name/target/*.jar");
   system("cd ../$name && mvn install -q -DskipTests=true");
-  move("../$name/target/$name-$v.jar", "release/$name.jar");
+  move("../$name/target/$name-$v.jar", "$release/$name.jar");
 }
 
 # modifies the launch4j xml
 sub exe {
   print "* Create executable\n";
 
-  open(L4J, "win/launch4j.xml");
-  my @raw_data=<L4J>;
-  open(L4JTMP, '>>release/launch4j.xml');
+  open(my $l4in, "win/launch4j.xml");
+  my @raw = <$l4in>;
+  open(my $l4out, ">".$release."/launch4j.xml");
   (my $ff = $f) =~ s/-.*//;
   (my $vv = $v) =~ s/-.*//;
-  foreach my $line (@raw_data) {
+  foreach my $line (@raw) {
     $line =~ s/\$f/$ff/g;
     $line =~ s/\$v/$vv/g; 
-    print L4JTMP $line;
+    print $l4out $line;
   }
-  close(L4J);
-  close(L4JTMP);
+  close($l4in);
+  close($l4out);
 
-  system("$launch4j release/launch4j.xml");
-  unlink("release/launch4j.xml");
-  move("BaseX.exe", "release/BaseX.exe");
+  system("$launch4j $release/launch4j.xml");
+  unlink("$release/launch4j.xml");
+  move("BaseX.exe", "$release/BaseX.exe");
 
   system($nsis." win/installer/BaseX.nsi");
-  unlink("release/BaseX.exe");
+  unlink("$release/BaseX.exe");
 }
 
 # creates zip archive
@@ -115,7 +120,7 @@ sub zip {
   $zip->addString("", "$name/.basex");
 
   # Add files from disk
-  $zip->addFile("release/basex.jar", "$name/BaseX.jar");
+  $zip->addFile("$release/basex.jar", "$name/BaseX.jar");
   $zip->addFile("../$name/readme.txt", "$name/readme.txt");
   $zip->addFile("../$name/license.txt", "$name/license.txt");
   $zip->addFile("../$name/changelog.txt", "$name/changelog.txt");
@@ -123,7 +128,7 @@ sub zip {
   foreach my $file(glob("etc/*")) {
     $zip->addFile($file, "$name/$file");
   }
-  $zip->addFile("release/basex-api.jar", "$name/lib/basex-api.jar");
+  $zip->addFile("$release/basex-api.jar", "$name/lib/basex-api.jar");
 
   # bin folder
   foreach my $file(glob("bin/*")) {
@@ -134,12 +139,12 @@ sub zip {
 
   # add the start call in REST script
   # (needs to be done manually, as file is also modified by .nsi script)
-  copy("bin/basexhttp.bat", "release/basexhttp.bat");
-  open (REST,'>> release/basexhttp.bat');
-  print REST 'java -cp "%CP%;." %VM% org.basex.api.BaseXHTTP %*';
-  close(REST);
+  copy("bin/basexhttp.bat", "$release/basexhttp.bat");
+  open (my $rest, ">>".$release."/basexhttp.bat");
+  print $rest 'java -cp "%CP%;." %VM% org.basex.api.BaseXHTTP %*';
+  close($rest);
 
-  $zip->addFile("release/basexhttp.bat", "$name/bin/basexhttp.bat");
+  $zip->addFile("$release/basexhttp.bat", "$name/bin/basexhttp.bat");
 
   # lib folder
   foreach my $file(glob("../basex-api/lib/*")) {
@@ -148,10 +153,56 @@ sub zip {
   }
 
   # save the zip file
-  unless ($zip->writeToFileNamed("release/BaseX.zip") == AZ_OK ) {
+  unless ($zip->writeToFileNamed("$release/BaseX.zip") == AZ_OK ) {
     die "Could not write ZIP file.";
   }
-  unlink("release/basexhttp.bat");
+  unlink("$release/basexhttp.bat");
+}
+
+# creates app archive
+sub app {
+  print "* Create APP file\n";
+
+  my $zip = Archive::Zip->new();
+  my $info = "";
+  my $classes = "<array>\n".
+"        <string>\$JAVAROOT/repo/org/basex/basex/$v/basex-$v.jar</string>\n".
+"        <string>\$JAVAROOT/repo/lib/tagsoup-1.2.jar</string>\n".
+"        <string>\$JAVAROOT/repo/lib/xml-resolver-1.2.jar</string>\n".
+"        <string>\$JAVAROOT/repo/lib/lucene-stemmers-3.4.0.jar</string>\n".
+"        <string>\$JAVAROOT/repo/lib/igo-0.4.3.jar</string>\n".
+"      </array>";
+  open(my $in, "mac/OSXBundle/Info.plist");
+  while(my $l = <$in>) {
+    $info =~ s/\$\{bundleName\}/BaseX/;
+    $info =~ s/\$\{iconFile\}/BaseX.icns/;
+    $info =~ s/\$\{mainClass\}/org.basex.BaseXGUI/;
+    $info =~ s/\$\{classpath\}/$classes/;
+    $info .= $l;
+  }
+  close($in);
+  $zip->addString($info,
+    "BaseX.app/Contents/Info.plist");
+  $zip->addFile("mac/OSXBundle/JavaApplicationStub",
+    "BaseX.app/Contents/MacOS/JavaApplicationStub");
+  $zip->addFile("mac/OSXBundle/BaseX.icns",
+    "BaseX.app/Contents/Resources/BaseX.icns");
+
+  # lib folder
+  foreach my $file(glob("../basex-api/lib/*")) {
+    (my $target = $file) =~ s|.*/||;
+    $zip->addFile($file, 
+      "BaseX.app/Contents/Resources/Java/repo/lib/$target");
+  }
+  $zip->addFile("$release/basex-api.jar", 
+    "BaseX.app/Contents/Resources/Java/repo/lib/basex-api.jar");
+  $zip->addFile("$release/basex.jar",
+    "BaseX.app/Contents/Resources/Java/repo/org/basex/basex/7.0/basex-$v.jar");
+
+  # save the zip file
+  unless ($zip->writeToFileNamed("$release/BaseX.app") == AZ_OK ) {
+    die "Could not write APP file.";
+  }
 }
 
 # finishes the new release
@@ -159,9 +210,10 @@ sub finish {
   print "* Finish release\n";
 
   $v =~ s/\.//g;
-  move("release/BaseX.zip","release/BaseX$v.zip");
-  move("release/basex.jar","release/BaseX$v.jar");
-  move("release/basex.war","release/BaseX$v.war");
-  move("win/installer/Setup.exe","release/BaseX$v.exe");
-  unlink("release/basex-api.jar");
+  move("$release/BaseX.app", "$release/BaseX$v.app");
+  move("$release/BaseX.zip", "$release/BaseX$v.zip");
+  move("$release/basex.jar", "$release/BaseX$v.jar");
+  move("$release/basex.war", "$release/BaseX$v.war");
+  move("win/installer/Setup.exe", "$release/BaseX$v.exe");
+  unlink("$release/basex-api.jar");
 }
