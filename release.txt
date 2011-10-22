@@ -1,10 +1,6 @@
 ====================================================== BASEX RELEASE ===
 
- The release.pl script creates a "release" folder with the following
- contents:
-
- -> JAR archive, using Maven: BaseX$v.jar
- -> ZIP archive, containing scripts: BaseX$v.zip
- -> Windows Installer, using Launch4J and NSIS: BaseX$v.exe
+ The release.pl script creates a "release" folder with various files
+ needed for a new release.
 
 ========================================================================

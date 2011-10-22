@@ -1,7 +1,8 @@
 !define JAR "BaseX.jar"
 !define PRODUCT_NAME "BaseX"
 !define PRODUCT_PUBLISHER "BaseX Team"
-!define PRODUCT_WEB_SITE "http://www.basex.org"
+!define PRODUCT_WEB_SITE "http://basex.org"
+!define PRODUCT_WEB_DOCS "http://docs.basex.org"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\${JAR}"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
@@ -18,7 +19,7 @@ RequestExecutionLevel admin
 
 ; MUI Settings
 !define MUI_ABORTWARNING
-!define MUI_ICON "..\..\images\BaseX.ico"
+!define MUI_ICON "..\images\BaseX.ico"
 !define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\modern-uninstall.ico"
 !define MUI_FINISHPAGE_NOAUTOCLOSE
 Function .onInit
@@ -38,7 +39,7 @@ Pop "${Var}"
 Page custom CheckInstalledJRE
 ; License page
 !define MUI_LICENSEPAGE_RADIOBUTTONS
-!insertmacro MUI_PAGE_LICENSE "..\..\..\basex\license.txt"
+!insertmacro MUI_PAGE_LICENSE "..\license.txt"
 ; Directory page
 !insertmacro MUI_PAGE_DIRECTORY
 ; Custom page
@@ -162,11 +163,15 @@ ${EndIf}
 !insertmacro MUI_INSTALLOPTIONS_READ $R6 "Options" "Field 5" "State"
 # .xq file Association
         ${If} $R5 == 1
-	  ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xq" "XQ File"
+          ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xq" "XQuery File"
+          ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xqm" "XQuery File"
+          ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xqy" "XQuery File"
+          ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xquery" "XQuery File"
+          ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xql" "XQuery Library"
         ${EndIf}
 # .xml file Association
         ${If} $R6 == 1
-          ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xml" "XML File"
+          ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xml" "XML Document"
         ${EndIf}
         ${RefreshShellIcons}
 FunctionEnd
@@ -188,35 +193,33 @@ ShowUnInstDetails show
 Section "Hauptgruppe" SEC01
   SetOutPath "$INSTDIR"
   SetOverwrite ifnewer
-  File "..\..\release\BaseX.exe"
+  File "..\release\BaseX.exe"
   CreateDirectory "$INSTDIR\etc"
   SetOutPath "$INSTDIR\etc"
-  File "..\..\etc\factbook.xml"
+  File "..\etc\factbook.xml"
   CreateDirectory "$INSTDIR\bin"
   SetOutPath "$INSTDIR\bin"
-  File "..\..\bin\basex.bat"
-  File "..\..\bin\basexclient.bat"
-  File "..\..\bin\basexgui.bat"
-  File "..\..\bin\basexhttp.bat"
-  File "..\..\bin\basexserver.bat"
+  File "..\release\bin\*.bat"
   CreateDirectory "$INSTDIR\lib"
   SetOutPath "$INSTDIR\lib"
-  File "..\..\release\basex-api.jar"
-  File "..\..\..\basex-api\lib\*"
+  File "..\release\basex-api.jar"
+  File "..\..\basex-api\lib\*"
+  File "..\..\basex\lib\*"
   SetOutPath "$INSTDIR"
-  File "..\..\release\${JAR}"
-  File "..\..\..\basex\license.txt"
+  File "..\release\${JAR}"
+  File "..\..\basex\license.txt"
+  File "..\..\basex\changelog.txt"
+  File "..\readme.txt"
   File ".basex"
   CreateDirectory "$INSTDIR\ico"
   SetOutPath "$INSTDIR\ico"
-  File "..\..\images\BaseX.ico"
-  File "..\..\images\xml.ico"
-  File "..\..\images\shell.ico"
-  File "..\..\images\start.ico"
+  File "..\images\BaseX.ico"
+  File "..\images\xml.ico"
+  File "..\images\shell.ico"
+  File "..\images\start.ico"
   AccessControl::GrantOnFile "$INSTDIR" "(S-1-1-0)" "GenericRead + GenericWrite + GenericExecute + Delete"
-  #AccessControl::GrantOnFile "$INSTDIR\.basex" "(BU)" "GenericRead + GenericWrite"
   CreateDirectory "$INSTDIR\http"
-  #AccessControl::GrantOnFile "$INSTDIR\http" "(BU)" "GenericRead + GenericWrite"
+  CreateDirectory "$INSTDIR\repo"
   # set dbpath, port and webport
   StrLen $0 $R4
   IntOp $0 $0 - 1
@@ -227,17 +230,17 @@ Section "Hauptgruppe" SEC01
   !insertmacro IndexOf $9 "$R4" ":"
   ${If} $9 == -1
     CreateDirectory "$INSTDIR\$R4"
-    #AccessControl::GrantOnFile "$INSTDIR\$R4" "(BU)" "GenericRead + GenericWrite"
     nsExec::Exec '"$INSTDIR\bin\basex.bat" "-Wc" "set dbpath \"$INSTDIR\$R4\"; set httppath \"$INSTDIR\http\"; set repopath \"$INSTDIR\repo\""'
   ${Else}
     CreateDirectory "$R4"
-    #AccessControl::GrantOnFile "$R4" "(BU)" "GenericRead + GenericWrite"
     nsExec::Exec '"$INSTDIR\bin\basex.bat" "-Wc" "set dbpath \"$R4\"; set httppath \"$INSTDIR\http\"; set repopath \"$INSTDIR\repo\""'
   ${EndIf}
   nsExec::Exec '"$INSTDIR\bin\basex.bat" "-Wc" "set port $R2; set serverport $R2; set httpport $R3"'
-  #AccessControl::GrantOnFile "$INSTDIR\.basexperm" "(BU)" "GenericRead + GenericWrite"
-  nsExec::Exec '"$INSTDIR\bin\basex.bat" "-c" "alter user admin $R0"'
-  ${WriteToFile} "java -cp $\"%CP%$\" %VM% org.basex.api.BaseXHTTP -P$R0 %*" "$INSTDIR\bin\basexhttp.bat"
+
+  md5dll::GetMD5String "$R0"
+  Pop $0
+  # change admin password
+  nsExec::Exec '"$INSTDIR\bin\basex.bat" "-c" "alter user admin $0"'
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BaseX" \
                  "DisplayName" "BaseX"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BaseX" \
@@ -263,9 +266,9 @@ Section -AdditionalIcons
     CreateShortCut "$SMPROGRAMS\BaseX\BaseX GUI.lnk" "$INSTDIR\BaseX.exe" "" "$INSTDIR\ico\BaseX.ico" 0
     CreateShortCut "$SMPROGRAMS\BaseX\BaseX Server.lnk" "$INSTDIR\bin\basexhttp.bat" "" "$INSTDIR\ico\start.ico" 0
     CreateShortCut "$SMPROGRAMS\BaseX\BaseX Client.lnk" "$INSTDIR\bin\basexclient.bat" "" "$INSTDIR\ico\shell.ico" 0
-    CreateShortCut "$SMPROGRAMS\BaseX\BaseX.lnk" "$INSTDIR\bin\basex.bat" "" "$INSTDIR\ico\shell.ico" 0
-    WriteINIStr "$SMPROGRAMS\BaseX\Website.url" "InternetShortcut" "URL" "${PRODUCT_WEB_SITE}"
-    CreateShortCut "$SMPROGRAMS\BaseX\Uninstall.lnk" "$INSTDIR\uninst.exe"
+    CreateShortCut "$SMPROGRAMS\BaseX\BaseX Standalone.lnk" "$INSTDIR\bin\basex.bat" "" "$INSTDIR\ico\shell.ico" 0
+    WriteINIStr "$SMPROGRAMS\BaseX\BaseX Documentation.url" "InternetShortcut" "URL" "${PRODUCT_WEB_DOCS}"
+    CreateShortCut "$SMPROGRAMS\BaseX\Uninstall BaseX.lnk" "$INSTDIR\uninst.exe"
   ${EndIf}
 SectionEnd
 
@@ -276,7 +279,6 @@ Section -Post
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "URLInfoAbout" "${PRODUCT_WEB_SITE}"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "Publisher" "${PRODUCT_PUBLISHER}"
 SectionEnd
-
 
 Function un.onUninstSuccess
   HideWindow
@@ -299,8 +301,12 @@ Section Uninstall
   DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
   DeleteRegKey HKLM "${PRODUCT_DIR_REGKEY}"
   ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "$INSTDIR\bin"
-  ${unregisterExtension} ".xq" "XQ File"
-  ${unregisterExtension} ".xml" "XML File"
+  ${unregisterExtension} ".xq" "XQuery File"
+  ${unregisterExtension} ".xqm" "XQuery File"
+  ${unregisterExtension} ".xqy" "XQuery File"
+  ${unregisterExtension} ".xquery" "XQuery File"
+  ${unregisterExtension} ".xql" "XQuery Library"
+  ${unregisterExtension} ".xml" "XML Document"
   ${RefreshShellIcons}
   SetAutoClose true
 SectionEnd

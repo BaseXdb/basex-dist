@@ -49,7 +49,7 @@ o-----------------------------------------------------------------------------o
 
   !verbose push
   !verbose 4
-  !echo `${STRFUNC_INITMSGPRE}NSIS ${STRFUNC} ${STRFUNC_VER} - Copyright ${STRFUNC_CREDITS}${STRFUNC_INITMSGPOST}`
+  ;!echo `${STRFUNC_INITMSGPRE}NSIS ${STRFUNC} ${STRFUNC_VER} - Copyright ${STRFUNC_CREDITS}${STRFUNC_INITMSGPOST}`
   !verbose pop
 
   ;Header File Function Init Message Prefix and Postfix
@@ -82,13 +82,13 @@ o-----------------------------------------------------------------------------o
     !verbose 4
 
     !ifndef `Un${ShortName}`
-      !echo `${STRFUNC_FUNCMSGPRE}$ {Un${ShortName}} - Copyright ${Credits}${STRFUNC_FUNCMSGPOST}`
+      ;!echo `${STRFUNC_FUNCMSGPRE}$ {Un${ShortName}} - Copyright ${Credits}${STRFUNC_FUNCMSGPOST}`
       !verbose pop
       !define `Un${ShortName}` `!insertmacro FUNCTION_STRING_Un${ShortName}_Call`
       !define `Un${ShortName}_INCLUDED`
       Function `un.${ShortName}`
     !else
-      !echo `${STRFUNC_FUNCMSGPRE}$ {${ShortName}} - Copyright ${Credits}${STRFUNC_FUNCMSGPOST}`
+      ;!echo `${STRFUNC_FUNCMSGPRE}$ {${ShortName}} - Copyright ${Credits}${STRFUNC_FUNCMSGPOST}`
       !verbose pop
       !undef `${ShortName}`
       !define `${ShortName}` `!insertmacro FUNCTION_STRING_${ShortName}_Call`
@@ -1505,7 +1505,7 @@ o-----------------------------------------------------------------------------o
   !macro FUNCTION_STRING_StrCase_Call ResultVar String Type
     !verbose push
     !verbose 4
-    !echo `$ {StrCase} "${ResultVar}" "${String}" "${Type}"`
+    ;!echo `$ {StrCase} "${ResultVar}" "${String}" "${Type}"`
     !verbose pop
 
     Push `${String}`
@@ -1516,7 +1516,7 @@ o-----------------------------------------------------------------------------o
   !macro FUNCTION_STRING_UnStrCase_Call ResultVar String Type
     !verbose push
     !verbose 4
-    !echo `$ {UnStrCase} "${ResultVar}" "${String}" "${Type}"`
+    ;!echo `$ {UnStrCase} "${ResultVar}" "${String}" "${Type}"`
     !verbose pop
 
     Push `${String}`
@@ -1528,7 +1528,7 @@ o-----------------------------------------------------------------------------o
   !macro FUNCTION_STRING_StrClb_Call ResultVar String Action
     !verbose push
     !verbose 4
-    !echo `$ {StrClb} "${ResultVar}" "${String}" "${Action}"`
+    ;!echo `$ {StrClb} "${ResultVar}" "${String}" "${Action}"`
     !verbose pop
 
     Push `${String}`
@@ -1539,7 +1539,7 @@ o-----------------------------------------------------------------------------o
   !macro FUNCTION_STRING_UnStrClb_Call ResultVar String Action
     !verbose push
     !verbose 4
-    !echo `$ {UnStrClb} "${ResultVar}" "${String}" "${Action}"`
+    ;!echo `$ {UnStrClb} "${ResultVar}" "${String}" "${Action}"`
     !verbose pop
 
     Push `${String}`
@@ -1551,7 +1551,7 @@ o-----------------------------------------------------------------------------o
   !macro FUNCTION_STRING_StrIOToNSIS_Call ResultVar String
     !verbose push
     !verbose 4
-    !echo `$ {StrIOToNSIS} "${ResultVar}" "${String}"`
+    ;!echo `$ {StrIOToNSIS} "${ResultVar}" "${String}"`
     !verbose pop
 
     Push `${String}`
@@ -1561,7 +1561,7 @@ o-----------------------------------------------------------------------------o
   !macro FUNCTION_STRING_UnStrIOToNSIS_Call ResultVar String
     !verbose push
     !verbose 4
-    !echo `$ {UnStrIOToNSIS} "${ResultVar}" "${String}"`
+    ;!echo `$ {UnStrIOToNSIS} "${ResultVar}" "${String}"`
     !verbose pop
 
     Push `${String}`
@@ -1572,7 +1572,7 @@ o-----------------------------------------------------------------------------o
   !macro FUNCTION_STRING_StrLoc_Call ResultVar String StrToSearchFor OffsetDirection
     !verbose push
     !verbose 4
-    !echo `$ {StrLoc} "${ResultVar}" "${String}" "${StrToSearchFor}" "${OffsetDirection}"`
+    ;!echo `$ {StrLoc} "${ResultVar}" "${String}" "${StrToSearchFor}" "${OffsetDirection}"`
     !verbose pop
 
     Push `${String}`
@@ -1584,7 +1584,7 @@ o-----------------------------------------------------------------------------o
   !macro FUNCTION_STRING_UnStrLoc_Call ResultVar String StrToSearchFor OffsetDirection
     !verbose push
     !verbose 4
-    !echo `$ {UnStrLoc} "${ResultVar}" "${String}" "${StrToSearchFor}" "${OffsetDirection}"`
+    ;!echo `$ {UnStrLoc} "${ResultVar}" "${String}" "${StrToSearchFor}" "${OffsetDirection}"`
     !verbose pop
 
     Push `${String}`
@@ -1597,7 +1597,7 @@ o-----------------------------------------------------------------------------o
   !macro FUNCTION_STRING_StrNSISToIO_Call ResultVar String
     !verbose push
     !verbose 4
-    !echo `$ {StrNSISToIO} "${ResultVar}" "${String}"`
+    ;!echo `$ {StrNSISToIO} "${ResultVar}" "${String}"`
     !verbose pop
 
     Push `${String}`
@@ -1607,7 +1607,7 @@ o-----------------------------------------------------------------------------o
   !macro FUNCTION_STRING_UnStrNSISToIO_Call ResultVar String
     !verbose push
     !verbose 4
-    !echo `$ {UnStrNSISToIO} "${ResultVar}" "${String}"`
+    ;!echo `$ {UnStrNSISToIO} "${ResultVar}" "${String}"`
     !verbose pop
 
     Push `${String}`
@@ -1618,7 +1618,7 @@ o-----------------------------------------------------------------------------o
   !macro FUNCTION_STRING_StrRep_Call ResultVar String StringToReplace ReplacementString
     !verbose push
     !verbose 4
-    !echo `$ {StrRep} "${ResultVar}" "${String}" "${StringToReplace}" "${ReplacementString}"`
+    ;!echo `$ {StrRep} "${ResultVar}" "${String}" "${StringToReplace}" "${ReplacementString}"`
     !verbose pop
 
     Push `${String}`
@@ -1630,7 +1630,7 @@ o-----------------------------------------------------------------------------o
   !macro FUNCTION_STRING_UnStrRep_Call ResultVar String StringToReplace ReplacementString
     !verbose push
     !verbose 4
-    !echo `$ {UnStrRep} "${ResultVar}" "${String}" "${StringToReplace}" "${ReplacementString}"`
+    ;!echo `$ {UnStrRep} "${ResultVar}" "${String}" "${StringToReplace}" "${ReplacementString}"`
     !verbose pop
 
     Push `${String}`
@@ -1643,7 +1643,7 @@ o-----------------------------------------------------------------------------o
   !macro FUNCTION_STRING_StrSort_Call ResultVar String CenterStr LeftStr RightStr IncludeCenterStr IncludeLeftStr IncludeRightStr
     !verbose push
     !verbose 4
-    !echo `$ {StrSort} "${ResultVar}" "${String}" "${CenterStr}" "${LeftStr}" "${RightStr}" "${IncludeCenterStr}" "${IncludeLeftStr}" "${IncludeRightStr}"`
+    ;!echo `$ {StrSort} "${ResultVar}" "${String}" "${CenterStr}" "${LeftStr}" "${RightStr}" "${IncludeCenterStr}" "${IncludeLeftStr}" "${IncludeRightStr}"`
     !verbose pop
 
     Push `${String}`
@@ -1659,7 +1659,7 @@ o-----------------------------------------------------------------------------o
   !macro FUNCTION_STRING_UnStrSort_Call ResultVar String CenterStr LeftStr RightStr IncludeCenterStr IncludeLeftStr IncludeRightStr
     !verbose push
     !verbose 4
-    !echo `$ {UnStrSort} "${ResultVar}" "${String}" "${CenterStr}" "${LeftStr}" "${RightStr}" "${IncludeCenterStr}" "${IncludeLeftStr}" "${IncludeRightStr}"`
+    ;!echo `$ {UnStrSort} "${ResultVar}" "${String}" "${CenterStr}" "${LeftStr}" "${RightStr}" "${IncludeCenterStr}" "${IncludeLeftStr}" "${IncludeRightStr}"`
     !verbose pop
 
     Push `${String}`
@@ -1676,7 +1676,7 @@ o-----------------------------------------------------------------------------o
   !macro FUNCTION_STRING_StrStr_Call ResultVar String StrToSearchFor
     !verbose push
     !verbose 4
-    !echo `$ {StrStr} "${ResultVar}" "${String}" "${StrToSearchFor}"`
+    ;!echo `$ {StrStr} "${ResultVar}" "${String}" "${StrToSearchFor}"`
     !verbose pop
 
     Push `${String}`
@@ -1687,7 +1687,7 @@ o-----------------------------------------------------------------------------o
   !macro FUNCTION_STRING_UnStrStr_Call ResultVar String StrToSearchFor
     !verbose push
     !verbose 4
-    !echo `$ {UnStrStr} "${ResultVar}" "${String}" "${StrToSearchFor}"`
+    ;!echo `$ {UnStrStr} "${ResultVar}" "${String}" "${StrToSearchFor}"`
     !verbose pop
 
     Push `${String}`
@@ -1699,7 +1699,7 @@ o-----------------------------------------------------------------------------o
   !macro FUNCTION_STRING_StrStrAdv_Call ResultVar String StrToSearchFor SearchDirection ResultStrDirection DisplayStrToSearch Loops CaseSensitive
     !verbose push
     !verbose 4
-    !echo `$ {StrStrAdv} "${ResultVar}" "${String}" "${StrToSearchFor}" "${SearchDirection}" "${ResultStrDirection}" "${DisplayStrToSearch}" "${Loops}" "${CaseSensitive}"`
+    ;!echo `$ {StrStrAdv} "${ResultVar}" "${String}" "${StrToSearchFor}" "${SearchDirection}" "${ResultStrDirection}" "${DisplayStrToSearch}" "${Loops}" "${CaseSensitive}"`
     !verbose pop
 
     Push `${String}`
@@ -1715,7 +1715,7 @@ o-----------------------------------------------------------------------------o
   !macro FUNCTION_STRING_UnStrStrAdv_Call ResultVar String StrToSearchFor SearchDirection ResultStrDirection DisplayStrToSearch Loops CaseSensitive
     !verbose push
     !verbose 4
-    !echo `$ {UnStrStrAdv} "${ResultVar}" "${String}" "${StrToSearchFor}" "${SearchDirection}" "${ResultStrDirection}" "${DisplayStrToSearch}" "${Loops}" "${CaseSensitive}"`
+    ;!echo `$ {UnStrStrAdv} "${ResultVar}" "${String}" "${StrToSearchFor}" "${SearchDirection}" "${ResultStrDirection}" "${DisplayStrToSearch}" "${Loops}" "${CaseSensitive}"`
     !verbose pop
 
     Push `${String}`
@@ -1732,7 +1732,7 @@ o-----------------------------------------------------------------------------o
   !macro FUNCTION_STRING_StrTok_Call ResultVar String Separators ResultPart SkipEmptyParts
     !verbose push
     !verbose 4
-    !echo `$ {StrTok} "${ResultVar}" "${String}" "${Separators}" "${ResultPart}" "${SkipEmptyParts}"`
+    ;!echo `$ {StrTok} "${ResultVar}" "${String}" "${Separators}" "${ResultPart}" "${SkipEmptyParts}"`
     !verbose pop
 
     Push `${String}`
@@ -1745,7 +1745,7 @@ o-----------------------------------------------------------------------------o
   !macro FUNCTION_STRING_UnStrTok_Call ResultVar String Separators ResultPart SkipEmptyParts
     !verbose push
     !verbose 4
-    !echo `$ {UnStrTok} "${ResultVar}" "${String}" "${Separators}" "${ResultPart}" "${SkipEmptyParts}"`
+    ;!echo `$ {UnStrTok} "${ResultVar}" "${String}" "${Separators}" "${ResultPart}" "${SkipEmptyParts}"`
     !verbose pop
 
     Push `${String}`
@@ -1759,7 +1759,7 @@ o-----------------------------------------------------------------------------o
   !macro FUNCTION_STRING_StrTrimNewLines_Call ResultVar String
     !verbose push
     !verbose 4
-    !echo `$ {StrTrimNewLines} "${ResultVar}" "${String}"`
+    ;!echo `$ {StrTrimNewLines} "${ResultVar}" "${String}"`
     !verbose pop
 
     Push `${String}`
@@ -1769,7 +1769,7 @@ o-----------------------------------------------------------------------------o
   !macro FUNCTION_STRING_UnStrTrimNewLines_Call ResultVar String
     !verbose push
     !verbose 4
-    !echo `$ {UnStrTrimNewLines} "${ResultVar}" "${String}"`
+    ;!echo `$ {UnStrTrimNewLines} "${ResultVar}" "${String}"`
     !verbose pop
 
     Push `${String}`
