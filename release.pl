@@ -313,6 +313,6 @@ sub finish {
   move("$release/basex.war", "$release/BaseX$v.war");
   move("$release/BaseX.exe", "$release/BaseX$v.exe");
   unlink("$release/basex-api.jar");
-  #unlink(glob("$release/bin/*"));
+  unlink(glob("$release/bin/*"));
   rmdir("$release/bin");
 }

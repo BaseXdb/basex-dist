@@ -217,6 +217,7 @@ Section "Hauptgruppe" SEC01
   File "..\images\xml.ico"
   File "..\images\shell.ico"
   File "..\images\start.ico"
+  File "..\images\stop.ico"
   AccessControl::GrantOnFile "$INSTDIR" "(S-1-1-0)" "GenericRead + GenericWrite + GenericExecute + Delete"
   CreateDirectory "$INSTDIR\http"
   CreateDirectory "$INSTDIR\repo"
@@ -264,7 +265,8 @@ Section -AdditionalIcons
   ${If} $R8 == 1
     CreateDirectory "$SMPROGRAMS\BaseX"
     CreateShortCut "$SMPROGRAMS\BaseX\BaseX GUI.lnk" "$INSTDIR\BaseX.exe" "" "$INSTDIR\ico\BaseX.ico" 0
-    CreateShortCut "$SMPROGRAMS\BaseX\BaseX Server.lnk" "$INSTDIR\bin\basexhttp.bat" "" "$INSTDIR\ico\start.ico" 0
+    CreateShortCut "$SMPROGRAMS\BaseX\BaseX Server (Start).lnk" "$INSTDIR\bin\basexhttp.bat" "-S" "$INSTDIR\ico\start.ico" 0
+    CreateShortCut "$SMPROGRAMS\BaseX\BaseX Server (Stop).lnk" "$INSTDIR\bin\basexhttp.bat" "stop" "$INSTDIR\ico\stop.ico" 0
     CreateShortCut "$SMPROGRAMS\BaseX\BaseX Client.lnk" "$INSTDIR\bin\basexclient.bat" "" "$INSTDIR\ico\shell.ico" 0
     CreateShortCut "$SMPROGRAMS\BaseX\BaseX Standalone.lnk" "$INSTDIR\bin\basex.bat" "" "$INSTDIR\ico\shell.ico" 0
     WriteINIStr "$SMPROGRAMS\BaseX\BaseX Documentation.url" "InternetShortcut" "URL" "${PRODUCT_WEB_DOCS}"
