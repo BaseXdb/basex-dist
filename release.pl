@@ -55,7 +55,9 @@ sub prepare {
     next if -d $f;
     (my $n = $f) =~ s|.*/||;
     open(my $in, $f);
+    binmode $in;
     open(my $out, ">".$release."/bin/$n");
+    binmode $out;
     while(my $l = <$in>) {
       if($l =~ m|\.\./\.\./|) {
         # basexhttp.bat: replace "%PWD%/../../basex/target/classes" with "basex-api.jar"
@@ -63,6 +65,7 @@ sub prepare {
       }
       $l =~ s|target/classes|BaseX.jar|;
       print $out $l;
+      #print $out ($f =~ /.bat$/ ? "\r\n" : "\n");
     }
     close($in);
     close($out);
@@ -310,6 +313,6 @@ sub finish {
   move("$release/basex.war", "$release/BaseX$v.war");
   move("$release/BaseX.exe", "$release/BaseX$v.exe");
   unlink("$release/basex-api.jar");
-  unlink(glob("$release/bin/*"));
+  #unlink(glob("$release/bin/*"));
   rmdir("$release/bin");
 }
