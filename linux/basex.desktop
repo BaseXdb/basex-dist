@@ -1,10 +1,12 @@
 [Desktop Entry]
 Version=1.0
+Name=BaseX
+Comment=XML database and XPath/XQuery processor
 Type=Application
-Name=BaseX XML database and XPath/XQuery processor
 Exec=basexgui
 Icon=basex
 Terminal=false
-Categories=Development;Database;
+Categories=Development;
 StartupNotify=true
 MimeType=application/xml;text/xml;application/xquery;
+X-SuSE-translate=false
