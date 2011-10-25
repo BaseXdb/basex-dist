@@ -2,9 +2,7 @@ Source: basex
 Section: database
 Priority: optional
 Maintainer: Alexander Holupirek <alex@holupirek.de>
-Build-Depends: debhelper (>= 7), cdbs, default-jdk, maven-debian-helper
-Build-Depends-Indep: libmaven-compiler-plugin-java (>= 2.0.2), libmaven-jar-plugin-java (>= 2.2),  
- libsurefire-java (>= 2.4.3) 
+Build-Depends: debhelper (>= 7), cdbs, default-jdk, maven-debian-helper (>= 1.4)
 Standards-Version: 3.9.2
 Vcs-Git: https://github.com/BaseXdb/basex-dist/tree/master/linux/debian
 Vcs-Browser: https://github.com/BaseXdb/basex-dist/tree/master/linux/debian
@@ -13,7 +11,7 @@ Homepage: http://basex.org
 Package: basex
 Architecture: all
 Depends: ${misc:Depends}, ${maven:Depends}, java-wrappers, default-jre | java6-runtime
-Recommends: ${maven:OptionalDepends}
+Suggests: libtagsoup-java
 Description: XML database and XPath/XQuery processor
  BaseX is a very fast and light-weight, yet powerful XML database and
  XPath/XQuery processor, including support for the latest W3C Full Text and

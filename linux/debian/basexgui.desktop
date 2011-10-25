@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=BaseX XML Database
+Comment=Visually query and analyse your XML data
+TryExec=basexgui
+Exec=basexgui %F
+Icon=basex
+MimeType=text/xml;
+Categories=Development;Utility;Database;
+StartupNotify=true
+StartupWMClass=org-basex-BaseXGUI

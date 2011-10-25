@@ -1,37 +1,38 @@
-Format-Specification: http://dep.debian.net/deps/dep5/
-Upstream-Name: basex
-Upstream-Contact: Christian Grün <cg@basex.org>
+Format: http://anonscm.debian.org/viewvc/dep/web/deps/dep5.mdwn?revision=202
+Upstream-Name: BaseX
+Upstream-Contact: Christian Grün <christian.gruen@uni-konstanz.de> as architect, developer 
 Source: https://github.com/BaseXdb/basex
 
 Files: *
-Copyright:  2005, BaseX Team <info@basex.org>
-License: BSD
-Comment:
-	Following persons contributed to the project and form the 
-	'BaseX Team': 
-	Christian Grün <cg@basex.org>
-	Alexander Holupirek <ah@basex.org>
-	Michael Seiferle <ms@basex.org>
-	Andreas Weiler
-	Bastian Lemke
-	Christian Gruen
-	Dimitar Popov
-	Jens Erat
-	Joerg Hauser
-	Leo Woerteler
-	Lukas Kircher
-	Oliver Egli
-	Philipp Ziemer
-	Rositsa Shadura
-	Sebastian Gath
-	Tim Petrowsky
-	Wolfgang Miller
+Copyright: 2005, BaseX Team <info@basex.org>
+License: BSD-3-clause
+Comment: 
+ Following persons contributed to the project and form the 
+ 'BaseX Team': 
+ Christian Grün <cg@basex.org>
+ Alexander Holupirek <ah@basex.org>
+ Michael Seiferle <ms@basex.org>
+ Andreas Weiler
+ Bastian Lemke
+ Dimitar Popov
+ Jens Erat
+ Joerg Hauser
+ Leo Woerteler
+ Lukas Kircher
+ Oliver Egli
+ Roman Raedle
+ Rositsa Shadura
+ Sebastian Gath
+ Tim Petrowsky
+ Toshio HIRAI
+ Vitali Yemialyanchyk,
+ Wolfgang Miller
 
 Files: debian/*
 Copyright: 2011, Alexander Holupirek <alex@holupirek.de>
-License: BSD
+License: BSD-3-clause
 
-License: BSD
+License: BSD-3-clause
  Copyright (c) 2005-11, BaseX Team <info@basex.org>
  All rights reserved.
  . 
@@ -41,7 +42,7 @@ License: BSD
  . 
  1. Redistributions of source code must retain the above copyright
     notice, this list of conditions and the following disclaimer.
- 
+ . 
  2. Redistributions in binary form must reproduce the above copyright
     notice, this list of conditions and the following disclaimer in the
     documentation and/or other materials provided with the distribution.
