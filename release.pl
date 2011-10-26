@@ -213,7 +213,7 @@ sub app {
     "BaseX.app/Contents/Resources/Java/repo/org/basex/basex/$version/basex-$version.jar");
 
   # save the zip file
-  unless ($zip->writeToFileNamed("$release/BaseX.app") == AZ_OK ) {
+  unless ($zip->writeToFileNamed("$release/BaseX.app.zip") == AZ_OK ) {
     die "Could not write APP file.";
   }
 }
@@ -307,7 +307,7 @@ sub finish {
   print "* Finish release\n";
 
   (my $v = $version) =~ s/\.//g;
-  move("$release/BaseX.app", "$release/BaseX$v.app");
+  move("$release/BaseX.app.zip", "$release/BaseX$v.app.zip");
   move("$release/BaseX.zip", "$release/BaseX$v.zip");
   move("$release/basex.jar", "$release/BaseX$v.jar");
   move("$release/basex.war", "$release/BaseX$v.war");

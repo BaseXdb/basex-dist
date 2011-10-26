@@ -67,7 +67,7 @@
 	</Program_Info>
 	<Program_Descriptions>
 		<English>
-			<Keywords>XML, Database, XQuery, Full-Text</Keywords>
+			<Keywords>XML, Database, XPath, XQuery, XSLT, Full-Text, SQL, JSON</Keywords>
 			<Char_Desc_45>BaseX is an XML Database and XQuery Processor</Char_Desc_45>
 			<Char_Desc_80>BaseX is a compact and high-performance XML Database and XPath/XQuery Processor.</Char_Desc_80>
 			<Char_Desc_250>BaseX is a light-weight and high-performance XML database system and XPath/XQuery processor, including support for the latest W3C Full Text and Update Recommendations. It supports very large XML instances and offers a highly interactive frontend.</Char_Desc_250>
