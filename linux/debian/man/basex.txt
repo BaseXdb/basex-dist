@@ -55,6 +55,7 @@ DATABASE COMMANDS
   EXIT                                   Exit application.
   EXPORT [path]                          Export database to XML.
   FIND [keywords]                        Run a keyword query.
+  FLUSH                                  Flush database.
   GET [option]                           Show global option.
   GRANT [NONE|READ|WRITE|CREATE|ADMIN] (ON [database]) TO [user]   Grant user permissions.
   HELP ([command])                       Get help on BaseX commands.
@@ -68,9 +69,11 @@ DATABASE COMMANDS
   REPLACE [path] [input]                 Replace documents in database.
   REPO [DELETE|INSTALL|LIST]             Install, delete or list packages.
   RESTORE [name (date)]                  Restore database.
+  RETRIEVE [path]                        Retrieve raw data.
   RUN [path]                             Run file as XQuery.
   SET [option] ([value])                 Set global options.
   SHOW [BACKUPS|DATABASES|EVENTS|SESSIONS|USERS]   Show server information.
+  STORE (TO [path]) [input]              Store raw data.
   XQUERY [query]                         Run XQuery.
 
 SERIALIZATION
@@ -149,14 +152,14 @@ EXAMPLES
 
   * Retrieve XML from the web and perform XPath query: 
 
-    $ basex \-q "doc('https://svn.uni-konstanz.de/dbis/basex/tags/6.5/basex/etc/xml/input.xml')//li"
+    $ basex \-q "doc('https://raw.github.com/BaseXdb/basex/master/etc/test/input.xml')//li"
     <li>Exercise 1</li>
     <li>Exercise 2</li>
 
   * W3C XQuery Full-Text (make use of full-text index and perform fuzzy query with a typing error):
 
     $ basex
-    BaseX 6.5 [Standalone]
+    BaseX 7.0 [Standalone]
     Try "help" to get more information.
 
     > SET FTINDEX on 
@@ -185,8 +188,10 @@ SEE ALSO
   ~/.basex                BaseX (standalone and server) properties
   ~/.basexgui             BaseX additional GUI properties 
   ~/.basexperm            user name, passwords, and permissions
+  ~/.basexevents          contains all existing events
   ~/BaseXData             Default database directory
   ~/BaseXData/.logs       Server logs
+  ~/BaseXRepo             Package repository
 
   BaseX Documentation Wiki: http://docs.basex.org
 

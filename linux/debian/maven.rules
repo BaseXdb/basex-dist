@@ -16,5 +16,4 @@
 # and version starting with 3., replacing the version with 3.x
 #   junit junit jar s/3\\..*/3.x/
 
-junit junit jar s/4\..*/4.x/ * *
-org.basex basex jar s/6\..*/6.x/ * *
+org.basex basex jar s/7\..*/7.x/ * *

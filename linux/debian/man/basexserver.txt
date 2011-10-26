@@ -2,7 +2,7 @@ NAME
   basexserver - XML database system and XPath/XQuery processor (server mode)
 
 SYNOPSIS
-  basexserver [-dpsz] [-c] [stop]
+  basexserver [-deipsz] [-c] [stop]
 
 DESCRIPTION
   basexserver starts the server mode of the native XML database system basex(1) on default port 1984.
@@ -58,40 +58,9 @@ USER MANAGEMENT
 DATABASE COMMANDS
   A list of supported Database commands can be obtained from
 
-    $ basexserver \-i help
+    $ basexserver \-ic help
 
   or by browsing http://docs.basex.org/wiki/Commands
-
-  Following table shows BaseX commands and the permission needed to execute the command.
-  Without appropriate permission an error is thrown and the command will not be executed.
-
-  close         Closes currently opened database.  (None)
-  exit          Exits BaseX.  (None)
-  get           Returns a property value.  (None)
-  help          Shows the help texts.  (None)
-  password      Changes password of currently logged-in user.  (None)
-  set           Sets a property value.  (None)
-  xquery        Executes a xquery function without database access.  (None)
-  info          Shows information about the currently opened database.  (Read)
-  list          Shows all available databases.  (Read)
-  open          Opens a database.  (Read)
-  xquery        Executes a read-only xquery function with database access.  (Read)
-  add           Adds documents to the currently opened database.  (Write)
-  create index  Creates the specified index.  (Write)
-  delete        Deletes documents from the currently opened database.  (Write)
-  drop index    Drops the specified index.  (Write)
-  optimize      Optimizes the database structure and renews the indexes.  (Write)
-  xquery        Executes a xquery update function.  (Write)
-  alter db      Renames a database.  (Create)
-  create db     Creates a database.  (Create)
-  drop db       Drops a database.  (Create)
-  export        Exports the database content.  (Create)
-  alter user    Changes the password of an user.  (Admin)
-  create users  Creates a new user.  (Admin)
-  drop user     Drops an user.  (Admin)
-  grant         Assigns permissions to users.  (Admin)
-  kill          Kills an user session on the server.  (Admin)
-  show          Shows different server information.  (Admin)
 
 SEE ALSO
   basexclient(1), basex(1), basexgui(1)
@@ -99,8 +68,10 @@ SEE ALSO
   ~/.basex                BaseX (standalone and server) properties
   ~/.basexgui             BaseX additional GUI properties 
   ~/.basexperm            user name, passwords, and permissions
+  ~/.basexevents          contains all existing events
   ~/BaseXData             Default database directory
   ~/BaseXData/.logs       Server logs
+  ~/BaseXRepo             Package repository
 
   BaseX Documentation Wiki: http://docs.basex.org
 

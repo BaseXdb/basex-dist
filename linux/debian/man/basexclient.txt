@@ -2,7 +2,7 @@ NAME
   basexclient - XML database system and XPath/XQuery processor (client mode)
 
 SYNOPSIS
-  basexclient [-npPU] [-dosvVwz] [-cq] [file]
+  basexclient [-bdinopPsUvVwxz] [-cq] [file]
 
 DESCRIPTION
   basexclient starts a basex(1) XML database client in order to connect to a
@@ -38,8 +38,10 @@ SEE ALSO
   ~/.basex                BaseX (standalone and server) properties
   ~/.basexgui             BaseX additional GUI properties 
   ~/.basexperm            user name, passwords, and permissions
+  ~/.basexevents          contains all existing events
   ~/BaseXData             Default database directory
   ~/BaseXData/.logs       Server logs
+  ~/BaseXRepo             Package repository
 
   BaseX Documentation Wiki: http://docs.basex.org
 

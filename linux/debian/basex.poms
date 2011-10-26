@@ -2,7 +2,9 @@
 # Format of this file is:
 # <path to pom file> [option]*
 # where option can be:
-#   --ignore: ignore this POM or
+#   --ignore: ignore this POM and its artifact if any
+#   --ignore-pom: don't install the POM with mh_install or mh_installpoms. To use with POM files that are created
+#     temporarily for certain artifacts such as Javadoc jars.
 #   --no-parent: remove the <parent> tag from the POM
 #   --package=<package>: an alternative package to use when installing this POM
 #      and its artifact
@@ -20,7 +22,5 @@
 #   --dest-jar=<path>: the destination for the real jar
 #   it will be installed with mh_install.
 #   --classifier=<classifier>: Optional, the classifier for the jar. Empty by default.
-#   --ignore-pom: don't install the POM with mh_install or mh_installpoms. To use with POM files that are created
-#     temporarily for certain artifacts such as Javadoc jars.
 #
-pom.xml --has-package-version --java-lib
+pom.xml --has-package-version

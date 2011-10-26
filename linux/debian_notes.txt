@@ -5,7 +5,7 @@ http://www.debian.org/doc/maint-guide/update.en.html#newupstream
 
 * Tagging a new release
 
-  $ git tag -a 6.7.1 -m 'Version 6.7.1 (July 28, 2011) Balisage release'
+  $ git tag -a 7.0 -m 'Version 7.0 (October 14, 2011) TEI release'
   $ git push --tags
 
 * To delete a tag
@@ -15,37 +15,103 @@ http://www.debian.org/doc/maint-guide/update.en.html#newupstream
   To git@github.com:BaseXdb/basex.git
   - [deleted]     help 
 
+-------------------------------------------------------------------------
+A. Build new from source
+
+$ mkdir new & cd new
+
+* Get tagged code from github (download)
+  $ wget https://github.com/BaseXdb/basex/tarball/7.0
+  $ tar xvzf 7.0 - | tar cf basex.tar.gz -
+  $ mv BaseXdb-basex-fa64da8/ basex
+  $ tar cvzf basex.tar.gz basex/
+
+$ tar xvzf BaseXdb-basex-7.0-0-gff26ab6.tar.gz
+$ cd BaseXdb-basex-fa64da8
+$ mh_make
+> basex
+> basex
+> n
+> n
+> 7.0
+> debian version
+> ignore test dependency
+> ignore test plugin
+> ignore deploy plugin
+> ignore wagon plugin
+
+$ ./debian/rules get-orig-source 
+	Prerequisite:
+	$ scp ../BaseXdb-basex-7.0-0-gff26ab6.tar.gz basex:~/files/releases/7.0/BaseX-source-7.0.tar.gz 
+
+* Copy additional files to debian/ (we should place those on github and nothing else TODO)
+
+basex.examples
+basex.install
+basex.manpages
+basex.desktop
+menu
+watch
+clean
+images/
+man/
+patches/
+scripts/
+
+* Overwrite new with old
+
+changelog (and update using $ dch)
+
+* Merge old with new 
+
+control
+copyright
+	* Check author list
+	$ grep -hr '@author' . | grep -v BaseX | awk '{print $3, $4 }' | tr -d '\r' | sort | uniq
+
+	* Check copyright file
+	$ config-edit -application dpkg-copyright -ui none
+README.source
+
+$ dpkg-buildpackage 
+
+-------------------------------------------------------------------------
+B. Build from existing package 
 * Get basex source and package stub
 
   $ mkdir build
   $ cd build
   $ apt-get source basex
   $ ls
-  basex-6.6.2
-  basex_6.6.2-1.debian.tar.gz
-  basex_6.6.2-1.dsc
-  basex_6.6.2.orig.tar.gz
-  $ cd basex-6.6.2
+  basex-6.7.1  basex_6.7.1-1.debian.tar.gz  basex_6.7.1-1.dsc  basex_6.7.1.orig.tar.gz
+  $ cd basex-6.7.1
   $ uscan
-  basex: Newer version (6.7) available on remote site:
-  http://githubredir.debian.net/github/BaseXdb/basex/6.7.tar.gz
-  (local version is 6.6.2)
-  basex: Successfully downloaded updated package 6.7.tar.gz
-    and symlinked basex_6.7.orig.tar.gz to it
+  basex: Newer version (7.0) available on remote site:
+    http://phobos103.inf.uni-konstanz.de/tst/7.0.tar.gz
+    (local version is 6.7.1)
+  basex: Successfully downloaded updated package 7.0.tar.gz
+    and symlinked basex_7.0.orig.tar.gz to it
+/ If githubredir still fails upload 7.1.tar.gz to files.basex.org/debian/7.1.tar.gz
+/ $ uscan
+/ basex: Newer version (6.7) available on remote site:
+/ http://githubredir.debian.net/github/BaseXdb/basex/6.7.tar.gz
+/ (local version is 6.6.2)
+/ basex: Successfully downloaded updated package 6.7.tar.gz
+/   and symlinked basex_6.7.orig.tar.gz to it
   $ ls ../
-  6.7.tar.gz
-  basex_6.7.orig.tar.gz
-  basex-6.6.2
-  basex_6.6.2-1.debian.tar.gz
-  basex_6.6.2-1.dsc
-  basex_6.6.2.orig.tar.gz
-  $ uupdate -v 6.7 ../basex_6.7.orig.tar.gz 
-  New Release will be 6.7-1.
-  -- Untarring the new sourcecode archive ../basex_6.7.orig.tar.gz
-  Unpacking the debian/ directory from version 6.6.2-1 worked fine.
+  7.0.tar.gz
+  basex_6.7.1.orig.tar.gz
+  basex_6.7.1-1.debian.tar.gz
+  basex-6.7.1
+  basex_6.7.1-1.dsc
+  basex_7.0.orig.tar.gz -> 7.0.tar.gz
+  $ uupdate -v 7.0 ../basex_7.0.orig.tar.gz 
+  New Release will be 7.0-1.
+  -- Untarring the new sourcecode archive ../basex_7.0.orig.tar.gz
+  Unpacking the debian/ directory from version 6.7.1-1 worked fine.
   Remember: Your current directory is the OLD sourcearchive!
-  Do a "cd ../basex-6.7" to see the new package  
-  $ cd ../basex-6.7
+  Do a "cd ../basex-7.0" to see the new package
+  $ cd ../basex-7.0
   $ dch -i
   ...
   [ man pages (!! RESTORE and missing hyphen), new commands, new examples, patches OK, new authors ... ]
@@ -53,38 +119,43 @@ http://www.debian.org/doc/maint-guide/update.en.html#newupstream
 * Check author list
  $ grep -hr '@author' . | grep -v BaseX | awk '{print $3, $4 }' | tr -d '\r' | sort | uniq
 
-* Build package
- $ dpkg-buildpackage
+* Check copyright file
+ $ config-edit -application dpkg-copyright -ui none
+-------------------------------------------------------------------------
+
+* Debuild: Build package w/o signing source and changes
+  - /etc/devscripts.conf needs to be configured 
+  http://www.debian.org/doc/maint-guide/build.en.html#completebuild
+ $ debuild -us -uc
 
 * Quick check generated files
  $ tree debian/basex
 
 * Lintian check
- $ lintian -i -I --show-overrides --pedantic ../basex_6.7-1_all.deb
+ $ lintian -i -I --show-overrides --pedantic ../basex_7.0-1_all.deb
 
 * Clean build
  $ fakeroot ./debian/rules clean
 
-* Debuild
-  - /etc/devscripts.conf needs to be configured 
-  http://www.debian.org/doc/maint-guide/build.en.html#completebuild
-  $ debuild -sa
-
 * Build in chroot'ed environment
   http://www.debian.org/doc/maint-guide/build.en.html#pbuilder
-  $ sudo pbuilder --build --debbuildopts -sa ../basex_6.7-1.dsc
-  ( $ script -c 'sudo pbuilder --build --debbuildopts -sa basex_6.6.1-2.dsc' build.log )
+  $ sudo pbuilder --update
+  $ sudo pbuilder --build --debbuildopts -sa ../basex_7.0-1.dsc
+  ( $ script -c 'sudo pbuilder --build --debbuildopts -sa basex_7.0-1.dsc' build.log )
   Results are placed in:
   $ ll /var/cache/pbuilder/result/
 
 * Verify package installation
-  $ sudo debi ../basex_6.7-1_i386.changes
-  $ sudo debi /var/cache/pbuilder/result/basex_6.7-1_i386.changes
+  $ sudo debi ../basex_7.0-1_i386.changes
+  $ sudo debi /var/cache/pbuilder/result/basex_7.0-1_i386.changes
 
 * Check maintainer scripts
   $ sudo dpkg -r basex
   $ sudo dpkg -P basex
-  $ sudo dpkg -i ../basex_6.7-1_all.deb
+  $ sudo dpkg -i ../basex_7.0-1_all.deb
+
+* Build and sign package
+  $ dpkg-buildpackage -k79967C5F
 
 * Commit debian/ to basex-dist
   $ fakeroot ./debian/rules clean
@@ -111,8 +182,8 @@ http://www.debian.org/doc/maint-guide/update.en.html#newupstream
   passive_ftp = 1
   ----- 8< ------
 
-  - Perform upload
-  $ dput mentors ../basex_6.7-1_i386.changes
+  - Perform mentors upload
+  $ dput mentors ../basex_7.0.1-1_i386.changes
   
   - Verify upload
   $ vim ../basex_6.7-1_i386.upload
@@ -148,7 +219,7 @@ http://www.debian.org/doc/maint-guide/update.en.html#newupstream
   ----- 8< ------
 
    - Upload
-   $ dput phobos103 ./basex_6.7-1_i386.changes
+   $ dput phobos103 ../basex_7.0.1-1_i386.changes
    
    - Sign Release
    $ cd /var/www/debian
@@ -173,9 +244,23 @@ TODO
 
 [X] screenshot: http://screenshots.debian.net/package/basex
 [X] Tagging with debtags: http://debtags.alioth.debian.org/edit.html?pkg=basex
+[X] basex (6.7.1-1) Info PTS Bugs
+    W syntax-error-in-dep5-copyright
+    syntax error in section 4 after the tag license: 2. Redistributions in binary form must reproduce the above copyright\n
 [ ] Get rid of warnings:
     dpkg-gencontrol: warning: package basex: unused substitution variable ${maven:CompileDepends}
     dpkg-gencontrol: warning: package basex: unused substitution variable ${maven:TestDepends}
 [ ] Think about what to do if a basex server is running while installing a new version?
 
+SCRATCHPAD
+==========
+
+* Check DEP5
+http://ddumont.wordpress.com/2011/01/13/debian-copyright-dep5-parsereditorvalidatormigrator-is-released/
+$ aptitude install libconfig-model-perl
+$ config-edit -application dpkg-copyright -ui none
+* uscan
+http://files.basex.org/releases/(\d\.\d)/BaseX-source-(\d\.\d).tar.gz
 ========================================================================
+
+http://raphaelhertzog.com/2011/07/04/how-to-prepare-patches-for-debian-packages/

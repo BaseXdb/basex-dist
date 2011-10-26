@@ -18,8 +18,10 @@ SEE ALSO
   ~/.basex                BaseX (standalone and server) properties
   ~/.basexgui             BaseX additional GUI properties 
   ~/.basexperm            user name, passwords, and permissions
+  ~/.basexevents          contains all existing events
   ~/BaseXData             Default database directory
   ~/BaseXData/.logs       Server logs
+  ~/BaseXRepo             Package repository
 
   BaseX Documentation Wiki: http://docs.basex.org
 

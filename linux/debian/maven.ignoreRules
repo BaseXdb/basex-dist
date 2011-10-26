@@ -14,4 +14,14 @@
 # from the POM
 #   junit junit jar s/3\\..*/3.x/
 
+jp.sourceforge.igo igo * * * *
+junit junit * * * *
+org.apache lucene-stemmers * * * *
+org.apache.maven.plugins maven-deploy-plugin * * * *
 org.apache.maven.plugins maven-source-plugin * * * *
+org.apache.maven.plugins maven-surefire-plugin * * * *
+org.apache.maven.wagon wagon-ftp * * * *
+org.ccil.cowan.tagsoup tagsoup * * * *
+org.codehaus.mojo exec-maven-plugin * * * *
+org.codehaus.plexus plexus-compiler-javac * * * *
+xml-resolver xml-resolver * * * *
