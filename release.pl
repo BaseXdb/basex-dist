@@ -150,7 +150,7 @@ sub zip {
   }
 
   # lib folders
-  foreach my $file(glob("../basex/lib/*"), glob("../basex-api/lib/*")) {
+  foreach my $file(glob("../basex/lib/*"), glob("../basex-api/lib/*"), glob("../basex-dist/lib/*")) {
     (my $target = $file) =~ s|.*/|$name/lib/|;
     $zip->addFile($file, $target);
   }
@@ -203,7 +203,7 @@ sub app {
     "BaseX.app/Contents/Resources/BaseX.icns");
 
   # lib folder
-  foreach my $file(glob("../basex/lib/*"), glob("../basex-api/lib/*")) {
+  foreach my $file(glob("../basex/lib/*"), glob("../basex-api/lib/*"), glob("../basex-dist/lib/*")) {
     (my $target = $file) =~ s|.*/|BaseX.app/Contents/Resources/Java/repo/lib/|;
     $zip->addFile($file, $target);
   }
@@ -221,18 +221,6 @@ sub app {
 # creates the installer
 sub exe {
   print "* Create executable\n";
-
-  # remove last line from http script (will be readded by NSI script)
-  #my $tmp = "";
-  #open(my $in, "$release/bin/basexhttp.bat");
-  #while(my $l = <$in>) {
-  #  next if $l =~ m|%CP%.*BaseXHTTP|;
-  #  $tmp .= $l;
-  #}
-  #close($in);
-  #open(my $out, ">".$release."/bin/basexhttp.bat");
-  #print $out $tmp;
-  #close($out);
 
   # add start class and libraries
   my $cc = "<classPath>\n".

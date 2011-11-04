@@ -203,6 +203,7 @@ Section "Hauptgruppe" SEC01
   CreateDirectory "$INSTDIR\lib"
   SetOutPath "$INSTDIR\lib"
   File "..\release\basex-api.jar"
+  File "..\..\basex-dist\lib\*"
   File "..\..\basex-api\lib\*"
   File "..\..\basex\lib\*"
   SetOutPath "$INSTDIR"
