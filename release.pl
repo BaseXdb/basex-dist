@@ -59,13 +59,14 @@ sub prepare {
     open(my $out, ">".$release."/bin/$n");
     binmode $out;
     while(my $l = <$in>) {
+      # basexhttp/basexhttp.bat: ignore lines with $BXCORE variable
+      next if $l =~ m|\$BXCORE|;
       if($l =~ m|\.\./\.\./|) {
         # basexhttp.bat: replace "%PWD%/../../basex/target/classes" with "basex-api.jar"
         next if $l !~ s|%PWD%/\.\./\.\./basex/target/classes|%LIB%/basex-api.jar|;
       }
       $l =~ s|target/classes|BaseX.jar|;
       print $out $l;
-      #print $out ($f =~ /.bat$/ ? "\r\n" : "\n");
     }
     close($in);
     close($out);
