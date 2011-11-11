@@ -87,7 +87,7 @@
 			<Primary_Download_URL>http://files.basex.org/BaseX.zip</Primary_Download_URL>
 			<Secondary_Download_URL>http://files.basex.org/BaseX.exe</Secondary_Download_URL>
 			<Additional_Download_URL_1>http://files.basex.org/BaseX.jar</Additional_Download_URL_1>
-			<Additional_Download_URL_2>http://files.basex.org/BaseX.dmg</Additional_Download_URL_2>
+			<Additional_Download_URL_2>http://files.basex.org/BaseX.war</Additional_Download_URL_2>
 		</Download_URLs>
 	</Web_Info>
 	<Permissions>
