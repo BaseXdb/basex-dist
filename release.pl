@@ -127,8 +127,13 @@ sub zip {
   $zip->addDirectory("$name/bin");
   $zip->addDirectory("$name/data");
   $zip->addDirectory("$name/etc");
-  $zip->addDirectory("$name/http");
   $zip->addDirectory("$name/repo");
+  $zip->addDirectory("$name/http");
+  # Add example and DTD files
+  foreach my $file(glob("http/*")) {
+    $zip->addFile($file, "$name/$file");
+  }
+
   $zip->addString("", "$name/.basex");
 
   # Add files from disk
