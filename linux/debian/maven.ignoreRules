@@ -17,6 +17,8 @@
 jp.sourceforge.igo igo * * * *
 junit junit * * * *
 org.apache lucene-stemmers * * * *
+org.apache.maven.plugins maven-assembly-plugin * * * *
+org.apache.maven.plugins maven-dependency-plugin * * * *
 org.apache.maven.plugins maven-deploy-plugin * * * *
 org.apache.maven.plugins maven-source-plugin * * * *
 org.apache.maven.plugins maven-surefire-plugin * * * *

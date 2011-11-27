@@ -1,10 +1,37 @@
+basex (7.0.2-1) unstable; urgency=low
+
+  * New upstream release (November 11, 2011)
+    FULL TEXT
+    - Stemming support for Japanese text corpora
+      (thanks to Toshio HIRAI!)
+    STARTUP
+    - Updated start scripts (thanks to Ralf Jung!)
+    - System property "org.basex.path" added to specify
+      project's home directory (thanks to malamut2!)
+    XQUERY
+    - Numerous minor XQuery 3.0 enhancements and fixes
+    - Fix for db:optimize() calls (thanks to Martin Hillert!)
+    STORAGE
+    - Fix to retain newly introduced namespaces
+      (thanks to Laurent Chevalier!)
+    USERS
+    - Default privileges for new users set to "none"
+      (thanks to Pascal Heus!)
+    REST
+    - query base URI for evaluated queries is now $HTTPPATH
+      (thanks to Florent Georges!)
+
+  * Resolved policy violation by talking to upstream (closes: #647422) 
+
+ -- Alexander Holupirek <alex@holupirek.de>  Sat, 12 Nov 2011 21:38:31 +0100
+
 basex (7.0.1-1) unstable; urgency=low
 
   * New upstream release (October 23, 2011)
     XQUERY
     - much faster execution of count() when applied to opened databases
 
- -- Alexander Holupirek <alex@holupirek.de>  Tue, 25 Oct 2011 17:19:08 +0200
+ -- Alexander Holupirek <alex@holupirek.de>  Wed, 02 Nov 2011 23:06:11 +0100
 
 basex (7.0-1) unstable; urgency=low
 
@@ -40,7 +67,7 @@ basex (7.0-1) unstable; urgency=low
     - [ADD] AUTOFLUSH database buffers
     - [ADD] QUERYPATH: path to executed query
   * Added new database commands to man pages.
-  * Added debian/basexgui.desktop file, closes: bug#872072
+  * Added debian/basexgui.desktop file (closes LP: 872072)
   * Added BaseX icon PNG files for /usr/share/icons/hicolor/?x?/apps to 
     be displayed in the KDE, Gnome, Unity ... menus.
   * Fixed unversioned-copyright-format-uri warning in dep5 copyright file.
