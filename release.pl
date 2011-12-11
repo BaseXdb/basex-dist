@@ -85,24 +85,22 @@ sub prepare {
 
 # gets version from pom file
 sub version {
-  print "* Extract version from POM file\n";
-
   open(POM, "../basex/pom.xml") or die "pom.xml not found";
   while(my $l = <POM>) {
     next if $l !~ m|<version>(.*)</version>|;
     $version = $1;
-    if (length($version) == 1) {
-      $full = $version . ".0.0.0";
-    } elsif (length($version) == 3) {
-      $full = $version . ".0.0";
-    } elsif (length($version) == 5) {
-      $full = $version . ".0";
+    $full = $version;
+    if(length($full) > 5) {
+      $full =~ s/-.*//;
+      $full .= ".0" while $full !~ /\..*\./;
+      $full .= ".".time();
     } else {
-      $full = substr($version, 0, 5).".".time();
+      $full .= ".0" while $full !~ /\..*\..*\./;
     }
     last;
   }
   close(POM);
+  print "* Version: $version ($full)\n";
 }
 
 # creates project packages
