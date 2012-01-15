@@ -3,7 +3,7 @@
 -------------------------
 
 BaseX is an XML database system and XPath/XQuery processor.
-Homepage: www.basex.org
+Homepage: http://basex.org
 
 This package was debianized by Alexander Holupirek <alex@holupirek.de> using
 the mh_make command from the maven-debian-helper package.

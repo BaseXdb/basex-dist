@@ -1,6 +1,6 @@
 # Creates all files for a new release.
 # 
-# (C) BaseX Team 2005-11, ISC License
+# (C) BaseX Team 2005-12, BSD License
 
 use warnings;
 use strict;
