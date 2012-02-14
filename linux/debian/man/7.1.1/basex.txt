@@ -20,6 +20,7 @@ OPTIONS
   -d         Turn on debugging (to standard error).
   -i<input>  Open a database or XML document specified by the argument.
              The opened input may be further processed by an XQuery expression.
+  -L         Add trailing newline after query result
   -o<file>   Command and query output is written to the specified file.
   -q<expr>   Execute the specified string as XQuery expression. The flag should
              be placed last, as all remaining characters are interpreted as
@@ -100,9 +101,9 @@ SERIALIZATION
 EXAMPLES
   * XQuery evaluation (no database, no interaction, script mode):
 
-   $ basex \-q 19+23
+   $ basex \-Lq 19+23
    42
-   $ basex \-q "<answer>{ 23+19 }</answer>"
+   $ basex \-Lq "<answer>{ 23+19 }</answer>"
    <answer>42</answer>
 
   * Import an XML file into database, output its content (query its root) and be verbose:
@@ -148,12 +149,12 @@ EXAMPLES
 
   * XPath evaluation (with existing database):
 
-    $ basex \-c "OPEN input; XQUERY //li[1]"
+    $ basex \-Lc "OPEN input; XQUERY //li[1]"
     <li>Exercise 1</li>
 
   * Retrieve XML from the web and perform XPath query: 
 
-    $ basex \-q "doc('http://files.basex.org/examples/input.xml')//li"
+    $ basex \-Lq "doc('http://files.basex.org/examples/input.xml')//li"
     <li>Exercise 1</li>
     <li>Exercise 2</li>
 
@@ -185,7 +186,7 @@ EXAMPLES
 
   * Open an input xml file, execute a query and write result into file:
 
-    $ basex \-i /usr/share/doc/basex/examples/input.xml \-q //div \-o out.xml
+    $ basex \-Li /usr/share/doc/basex/examples/input.xml \-q //div \-o out.xml
     $ cat out.xml
     <div align="right">
       <b>Assignments</b>
@@ -198,7 +199,7 @@ EXAMPLES
   * Query an already existing database called 'input': 
     (if a file named 'input' exists in current working directory it takes precedence)
 
-    $ basex \-i input \-q //div
+    $ basex \-Li input \-q //div
     <div align="right">
       <b>Assignments</b>
       <ul>
@@ -209,7 +210,7 @@ EXAMPLES
 
   * Let basex process query input from standard in:
 
-   $ echo '19+23' | basex \-q\-
+   $ echo '19+23' | basex \-Lq\-
    42
 
 SEE ALSO

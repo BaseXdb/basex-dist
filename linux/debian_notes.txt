@@ -5,24 +5,37 @@ http://www.debian.org/doc/maint-guide/update.en.html#newupstream
 
 * Tagging a new release
 
-  $ git tag -a 7.0 -m 'Version 7.0 (October 14, 2011) TEI release'
+  $ git tag -a 7.1 -m 'Version 7.1 (February 8, 2011)'
   $ git push --tags
 
+* Tag a previous commit (if we forgot it during release)
+  
+  $ git tag -a 7.1 7165a07
+
+* Modify tag message
+
+  $ git tag 7.1 -f -m "Version 7.1 (February 8, 2012) XML Prague Release"
+
 * To delete a tag
-  $ git tag -d help
+
+  $ git tag -d 7.1
   Deleted tag 'help' (was 961dfe0)
-  $ git push origin :help
+  $ git push origin :7.1
   To git@github.com:BaseXdb/basex.git
-  - [deleted]     help 
+  - [deleted]     7.1 
+
+* Check tags
+
+  $ git log --oneline --decorate
 
 -------------------------------------------------------------------------
 A. Build new from source
 
-$ mkdir new & cd new
+$ mkdir new && cd new
 
 * Get tagged code from github (download)
-  $ wget https://github.com/BaseXdb/basex/tarball/7.0
-  $ tar xvzf 7.0 - | tar cf basex.tar.gz -
+  $ wget https://github.com/BaseXdb/basex/tarball/7.1
+  $ tar xvzf 7.1 
   $ mv BaseXdb-basex-fa64da8/ basex
   $ tar cvzf basex.tar.gz basex/
 
@@ -91,13 +104,6 @@ B. Build from existing package
     (local version is 6.7.1)
   basex: Successfully downloaded updated package 7.0.tar.gz
     and symlinked basex_7.0.orig.tar.gz to it
-/ If githubredir still fails upload 7.1.tar.gz to files.basex.org/debian/7.1.tar.gz
-/ $ uscan
-/ basex: Newer version (6.7) available on remote site:
-/ http://githubredir.debian.net/github/BaseXdb/basex/6.7.tar.gz
-/ (local version is 6.6.2)
-/ basex: Successfully downloaded updated package 6.7.tar.gz
-/   and symlinked basex_6.7.orig.tar.gz to it
   $ ls ../
   7.0.tar.gz
   basex_6.7.1.orig.tar.gz
@@ -112,7 +118,7 @@ B. Build from existing package
   Remember: Your current directory is the OLD sourcearchive!
   Do a "cd ../basex-7.0" to see the new package
   $ cd ../basex-7.0
-  $ dch -i
+  $ dch -e
   ...
   [ man pages (!! RESTORE and missing hyphen), new commands, new examples, patches OK, new authors ... ]
   ...

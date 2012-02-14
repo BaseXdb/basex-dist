@@ -21,6 +21,7 @@ OPTIONS
   -c<cmd>    Launch database commands and skip interactive mode. The flag should be placed last, all remaining characters are interpreted as commands. Several commands can be separated by semicolons. (-c"list;info") 
   -d         Turn on debugging. Debugging information is output to standard error. 
   -i<input>  Open initial file or database
+  -L         Add trailing newline after query result
   -n<name>   Specify the server name on which the server is running. (default: localhost, -nserver.basex.org)
   -o<file>   Command and query output is written to the specified <file>. 
   -p<num>    Specify the port on which the server is running. (default: 1984, -p9999)

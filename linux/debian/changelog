@@ -1,3 +1,71 @@
+basex (7.1-1) unstable; urgency=low
+
+  * New upstream release (February 8, 2012) XML Prague Release
+    GUI
+    - improved document management: hierarchical view of db resources
+    - easier index creation/removal and database optimization
+    - JSON/JsonML parser added
+    - editor: updated and reopened files are reverted from disk
+    
+    REST
+    - automatic XML conversion of popular content types
+      (JSON/JsonML, CSV, HTML)
+    
+    XQUERY
+    - new index module for directly accessing database index structures
+    - new repository module to manage EXPath packages via XQuery
+    - db:list-details() returns information on the database resources
+    - db:content-type() retrieves content-type of a specific resource
+    - ft:tokens() returns full-text tokens stored in the index
+    - ft:tokenize() tokenizes a given input string
+    - util:path() returns the path to the executed query file
+    - util:time() prints the time needed to evaluate a given expression
+    - util:mem() prints allocated memory for evaluating an expression
+    - expanded QNames, computed namespace constructors
+    
+    COMMAND-LINE
+    - multiple query files and -c/-i/-q flags can now be specified
+    
+    INDEXING
+    - ID/Pre mapping, incremental indexing of value index structures
+    - document index fix: correct replacement of existing documents
+    - document index: faster updates
+    
+    OPTIONS
+    - ADDRAW: add raw files if not filtered by CREATEFILTER
+    - MAXLEN: max. length of strings to be added to the index structures
+    - MAXCATS: max. number of distinct values stored in statistics
+    - UPDINDEX: turn on incremental index updates for value indexes
+    - improved BINDINGS option
+    
+    CLIENT/SERVER
+    - improved log output if query iterator is used
+    - new ActionScript API (thanks to Manfred Knobloch!)
+    
+    SERIALIZATION
+    - "newline" parameter specifies the type of newline to be used
+    
+    COMMANDS
+    - KILL command accepts IP:port combination to specify target
+    
+    TRANSLATIONS
+    - Bahasa Indonesian: thanks to Andria Arisal!
+    - Mongolian: thanks to Tuguldur Jamiyansharav!
+
+  * Upstream resolved 'GUI not ready for namespaces' (closes: #649966) 
+    https://github.com/BaseXdb/basex/issues/288
+    Thanks to jidanni@jidanni.org for reporting
+  * Documented usage of -i flag (closes: #650169)
+    Thanks to jidanni@jidanni.org for reporting
+  * Upstream added flag -L to add a trailing newline after query results
+    (closes: #649965) Thanks to jidanni@jidanni.org for reporting
+  * Documented how to pass command file to basex (closes: #650170)
+    Thanks to jidanni@jidanni.org for reporting
+  * Changed man page example to avoid shell interpretation (closes: #650052)
+    Thanks to jidanni@jidanni.org for reporting
+
+ -- Alexander Holupirek <alex@holupirek.de>  Tue, 14 Feb 2012 17:34:32 +0100
+
 basex (7.0.2-1) unstable; urgency=low
 
   * New upstream release (November 11, 2011)
