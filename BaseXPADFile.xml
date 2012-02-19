@@ -9,7 +9,7 @@
 		<Company_Name>BaseX</Company_Name>
 		<Address_1 />
 		<Address_2 />
-		<City_Town />
+		<City_Town>Konstanz</City_Town>
 		<State_Province />
 		<Zip_Postal_Code />
 		<Country>Germany</Country>
@@ -44,7 +44,7 @@
 		<Program_Type>Freeware</Program_Type>
 		<Program_Release_Status>New Release</Program_Release_Status>
 		<Program_Install_Support>No Install Support</Program_Install_Support>
-		<Program_OS_Support>Win98,WinME,WinNT 3.x,WinNT 4.x,Windows2000,WinXP,Windows2003,Windows Vista Starter,Windows Vista Home Basic,Windows Vista Home Premium,Windows Vista Business,Windows Vista Enterprise,Windows Vista Ultimate,Windows Vista Home Basic x64,Windows Vista Home Premium x64,Windows Vista Business x64,Windows Vista Enterprise x64,Windows Vista Ultimate x64,Windows 7 Professional x64,Windows 7 Professional x86,Windows 7 Home Premium x64,Windows 7 Home Premium x86,Windows 7 Ultimate x64, Windows 7 Ultimate x86,Unix,Linux,Linux Console,Linux Gnome,Linux GPL,Linux Open Source,MS-DOS,Mac OS X,Mac OS X 10.1,Mac OS X 10.2,Mac OS X 10.3,Mac OS X 10.4,Mac OS X 10.5,Mac Other,Java</Program_OS_Support>
+		<Program_OS_Support>Java,Linux,Linux Console,Linux Gnome,Linux GPL,Linux Open Source,Mac OS X,Mac Other,Unix,Win2000,Win7 x32,Win7 x64,Win98,WinOther,WinVista,WinVista x64,WinXP,Other</Program_OS_Support>
 		<Program_Language>English,German,French,Dutch,Italian,Japanese,Vietnamese</Program_Language>
 		<Program_Change_Info />
 		<Program_Specific_Category>Business</Program_Specific_Category>
@@ -87,7 +87,7 @@
 			<Primary_Download_URL>http://files.basex.org/BaseX.zip</Primary_Download_URL>
 			<Secondary_Download_URL>http://files.basex.org/BaseX.exe</Secondary_Download_URL>
 			<Additional_Download_URL_1>http://files.basex.org/BaseX.jar</Additional_Download_URL_1>
-			<Additional_Download_URL_2>http://files.basex.org/BaseX.war</Additional_Download_URL_2>
+			<Additional_Download_URL_2>http://files.basex.org/BaseX.app.zip</Additional_Download_URL_2>
 		</Download_URLs>
 	</Web_Info>
 	<Permissions>
