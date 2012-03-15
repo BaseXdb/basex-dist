@@ -4,7 +4,7 @@ Release:        1%{?dist}
 Summary:        XML database and XPath/XQuery processor
 
 Group:          Applications/Databases
-License:        BSD
+License:        BSD-3-clause
 URL:            http://basex.org
 Source0:        http://files.basex.org/maven/org/basex/basex/%{version}/%{name}-%{version}.tar.gz
 Source1:        https://raw.github.com/BaseXdb/basex-dist/master/linux/debian/man/basex.1
@@ -47,8 +47,8 @@ BuildRequires:    maven-source-plugin
 Requires:       jpackage-utils
 Requires:       java
 Requires:       xml-commons-resolver
-Requires:       tagsoup
 Requires:       lucene-contrib
+Requires:       tagsoup
 
 %description
 BaseX is a very fast and light-weight, yet powerful XML database and
@@ -108,9 +108,9 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE13}
 %{__install} -D -m 644 %{SOURCE12} %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/%{name}.svg
 
 # start scripts
-%jpackage_script org.basex.BaseX       "-Xmx512m" "" %{name}:tagsoup:xml-commons-resolver:lucene-contrib/lucene-analyzers:lucene-contrib/lucene-snowball basex       true
-%jpackage_script org.basex.BaseXGUI    "-Xmx512m" "" %{name}:tagsoup:xml-commons-resolver:lucene-contrib/lucene-analyzers:lucene-contrib/lucene-snowball basexgui    true
-%jpackage_script org.basex.BaseXServer "-Xmx512m" "" %{name}:tagsoup:xml-commons-resolver:lucene-contrib/lucene-analyzers:lucene-contrib/lucene-snowball basexserver true
+%jpackage_script org.basex.BaseX       "-Xmx512m" "" %{name}:jline:tagsoup:xml-commons-resolver:lucene-contrib/lucene-analyzers:lucene-contrib/lucene-snowball basex       true
+%jpackage_script org.basex.BaseXGUI    "-Xmx512m" "" %{name}:jline:tagsoup:xml-commons-resolver:lucene-contrib/lucene-analyzers:lucene-contrib/lucene-snowball basexgui    true
+%jpackage_script org.basex.BaseXServer "-Xmx512m" "" %{name}:jline:tagsoup:xml-commons-resolver:lucene-contrib/lucene-analyzers:lucene-contrib/lucene-snowball basexserver true
 %jpackage_script org.basex.BaseXClient ""         "" %{name} basexclient true
 
 %__cat > %{buildroot}%{_bindir}/basexserverstop << EOF
@@ -118,12 +118,8 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE13}
 basexserver "\$@" stop
 EOF
 
-# %__cat > %{buildroot}%{_bindir}/xquery << EOF
-# #!/bin/sh
-# basex -q "\$@"
-# EOF
-
 %files
+%defattr(0644,root,root,0755)
 %{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
 %{_javadir}/%{name}.jar
@@ -142,15 +138,14 @@ EOF
 %{_datadir}/icons/hicolor
 
 # start scripts
-%defattr(0644,root,root,0755)
 %attr(0755,root,root) %{_bindir}/basex
 %attr(0755,root,root) %{_bindir}/basexclient
 %attr(0755,root,root) %{_bindir}/basexgui
 %attr(0755,root,root) %{_bindir}/basexserver
 %attr(0755,root,root) %{_bindir}/basexserverstop
-# %attr(0755,root,root) %{_bindir}/xquery
 
 %files javadoc
+%defattr(0644,root,root,0755)
 %{_javadocdir}/%{name}
 
 %post
@@ -177,3 +172,4 @@ fi
 
 * Sun Feb 26 2012 Dimitar Popov <dimitar.popov at  uni-konstanz.de> 7.1.1-1
 - Initial release for Fedora.
+
