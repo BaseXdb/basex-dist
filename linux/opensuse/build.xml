@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="%{name}" default="package" basedir=".">
+  <property name="name" value="%{name}"/>
+  <property name="version" value="%{version}"/>
+  <property name="sources" value = "src/main/java"/>
+  <property name="resources" value = "src/main/resources"/>
+  <property name="output" value = "target"/>
+  <property name="classes" value="\${output}/classes"/>
+  <target name="clean">
+    <delete dir="\${output}"/>
+  </target>
+  <target name="compile">
+    <mkdir dir="\${classes}"/>
+    <javac destdir="\${classes}"
+           optimize="true"
+           target="1.6"
+           verbose="false"
+           fork="false"
+           source="1.6">
+      <src>
+        <pathelement location="\${sources}"/>
+      </src>
+    </javac>
+    <copy todir="\${classes}">
+      <fileset dir="\${resources}"/>
+    </copy>
+  </target>
+ <target name="javadoc">
+    <javadoc sourcepath="\${sources}"
+             packagenames="*"
+             destdir="\${output}/apidocs"
+             access="protected"
+             old="false"
+             verbose="false"
+             version="true"
+             use="true"
+             author="true"
+             splitindex="false"
+             nodeprecated="false"
+             nodeprecatedlist="false"
+             notree="false"
+             noindex="false"
+             nohelp="false"
+             nonavbar="false"
+             serialwarn="false"
+             charset="UTF-8"
+             linksource="false"
+             breakiterator="false"/>
+  </target>
+  <target name="package" depends="compile">
+    <jar jarfile="\${output}/\${name}-\${version}.jar"
+         compress="true"
+         index="false"
+         basedir="\${classes}"
+         excludes="**/package.html">
+        <manifest>
+          <attribute name="Main-Class" value="org.basex.BaseXGUI"/>
+        </manifest>
+    </jar>
+  </target>
+</project>
+
