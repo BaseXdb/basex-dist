@@ -1,5 +1,5 @@
 Name:           basex
-Version:        7.1.1
+Version:        7.2
 Release:        1%{?dist}
 Summary:        XML database and XPath/XQuery processor
 
@@ -48,6 +48,7 @@ Requires:       jpackage-utils
 Requires:       java
 Requires:       xml-commons-resolver
 Requires:       lucene-contrib
+Requires:       jline
 Requires:       tagsoup
 
 %description
@@ -109,9 +110,9 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE13}
 
 # start scripts
 %jpackage_script org.basex.BaseX       "-Xmx512m" "" %{name}:jline:tagsoup:xml-commons-resolver:lucene-contrib/lucene-analyzers:lucene-contrib/lucene-snowball basex       true
-%jpackage_script org.basex.BaseXGUI    "-Xmx512m" "" %{name}:jline:tagsoup:xml-commons-resolver:lucene-contrib/lucene-analyzers:lucene-contrib/lucene-snowball basexgui    true
+%jpackage_script org.basex.BaseXGUI    "-Xmx512m" "" %{name}:tagsoup:xml-commons-resolver:lucene-contrib/lucene-analyzers:lucene-contrib/lucene-snowball basexgui    true
 %jpackage_script org.basex.BaseXServer "-Xmx512m" "" %{name}:jline:tagsoup:xml-commons-resolver:lucene-contrib/lucene-analyzers:lucene-contrib/lucene-snowball basexserver true
-%jpackage_script org.basex.BaseXClient ""         "" %{name} basexclient true
+%jpackage_script org.basex.BaseXClient ""         "" %{name}:jline basexclient true
 
 %__cat > %{buildroot}%{_bindir}/basexserverstop << EOF
 #!/bin/sh
@@ -169,6 +170,9 @@ fi
 /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 %changelog
+
+* Sun Mar 24 2012 Dimitar Popov <dimitar.popov at  uni-konstanz.de> 7.2-1
+- Version 7.2.
 
 * Sun Feb 26 2012 Dimitar Popov <dimitar.popov at  uni-konstanz.de> 7.1.1-1
 - Initial release for Fedora.
