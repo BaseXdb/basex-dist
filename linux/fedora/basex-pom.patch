@@ -1,5 +1,5 @@
 diff --git a/pom.xml b/pom.xml
-index 6ade952..b1b04c6 100644
+index c6b423c..e58d3ad 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -70,27 +70,6 @@
@@ -30,7 +30,7 @@ index 6ade952..b1b04c6 100644
      	<groupId>xml-resolver</groupId>
      	<artifactId>xml-resolver</artifactId>
      	<version>1.2</version>
-@@ -154,38 +133,6 @@
+@@ -161,38 +140,6 @@
        </plugin>
        <plugin>
          <groupId>org.apache.maven.plugins</groupId>
@@ -69,7 +69,7 @@ index 6ade952..b1b04c6 100644
          <artifactId>maven-deploy-plugin</artifactId>
          <version>2.7</version>
        </plugin>
-@@ -202,75 +149,7 @@
+@@ -209,96 +156,7 @@
            </execution>
          </executions>
        </plugin>-->
@@ -87,7 +87,7 @@ index 6ade952..b1b04c6 100644
 -        <configuration>
 -          <descriptorRefs>
 -            <descriptorRef>src</descriptorRef>
--            <descriptorRef>jar-with-dependencies</descriptorRef>
+-            <!--<descriptorRef>jar-with-dependencies</descriptorRef>-->
 -          </descriptorRefs>
 -          <archive>
 -            <manifest>
@@ -95,6 +95,27 @@ index 6ade952..b1b04c6 100644
 -              <packageName>org.basex</packageName>
 -            </manifest>
 -          </archive>
+-        </configuration>
+-      </plugin>
+-      <plugin>
+-        <groupId>org.apache.maven.plugins</groupId>
+-        <artifactId>maven-checkstyle-plugin</artifactId>
+-        <version>2.9.1</version>
+-        <executions>
+-          <execution>
+-            <phase>test</phase>
+-            <goals>
+-              <goal>check</goal>
+-            </goals>
+-          </execution>
+-        </executions>
+-        <configuration>
+-          <configLocation>.settings/checkstyle.xml</configLocation>
+-          <failsOnError>true</failsOnError>
+-          <includeTestSourceDirectory>true</includeTestSourceDirectory>
+-          <linkXRef>false</linkXRef>
+-          <consoleOutput>true</consoleOutput>
+-          <violationSeverity>warning</violationSeverity>
 -        </configuration>
 -      </plugin>
      </plugins>
