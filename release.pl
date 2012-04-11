@@ -59,13 +59,10 @@ sub prepare {
     open(my $out, ">".$release."/bin/$n");
     binmode $out;
     while(my $l = <$in>) {
-      # basexhttp: ignore lines with BXCORE variable
-      #next if $l =~ m|BXCORE|;
-      if($l =~ m|\.\./\.\./|) {
-        # basexhttp.bat: replace "%PWD%/../../basex/target/classes" with "basex-api.jar"
-        next if $l !~ s|%PWD%/\.\./\.\./basex/target/classes|%LIB%/basex-api.jar|;
-      }
+      # replace "target/classes"
+      $l =~ s|%PWD%/\.\./\.\./basex/target/classes|%LIB%/basex-api.jar|;
       $l =~ s|target/classes|BaseX.jar|;
+      next if $l =~ m|\.\./\.\./basex|;
       print $out $l;
     }
     close($in);
@@ -107,8 +104,9 @@ sub version {
 sub pkg {
   my $name = shift;
   print "* Create $name-$version package\n";
-  unlink("../$name/target/*.jar");
-  system("cd ../$name && mvn install -q -DskipTests=true");
+  foreach my $f(glob("../$name/target/*")) { unlink $f; }
+  foreach my $f(glob("../$name/lib/*")) { unlink $f; }
+  system("cd ../$name && mvn install -q -DskipTests");
   move("../$name/target/$name-$version.jar", "$release/$name.jar");
 }
 
@@ -155,6 +153,7 @@ sub zip {
 
   # lib folders
   foreach my $file(glob("../basex/lib/*"), glob("../basex-api/lib/*"), glob("../basex-dist/lib/*")) {
+    next if $file =~ m|/lib/basex-|;
     (my $target = $file) =~ s|.*/|$name/lib/|;
     $zip->addFile($file, $target);
   }
@@ -208,6 +207,7 @@ sub app {
 
   # lib folder
   foreach my $file(glob("../basex/lib/*"), glob("../basex-api/lib/*"), glob("../basex-dist/lib/*")) {
+    next if $file =~ m|/lib/basex-|;
     (my $target = $file) =~ s|.*/|BaseX.app/Contents/Resources/Java/repo/lib/|;
     $zip->addFile($file, $target);
   }
