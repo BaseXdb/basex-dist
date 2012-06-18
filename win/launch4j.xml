@@ -24,8 +24,8 @@
   <versionInfo>
     <fileVersion>$full</fileVersion>
     <txtFileVersion>BaseX $version</txtFileVersion>
-    <fileDescription>XML Database and XPath/XQuery Processor</fileDescription>
-    <copyright>(c) BaseX Team, 2011</copyright>
+    <fileDescription>XML Database and XPath/XQuery 3.0 Processor</fileDescription>
+    <copyright>(c) BaseX Team, 2012</copyright>
     <productVersion>$full</productVersion>
     <txtProductVersion>BaseX $version</txtProductVersion>
     <productName>BaseX</productName>
