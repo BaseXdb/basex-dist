@@ -9,4 +9,5 @@
 . /usr/lib/java-wrappers/java-wrappers.sh
 find_java_runtime java6
 find_jars /usr/share/java/basex.jar
+find_jars /usr/share/java/tagsoup.jar
 run_java org.basex.BaseXServer "$@"

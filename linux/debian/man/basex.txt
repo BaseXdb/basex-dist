@@ -2,40 +2,18 @@ NAME
   basex - XML database system and XPath/XQuery processor (command line mode)
 
 SYNOPSIS
-  basex [-bcdiLoqsuvVwxz] [file]
+  basex [-bcdiLosuvVwxz] [query]
 
 DESCRIPTION
   basex is a fast and powerful, yet light-weight and platform independent XML
   database system and XPath/XQuery processor.
 
 OPTIONS
-  [file]     Execute the specified XQuery file.
-  -b<pars>   Bind external variables to XQuery expression. Flag may be specified
-             multiple times; key/value pairs are separated by equality signs (=)
-             (-bv=example -q'declare variable $v external; $v')
-  -c<cmd>    Launch database commands and skip interactive mode.
-             The flag should be placed last, as all remaining characters are
-             interpreted as commands. Several commands can be separated by 
-             semicolons.
-  -d         Turn on debugging (to standard error).
-  -i<input>  Open a database or XML document specified by the argument.
-             The opened input may be further processed by an XQuery expression.
-  -o<file>   Command and query output is written to the specified file.
-  -q<expr>   Execute the specified string as XQuery expression. The flag should
-             be placed last, as all remaining characters are interpreted as
-             XQuery.
-  -s<pars>   Specify parameters for serializing XQuery results;
-             see SERIALIZATION for more details. This flag may be specified
-             multiple times; key/value pairs are separated by equality signs (=)
-  -u         Modify original files after evaluating XQuery Update expressions
-  -v         Process information is written to standard output
-  -V         Detailed query information is written to standard output, 
-             including compilation and profiling steps.
-  -w         By default, whitespaces around text nodes are chopped when a 
-             database is created. The flag specifies to suppress chopping.
-  -x         Show query execution plan
-  -z         Skip the serialization of XQuery results (may be useful for 
-             analyzing query plans)
+  A short description of option can be obtained from
+
+    $ basex \-h
+
+  or by browsing http://docs.basex.org/wiki/Startup_Options#BaseX_Standalone
 
 DATABASE COMMANDS
   A list of supported Database commands can be obtained from
@@ -44,65 +22,12 @@ DATABASE COMMANDS
 
   or by browsing http://docs.basex.org/wiki/Commands
 
-  ADD (AS [name]) (TO [target]) [input]  Add document to database.
-  ALTER [DATABASE|USER] [...]            Alter database name or user password.
-  CHECK [input]                          Open or create database.
-  CLOSE                                  Close current database.
-  COPY [name] [newname]                  Copy database.
-  CREATE [BACKUP|DATABASE|EVENT|INDEX|USER] [...]  Create database, index or user.
-  CS [query]                             Run XQuery and set result as new context set.
-  DELETE [path]                          Delete documents from database.
-  DROP [BACKUP|DATABASE||EVENTINDEX|USER] [...]   Drop database, index or user.
-  EXIT                                   Exit application.
-  EXPORT [path]                          Export database to XML.
-  FIND [keywords]                        Run a keyword query.
-  FLUSH                                  Flush database.
-  GET [option]                           Show global option.
-  GRANT [NONE|READ|WRITE|CREATE|ADMIN] (ON [database]) TO [user]   Grant user permissions.
-  HELP ([command])                       Get help on BaseX commands.
-  INFO ([DATABASE|INDEX|STORAGE])        Show information on current database.
-  KILL [name]                            Kill user sessions.
-  LIST ([path])                          List databases or documents in database.
-  OPEN [path]                            Open database.
-  OPTIMIZE (ALL)                         Optimize the database.
-  PASSWORD ([password])                  Change password.
-  RENAME [path] [newpath]                Rename document paths in database.
-  REPLACE [path] [input]                 Replace documents in database.
-  REPO [DELETE|INSTALL|LIST]             Install, delete or list packages.
-  RESTORE [name (date)]                  Restore database.
-  RETRIEVE [path]                        Retrieve raw data.
-  RUN [path]                             Run file as XQuery.
-  SET [option] ([value])                 Set global options.
-  SHOW [BACKUPS|DATABASES|EVENTS|SESSIONS|USERS]   Show server information.
-  STORE (TO [path]) [input]              Store raw data.
-  XQUERY [query]                         Run XQuery.
-
-SERIALIZATION
-  Serialization parameters define how XQuery items and XML nodes are textually
-  output, i.e., serialized. They have been formalized in a W3C XQuery
-  Serialization 3.0 document available at http://www.w3.org/TR/xslt-xquery-serialization-30
-
-  In BaseX, they can be specified in several ways: 
-  * by using the -s flag of the BaseX command-line clients,
-  * by setting the SERIALIZER option before running a query,
-  * by setting the EXPORTER option before exporting a database,
-  * by setting them as Output Parameter of the REST API,
-  * by including them in the prolog of the XQuery expression (since XQuery 3.0), or
-  * by specifying them in the XQuery function file:write().
-
-  An extensive documentation of all serialization parameters is to be found on:
-  http://docs.basex.org/wiki/Serialization
-
-  An example would be:
-
-    method=xml,encoding=CP1252
-
 EXAMPLES
   * XQuery evaluation (no database, no interaction, script mode):
 
-   $ basex \-q 19+23
+   $ basex \-Lq 19+23
    42
-   $ basex \-q "<answer>{ 23+19 }</answer>"
+   $ basex \-Lq "<answer>{ 23+19 }</answer>"
    <answer>42</answer>
 
   * Import an XML file into database, output its content (query its root) and be verbose:
@@ -148,12 +73,12 @@ EXAMPLES
 
   * XPath evaluation (with existing database):
 
-    $ basex \-c "OPEN input; XQUERY //li[1]"
+    $ basex \-Lc "OPEN input; XQUERY //li[1]"
     <li>Exercise 1</li>
 
   * Retrieve XML from the web and perform XPath query: 
 
-    $ basex \-q "doc('http://files.basex.org/examples/input.xml')//li"
+    $ basex \-Lq "doc('http://files.basex.org/examples/input.xml')//li"
     <li>Exercise 1</li>
     <li>Exercise 2</li>
 
@@ -185,7 +110,7 @@ EXAMPLES
 
   * Open an input xml file, execute a query and write result into file:
 
-    $ basex \-i /usr/share/doc/basex/examples/input.xml \-q //div \-o out.xml
+    $ basex \-Li /usr/share/doc/basex/examples/input.xml \-q //div \-o out.xml
     $ cat out.xml
     <div align="right">
       <b>Assignments</b>
@@ -195,10 +120,9 @@ EXAMPLES
       </ul>
     </div>
    
-  * Query an already existing database called 'input': 
-    (if a file named 'input' exists in current working directory it takes precedence)
+  * Query an already existing database called 'input'. If a file named 'input' exists in current working directory it takes precedence:
 
-    $ basex \-i input \-q //div
+    $ basex \-Li input \-q //div
     <div align="right">
       <b>Assignments</b>
       <ul>
@@ -209,8 +133,42 @@ EXAMPLES
 
   * Let basex process query input from standard in:
 
-   $ echo '19+23' | basex \-q\-
+   $ echo '19+23' | basex \-Lq\-
    42
+
+  * Execute commands from script file:
+
+   $ cat commands.txt
+   create db debian <debian_db/>
+   xquery /
+   list
+   $ basex \-LC commands.txt | grep debian
+   <debian_db/>
+   debian              1          4639       debian.xml
+
+  * Parse non well-formed HTML (needs libtagsoup-java installed):
+
+   $ cat bad.html         
+   <html>
+     <ul>
+       <li>A
+       <li>B
+     </ul>
+   </html>
+   
+   $ basex \-c 'set parser html; set htmlopt method=html,nons=true; create db htmldb bad.html'
+   $ basex \-q "doc('htmldb')"
+   <html>
+     <body>
+       <ul>
+         <li>A</li>
+         <li>B</li>
+       </ul>
+     </body>
+   </html>
+
+   For further documentation on how to configure the HTML Parser refer to 
+   http://docs.basex.org/wiki/Parsers#HTML_Parser
 
 SEE ALSO
   basexgui(1), basexserver(1), basexclient(1)

@@ -8,14 +8,11 @@ DESCRIPTION
   basexserver starts the server mode of the native XML database system basex(1) on default port 1984.
 
 OPTIONS
-  stop     Stop an existing server instance; remaining input is ignored. 
-  -c<cmd>  Launch database commands before the server itself is started; all remaining text is interpreted as command input. Several commands can be separated by semicolons. (-c"open database;info")
-  -d       Turn on debugging. Debugging information is output to standard error. 
-  -e<num>  Set event port
-  -i       Interactively enter commands on the console, similar to standalone and client mode. 
-  -p<num>  Specify the port on which the server will be addressable (default 1984, -p9999). 
-  -S       Start as daemon.
-  -z       Do not generate log files.
+  A short description of option can be obtained from
+
+    $ basexserver \-h
+
+  or by browsing http://docs.basex.org/wiki/Startup_Options#BaseX_Server
 
 USER MANAGEMENT
   On first startup a user 'admin' with default password 'admin' exists (make sure to change this)!

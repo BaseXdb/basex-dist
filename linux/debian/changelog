@@ -1,3 +1,113 @@
+basex (7.3-1) UNRELEASED; urgency=low
+
+  * New upstream release (June 18, 2012)
+    - Many new internal XQuery Modules have been added, and existing
+      ones have been revised to ensure long-term stability of your future 
+      XQuery applications: http://docs.basex.org/wiki/Module_Library
+    - A new powerful Command API is provided to specify BaseX commands
+      and scripts as XML: http://docs.basex.org/wiki/Commands#Basics
+    - The full-text fuzzy index was extended to also support wildcard
+      queries: http://docs.basex.org/wiki/Full-Text
+    - The XQuery 3.0 simple map operator gives you a compact syntax to
+      process items of sequences: http://docs.basex.org/wiki/XQuery_3.0
+    - BaseX as Web Application can now start its own server instance:
+      http://docs.basex.org/wiki/Web_Application
+    - All command-line options will now be executed in the given order: 
+      http://docs.basex.org/wiki/Startup_Options
+    - Charles Foster's latest XQJ Driver supports XQuery 3.0 and the
+      Update and Full Text extensions: http://xqj.net/basex/
+
+ -- Alexander Holupirek <alex@holupirek.de>  Tue, 26 Jun 2012 09:13:14 +0200
+
+basex (7.2.1-1) unstable; urgency=low
+
+  [ Alexander Holupirek ]
+  * New upstream release (April 27, 2012)
+    - Our value indexes now support string-based range queries:
+      http://docs.basex.org/wiki/Indexes#Value_Indexes
+    - Our new XQJ API is based on Charles Foster's implementation.
+      It fully utilizes the client/server architecture:
+      http://xqj.net/basex
+    - Import of XQuery modules has been simplified:
+      http://docs.basex.org/wiki/Repository
+    - Better Java code integration:
+      http://docs.basex.org/wiki/Java_Bindings
+    - Full support for the XQuery 3.0 Regular Expressions syntax:
+      http://www.w3.org/TR/xpath-functions-30/#regex-syntax
+    - Updating functions can now return values:
+      http://docs.basex.org/wiki/Database_Module#db:output
+    - Unified handling of document and database URIs:
+      http://docs.basex.org/wiki/Databases#Access_Resources
+    - Pinning of opened database replaced by filesystem locking:
+      http://docs.basex.org/wiki/Transaction_Management#Locking
+    - REST, RESTXQ, WebDav: concurrency issues fixed
+
+  [ tony mancill ]
+  * Add unmappable-characters.patch for build on Debian.
+
+ -- Alexander Holupirek <alex@holupirek.de>  Fri, 27 Apr 2012 17:41:45 +0200
+
+basex (7.2-1) unstable; urgency=low
+
+  * New upstream release (March 24, 2012) EDBT Berlin Release
+    - support for the new RESTXQ API for building XQuery web services
+    - improved support for running BaseX as web application
+    - XQuery: higher order functions added to speed up Top-K queries
+    - proxy server settings added
+    - advanced TagSoup options added for importing HTML files
+    - XQuery: faster traversal of full-text index entries: ft:tokens()
+    - Command-line: embedded readline and history support via JLine
+    - XQuery 3.0: annotation added, updated EQName syntax (Q{uri}name)
+    - opened databases are now pinned OS-wide to reduce write conflicts
+    - HTML5 serialization of query results
+    - a printable version of our Wiki documentation
+  * Will leave example in man page on how to bind external variables.
+    https://mailman.uni-konstanz.de/pipermail/basex-talk/2012-March/002887.html
+    (closes: #664251)
+  * Updated man page with an example on how to parse HTML (now for real ;)
+    (closes: #661297)
+  * Upstream added support for http_proxy (closes: #650168)
+    (http://docs.basex.org/wiki/Options#PROXYHOST)
+  * Copy/Paste problems reported upstream and closed there.
+    (https://github.com/BaseXdb/basex/issues/289, closes: #649964)
+  * Emacs-style error messages reported upstream and closed there.
+    (https://github.com/BaseXdb/basex/issues/240, closes: #637952)
+
+ -- Alexander Holupirek <alex@holupirek.de>  Thu, 19 Apr 2012 11:56:17 +0200
+
+basex (7.1.1-2) unstable; urgency=low
+
+  * Allow non well-formed HTML to be parsed if libtagsoup-java is installed.
+  * Updated man page with an example on how to parse HTML. 
+
+ -- Alexander Holupirek <alex@holupirek.de>  Wed, 22 Feb 2012 12:57:22 +0100
+
+basex (7.1.1-1) unstable; urgency=low
+
+  * New upstream release (February 19, 2012)
+    GUI:
+    - new "Package" dialog: to list, install and delete XQuery Packages
+    - "New/Add" dialog: "RAW" input format allows import of raw files;
+      automatic detection of input formats, increased usability
+    - "Export" dialog enhanced to support other methods like JSON,
+      and various serialization parameters
+    
+    Command-Line:
+    - new option -L: add trailing newline after query result
+    - new option -C: execute commands from batch script
+    
+    REST:
+    - new "option" parameter: set options before executing request
+    
+    Full-Text:
+    - Indonesian Stemmer (thanks Andria Arisal!)
+    
+    IO:
+    - faster read/write access to byte arrays
+  * Updates to manpage regarding new command line options.
+
+ -- Alexander Holupirek <alex@holupirek.de>  Sun, 19 Feb 2012 22:01:35 +0100
+
 basex (7.1-1) unstable; urgency=low
 
   * New upstream release (February 8, 2012) XML Prague Release
