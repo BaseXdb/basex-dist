@@ -201,6 +201,7 @@ Section "Hauptgruppe" SEC01
   SetOutPath "$INSTDIR\bin"
   File "..\release\bin\*.bat"
   CreateDirectory "$INSTDIR\http"
+  SetOutPath "$INSTDIR\http"
   File "..\http\*"
   CreateDirectory "$INSTDIR\lib"
   SetOutPath "$INSTDIR\lib"
