@@ -163,15 +163,17 @@ ${EndIf}
 !insertmacro MUI_INSTALLOPTIONS_READ $R6 "Options" "Field 5" "State"
 # .xq file Association
         ${If} $R5 == 1
-          ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xq" "XQuery File"
-          ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xqm" "XQuery File"
-          ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xqy" "XQuery File"
+          ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xq"     "XQuery File"
+          ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xqu"    "XQuery File"
+          ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xqy"    "XQuery File"
           ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xquery" "XQuery File"
-          ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xql" "XQuery Library"
+          ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xqm"    "XQuery Module"
+          ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xql"    "XQuery Module"
         ${EndIf}
 # .xml file Association
         ${If} $R6 == 1
           ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xml" "XML Document"
+          ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".bxs" "BaseX Command Script"
         ${EndIf}
         ${RefreshShellIcons}
 FunctionEnd
@@ -304,12 +306,14 @@ Section Uninstall
   DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
   DeleteRegKey HKLM "${PRODUCT_DIR_REGKEY}"
   ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "$INSTDIR\bin"
-  ${unregisterExtension} ".xq" "XQuery File"
-  ${unregisterExtension} ".xqm" "XQuery File"
-  ${unregisterExtension} ".xqy" "XQuery File"
+  ${unregisterExtension} ".xq"     "XQuery File"
+  ${unregisterExtension} ".xqu"    "XQuery File"
+  ${unregisterExtension} ".xqy"    "XQuery File"
   ${unregisterExtension} ".xquery" "XQuery File"
-  ${unregisterExtension} ".xql" "XQuery Library"
-  ${unregisterExtension} ".xml" "XML Document"
+  ${unregisterExtension} ".xqm"    "XQuery Module"
+  ${unregisterExtension} ".xql"    "XQuery Module"
+  ${unregisterExtension} ".xml"    "XML Document"
+  ${unregisterExtension} ".bxs"    "BaseX Command Script"
   ${RefreshShellIcons}
   SetAutoClose true
 SectionEnd
