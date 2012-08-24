@@ -4,9 +4,7 @@
  :)
 module namespace page = 'http://basex.org/modules/web-page';
 
-declare namespace rest = 'http://exquery.org/ns/restxq';
-
-declare %rest:path("")
+declare %restxq:path("")
         %output:method("xhtml")
         %output:omit-xml-declaration("no")
         %output:doctype-public("-//W3C//DTD XHTML 1.0 Transitional//EN")
@@ -35,7 +33,7 @@ declare %rest:path("")
       <p>The next example processes a simple form via POST:</p>
       <form method="post" action="form">
         <p>Your message:<br />
-        <input name="content" size="50"></input>
+        <input name="message" size="50"></input>
         <input type="submit" /></p>
       </form>
       <p>The source of this file is shown below:</p>
@@ -47,9 +45,9 @@ declare %rest:path("")
   </html>
 };
 
-declare %rest:path("hello/{$world}")
-        %rest:GET
-        %rest:header-param("User-Agent", "{$agent}")
+declare %restxq:path("hello/{$world}")
+        %restxq:GET
+        %restxq:header-param("User-Agent", "{$agent}")
         function page:hello($world as xs:string, $agent as xs:string*) {
   <response>
     <title>Hello { $world }!</title>
@@ -58,9 +56,9 @@ declare %rest:path("hello/{$world}")
   </response>
 };
 
-declare %rest:path("form/")
-        %rest:POST
-        %rest:form-param("content","{$message}", "'no message delivered'")
+declare %restxq:path("form/")
+        %restxq:POST
+        %restxq:form-param("message","{$message}", "'no message delivered'")
         function page:hello-postman($message as xs:string) {
   <response>
     <title>Hello!</title>
