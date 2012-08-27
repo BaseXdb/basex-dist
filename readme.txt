@@ -9,14 +9,14 @@
 
 CONTENTS ---------------------------------------------------------------
 
- This distribution contains the following directories:
+ This distribution contains the following directory:
 
-   bin/   Windows and Linux starter scripts
-   data/  contains all databases
-   etc/   example and DTD catalog files
-   http/  serves as container for REST XQuery scripts
-   lib/   libraries for BaseX and HTTP server extensions
-   repo/  includes installed XQuery modules
+   bin/      start scripts
+   data/     database directory
+   etc/      examples and DTD catalog files
+   lib/      Java libraries, referenced by the start scripts
+   repo/     XQuery modules
+   webapp/   web contents, including RESTXQ scripts
 
  To improve your workflows with BaseX, just add the bin/ directory to
  your PATH variable, or move the start scripts to an already added

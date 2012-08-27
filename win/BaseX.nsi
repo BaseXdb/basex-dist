@@ -92,7 +92,6 @@ FunctionEnd
 # =========================================================================
 #
 Function OptionsPage
-Delete $INSTDIR\bin\basexhttp.bat
 !insertmacro MUI_HEADER_TEXT "Installation Options" "Choose optional settings for the BaseX installation."
 # Display the page.
 !insertmacro MUI_INSTALLOPTIONS_DISPLAY "Options"
@@ -106,7 +105,7 @@ Function OptionsLeave
 !insertmacro MUI_INSTALLOPTIONS_READ $R1 "Options" "Field 8" "State"
 # serverport field
 !insertmacro MUI_INSTALLOPTIONS_READ $R2 "Options" "Field 9" "State"
-# HTTP port field
+# Event port field
 !insertmacro MUI_INSTALLOPTIONS_READ $R3 "Options" "Field 10" "State"
 # dbpath field
 !insertmacro MUI_INSTALLOPTIONS_READ $R4 "Options" "Field 6" "State"
@@ -135,14 +134,14 @@ ${If} $R2 != "1984"
     Abort
   ${EndIf}
 ${EndIf}
-# HTTP port check
-${If} $R3 != "8984"
+# Event port check
+${If} $R3 != "1985"
   Push "$R3"
   Push "${NUMERIC}"
   Call Validate
   Pop $0
   ${If} $0 == 0
-    MessageBox MB_OK "HTTP port contains invalid characters."
+    MessageBox MB_OK "Event port contains invalid characters."
     Abort
   ${EndIf}
 ${EndIf}
@@ -162,20 +161,20 @@ ${EndIf}
 # xml field
 !insertmacro MUI_INSTALLOPTIONS_READ $R6 "Options" "Field 5" "State"
 # .xq file Association
-        ${If} $R5 == 1
-          ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xq"     "XQuery File"
-          ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xqu"    "XQuery File"
-          ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xqy"    "XQuery File"
-          ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xquery" "XQuery File"
-          ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xqm"    "XQuery Module"
-          ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xql"    "XQuery Module"
-        ${EndIf}
+  ${If} $R5 == 1
+    ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xq"     "XQuery File"
+    ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xqu"    "XQuery File"
+    ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xqy"    "XQuery File"
+    ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xquery" "XQuery File"
+    ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xqm"    "XQuery File"
+    ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xql"    "XQuery File"
+  ${EndIf}
 # .xml file Association
-        ${If} $R6 == 1
-          ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xml" "XML Document"
-          ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".bxs" "BaseX Command Script"
-        ${EndIf}
-        ${RefreshShellIcons}
+  ${If} $R6 == 1
+    ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xml" "XML Document"
+    ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".bxs" "BaseX Command Script"
+  ${EndIf}
+  ${RefreshShellIcons}
 FunctionEnd
 
 ; Language files
@@ -196,34 +195,36 @@ Section "Hauptgruppe" SEC01
   SetOutPath "$INSTDIR"
   SetOverwrite ifnewer
   File "..\release\BaseX.exe"
-  CreateDirectory "$INSTDIR\etc"
-  SetOutPath "$INSTDIR\etc"
-  File "..\etc\*"
-  CreateDirectory "$INSTDIR\bin"
-  SetOutPath "$INSTDIR\bin"
-  File "..\release\bin\*.bat"
-  CreateDirectory "$INSTDIR\http"
-  SetOutPath "$INSTDIR\http"
-  File "..\http\*"
-  CreateDirectory "$INSTDIR\lib"
-  SetOutPath "$INSTDIR\lib"
-  File "..\release\basex-api.jar"
-  File "..\..\basex-dist\lib\*"
-  File "..\..\basex-api\lib\*"
-  File "..\..\basex\lib\*"
-  SetOutPath "$INSTDIR"
   File "..\release\${JAR}"
   File "..\..\basex\license.txt"
   File "..\..\basex\changelog.txt"
   File "..\readme.txt"
   File ".basex"
+  CreateDirectory "$INSTDIR\bin"
+  SetOutPath "$INSTDIR\bin"
+  File "..\release\bin\*.bat"
+  CreateDirectory "$INSTDIR\etc"
+  SetOutPath "$INSTDIR\etc"
+  File "..\etc\*"
   CreateDirectory "$INSTDIR\ico"
   SetOutPath "$INSTDIR\ico"
   File "..\images\*.ico"
+  CreateDirectory "$INSTDIR\lib"
+  SetOutPath "$INSTDIR\lib"
+  File "..\release\basex-api.jar"
+  File "..\..\basex-dist\lib\*"
+  File /x basex-*.jar "..\..\basex-api\lib\*"
+  File "..\..\basex-api\lib\basex-xqj*.*"
+  File "..\..\basex\lib\*"
   CreateDirectory "$INSTDIR\repo"
+  CreateDirectory "$INSTDIR\webapp"
+  SetOutPath "$INSTDIR\webapp"
+  File /r "..\webapp\*"
+  #CreateDirectory "$INSTDIR\webapp\WEB-INF"
+  #SetOutPath "$INSTDIR\webapp\WEB-INF"
+  #File "..\webapp\WEB-INF\*"
+
   AccessControl::GrantOnFile "$INSTDIR" "(S-1-1-0)" "GenericRead + GenericWrite + GenericExecute + Delete"
-  CreateDirectory "$INSTDIR\http"
-  CreateDirectory "$INSTDIR\repo"
   # set dbpath, port and webport
   StrLen $0 $R4
   IntOp $0 $0 - 1
@@ -234,23 +235,23 @@ Section "Hauptgruppe" SEC01
   !insertmacro IndexOf $9 "$R4" ":"
   ${If} $9 == -1
     CreateDirectory "$INSTDIR\$R4"
-    nsExec::Exec '"$INSTDIR\bin\basex.bat" "-Wc" "set dbpath \"$INSTDIR\$R4\"; set httppath \"$INSTDIR\http\"; set repopath \"$INSTDIR\repo\""'
+    nsExec::Exec '"$INSTDIR\bin\basex.bat" "-Wc" "set dbpath \"$INSTDIR\$R4\"'
+    # nsExec::Exec '"$INSTDIR\bin\basex.bat" "-Wc" "set dbpath \"$INSTDIR\$R4\"; set webpath \"$INSTDIR\webapp\"; set repopath \"$INSTDIR\repo\""'
   ${Else}
+    # store absolute path
     CreateDirectory "$R4"
-    nsExec::Exec '"$INSTDIR\bin\basex.bat" "-Wc" "set dbpath \"$R4\"; set httppath \"$INSTDIR\http\"; set repopath \"$INSTDIR\repo\""'
+    nsExec::Exec '"$INSTDIR\bin\basex.bat" "-Wc" "set dbpath \"$R4\";'
+    #nsExec::Exec '"$INSTDIR\bin\basex.bat" "-Wc" "set dbpath \"$R4\"; set webpath \"$INSTDIR\webapp\"; set repopath \"$INSTDIR\repo\""'
   ${EndIf}
-  nsExec::Exec '"$INSTDIR\bin\basex.bat" "-Wc" "set port $R2; set serverport $R2; set httpport $R3"'
+  nsExec::Exec '"$INSTDIR\bin\basex.bat" "-Wc" "set port $R2; set serverport $R2; set eventport $R3"'
 
   md5dll::GetMD5String "$R0"
   Pop $0
   # change admin password
   nsExec::Exec '"$INSTDIR\bin\basex.bat" "-c" "alter user admin $0"'
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BaseX" \
-                 "DisplayName" "BaseX"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BaseX" \
-                 "DisplayIcon" "$\"$INSTDIR\BaseX.ico$\""
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BaseX" \
-                 "UninstallString" "$\"$INSTDIR\uninstall.exe$\""
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BaseX" "DisplayName" "BaseX"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BaseX" "DisplayIcon" "$\"$INSTDIR\BaseX.ico$\""
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BaseX" "UninstallString" "$\"$INSTDIR\uninstall.exe$\""
   ${EnvVarUpdate} $0 "PATH" "R" "HKLM" "$INSTDIR\bin"  ; Remove path of old rev
   ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$INSTDIR\bin"  ; Append the new one
 SectionEnd
@@ -310,8 +311,8 @@ Section Uninstall
   ${unregisterExtension} ".xqu"    "XQuery File"
   ${unregisterExtension} ".xqy"    "XQuery File"
   ${unregisterExtension} ".xquery" "XQuery File"
-  ${unregisterExtension} ".xqm"    "XQuery Module"
-  ${unregisterExtension} ".xql"    "XQuery Module"
+  ${unregisterExtension} ".xqm"    "XQuery File"
+  ${unregisterExtension} ".xql"    "XQuery File"
   ${unregisterExtension} ".xml"    "XML Document"
   ${unregisterExtension} ".bxs"    "BaseX Command Script"
   ${RefreshShellIcons}
