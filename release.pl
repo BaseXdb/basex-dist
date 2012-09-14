@@ -76,6 +76,10 @@ sub prepare {
   for my $f(glob("../basex-api/src/main/webapp/*")) {
     copy($f, "webapp/".basename($f));
   }
+  mkdir "webapp/restxq";
+  for my $f(glob("../basex-api/src/main/webapp/restxq/*")) {
+    copy($f, "webapp/restxq/".basename($f));
+  }
   mkdir "webapp/WEB-INF";
   for my $f(glob("../basex-api/src/main/webapp/WEB-INF/*")) {
     copy($f, "webapp/WEB-INF/".basename($f));

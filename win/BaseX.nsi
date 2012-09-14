@@ -220,9 +220,6 @@ Section "Hauptgruppe" SEC01
   CreateDirectory "$INSTDIR\webapp"
   SetOutPath "$INSTDIR\webapp"
   File /r "..\webapp\*"
-  #CreateDirectory "$INSTDIR\webapp\WEB-INF"
-  #SetOutPath "$INSTDIR\webapp\WEB-INF"
-  #File "..\webapp\WEB-INF\*"
 
   AccessControl::GrantOnFile "$INSTDIR" "(S-1-1-0)" "GenericRead + GenericWrite + GenericExecute + Delete"
   # set dbpath, port and webport
