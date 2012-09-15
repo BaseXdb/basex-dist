@@ -175,6 +175,10 @@ sub zip {
   foreach my $file(glob("webapp/WEB-INF/*")) {
     $zip->addFile($file, "$name/$file");
   }
+  $zip->addDirectory("$name/webapp/restxq");
+  foreach my $file(glob("webapp/restxq/*")) {
+    $zip->addFile($file, "$name/$file");
+  }
 
   # save the zip file
   unless ($zip->writeToFileNamed("$release/BaseX.zip") == AZ_OK ) {
