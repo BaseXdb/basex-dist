@@ -159,7 +159,7 @@ sub zip {
   # Add libraries
   $zip->addDirectory("$name/lib");
   foreach my $file(glob("../basex/lib/*"), glob("../basex-api/lib/*"), glob("../basex-dist/lib/*")) {
-    next if $file =~ m|/lib/basex-|;
+    next if $file =~ m|/lib/basex-$version|;
     (my $target = $file) =~ s|.*/|$name/lib/|;
     $zip->addFile($file, $target);
   }
