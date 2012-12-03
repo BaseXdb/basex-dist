@@ -152,7 +152,7 @@ ${If} $R4 != "data"
   Call Validate
   Pop $0
   ${If} $0 == 0
-    MessageBox MB_OK "Database Path contains invalid characters."
+    MessageBox MB_OK "Database path contains invalid characters."
     Abort
   ${EndIf}
 ${EndIf}
