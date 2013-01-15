@@ -1,4 +1,42 @@
-basex (7.3-1) UNRELEASED; urgency=low
+basex (7.5-1) UNRELEASED; urgency=low
+
+  * New upstream release (December 21, 2012) (closes: #697037)
+    XQUERY UPDATE
+    - bulk updates are now much faster than before
+    - insert and replace operations take much less memory
+    - databases can now be created via XQuery and db:create()
+    
+    GUI TEXT EDITOR
+    - a fast and flexible search/replace panel has been added
+    - error highlighting has been extended to XML files
+    - the editor was improved for editing arbitrary text files
+    
+    XQUERY 3.0
+    - the code has been aligned with latest changes in the specs
+    - HTML5 support has been updated
+    
+    WEB APPLICATIONS
+    - new modules have been added: Request, Session, Sessions
+    - logging has been revised and extended to HTTP requests
+    - SSL support added, switched to Jetty 8
+    - all operation modes have been unified and simplified
+    - RESTXQ elements added to simplify forwarding and redirects
+    
+    CORE FEATURES
+    - improved stability of concurrent read/write operations
+    - the INSPECT command performs database sanity checks
+    - EXECUTE triggers the execution of command scripts
+
+  * Packaging:
+    - Added example provided by jidanni@jidanni.org to basex.1
+      Thanks! (closes: #696804)
+    - Added note for missing -q option to basex.1 (closes: #696796)
+      Reported issue upstream:
+      https://github.com/BaseXdb/basex/issues/620
+
+ -- Alexander Holupirek <alex@holupirek.de>  Tue, 15 Jan 2013 10:00:12 +0100
+
+basex (7.3-1) unstable; urgency=low
 
   * New upstream release (June 18, 2012)
     - Many new internal XQuery Modules have been added, and existing
