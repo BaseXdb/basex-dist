@@ -44,7 +44,7 @@ sub prepare {
   print "* Prepare release\n";
 
   # delete old release files
-  rmtree("release/*");
+  rmtree("release");
   mkdir $release;
 
   # extract pom version
