@@ -1,4 +1,29 @@
-basex (7.5-1) UNRELEASED; urgency=low
+basex (7.6-1) unstable; urgency=low
+
+  * New upstream release (February 5, 2012)
+    DATABASE LOCKING:
+    - updates on different databases can now be executed in parallel and
+    won't lock your read-only queries anymore:
+    http://docs.basex.org/wiki/Transaction_Management
+    
+    XQUERY
+    - when errors are raised, the full stack trace is now returned
+    - the EXPath Geo Module, Fetch Module and HTML Module have been added:
+    http://docs.basex.org/wiki/Module_Library
+    - the Validation, XSLT, Database and Profiling Module have been updated
+    
+    GUI
+    - error messages are now clickable and linked with the text editor
+    - trace/profiling output is redirected to the info view in realtime
+
+  * Packaging:
+    - Changed Vcs-Git field to point to git://github.com/BaseXdb/basex-dist.git
+      To retrieve relevant debian packagin you have to change to linux/debian,
+      however.
+
+ -- Alexander Holupirek <alex@holupirek.de>  Wed, 06 Feb 2013 23:06:53 +0100
+
+basex (7.5-1) unstable; urgency=low
 
   * New upstream release (December 21, 2012) (closes: #697037)
     XQUERY UPDATE
