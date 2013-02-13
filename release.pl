@@ -120,7 +120,6 @@ sub version {
 sub pkg {
   my $name = shift;
   print "* Create $name-$version package\n";
-  foreach my $f(glob("../$name/target/*")) { unlink $f; }
   foreach my $f(glob("../$name/lib/*")) { unlink $f; }
   system("cd ../$name && mvn install -q -DskipTests");
   move("../$name/target/$name-$version.jar", "$release/$name.jar");
@@ -255,6 +254,13 @@ sub exe {
     $file =~ s|.*/|lib/|;
     $cc .= "    <cp>$file</cp>\n";
   }
+  foreach my $file(glob("../basex-api/lib/*")) {
+    next if $file =~ /basex-\d/;
+    $file =~ s|.*/|lib/|;
+    $cc .= "    <cp>$file</cp>\n";
+  }
+  # add basex-api to find additional libraries
+  $cc .= "    <cp>lib/basex-api.jar</cp>\n";
   $cc .= "  </classPath>";
 
   # prepare launch script
