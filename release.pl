@@ -155,6 +155,11 @@ sub zip {
   foreach my $file(glob("etc/*")) {
     $zip->addFile($file, "$name/$file");
   }
+  # Add xqdoc files
+  $zip->addDirectory("$name/doc/modules");
+  foreach my $file(glob("doc/modules/*")) {
+    $zip->addFile($file, "$name/$file");
+  }
   # Add libraries
   $zip->addDirectory("$name/lib");
   foreach my $file(glob("../basex/lib/*"), glob("../basex-api/lib/*"), glob("../basex-dist/lib/*")) {
