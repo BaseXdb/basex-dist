@@ -1,14 +1,19 @@
-declare namespace _ = '_';
+(:~
+ : This script creates XQM files from the online documentation
+ : on XQuery Modules.
+ :
+ : @author Christian Gruen, BaseX Team
+ :)
+declare namespace _ = 'http://basex.org/modules/wiki2xqm';
 
 declare option db:chop 'no';
-declare option output:method 'text';
 
 (:~ Target directory. :)
-declare variable $TARGET-DIR := 'modules/';
+declare variable $TARGET-DIR := 'etc/modules/';
 (:~ Root URL. :)
 declare variable $ROOT-URL := 'http://docs.basex.org';
 (:~ Test script :)
-declare variable $TEST-XQ := 'test.xq';
+declare variable $TEST-XQ := $TARGET-DIR || 'test.xq';
 (:~ Prefix of the module to parse (if empty, all modules will be parsed) :)
 declare variable $PREFIX := () (:'admin':);
 
@@ -102,7 +107,6 @@ declare %private function _:create(
 
 (: Delete old files and create test directory :)
 prof:dump('Parsing modules...'),
-try { file:delete($TEST-XQ) } catch * { () },
 try { file:delete($TARGET-DIR, true()) } catch * { () },
 file:create-dir($TARGET-DIR),
 
@@ -123,7 +127,7 @@ return
     prof:dump('* ' || $prefix || ': ' || $uri),
     file:write-text($TARGET-DIR || $prefix || '.xqm', $xqdoc),
     let $import := 'import module namespace ' || $prefix || ' = "' || $uri ||
-      '" at "' || $TARGET-DIR || $prefix || '.xqm";'
+      '" at "' || $prefix || '.xqm";'
     return file:append-text-lines($TEST-XQ, $import)
   ),
 
@@ -131,7 +135,10 @@ file:append-text-lines($TEST-XQ, '()'),
 
 (: Check if all signatures are correct :)
 prof:dump('Running test script...'),
-xquery:invoke($TEST-XQ),
-file:delete($TEST-XQ),
+try {
+  xquery:invoke($TEST-XQ),
+  prof:dump('Successful')
+} catch * {
+  prof:dump('Failed: ' || $err:description)
+}
 
-prof:dump('Successful')

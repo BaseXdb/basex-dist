@@ -153,11 +153,11 @@ sub zip {
   # Add example files
   $zip->addDirectory("$name/etc");
   foreach my $file(glob("etc/*")) {
-    $zip->addFile($file, "$name/$file");
+    $zip->addFile($file, "$name/$file") if -f $file;
   }
   # Add xqdoc files
-  $zip->addDirectory("$name/doc/modules");
-  foreach my $file(glob("doc/modules/*")) {
+  $zip->addDirectory("$name/etc/modules");
+  foreach my $file(glob("etc/modules/*")) {
     $zip->addFile($file, "$name/$file");
   }
   # Add libraries
