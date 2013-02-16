@@ -31,13 +31,13 @@ HELP -------------------------------------------------------------------
  BaseX is an Open Source project and BSD-licensed. You are welcome
  to join our mailing lists and give all kinds of feedback:
 
-   http://basex.org/open-source/
+   http://basex.org/open-source
 
  You may as well contribute to our bug tracker: 
 
    https://github.com/BaseXdb/BaseX/issues
 
  Have fun,
- BaseX Team, 2012
+ BaseX Team, 2013
 
 ========================================================================
