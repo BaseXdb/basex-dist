@@ -17,9 +17,9 @@ declare function hof:id($expr as item()*) as item()* external;
 declare function hof:const($expr as item()*, $ignored as item()*) as item()* external;
 
 (:~
- : Works the same as <a href="http://docs.basex.org/wiki/Higher-Order_Functions#fn:fold-left.28.24f.2C_.24seed.2C_.24seq.29">fn:fold-left($f, $seed, $seq)</a> , but doesn't need a seed, because the sequence must be non-empty.
+ : Works the same as <a href="http://docs.basex.org/wiki/Higher-Order_Functions#fn:fold-left.28.24f.2C_.24seed.2C_.24seq.29">fn:fold-left($seq, $seed, $f)</a> , but doesn't need a seed, because the sequence must be non-empty.
  :)
-declare function hof:fold-left1($f as function(item()*, item()) as item()*, $seq as item()+) as item()* external;
+declare function hof:fold-left1($seq as item()+, $f as function(item()*, item()) as item()*) as item()* external;
 
 (:~
  : Applies the function <code>$f</code> to the initial value <code>$start</code> until the predicate <code>$pred</code> applied to the result returns <code>true()</code> .
