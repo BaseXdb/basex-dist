@@ -139,7 +139,7 @@ sub zip {
   $zip->addFile("../$name/license.txt", "$name/license.txt");
   $zip->addFile("../$name/changelog.txt", "$name/changelog.txt");
   $zip->addFile("readme.txt", "$name/readme.txt");
-  $zip->addString("", "$name/.basex");
+  $zip->addString("", "$name/.basexhome");
 
   # Add scripts
   $zip->addDirectory("$name/bin");
