@@ -161,6 +161,10 @@ ${EndIf}
 # xml field
 !insertmacro MUI_INSTALLOPTIONS_READ $R6 "Options" "Field 5" "State"
 # .xq file Association
+  ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".bxs" "BaseX Command Script"
+  ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".basex" "BaseX Configuration"
+  ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".basexhome" "BaseX Configuration"
+  ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".basexgui" "BaseX Configuration"
   ${If} $R5 == 1
     ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xq"     "XQuery File"
     ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xqu"    "XQuery File"
@@ -172,7 +176,6 @@ ${EndIf}
 # .xml file Association
   ${If} $R6 == 1
     ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xml" "XML Document"
-    ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".bxs" "BaseX Command Script"
   ${EndIf}
   ${RefreshShellIcons}
 FunctionEnd
@@ -199,7 +202,7 @@ Section "Hauptgruppe" SEC01
   File "..\..\basex\license.txt"
   File "..\..\basex\changelog.txt"
   File "..\readme.txt"
-  File ".basex"
+  File ".basexhome"
   CreateDirectory "$INSTDIR\bin"
   SetOutPath "$INSTDIR\bin"
   File "..\release\bin\*.bat"
@@ -304,14 +307,17 @@ Section Uninstall
   DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
   DeleteRegKey HKLM "${PRODUCT_DIR_REGKEY}"
   ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "$INSTDIR\bin"
-  ${unregisterExtension} ".xq"     "XQuery File"
-  ${unregisterExtension} ".xqu"    "XQuery File"
-  ${unregisterExtension} ".xqy"    "XQuery File"
-  ${unregisterExtension} ".xquery" "XQuery File"
-  ${unregisterExtension} ".xqm"    "XQuery File"
-  ${unregisterExtension} ".xql"    "XQuery File"
-  ${unregisterExtension} ".xml"    "XML Document"
-  ${unregisterExtension} ".bxs"    "BaseX Command Script"
+  ${unregisterExtension} ".xq"        "XQuery File"
+  ${unregisterExtension} ".xqu"       "XQuery File"
+  ${unregisterExtension} ".xqy"       "XQuery File"
+  ${unregisterExtension} ".xquery"    "XQuery File"
+  ${unregisterExtension} ".xqm"       "XQuery File"
+  ${unregisterExtension} ".xql"       "XQuery File"
+  ${unregisterExtension} ".xml"       "XML Document"
+  ${unregisterExtension} ".bxs"       "BaseX Command Script"
+  ${unregisterExtension} ".basex"     "BaseX Configuration"
+  ${unregisterExtension} ".basexgui"  "BaseX Configuration"
+  ${unregisterExtension} ".basexhome" "BaseX Configuration"
   ${RefreshShellIcons}
   SetAutoClose true
 SectionEnd
