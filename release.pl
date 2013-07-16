@@ -76,9 +76,9 @@ sub prepare {
   for my $f(glob("../basex-api/src/main/webapp/*")) {
     copy($f, "webapp/".basename($f));
   }
-  mkdir "webapp/restxq";
-  for my $f(glob("../basex-api/src/main/webapp/restxq/*")) {
-    copy($f, "webapp/restxq/".basename($f));
+  mkdir "webapp/static";
+  for my $f(glob("../basex-api/src/main/webapp/static/*")) {
+    copy($f, "webapp/static/".basename($f));
   }
   mkdir "webapp/WEB-INF";
   for my $f(glob("../basex-api/src/main/webapp/WEB-INF/*")) {
@@ -179,8 +179,8 @@ sub zip {
   foreach my $file(glob("webapp/WEB-INF/*")) {
     $zip->addFile($file, "$name/$file");
   }
-  $zip->addDirectory("$name/webapp/restxq");
-  foreach my $file(glob("webapp/restxq/*")) {
+  $zip->addDirectory("$name/webapp/static");
+  foreach my $file(glob("webapp/static/*")) {
     $zip->addFile($file, "$name/$file");
   }
 
