@@ -1,5 +1,5 @@
 (:~
- : This <a href="http://docs.basex.org/wiki/Module_Library">XQuery Module</a> contains a single function to send HTTP requests and handle HTTP responses. The function <code>send-request</code> is based on the <a href="http://expath.org/spec/http-client">EXPath HTTP Client Module</a> :
+ : This <a href="http://docs.basex.org/wiki/Module_Library">XQuery Module</a> contains a single function to send HTTP requests and handle HTTP responses. The function <code>send-request</code> is based on the <a href="http://expath.org/spec/http-client">EXPath HTTP Client Module</a> . It gives full control over the available request and response parameters. For simple GET requests, the <a href="http://docs.basex.org/wiki/Fetch_Module">Fetch Module</a> may be sufficient.
  : 
  : @author BaseX Team
  : @see http://docs.basex.org/wiki/Module_Library

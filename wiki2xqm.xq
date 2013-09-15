@@ -139,6 +139,8 @@ try {
   xquery:invoke($TEST-XQ),
   prof:dump('Successful')
 } catch * {
-  prof:dump('Failed: ' || $err:description)
+  prof:dump('Error at line ' || $err:module || ', ' ||
+    $err:line-number || '/' || $err:line-number || ':&#xa;' ||
+    $err:description)
 }
 

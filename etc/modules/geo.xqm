@@ -95,7 +95,7 @@ declare function geo:num-geometries($geometry as element(*)) as xs:integer exter
 declare function geo:geometry-n($geometry as element(*), $geoNumber as xs:integer) as element(*) external;
 
 (:~
- : Returns the length of the line of the geometry <code>$geometry</code> . If the geometry is a point, zero value will be returned.
+ : Returns the length of the geometry <code>$geometry</code> . If the geometry is a point, zero value will be returned.
  :
  : @error experr:GEO0001 the given element(s) is not recognized as a valid geometry (QName).
  : @error experr:GEO0002 the given element cannot be read by reader for some reason.
@@ -190,7 +190,7 @@ declare function geo:crosses($geometry1 as element(*), $geometry2 as element(*))
 declare function geo:within($geometry1 as element(*), $geometry2 as element(*)) as xs:boolean external;
 
 (:~
- : Returns whether geometry1 <code>$geometry1</code> is spatially contains $geometry2 <code>$geometry2</code> . Returns true if within function of these two geometries also returns true.
+ : Returns whether geometry1 <code>$geometry1</code> spatially contains $geometry2 <code>$geometry2</code> . Returns true if within function of these two geometries also returns true.
  :
  : @error experr:GEO0001 the given element(s) is not recognized as a valid geometry (QName).
  : @error experr:GEO0002 the given element cannot be read by reader for some reason.

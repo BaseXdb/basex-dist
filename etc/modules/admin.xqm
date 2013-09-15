@@ -9,17 +9,17 @@ declare namespace bxerr = "http://basex.org/errors";
 
 (:~
  : Returns an element sequence, containing all registered users along with their access permissions.
- : If a <a href="http://docs.basex.org/wiki/Database_Module#Database_Nodes">database node</a>  <code>$db</code> is specified, users registered for a particular database will be returned.
+ : If a database <code>$db</code> is specified, users registered for a particular database will be returned.
  : The output of this function is similar to the <a href="http://docs.basex.org/wiki/Commands#SHOW_USERS">SHOW USERS</a> command.
  :)
 declare function admin:users() as element(user)* external;
 
 (:~
  : Returns an element sequence, containing all registered users along with their access permissions.
- : If a <a href="http://docs.basex.org/wiki/Database_Module#Database_Nodes">database node</a>  <code>$db</code> is specified, users registered for a particular database will be returned.
+ : If a database <code>$db</code> is specified, users registered for a particular database will be returned.
  : The output of this function is similar to the <a href="http://docs.basex.org/wiki/Commands#SHOW_USERS">SHOW USERS</a> command.
  :)
-declare function admin:users($db as item()) as element(user)* external;
+declare function admin:users($db as xs:string) as element(user)* external;
 
 (:~
  : Returns an element sequence with all currently opened sessions, including the user name, address (IP:port) and an optionally opened database.

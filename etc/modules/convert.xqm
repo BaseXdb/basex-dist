@@ -11,19 +11,21 @@ declare namespace bxerr = "http://basex.org/errors";
  : Converts the specifed binary data (xs:base64Binary, xs:hexBinary) to a string.
  : The UTF-8 default encoding can be overwritten with the optional <code>$encoding</code> argument.
  :
- : @error bxerr:BXCO0001 The input is an invalid XML string, or the wrong encoding has been specified.
+ : @error bxerr:BXCO0001 The input is an invalid XML string, or the wrong encoding has been specified. Invalid XML characters will be ignored if the
+ : @error bxerr: option is turned off.
  : @error bxerr:BXCO0002 The specified encoding is invalid or not supported.
  :)
-declare function convert:binary-to-string($bytes as basex:binary) as xs:string external;
+declare function convert:binary-to-string($bytes as xs:anyAtomicType) as xs:string external;
 
 (:~
  : Converts the specifed binary data (xs:base64Binary, xs:hexBinary) to a string.
  : The UTF-8 default encoding can be overwritten with the optional <code>$encoding</code> argument.
  :
- : @error bxerr:BXCO0001 The input is an invalid XML string, or the wrong encoding has been specified.
+ : @error bxerr:BXCO0001 The input is an invalid XML string, or the wrong encoding has been specified. Invalid XML characters will be ignored if the
+ : @error bxerr: option is turned off.
  : @error bxerr:BXCO0002 The specified encoding is invalid or not supported.
  :)
-declare function convert:binary-to-string($bytes as basex:binary, $encoding as xs:string) as xs:string external;
+declare function convert:binary-to-string($bytes as xs:anyAtomicType, $encoding as xs:string) as xs:string external;
 
 (:~
  : Converts the specified string to a <code>xs:base64Binary</code> item. If the default encoding is chosen, conversion will be cheap, as both <code>xs:string</code> and <code>xs:base64Binary</code> items are internally represented as byte arrays.
@@ -71,16 +73,13 @@ declare function convert:bytes-to-base64($input as xs:byte*) as xs:base64Binary 
 
 (:~
  : Converts the specified byte sequence to a <code>xs:hexBinary</code> item. Conversion is cheap, as <code>xs:hexBinary</code> items are internally represented as byte arrays.
- :
- : @error bxerr:BXCO0001 The input cannot be represented in the specified encoding.
- : @error bxerr:BXCO0002 The specified encoding is invalid or not supported.
  :)
-declare function convert:string-to-hex($input as xs:byte*) as xs:hexBinary external;
+declare function convert:bytes-to-hex($input as xs:byte*) as xs:hexBinary external;
 
 (:~
  : Returns the specified binary data (xs:base64Binary, xs:hexBinary) as a sequence of bytes.
  :)
-declare function convert:binary-to-bytes($bin as basex:binary) as xs:byte* external;
+declare function convert:binary-to-bytes($bin as xs:anyAtomicType) as xs:byte* external;
 
 (:~
  : Converts <code>$num</code> to base <code>$base</code> , interpreting it as a 64-bit unsigned integer.

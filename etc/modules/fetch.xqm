@@ -8,23 +8,25 @@ module namespace fetch = "http://basex.org/modules/fetch";
 declare namespace bxerr = "http://basex.org/errors";
 
 (:~
- : Fetches the resource referred to by the given URI and returns it as streamable <code>xs:string</code> .
+ : Fetches the resource referred to by the given URI and returns it as <a href="http://docs.basex.org/wiki/Streaming_Module">streamable</a>  <code>xs:string</code> .
  :
- : @error bxerr:BXFE0001 the URI could not be resolved, or the resource could not be retrieved.
+ : @error bxerr:BXFE0001 the URI could not be resolved, or the resource could not be retrieved. Invalid XML characters will be ignored if the
+ : @error bxerr: option is turned off.
  : @error bxerr:BXFE0002 the specified encoding is not supported, or unknown.
  :)
 declare function fetch:text($uri as xs:string) as xs:string external;
 
 (:~
- : Fetches the resource referred to by the given URI and returns it as streamable <code>xs:string</code> .
+ : Fetches the resource referred to by the given URI and returns it as <a href="http://docs.basex.org/wiki/Streaming_Module">streamable</a>  <code>xs:string</code> .
  :
- : @error bxerr:BXFE0001 the URI could not be resolved, or the resource could not be retrieved.
+ : @error bxerr:BXFE0001 the URI could not be resolved, or the resource could not be retrieved. Invalid XML characters will be ignored if the
+ : @error bxerr: option is turned off.
  : @error bxerr:BXFE0002 the specified encoding is not supported, or unknown.
  :)
 declare function fetch:text($uri as xs:string, $encoding as xs:string) as xs:string external;
 
 (:~
- : Fetches the resource referred to by the given URI and returns it as streamable <code>xs:base64Binary</code> .
+ : Fetches the resource referred to by the given URI and returns it as <a href="http://docs.basex.org/wiki/Streaming_Module">streamable</a>  <code>xs:base64Binary</code> .
  :
  : @error bxerr:BXFE0001 the URI could not be resolved, or the resource could not be retrieved.
  :)

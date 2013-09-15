@@ -1,5 +1,5 @@
 (:~
- : This <a href="http://docs.basex.org/wiki/Module_Library">XQuery Module</a> contains functions to handle archives (including ePub, Open Office, JAR, and many other formats). New ZIP and GZIP archives can be created, existing archives can be updated, and the archive entries can be listed and extracted. This module may soon replace the existing <a href="http://docs.basex.org/wiki/ZIP_Module">ZIP Module</a> ( <a href="http://spex.basex.org/index.php?title=ZIP_Module">more information</a> ).
+ : This <a href="http://docs.basex.org/wiki/Module_Library">XQuery Module</a> contains functions to handle archives (including ePub, Open Office, JAR, and many other formats). New ZIP and GZIP archives can be created, existing archives can be updated, and the archive entries can be listed and extracted. The <a href="#archive:extract-binary">archive:extract-binary</a> function includes an example for writing the contents of an archive to disk.
  : 
  : @author BaseX Team
  : @see http://docs.basex.org/wiki/Module_Library
@@ -15,7 +15,8 @@ declare namespace bxerr = "http://basex.org/errors";
  : @error bxerr:ARCH0001 the number of entries and contents differs.
  : @error bxerr:ARCH0002 the specified option or its value is invalid or not supported.
  : @error bxerr:ARCH0003 entry descriptors contain invalid entry names, timestamps or compression levels.
- : @error bxerr:ARCH0004 the specified encoding is invalid or not supported, or the string conversion failed.
+ : @error bxerr:ARCH0004 the specified encoding is invalid or not supported, or the string conversion failed. Invalid XML characters will be ignored if the
+ : @error bxerr: option is turned off.
  : @error bxerr:ARCH0005 the chosen archive format only allows single entries.
  : @error bxerr:ARCH9999 archive creation failed for some other reason.
  : @error bxerr:FORG0006 an argument has a wrong type.
@@ -30,7 +31,8 @@ declare function archive:create($entries as item(), $contents as item()*) as xs:
  : @error bxerr:ARCH0001 the number of entries and contents differs.
  : @error bxerr:ARCH0002 the specified option or its value is invalid or not supported.
  : @error bxerr:ARCH0003 entry descriptors contain invalid entry names, timestamps or compression levels.
- : @error bxerr:ARCH0004 the specified encoding is invalid or not supported, or the string conversion failed.
+ : @error bxerr:ARCH0004 the specified encoding is invalid or not supported, or the string conversion failed. Invalid XML characters will be ignored if the
+ : @error bxerr: option is turned off.
  : @error bxerr:ARCH0005 the chosen archive format only allows single entries.
  : @error bxerr:ARCH9999 archive creation failed for some other reason.
  : @error bxerr:FORG0006 an argument has a wrong type.
@@ -38,14 +40,14 @@ declare function archive:create($entries as item(), $contents as item()*) as xs:
 declare function archive:create($entries as item(), $contents as item()*, $options as item()) as xs:base64Binary external;
 
 (:~
- : Returns the entry descriptors of the given archive. A descriptor contains the following attributes, provided that they are available in the archive format: <ul> <li> <code>size</code>: original file size </li> <li> <code>last-modified</code>: timestamp, formatted as xs:dateTime </li> <li> <code>compressed-size</code>: compressed file size </li> </ul>  <p>An example: </p>  <pre class="brush:xml"> &lt;archive:entry size="1840" last-modified="2009-03-20T03:30:32" compressed-size="672"&gt; doc/index.html &lt;/archive:entry&gt; </pre> 
+ : Returns the entry descriptors of the specified <code>$archive</code> . A descriptor contains the following attributes, provided that they are available in the archive format: <ul> <li> <code>size</code>: original file size </li> <li> <code>last-modified</code>: timestamp, formatted as xs:dateTime </li> <li> <code>compressed-size</code>: compressed file size </li> </ul>  <p>An example: </p>  <pre class="brush:xml"> &lt;archive:entry size="1840" last-modified="2009-03-20T03:30:32" compressed-size="672"&gt; doc/index.html &lt;/archive:entry&gt; </pre> 
  :
  : @error bxerr:ARCH9999 archive creation failed for some other reason.
  :)
 declare function archive:entries($archive as xs:base64Binary) as element(archive:entry)* external;
 
 (:~
- : Returns the options of the given archive in the format specified by <a href="#archive:create">archive:create</a> .
+ : Returns the options of the specified <code>$archive</code> in the format specified by <a href="#archive:create">archive:create</a> .
  :
  : @error bxerr:ARCH0002 The packing format is not supported.
  : @error bxerr:ARCH9999 archive creation failed for some other reason.
@@ -53,37 +55,40 @@ declare function archive:entries($archive as xs:base64Binary) as element(archive
 declare function archive:options($archive as xs:base64Binary) as element(archive:options) external;
 
 (:~
- : Extracts archive entries and returns them as texts.
+ : Extracts entries of the specified <code>$archive</code> and returns them as texts.
  : The returned entries can be limited via <code>$entries</code> . The format of the argument is the same as for <a href="#archive:create">archive:create</a> (attributes will be ignored).
  : The encoding of the input files can be specified via <code>$encoding</code> .
  :
- : @error bxerr:ARCH0004 the specified encoding is invalid or not supported, or the string conversion failed.
+ : @error bxerr:ARCH0004 the specified encoding is invalid or not supported, or the string conversion failed. Invalid XML characters will be ignored if the
+ : @error bxerr: option is turned off.
  : @error bxerr:ARCH9999 archive creation failed for some other reason.
  :)
 declare function archive:extract-text($archive as xs:base64Binary) as xs:string* external;
 
 (:~
- : Extracts archive entries and returns them as texts.
+ : Extracts entries of the specified <code>$archive</code> and returns them as texts.
  : The returned entries can be limited via <code>$entries</code> . The format of the argument is the same as for <a href="#archive:create">archive:create</a> (attributes will be ignored).
  : The encoding of the input files can be specified via <code>$encoding</code> .
  :
- : @error bxerr:ARCH0004 the specified encoding is invalid or not supported, or the string conversion failed.
+ : @error bxerr:ARCH0004 the specified encoding is invalid or not supported, or the string conversion failed. Invalid XML characters will be ignored if the
+ : @error bxerr: option is turned off.
  : @error bxerr:ARCH9999 archive creation failed for some other reason.
  :)
 declare function archive:extract-text($archive as xs:base64Binary, $entries as item()*) as xs:string* external;
 
 (:~
- : Extracts archive entries and returns them as texts.
+ : Extracts entries of the specified <code>$archive</code> and returns them as texts.
  : The returned entries can be limited via <code>$entries</code> . The format of the argument is the same as for <a href="#archive:create">archive:create</a> (attributes will be ignored).
  : The encoding of the input files can be specified via <code>$encoding</code> .
  :
- : @error bxerr:ARCH0004 the specified encoding is invalid or not supported, or the string conversion failed.
+ : @error bxerr:ARCH0004 the specified encoding is invalid or not supported, or the string conversion failed. Invalid XML characters will be ignored if the
+ : @error bxerr: option is turned off.
  : @error bxerr:ARCH9999 archive creation failed for some other reason.
  :)
 declare function archive:extract-text($archive as xs:base64Binary, $entries as item()*, $encoding as xs:string) as xs:string* external;
 
 (:~
- : Extracts archive entries and returns them as binaries.
+ : Extracts entries of the specified <code>$archive</code> and returns them as binaries.
  : The returned entries can be limited via <code>$entries</code> . The format of the argument is the same as for <a href="#archive:create">archive:create</a> (attributes will be ignored).
  :
  : @error bxerr:ARCH9999 archive creation failed for some other reason.
@@ -91,7 +96,7 @@ declare function archive:extract-text($archive as xs:base64Binary, $entries as i
 declare function archive:extract-binary($archive as xs:base64Binary) as xs:string* external;
 
 (:~
- : Extracts archive entries and returns them as binaries.
+ : Extracts entries of the specified <code>$archive</code> and returns them as binaries.
  : The returned entries can be limited via <code>$entries</code> . The format of the argument is the same as for <a href="#archive:create">archive:create</a> (attributes will be ignored).
  :
  : @error bxerr:ARCH9999 archive creation failed for some other reason.
@@ -99,12 +104,13 @@ declare function archive:extract-binary($archive as xs:base64Binary) as xs:strin
 declare function archive:extract-binary($archive as xs:base64Binary, $entries as item()*) as xs:base64Binary* external;
 
 (:~
- : Adds new entries and replaces existing entries in an archive.
+ : Creates an updated version of the specified <code>$archive</code> with new or replaced entries.
  : The format of <code>$entries</code> and <code>$contents</code> is the same as for <a href="#archive:create">archive:create</a> .
  :
  : @error bxerr:ARCH0001 the number of entries and contents differs.
  : @error bxerr:ARCH0003 entry descriptors contain invalid entry names, timestamps, compression levels or encodings.
- : @error bxerr:ARCH0004 the specified encoding is invalid or not supported, or the string conversion failed.
+ : @error bxerr:ARCH0004 the specified encoding is invalid or not supported, or the string conversion failed. Invalid XML characters will be ignored if the
+ : @error bxerr: option is turned off.
  : @error bxerr:ARCH0005 the entries of the given archive cannot be modified.
  : @error bxerr:ARCH9999 archive creation failed for some other reason.
  : @error bxerr:FORG0006 (some of) the contents are not of type
@@ -114,13 +120,31 @@ declare function archive:extract-binary($archive as xs:base64Binary, $entries as
 declare function archive:update($archive as xs:base64Binary, $entries as item()*, $contents as item()*) as xs:base64Binary external;
 
 (:~
- : Deletes entries from an archive.
+ : Deletes entries from an <code>$archive</code> .
  : The format of <code>$entries</code> is the same as for <a href="#archive:create">archive:create</a> .
  :
  : @error bxerr:ARCH0005 the entries of the given archive cannot be modified.
  : @error bxerr:ARCH9999 archive creation failed for some other reason.
  :)
 declare function archive:delete($archive as xs:base64Binary, $entries as item()*) as xs:base64Binary external;
+
+(:~
+ : This convenience function directly writes files of an <code>$archive</code> to the specified directory <code>$path</code> .
+ : The entries to be written can be limited via <code>$entries</code> . The format of the argument is the same as for <a href="#archive:create">archive:create</a> (attributes will be ignored).
+ :
+ : @error bxerr:FILE0001 a specified path does not exist.
+ : @error bxerr:ARCH9999 archive creation failed for some other reason.
+ :)
+declare function archive:write($path as xs:string, $archive as xs:base64Binary) as xs:string* external;
+
+(:~
+ : This convenience function directly writes files of an <code>$archive</code> to the specified directory <code>$path</code> .
+ : The entries to be written can be limited via <code>$entries</code> . The format of the argument is the same as for <a href="#archive:create">archive:create</a> (attributes will be ignored).
+ :
+ : @error bxerr:FILE0001 a specified path does not exist.
+ : @error bxerr:ARCH9999 archive creation failed for some other reason.
+ :)
+declare function archive:write($path as xs:string, $archive as xs:base64Binary, $entries as item()*) as empty-sequence() external;
 
 
 

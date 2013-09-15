@@ -3,9 +3,9 @@
  Welcome to BaseX!
 
  BaseX is a light-weight, high-performance and scalable XML Database
- engine and XPath/XQuery Processor, including full support for the W3C
- Update and Full Text extensions. An interactive and user-friendly GUI
- frontend gives you great insight into your XML documents.
+ engine and XPath/XQuery 3.0 Processor, including full support for the
+ W3C Update and Full Text extensions. An user-friendly GUI provides
+ interactive access to your XML documents and queries.
 
 CONTENTS ---------------------------------------------------------------
 
@@ -13,10 +13,10 @@ CONTENTS ---------------------------------------------------------------
 
    bin/      start scripts
    data/     database directory
-   etc/      examples and DTD catalog files
+   etc/      examples, catalog files and module declarations (optional)
    lib/      Java libraries, referenced by the start scripts
-   repo/     XQuery modules
-   webapp/   web contents, including RESTXQ scripts
+   repo/     user-defined XQuery modules
+   webapp/   contents for web applications, including RESTXQ scripts
 
  To improve your workflows with BaseX, just add the bin/ directory to
  your PATH variable, or move the start scripts to an already added

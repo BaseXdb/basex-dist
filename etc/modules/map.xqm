@@ -1,10 +1,10 @@
 (:~
- : This <a href="http://docs.basex.org/wiki/Module_Library">XQuery Module</a> contains functions for manipulating maps. The following documentation is derived from an <a href="http://www.w3.org/TR/xpath-functions-30/">XQuery 3.0 Functions and Operators</a> working draft proposal written by <a href="http://en.wikipedia.org/wiki/Michael_Kay_(software_engineer)">Michael H. Kay</a> , and is not part of the official standard yet.
+ : This <a href="http://docs.basex.org/wiki/Module_Library">XQuery Module</a> contains functions for manipulating maps. The following documentation is derived from an <a href="http://www.w3.org/TR/xpath-functions-30/">XQuery 3.0 Functions and Operators</a> working draft proposal written by <a href="http://en.wikipedia.org/wiki/Michael_Kay_(software_engineer)">Michael H. Kay</a> , and is not part of the official recommendation yet.
  : 
  : @author BaseX Team
  : @see http://docs.basex.org/wiki/Module_Library
  :)
-module namespace map = "http://www.w3.org/2005/xpath-functions/map";
+module namespace map = "http://www.w3.org/2005/xpath-functsions/map";
 
 (:~
  : Returns the collation URI of the <i>map</i> supplied as <code>$map</code> .

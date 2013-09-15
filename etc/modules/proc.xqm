@@ -45,7 +45,7 @@ declare function proc:system($cmd as xs:string, $args as xs:string*, $encoding a
  : Additional command arguments may be specified via <code>$args</code> .
  : The result can be explicitly converted to a specified <code>$encoding</code> . If no encoding is specified, the system’s default encoding is used.
  : A result has the following structure:
- : <pre class="brush:xml"> &lt;result&gt; &lt;output&gt;...result...&lt;/output&gt; &lt;error/&gt; {{Code|0}} &lt;/result&gt; </pre> 
+ : <pre class="brush:xml"> &lt;result&gt; &lt;output&gt;...result...&lt;/output&gt; &lt;error&gt;0&lt;/error&gt; &lt;/result&gt; </pre> 
  :
  : @error bxerr:BXPR9999 the specified encoding does not exist or is not supported.
  :)
@@ -56,7 +56,7 @@ declare function proc:execute($cmd as xs:string) as element(result) external;
  : Additional command arguments may be specified via <code>$args</code> .
  : The result can be explicitly converted to a specified <code>$encoding</code> . If no encoding is specified, the system’s default encoding is used.
  : A result has the following structure:
- : <pre class="brush:xml"> &lt;result&gt; &lt;output&gt;...result...&lt;/output&gt; &lt;error/&gt; {{Code|0}} &lt;/result&gt; </pre> 
+ : <pre class="brush:xml"> &lt;result&gt; &lt;output&gt;...result...&lt;/output&gt; &lt;error&gt;0&lt;/error&gt; &lt;/result&gt; </pre> 
  :
  : @error bxerr:BXPR9999 the specified encoding does not exist or is not supported.
  :)
@@ -67,7 +67,7 @@ declare function proc:execute($cmd as xs:string, $args as xs:string*) as element
  : Additional command arguments may be specified via <code>$args</code> .
  : The result can be explicitly converted to a specified <code>$encoding</code> . If no encoding is specified, the system’s default encoding is used.
  : A result has the following structure:
- : <pre class="brush:xml"> &lt;result&gt; &lt;output&gt;...result...&lt;/output&gt; &lt;error/&gt; {{Code|0}} &lt;/result&gt; </pre> 
+ : <pre class="brush:xml"> &lt;result&gt; &lt;output&gt;...result...&lt;/output&gt; &lt;error&gt;0&lt;/error&gt; &lt;/result&gt; </pre> 
  :
  : @error bxerr:BXPR9999 the specified encoding does not exist or is not supported.
  :)

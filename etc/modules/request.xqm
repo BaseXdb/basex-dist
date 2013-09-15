@@ -1,5 +1,5 @@
 (:~
- : This <a href="http://docs.basex.org/wiki/Module_Library">XQuery Module</a> contains functions for retrieving information on an HTTP request that has triggered the query. It is mainly useful in the context of <a href="http://docs.basex.org/wiki/Web_Application">Web Applications</a> . The module is mainly derived from Adam Retter’s upcoming <a href="http://exquery.github.com/expath-specs-playground/request-module-1.0-specification.html">EXQuery Request Module</a> .
+ : This <a href="http://docs.basex.org/wiki/Module_Library">XQuery Module</a> contains functions for retrieving information on an HTTP request that has triggered the query. It is mainly useful in the context of <a href="http://docs.basex.org/wiki/Web_Application">Web Applications</a> . The module is related to Adam Retter’s upcoming <a href="http://exquery.github.com/expath-specs-playground/request-module-1.0-specification.html">EXQuery Request Module</a> .
  : 
  : @author BaseX Team
  : @see http://docs.basex.org/wiki/Module_Library
@@ -10,6 +10,11 @@ module namespace request = "http://exquery.org/ns/request";
  : Returns the Method of the HTTP request.
  :)
 declare function request:method() as xs:string external;
+
+(:~
+ : Returns the value of an attribute of the HTTP request. If the attribute does not exist, an empty sequence is returned.
+ :)
+declare function request:attribute($name as xs:string) as xs:string external;
 
 (:~
  : Returns the Scheme component of the URI of an HTTP request.

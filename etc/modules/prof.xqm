@@ -1,5 +1,5 @@
 (:~
- : This <a href="http://docs.basex.org/wiki/Module_Library">XQuery Module</a> contains functions for XQuery code.
+ : This <a href="http://docs.basex.org/wiki/Module_Library">XQuery Module</a> contains various testing, profiling and helper functions.
  : 
  : @author BaseX Team
  : @see http://docs.basex.org/wiki/Module_Library
@@ -89,6 +89,12 @@ declare function prof:current-ms() as xs:integer external;
  : In contrast to <code>fn:current-time()</code> , the function is <i>non-deterministic</i> , as it returns different values every time it is called. Its evaluation order will be preserved by the compiler.
  :)
 declare function prof:current-ns() as xs:integer external;
+
+(:~
+ : Swallows all items of the specified <code>$value</code> and returns an empty sequence. This function is helpful if some code needs to be evaluated and if the actual result is irrelevant.
+ : The function is <i>non-deterministic</i> : evaluation order will be preserved by the compiler.
+ :)
+declare function prof:void($value as item()*) as empty-sequence() external;
 
 
 

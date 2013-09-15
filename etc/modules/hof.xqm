@@ -17,7 +17,7 @@ declare function hof:id($expr as item()*) as item()* external;
 declare function hof:const($expr as item()*, $ignored as item()*) as item()* external;
 
 (:~
- : Works the same as <a href="http://docs.basex.org/wiki/Higher-Order_Functions#fn:fold-left.28.24f.2C_.24seed.2C_.24seq.29">fn:fold-left($seq, $seed, $f)</a> , but doesn't need a seed, because the sequence must be non-empty.
+ : Works the same as <a href="http://docs.basex.org/wiki/Higher-Order_Functions#fn:fold-left">fn:fold-left</a> , but doesn't need a seed, because the sequence must be non-empty.
  :)
 declare function hof:fold-left1($seq as item()+, $f as function(item()*, item()) as item()*) as item()* external;
 
@@ -27,7 +27,7 @@ declare function hof:fold-left1($seq as item()+, $f as function(item()*, item())
 declare function hof:until($pred as function(item()*) as xs:boolean, $f as function(item()*) as item()*, $start as item()*) as item()* external;
 
 (:~
- : Returns the <code>$k</code> items in <code>$seq</code> that are greatest when sorted by the result of <code>$f</code> applied to the item. The function is a much more efficient implementation of the following scheme: <pre class="brush:xquery"> ( for $x in $seq order by $sort-key($x) descending return $x )[position() &lt;= $k] </pre> 
+ : Returns the <code>$k</code> items in <code>$seq</code> that are greatest when sorted by the result of <code>$f</code> applied to the item. The function is a much more efficient implementation of the following scheme: <pre class="brush:xquery"> (for $x in $seq order by $sort-key($x) descending return $x )[position() &lt;= $k] </pre> 
  :)
 declare function hof:top-k-by($seq as item()*, $sort-key as function(item()) as item(), $k as xs:integer) as item()* external;
 

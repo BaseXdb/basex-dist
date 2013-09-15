@@ -1,5 +1,5 @@
 (:~
- : This <a href="http://docs.basex.org/wiki/Module_Library">XQuery Module</a> contains functions and variables related to file system operations, such as listing, reading, or writing files. This module is based on the <a href="http://expath.org/spec/file">EXPath File Module</a> .
+ : This <a href="http://docs.basex.org/wiki/Module_Library">XQuery Module</a> contains functions and variables related to file system operations, such as listing, reading, or writing files. This module is based on the <a href="http://expath.org/spec/file">EXPath File Module</a> . With <font color="orangered">Version 7.7</font> , all returned strings that refer to existing directories will be suffixed with a directory separator.
  : 
  : @author BaseX Team
  : @see http://docs.basex.org/wiki/Module_Library
@@ -38,7 +38,7 @@ declare function file:list($dir as xs:string, $recursive as xs:boolean) as xs:st
 declare function file:list($dir as xs:string, $recursive as xs:boolean, $pattern as xs:string) as xs:string* external;
 
 (:~
- : Reads the binary content of the file specified by <code>$path</code> and returns it as streamable <code>xs:base64Binary</code> .
+ : Reads the binary content of the file specified by <code>$path</code> and returns it as <a href="http://docs.basex.org/wiki/Streaming_Module">streamable</a>  <code>xs:base64Binary</code> .
  :
  : @error experr:FILE0001 the specified file does not exist.
  : @error experr:FILE0004 the specified path is a directory.
@@ -47,24 +47,26 @@ declare function file:list($dir as xs:string, $recursive as xs:boolean, $pattern
 declare function file:read-binary($path as xs:string) as xs:base64Binary external;
 
 (:~
- : Reads the textual contents of the file specified by <code>$path</code> and returns it as streamable <code>xs:string</code> .
+ : Reads the textual contents of the file specified by <code>$path</code> and returns it as <a href="http://docs.basex.org/wiki/Streaming_Module">streamable</a>  <code>xs:string</code> .
  : The optional parameter <code>$encoding</code> defines the encoding of the file.
  :
  : @error experr:FILE0001 the specified file does not exist.
  : @error experr:FILE0004 the specified path is a directory.
  : @error experr:FILE0005 the specified encoding is not supported, or unknown.
- : @error experr:FILE9999 the operation fails for some other reason.
+ : @error experr:FILE9999 the operation fails for some other reason. Invalid XML characters will be ignored if the
+ : @error experr: option is turned off.
  :)
 declare function file:read-text($path as xs:string) as xs:string external;
 
 (:~
- : Reads the textual contents of the file specified by <code>$path</code> and returns it as streamable <code>xs:string</code> .
+ : Reads the textual contents of the file specified by <code>$path</code> and returns it as <a href="http://docs.basex.org/wiki/Streaming_Module">streamable</a>  <code>xs:string</code> .
  : The optional parameter <code>$encoding</code> defines the encoding of the file.
  :
  : @error experr:FILE0001 the specified file does not exist.
  : @error experr:FILE0004 the specified path is a directory.
  : @error experr:FILE0005 the specified encoding is not supported, or unknown.
- : @error experr:FILE9999 the operation fails for some other reason.
+ : @error experr:FILE9999 the operation fails for some other reason. Invalid XML characters will be ignored if the
+ : @error experr: option is turned off.
  :)
 declare function file:read-text($path as xs:string, $encoding as xs:string) as xs:string external;
 
@@ -91,12 +93,44 @@ declare function file:read-text-lines($path as xs:string) as xs:string external;
 declare function file:read-text-lines($path as xs:string, $encoding as xs:string) as xs:string* external;
 
 (:~
- : Recursively creates the directories specified by <code>$dir</code> .
+ : Creates the directory specified by <code>$dir</code> , including all non-existing parent directories.
  :
  : @error experr:FILE0002 a file with the same path already exists.
  : @error experr:FILE9999 the operation fails for some other reason.
  :)
 declare function file:create-dir($dir as xs:string) as empty-sequence() external;
+
+(:~
+ : Creates a new temporary directory that did not exist before this function was called, and returns its full file path. The directory name begins and ends with the specified <code>$prefix</code> and <code>$suffix</code> . If no directory is specified via <code>$dir</code> , the directory will be placed in the system’s default temporary directory. The operation will create all non-existing parent directories.
+ :
+ : @error experr:FILE0003 the specified directory points to a file.
+ : @error experr:FILE9999 the directory could not be created.
+ :)
+declare function file:create-temp-dir($prefix as xs:string, $suffix as xs:string) as xs:string external;
+
+(:~
+ : Creates a new temporary directory that did not exist before this function was called, and returns its full file path. The directory name begins and ends with the specified <code>$prefix</code> and <code>$suffix</code> . If no directory is specified via <code>$dir</code> , the directory will be placed in the system’s default temporary directory. The operation will create all non-existing parent directories.
+ :
+ : @error experr:FILE0003 the specified directory points to a file.
+ : @error experr:FILE9999 the directory could not be created.
+ :)
+declare function file:create-temp-dir($prefix as xs:string, $suffix as xs:string, $dir as xs:string) as xs:string external;
+
+(:~
+ : Creates a new temporary file that did not exist before this function was called, and returns its full file path. The file name begins and ends with the specified <code>$prefix</code> and <code>$suffix</code> . If no directory is specified via <code>$dir</code> , the file will be placed in the system’s default temporary directory. The operation will create all non-existing parent directories.
+ :
+ : @error experr:FILE0003 the specified directory points to a file.
+ : @error experr:FILE9999 the directory could not be created.
+ :)
+declare function file:create-temp-file($prefix as xs:string, $suffix as xs:string) as xs:string external;
+
+(:~
+ : Creates a new temporary file that did not exist before this function was called, and returns its full file path. The file name begins and ends with the specified <code>$prefix</code> and <code>$suffix</code> . If no directory is specified via <code>$dir</code> , the file will be placed in the system’s default temporary directory. The operation will create all non-existing parent directories.
+ :
+ : @error experr:FILE0003 the specified directory points to a file.
+ : @error experr:FILE9999 the directory could not be created.
+ :)
+declare function file:create-temp-file($prefix as xs:string, $suffix as xs:string, $dir as xs:string) as xs:string external;
 
 (:~
  : Recursively deletes a file or directory specified by <code>$path</code> .
@@ -119,7 +153,7 @@ declare function file:delete($path as xs:string, $recursive as xs:boolean) as em
 (:~
  : Writes a serialized sequence of items to the specified file. If the file already exists, it will be overwritten.
  : The <code>$params</code> argument contains serialization parameters (see <a href="http://docs.basex.org/wiki/Serialization">Serialization</a> for more details), which can either be specified
- : <ul> <li> as children of an <code>&lt;output:serialization-parameters/&gt;</code> element, as defined for the <a href="http://www.w3.org/TR/xpath-functions-30/#func-serialize">fn:serialize()</a> function; e.g.: </li> </ul>  <pre class="brush:xml"> &lt;output:serialization-parameters&gt; &lt;output:method value='xml'/&gt; &lt;output:cdata-section-elements value="div"/&gt; ... &lt;/serialization-parameters&gt; </pre>  <ul> <li> as map, which contains all key/value pairs: </li> </ul>  <pre class="brush:xml"> map { "method" := "xml", "cdata-section-elements" := "div", ... } </pre> 
+ : <ul> <li> as children of an <code>&lt;output:serialization-parameters/&gt;</code> element, as defined for the <a href="http://www.w3.org/TR/xpath-functions-30/#func-serialize">fn:serialize()</a> function; e.g.: </li> </ul>  <pre class="brush:xml"> &lt;output:serialization-parameters&gt; &lt;output:method value='xml'/&gt; &lt;output:cdata-section-elements value="div"/&gt; ... &lt;/output:serialization-parameters&gt; </pre>  <ul> <li> as map, which contains all key/value pairs: </li> </ul>  <pre class="brush:xml"> map { "method" := "xml", "cdata-section-elements" := "div", ... } </pre> 
  :
  : @error experr:FILE0003 the parent of specified path is no directory.
  : @error experr:FILE0004 the specified path is a directory.
@@ -130,7 +164,7 @@ declare function file:write($path as xs:string, $items as item()*) as empty-sequ
 (:~
  : Writes a serialized sequence of items to the specified file. If the file already exists, it will be overwritten.
  : The <code>$params</code> argument contains serialization parameters (see <a href="http://docs.basex.org/wiki/Serialization">Serialization</a> for more details), which can either be specified
- : <ul> <li> as children of an <code>&lt;output:serialization-parameters/&gt;</code> element, as defined for the <a href="http://www.w3.org/TR/xpath-functions-30/#func-serialize">fn:serialize()</a> function; e.g.: </li> </ul>  <pre class="brush:xml"> &lt;output:serialization-parameters&gt; &lt;output:method value='xml'/&gt; &lt;output:cdata-section-elements value="div"/&gt; ... &lt;/serialization-parameters&gt; </pre>  <ul> <li> as map, which contains all key/value pairs: </li> </ul>  <pre class="brush:xml"> map { "method" := "xml", "cdata-section-elements" := "div", ... } </pre> 
+ : <ul> <li> as children of an <code>&lt;output:serialization-parameters/&gt;</code> element, as defined for the <a href="http://www.w3.org/TR/xpath-functions-30/#func-serialize">fn:serialize()</a> function; e.g.: </li> </ul>  <pre class="brush:xml"> &lt;output:serialization-parameters&gt; &lt;output:method value='xml'/&gt; &lt;output:cdata-section-elements value="div"/&gt; ... &lt;/output:serialization-parameters&gt; </pre>  <ul> <li> as map, which contains all key/value pairs: </li> </ul>  <pre class="brush:xml"> map { "method" := "xml", "cdata-section-elements" := "div", ... } </pre> 
  :
  : @error experr:FILE0003 the parent of specified path is no directory.
  : @error experr:FILE0004 the specified path is a directory.
@@ -145,7 +179,7 @@ declare function file:write($path as xs:string, $items as item()*, $params as it
  : @error experr:FILE0004 the specified path is a directory.
  : @error experr:FILE9999 the operation fails for some other reason.
  :)
-declare function file:write-binary($path as xs:string, $value as basex:binary) as empty-sequence() external;
+declare function file:write-binary($path as xs:string, $value as xs:anyAtomicType) as empty-sequence() external;
 
 (:~
  : Writes a string to the specified file. If the file already exists, it will be overwritten.
@@ -216,7 +250,7 @@ declare function file:append($path as xs:string, $items as item()*, $params as i
  : @error experr:FILE0004 the specified path is a directory.
  : @error experr:FILE9999 the operation fails for some other reason.
  :)
-declare function file:append-binary($path as xs:string, $value as basex:binary) as empty-sequence() external;
+declare function file:append-binary($path as xs:string, $value as xs:anyAtomicType) as empty-sequence() external;
 
 (:~
  : Appends a string to a file specified by <code>$path</code> . If the specified file does not exists, a new file is created.
@@ -360,6 +394,11 @@ declare function file:path-separator() as xs:string external;
  : Returns the line separator used by the operating system, such as <code>&amp;#10;</code> , <code>&amp;#13;&amp;#10;</code> or <code>&amp;#13;</code> .
  :)
 declare function file:line-separator() as xs:string external;
+
+(:~
+ : Returns the system’s default temporary-file directory.
+ :)
+declare function file:temp-dir() as xs:string external;
 
 
 

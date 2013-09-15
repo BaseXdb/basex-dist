@@ -8,9 +8,8 @@ use File::Basename;
 use File::Copy;
 use File::Path;
 use Archive::Zip qw( :ERROR_CODES :CONSTANTS );
-
-# static directories
-my $release = "release";
+use File::Copy::Recursive qw(rcopy);
+ 
 # path to main class
 my $main = "org.basex.BaseXGUI";
 
@@ -45,19 +44,27 @@ sub prepare {
 
   # delete old release files
   rmtree("release");
-  mkdir $release;
+  mkdir "release";
 
   # extract pom version
   version();
 
+  # create artifacts
+  #artifacts();
+  copy("../basex/basex-core/target/basex-$version.jar", "release/basex.jar");
+  copy("../basex/basex-api/target/basex-api-$version.jar", "release/basex-api.jar");
+
   # prepare start scripts
-  mkdir "$release/bin";
-  for my $f(glob("../basex/etc/*"), glob("../basex-api/etc/*")) {
+  mkdir "release/bin";
+  for my $f(
+    glob("../basex/basex-core/etc/*"),
+    glob("../basex/basex-api/etc/*")
+  ) {
     next if -d $f;
     (my $n = $f) =~ s|.*/||;
     open(my $in, $f);
     binmode $in;
-    open(my $out, ">".$release."/bin/$n");
+    open(my $out, ">release/bin/$n");
     binmode $out;
     while(my $l = <$in>) {
       # replace "target/classes"
@@ -71,29 +78,24 @@ sub prepare {
   }
 
   # assemble webapp files
-  rmtree("webapp");
-  mkdir "webapp";
-  for my $f(glob("../basex-api/src/main/webapp/*")) {
-    copy($f, "webapp/".basename($f));
-  }
-  mkdir "webapp/static";
-  for my $f(glob("../basex-api/src/main/webapp/static/*")) {
-    copy($f, "webapp/static/".basename($f));
-  }
-  mkdir "webapp/WEB-INF";
-  for my $f(glob("../basex-api/src/main/webapp/WEB-INF/*")) {
-    copy($f, "webapp/WEB-INF/".basename($f));
-  }
-
-  # create packages
-  pkg("basex");
-  pkg("basex-api");
+  rcopy("../basex/basex-api/src/main/webapp", "release/webapp");
+  unlink("release/webapp/.gitignore");
+  rmtree("release/webapp/WEB-INF/data");
+  rmtree("release/webapp/WEB-INF/repo");
 
   # write version file
   print "* Write version file\n";
-  open(my $out, ">".$release."/version.txt");
+  open(my $out, ">release/version.txt");
   print $out $version;
   close($out);
+}
+
+# create artifacts
+sub artifacts {
+  print "* Create BaseX artifacts\n";
+  rmtree("../basex/basex-core/lib/");
+  rmtree("../basex/basex-api/lib/");
+  system("cd ../basex && mvn install -q -DskipTests");
 }
 
 # gets version from pom file
@@ -116,79 +118,49 @@ sub version {
   print "* Version: $version ($full)\n";
 }
 
-# creates project packages
-sub pkg {
-  my $name = shift;
-  print "* Create $name-$version package\n";
-  foreach my $f(glob("../$name/lib/*")) { unlink $f; }
-  system("cd ../$name && mvn install -q -DskipTests");
-  move("../$name/target/$name-$version.jar", "$release/$name.jar");
-}
-
 # creates the zip archive
 sub zip {
   print "* Create ZIP file\n";
 
   my $zip = Archive::Zip->new();
 
-  # Add directories
-  my $name = "basex";
   # Add files from disk
-  $zip->addDirectory("$name/");
-  $zip->addFile("$release/basex.jar", "$name/BaseX.jar");
-  $zip->addFile("../$name/license.txt", "$name/license.txt");
-  $zip->addFile("../$name/changelog.txt", "$name/changelog.txt");
-  $zip->addFile("readme.txt", "$name/readme.txt");
-  $zip->addString("", "$name/.basexhome");
+  $zip->addFile("release/basex.jar", "basex/BaseX.jar");
+  $zip->addFile("../basex/basex-core/license.txt", "basex/license.txt");
+  $zip->addFile("../basex/basex-core/changelog.txt", "basex/changelog.txt");
+  $zip->addFile("readme.txt", "basex/readme.txt");
+  $zip->addString("", "basex/.basexhome");
 
   # Add scripts
-  $zip->addDirectory("$name/bin");
-  foreach my $file(glob("$release/bin/*")) {
-    (my $target = $file) =~ s|.*/|$name/bin/|;
+  foreach my $file(glob("release/bin/*")) {
+    (my $target = $file) =~ s|.*/|basex/bin/|;
     my $m = $zip->addFile($file, $target);
     $m->unixFileAttributes($file =~ /.bat$/ ? 0644 : 0755);
   }
   # Add database directory
-  $zip->addDirectory("$name/data");
-  # Add example files
-  $zip->addDirectory("$name/etc");
-  foreach my $file(glob("etc/*")) {
-    $zip->addFile($file, "$name/$file") if -f $file;
-  }
-  # Add xqdoc files
-  $zip->addDirectory("$name/etc/modules");
-  foreach my $file(glob("etc/modules/*")) {
-    $zip->addFile($file, "$name/$file");
-  }
+  $zip->addDirectory("basex/data");
+  # Add etc directory
+  $zip->addTree("etc", "basex/etc");
   # Add libraries
-  $zip->addDirectory("$name/lib");
-  foreach my $file(glob("../basex/lib/*"), glob("../basex-api/lib/*"), glob("../basex-dist/lib/*")) {
+  $zip->addDirectory("basex/lib");
+  foreach my $file(
+    glob("../basex/basex-core/lib/*"),
+    glob("../basex/basex-api/lib/*"),
+    glob("lib/*")
+  ) {
     next if $file =~ m|/lib/basex-$version|;
-    (my $target = $file) =~ s|.*/|$name/lib/|;
-    $zip->addFile($file, $target);
+    (my $target = $file) =~ s|.*/||;
+    $zip->addFile($file, "basex/lib/$target");
   }
-  $zip->addFile("$release/basex-api.jar", "$name/lib/basex-api.jar");
+  $zip->addFile("release/basex-api.jar", "basex/lib/basex-api.jar");
   # Add repository directory
-  $zip->addDirectory("$name/repo");
+  $zip->addDirectory("basex/repo");
   # Add webapp directory
-  $zip->addDirectory("$name/webapp");
-  foreach my $file(glob("webapp/*")) {
-    $zip->addFile($file, "$name/$file") if -f $file;
-  }
-  $zip->addDirectory("$name/webapp/WEB-INF");
-  foreach my $file(glob("webapp/WEB-INF/*")) {
-    $zip->addFile($file, "$name/$file");
-  }
-  $zip->addDirectory("$name/webapp/static");
-  foreach my $file(glob("webapp/static/*")) {
-    $zip->addFile($file, "$name/$file");
-  }
+  $zip->addTree("release/webapp", "basex/webapp");
 
   # save the zip file
-  unless ($zip->writeToFileNamed("$release/BaseX.zip") == AZ_OK ) {
+  $zip->writeToFileNamed("release/BaseX.zip") == AZ_OK or
     die "Could not write ZIP file.";
-  }
-  #unlink("$release/basexhttp.bat");
 }
 
 # creates the war file
@@ -196,11 +168,11 @@ sub war {
   print "* Create WAR file\n";
 
   # create WAR file
-  system("cd ../basex-api && mvn compile war:war");
-  move("../basex-api/target/basex-api-$version.war", "$release/basex.war");
+  system("cd ../basex/basex-api && mvn compile war:war");
+  move("../basex/basex-api/target/basex-api-$version.war", "release/basex.war");
 }
 
-# creates app archive
+# creates the app archive
 sub app {
   print "* Create APP file\n";
 
@@ -208,7 +180,7 @@ sub app {
   my $info = "";
   my $classes = "<array>\n".
     "        <string>\$JAVAROOT/repo/org/basex/basex/$version/basex-$version.jar</string>\n";
-  foreach my $file(glob("../basex/lib/*")) {
+  foreach my $file(glob("../basex/basex-core/lib/*")) {
     $file =~ s|.*/|\$JAVAROOT/repo/lib/|;
     $classes .= "        <string>$file</string>\n";
   }
@@ -232,18 +204,22 @@ sub app {
     "BaseX.app/Contents/Resources/BaseX.icns");
 
   # lib folder
-  foreach my $file(glob("../basex/lib/*"), glob("../basex-api/lib/*"), glob("../basex-dist/lib/*")) {
+  foreach my $file(
+      glob("../basex/basex-core/lib/*"),
+      glob("../basex/basex-api/lib/*"),
+      glob("../basex-dist/lib/*")
+  ) {
     next if $file =~ m|/lib/basex-|;
     (my $target = $file) =~ s|.*/|BaseX.app/Contents/Resources/Java/repo/lib/|;
     $zip->addFile($file, $target);
   }
-  $zip->addFile("$release/basex-api.jar", 
+  $zip->addFile("release/basex-api.jar", 
     "BaseX.app/Contents/Resources/Java/repo/lib/basex-api.jar");
-  $zip->addFile("$release/basex.jar",
+  $zip->addFile("release/basex.jar",
     "BaseX.app/Contents/Resources/Java/repo/org/basex/basex/$version/basex-$version.jar");
 
   # save the zip file
-  unless ($zip->writeToFileNamed("$release/BaseX.app.zip") == AZ_OK ) {
+  unless ($zip->writeToFileNamed("release/BaseX.app.zip") == AZ_OK ) {
     die "Could not write APP file.";
   }
 }
@@ -255,11 +231,11 @@ sub exe {
   # add start class and libraries
   my $cc = "<classPath>\n".
     "    <mainClass>$main</mainClass>\n";
-  foreach my $file(glob("../basex/lib/*")) {
+  foreach my $file(glob("../basex/basex-core/lib/*")) {
     $file =~ s|.*/|lib/|;
     $cc .= "    <cp>$file</cp>\n";
   }
-  foreach my $file(glob("../basex-api/lib/*")) {
+  foreach my $file(glob("../basex/basex-api/lib/*")) {
     next if $file =~ /basex-\d/;
     $file =~ s|.*/|lib/|;
     $cc .= "    <cp>$file</cp>\n";
@@ -271,7 +247,7 @@ sub exe {
   # prepare launch script
   open(my $in, "win/launch4j.xml");
   my @raw = <$in>;
-  open(my $out, ">".$release."/launch4j.xml");
+  open(my $out, ">release/launch4j.xml");
   (my $ff = $full) =~ s/-.*//;
   (my $vv = $version) =~ s/-.*//;
   foreach my $line (@raw) {
@@ -284,17 +260,17 @@ sub exe {
   close($out);
 
   # create executable
-  system("$launch4j $release/launch4j.xml");
+  system("$launch4j release/launch4j.xml");
   # remove launch script
-  unlink("$release/launch4j.xml");
+  unlink("release/launch4j.xml");
   # move executable to final destination
-  move("BaseX.exe", "$release/BaseX.exe");
+  move("BaseX.exe", "release/BaseX.exe");
 
   # create installer
   print "* Create installer\n";
   system("$nsis win/BaseX.nsi");
   # move installer to final destination
-  move("win/Setup.exe", "$release/BaseX.exe");
+  move("win/Setup.exe", "release/BaseX.exe");
 }
 
 # write PAD file
@@ -307,12 +283,12 @@ sub pad {
   $month = "0$month" if length($month) == 1;
   $day = "0$day" if length($day) == 1;
 
-  my $bytes = -s "$release/BaseX.zip";
+  my $bytes = -s "release/BaseX.zip";
   my $kb = int($bytes / 102.4) / 10;
   my $mb = int($kb / 102.4) / 10;
 
   open(my $in, "BaseXPADFile.xml");
-  open(my $out, ">".$release."/BaseXPADFile.xml");
+  open(my $out, ">release/BaseXPADFile.xml");
   while(my $l = <$in>) {
     $l =~ s/\$version/$version/;
     $l =~ s/\$month/$month/;
@@ -332,12 +308,12 @@ sub finish {
   print "* Finish release\n";
 
   (my $v = $version) =~ s/\.//g;
-  move("$release/BaseX.app.zip", "$release/BaseX$v.app.zip");
-  move("$release/BaseX.zip", "$release/BaseX$v.zip");
-  move("$release/basex.jar", "$release/BaseX$v.jar");
-  move("$release/basex.war", "$release/BaseX$v.war");
-  move("$release/BaseX.exe", "$release/BaseX$v.exe");
-  unlink("$release/basex-api.jar");
+  move("release/BaseX.app.zip", "release/BaseX$v.app.zip");
+  move("release/BaseX.zip", "release/BaseX$v.zip");
+  move("release/basex.jar", "release/BaseX$v.jar");
+  move("release/basex.war", "release/BaseX$v.war");
+  move("release/BaseX.exe", "release/BaseX$v.exe");
+  unlink("release/basex-api.jar");
   rmtree("release/bin");
-  rmtree("webapp");
+  rmtree("release/webapp");
 }
