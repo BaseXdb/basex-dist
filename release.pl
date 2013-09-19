@@ -27,12 +27,12 @@ my $full = "";
 prepare();
 # create zip file
 zip();
-# create war file
-war();
 # create app file
 app();
 # create installer
 exe();
+# create war file
+war();
 # create pad file
 pad();
 # finish release
@@ -50,7 +50,7 @@ sub prepare {
   version();
 
   # create artifacts
-  #artifacts();
+  artifacts();
   copy("../basex/basex-core/target/basex-$version.jar", "release/basex.jar");
   copy("../basex/basex-api/target/basex-api-$version.jar", "release/basex-api.jar");
 
@@ -126,8 +126,8 @@ sub zip {
 
   # Add files from disk
   $zip->addFile("release/basex.jar", "basex/BaseX.jar");
-  $zip->addFile("../basex/basex-core/license.txt", "basex/license.txt");
-  $zip->addFile("../basex/basex-core/changelog.txt", "basex/changelog.txt");
+  $zip->addFile("../basex/license.txt", "basex/license.txt");
+  $zip->addFile("../basex/changelog.txt", "basex/changelog.txt");
   $zip->addFile("readme.txt", "basex/readme.txt");
   $zip->addString("", "basex/.basexhome");
 
@@ -226,7 +226,7 @@ sub app {
 
 # creates the installer
 sub exe {
-  print "* Create executable\n";
+  print "* Create EXE file\n";
 
   # add start class and libraries
   my $cc = "<classPath>\n".
@@ -267,7 +267,6 @@ sub exe {
   move("BaseX.exe", "release/BaseX.exe");
 
   # create installer
-  print "* Create installer\n";
   system("$nsis win/BaseX.nsi");
   # move installer to final destination
   move("win/Setup.exe", "release/BaseX.exe");

@@ -199,8 +199,8 @@ Section "Hauptgruppe" SEC01
   SetOverwrite ifnewer
   File "..\release\BaseX.exe"
   File "..\release\${JAR}"
-  File "..\..\basex\basex-core\license.txt"
-  File "..\..\basex\basex-core\changelog.txt"
+  File "..\..\basex\license.txt"
+  File "..\..\basex\changelog.txt"
   File "..\readme.txt"
   File ".basexhome"
   CreateDirectory "$INSTDIR\bin"
