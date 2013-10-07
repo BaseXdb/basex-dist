@@ -1,4 +1,4 @@
-==================================================== BASEX ON DEBIAN ===
+==================================================== BASEX ON DEBIAN ====
 
 -------------------------------------------------------------------------
 Update Debian/Ubuntu package to a new version:
@@ -9,23 +9,24 @@ Update Debian/Ubuntu package to a new version:
   $ cd build
   $ apt-get source basex
   $ ls
-  basex-6.7.1  basex_6.7.1-1.debian.tar.gz  basex_6.7.1-1.dsc  basex_6.7.1.orig.tar.gz
-  $ cd basex-6.7.1
+  basex-7.6  basex_7.6-1.debian.tar.gz  basex_7.6-1.dsc  basex_7.6.orig.tar.gz
+  $ cd basex-7.6
   $ uscan
-  basex: Newer version (7.0) available on remote site:
-    http://phobos103.inf.uni-konstanz.de/tst/7.0.tar.gz
-    (local version is 6.7.1)
-  basex: Successfully downloaded updated package 7.0.tar.gz
-    and symlinked basex_7.0.orig.tar.gz to it
+basex: Newer version (7.7.1) available on remote site:
+  http://githubredir.debian.net/github/BaseXdb/basex/7.7.1.tar.gz
+  (local version is 7.6)
+basex: Successfully downloaded updated package 7.7.1.tar.gz
+    and symlinked basex_7.7.1.orig.tar.gz to it
   $ ls ../
-  7.0.tar.gz basex_6.7.1.orig.tar.gz basex_6.7.1-1.debian.tar.gz basex-6.7.1 basex_6.7.1-1.dsc basex_7.0.orig.tar.gz -> 7.0.tar.gz
-  $ uupdate -v 7.0 ../basex_7.0.orig.tar.gz 
-  New Release will be 7.0-1.
-  -- Untarring the new sourcecode archive ../basex_7.0.orig.tar.gz
-  Unpacking the debian/ directory from version 6.7.1-1 worked fine.
-  Remember: Your current directory is the OLD sourcearchive!
-  Do a "cd ../basex-7.0" to see the new package
-  $ cd ../basex-7.0
+7.7.1.tar.gz  basex_7.6-1.debian.tar.gz  basex_7.6.orig.tar.gz
+basex-7.6     basex_7.6-1.dsc            basex_7.7.1.orig.tar.gz
+  $ uupdate -v 7.7.1 ../basex_7.7.1.orig.tar.gz
+New Release will be 7.7.1-1.
+-- Untarring the new sourcecode archive ../basex_7.7.1.orig.tar.gz
+Unpacking the debian/ directory from version 7.6-1 worked fine.
+Remember: Your current directory is the OLD sourcearchive!
+Do a "cd ../basex-7.7.1" to see the new package
+  $ cd ../basex-7.
   $ dch -e (! Change: UNRELEASED -> unstable)
 * Check author list
  $ grep -hr '@author' . | grep -v BaseX | awk '{print $3, $4 }' | tr -d '\r' | sort | uniq
