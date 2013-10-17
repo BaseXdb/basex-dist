@@ -26,3 +26,5 @@
 #     Empty by default. [mh_install]
 #
 pom.xml --has-package-version
+basex-core/pom.xml --has-package-version
+basex-api/pom.xml --ignore
