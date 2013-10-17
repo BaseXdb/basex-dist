@@ -152,9 +152,9 @@ $ cd ../basex-7.7.2
    $ gpg --detach-sign -o Release.gpg unstable/Release
 
 * Sync it to files.basex.org
-   $ scp Release.gpg basex:~/files/debian 
-   $ scp -r unstable basex:~/files/debian/
-   $ ssh basex
+   $ scp Release.gpg basex-web:~/files/debian 
+   $ scp -r unstable basex-web:~/files/debian/
+   $ ssh basex-web
    $ cd files/debian
    $ chmod a+r Release.gpg
    $ chmod a+r unstable/*
