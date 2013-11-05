@@ -3,6 +3,7 @@ Version=1.0
 Type=Application
 Name=BaseX XML Database
 Comment=Visually query and analyse your XML data
+Keywords=database;xquery;xpath;xml;information processing;
 TryExec=basexgui
 Exec=basexgui %F
 Icon=basex

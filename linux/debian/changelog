@@ -1,3 +1,66 @@
+basex (7.7.2-1) unstable; urgency=low
+
+  * New upstream releases
+    VERSION 7.7.2 (October 7, 2013) ----------------------------------------
+
+     XQUERY
+     - CSV Module and serialization added
+     - JSON serializer updated (more to follow)
+     - update checks in modify clause fixed
+     - parsing of new map syntax fixed (ignoring spaces)
+     - tail call handling in built-in higher order functions fixed
+
+     API
+     - Russian translation added (thanks to Oleksandr Shpak, Max Shamaev)
+     - command-line arguments starting with '<' are interpreted as XQuery
+
+     INDEXING
+     - bug fixed in updatable index structure
+
+    VERSION 7.7.1 (September 16, 2013) -------------------------------------
+
+     XQUERY
+     - new map syntax: { 'key' : 'value' }
+     - tail call optimization for dynamic functions
+     - optimize fn:subsequence() calls and sequence casts
+     - db:optimize(): original options are preserved
+
+     WEBDAV
+     - return non-breakable spaces as &#xA0;
+
+     CORE
+     - avoid OutOfMemory exception when building large databases
+
+    VERSION 7.7 (August 7, 2013) -------------------------------------------
+
+     XQUERY
+     - Our XQuery 3.0 support is now complete!
+       http://docs.basex.org/wiki/XQuery_3.0
+     - the Unit Module allows standardized testing of XQuery applications
+       http://docs.basex.org/wiki/Unit_Module
+     - the Streaming Module speeds up operations on large files
+       http://docs.basex.org/wiki/Streaming_Module
+     - the Inspection Module provides reflection and documentation features
+       http://docs.basex.org/wiki/Inspection_Module
+     - we have added support for XQuery collations
+       http://docs.basex.org/wiki/Full-Text#Collations
+     - we have extended the Database, Archive, File and other Modules
+       http://docs.basex.org/wiki/Module_Library
+     
+     COMMANDS
+     - database names have got more flexible
+       http://docs.basex.org/wiki/Commands#Valid_Names
+     - we have new options for simplifying the creation of large databases
+       http://docs.basex.org/wiki/Options
+     
+     WEB/HTTP SERVICES:
+     - WebDAV has been enriched with locking features (sponsored feature!)
+       http://docs.basex.org/wiki/WebDAV#Locking
+     - RESTXQ has been improved and extended:
+       http://docs.basex.org/wiki/RESTXQ
+
+ -- Alexander Holupirek <alex@holupirek.de>  Wed, 16 Oct 2013 20:56:56 +0200
+
 basex (7.6-1) unstable; urgency=low
 
   * New upstream release (February 5, 2012)
