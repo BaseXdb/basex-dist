@@ -98,64 +98,6 @@ Function OptionsPage
 FunctionEnd
 
 Function OptionsLeave
-# Get the user entered values.
-# first password field
-!insertmacro MUI_INSTALLOPTIONS_READ $R0 "Options" "Field 7" "State"
-# second password field
-!insertmacro MUI_INSTALLOPTIONS_READ $R1 "Options" "Field 8" "State"
-# serverport field
-!insertmacro MUI_INSTALLOPTIONS_READ $R2 "Options" "Field 9" "State"
-# Event port field
-!insertmacro MUI_INSTALLOPTIONS_READ $R3 "Options" "Field 10" "State"
-# dbpath field
-!insertmacro MUI_INSTALLOPTIONS_READ $R4 "Options" "Field 6" "State"
-# Admin password modification
-${If} $R1 == $R0
-  Push "$R1"
-  Push "${ALPHA}"
-  Call Validate
-  Pop $0
-  ${If} $0 == 0
-    MessageBox MB_OK "Passwords contain invalid characters."
-    Abort    
-  ${EndIf}
-${Else}
-  MessageBox MB_OK "Passwords do not match."
-  Abort
-${EndIf}
-# Server port check
-${If} $R2 != "1984"
-  Push "$R2"
-  Push "${NUMERIC}"
-  Call Validate
-  Pop $0
-  ${If} $0 == 0
-    MessageBox MB_OK "Server port contains invalid characters."
-    Abort
-  ${EndIf}
-${EndIf}
-# Event port check
-${If} $R3 != "1985"
-  Push "$R3"
-  Push "${NUMERIC}"
-  Call Validate
-  Pop $0
-  ${If} $0 == 0
-    MessageBox MB_OK "Event port contains invalid characters."
-    Abort
-  ${EndIf}
-${EndIf}
-# DBPATH check
-${If} $R4 != "data"
-  Push "$R4"
-  Push "${BETA}"
-  Call Validate
-  Pop $0
-  ${If} $0 == 0
-    MessageBox MB_OK "Database path contains invalid characters."
-    Abort
-  ${EndIf}
-${EndIf}
 # xq field
 !insertmacro MUI_INSTALLOPTIONS_READ $R5 "Options" "Field 3" "State"
 # xml field
