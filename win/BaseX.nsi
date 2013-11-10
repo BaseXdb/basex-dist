@@ -47,8 +47,8 @@ Page custom OptionsPage OptionsLeave
 ; Instfiles page
 !insertmacro MUI_PAGE_INSTFILES
 ; Finish page
-!define MUI_FINISHPAGE_RUN
-!define MUI_FINISHPAGE_RUN_FUNCTION run_basex
+;!define MUI_FINISHPAGE_RUN
+;!define MUI_FINISHPAGE_RUN_FUNCTION run_basex
 !insertmacro MUI_PAGE_FINISH
 
 Function run_basex
@@ -107,6 +107,7 @@ Function OptionsLeave
   ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".basex" "BaseX Configuration"
   ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".basexhome" "BaseX Configuration"
   ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".basexgui" "BaseX Configuration"
+  ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".basexperm" "BaseX Configuration"
   ${If} $R5 == 1
     ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xq"     "XQuery File"
     ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xqu"    "XQuery File"
@@ -167,30 +168,6 @@ Section "Hauptgruppe" SEC01
   File /r "..\release\webapp\*"
 
   AccessControl::GrantOnFile "$INSTDIR" "(S-1-1-0)" "GenericRead + GenericWrite + GenericExecute + Delete"
-  # set dbpath, port and webport
-  StrLen $0 $R4
-  IntOp $0 $0 - 1
-  StrCpy $2 $R4 1 $0
-  ${If} $2 == "\"
-    StrCpy $R4 $R4 -1
-  ${EndIf}
-  !insertmacro IndexOf $9 "$R4" ":"
-  ${If} $9 == -1
-    CreateDirectory "$INSTDIR\$R4"
-    nsExec::Exec '"$INSTDIR\bin\basex.bat" "-Wc" "set dbpath \"$INSTDIR\$R4\"'
-    # nsExec::Exec '"$INSTDIR\bin\basex.bat" "-Wc" "set dbpath \"$INSTDIR\$R4\"; set webpath \"$INSTDIR\webapp\"; set repopath \"$INSTDIR\repo\""'
-  ${Else}
-    # store absolute path
-    CreateDirectory "$R4"
-    nsExec::Exec '"$INSTDIR\bin\basex.bat" "-Wc" "set dbpath \"$R4\";'
-    #nsExec::Exec '"$INSTDIR\bin\basex.bat" "-Wc" "set dbpath \"$R4\"; set webpath \"$INSTDIR\webapp\"; set repopath \"$INSTDIR\repo\""'
-  ${EndIf}
-  nsExec::Exec '"$INSTDIR\bin\basex.bat" "-Wc" "set port $R2; set serverport $R2; set eventport $R3"'
-
-  md5dll::GetMD5String "$R0"
-  Pop $0
-  # change admin password
-  nsExec::Exec '"$INSTDIR\bin\basex.bat" "-c" "alter user admin $0"'
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BaseX" "DisplayName" "BaseX"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BaseX" "DisplayIcon" "$\"$INSTDIR\BaseX.ico$\""
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BaseX" "UninstallString" "$\"$INSTDIR\uninstall.exe$\""
@@ -260,6 +237,7 @@ Section Uninstall
   ${unregisterExtension} ".basex"     "BaseX Configuration"
   ${unregisterExtension} ".basexgui"  "BaseX Configuration"
   ${unregisterExtension} ".basexhome" "BaseX Configuration"
+  ${unregisterExtension} ".basexperm" "BaseX Configuration"
   ${RefreshShellIcons}
   SetAutoClose true
 SectionEnd
