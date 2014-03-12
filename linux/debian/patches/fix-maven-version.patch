@@ -1,8 +1,8 @@
 Debian does not have maven3, yet. Change maven version to 2.2.1.
 --- a/pom.xml
 +++ b/pom.xml
-@@ -222,7 +222,7 @@
-   </distributionManagement>
+@@ -209,7 +209,7 @@
+   </repositories>
  
    <prerequisites>
 -    <maven>3.0.0</maven>

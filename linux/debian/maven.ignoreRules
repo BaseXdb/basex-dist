@@ -11,5 +11,6 @@ org.apache.maven.plugins maven-surefire-plugin * * * *
 org.apache.maven.wagon wagon-ftp * * * *
 org.apache.maven.wagon wagon-ssh * * * *
 org.ccil.cowan.tagsoup tagsoup * * * *
+org.codehaus.mojo buildnumber-maven-plugin * * * *
 org.codehaus.mojo javacc-maven-plugin * * * *
 xml-resolver xml-resolver * * * *

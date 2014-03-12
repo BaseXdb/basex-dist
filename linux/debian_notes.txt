@@ -30,7 +30,7 @@ $ cd ../basex-7.7.2
 
   $ dch -e (! Change: UNRELEASED -> unstable)
 * Check author list
- $ grep -hr '@author' . | grep -v BaseX | awk '{print $3, $4 }' | tr -d '\r' | sort | uniq
+ $ grep -hr '@author' . | grep -v BaseX  | grep -v : | awk '{print $3, $4 }' | tr -d '\r' | sort | uniq
 * Check copyright file (does not seem to work anymore)
  $ config-edit -application dpkg-copyright -ui none
 

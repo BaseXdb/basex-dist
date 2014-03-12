@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Alexander Holupirek <alex@holupirek.de>
 Build-Depends: debhelper (>= 7), cdbs, default-jdk, maven-debian-helper (>= 1.5)
 Build-Depends-Indep: libmaven-exec-plugin-java 
-Standards-Version: 3.9.4
+Standards-Version: 3.9.5
 Vcs-Git: git://github.com/BaseXdb/basex-dist.git
 Vcs-Browser: https://github.com/BaseXdb/basex-dist/tree/master/linux/debian
 Homepage: http://basex.org
