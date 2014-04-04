@@ -6,11 +6,11 @@
   <typedef resource="org/apache/maven/artifact/ant/antlib.xml"
     uri="antlib:org.apache.maven.artifact.ant"
     classpathref="maven-ant-tasks.classpath"/>
-  <property name="basexcorepath" value="../../basex/basex-core"/>
+  <property name="basexcorepath" value="../../basex"/>
   <property name="basex" value="BaseX"/>
   <artifact:pom id="basexpom" file="${basexcorepath}/pom.xml"/>
   <!-- Check if basex-$VERSION$.jar is available -->
-  <available file="${basexcorepath}/target/basex-${basexpom.version}.jar"
+  <available file="${basexcorepath}/basex-api/lib/basex-${basexpom.version}.jar"
     type="file" property="basexpresent"/>
   <!-- Actual application bundling: -->
   <taskdef name="bundleapp" classname="com.oracle.appbundler.AppBundlerTask" classpath="third-party/appbundler-1.0.jar"/>
@@ -26,7 +26,8 @@
       mainclassname="org.basex.BaseXGUI">
       <classpath dir="${basexcorepath}" casesensitive="yes">
         <patternset id="basex-jar">
-          <include name="*/*.jar"/>
+          <include name="basex-api/lib/*.jar"/>
+          <include name="basex-core/lib/*.jar"/>
           <exclude name="target/*sources*"/>
         </patternset>
       </classpath>
@@ -45,7 +46,7 @@
     </exec>
   </target>
   <target name="checkbasexjar" unless="basexpresent">
-    <echo>BaseX.jar at ${basexcorepath}/target/basex-${basexpom.version}.jar could not be found</echo>
+    <echo>BaseX.jar at ${basexcorepath}/basex-api/lib/basex-${basexpom.version}.jar could not be found</echo>
     <echo>Make sure you built ${basexcorepath}</echo>
   </target>
   <target name="clean" if="basexpresent">
