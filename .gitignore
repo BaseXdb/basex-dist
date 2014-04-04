@@ -10,3 +10,5 @@
 
 # Maven target dir
 /release
+
+/mac/dist/BaseX.app/
