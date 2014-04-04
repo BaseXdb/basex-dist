@@ -176,47 +176,11 @@ sub war {
 sub app {
   print "* Create APP file\n";
 
+  # create WAR file
+  system("cd mac && ant");
+
   my $zip = Archive::Zip->new();
-  my $info = "";
-  my $classes = "<array>\n".
-    "        <string>\$JAVAROOT/repo/org/basex/basex/$version/basex-$version.jar</string>\n";
-  foreach my $file(glob("../basex/basex-core/lib/*")) {
-    $file =~ s|.*/|\$JAVAROOT/repo/lib/|;
-    $classes .= "        <string>$file</string>\n";
-  }
-  $classes .= "      </array>";
-
-  open(my $in, "mac/OSXBundle/Info.plist");
-  while(my $l = <$in>) {
-    $info =~ s/\$\{bundleName\}/BaseX/;
-    $info =~ s/\$\{iconFile\}/BaseX.icns/;
-    $info =~ s/\$\{mainClass\}/$main/;
-    $info =~ s/\$\{classpath\}/$classes/;
-    $info .= $l;
-  }
-  close($in);
-  $zip->addString($info,
-    "BaseX.app/Contents/Info.plist");
-  my $m = $zip->addFile("mac/OSXBundle/JavaApplicationStub",
-    "BaseX.app/Contents/MacOS/JavaApplicationStub");
-  $m->unixFileAttributes(0755);
-  $zip->addFile("mac/OSXBundle/BaseX.icns",
-    "BaseX.app/Contents/Resources/BaseX.icns");
-
-  # lib folder
-  foreach my $file(
-      glob("../basex/basex-core/lib/*"),
-      glob("../basex/basex-api/lib/*"),
-      glob("../basex-dist/lib/*")
-  ) {
-    next if $file =~ m|/lib/basex-|;
-    (my $target = $file) =~ s|.*/|BaseX.app/Contents/Resources/Java/repo/lib/|;
-    $zip->addFile($file, $target);
-  }
-  $zip->addFile("release/basex-api.jar", 
-    "BaseX.app/Contents/Resources/Java/repo/lib/basex-api.jar");
-  $zip->addFile("release/basex.jar",
-    "BaseX.app/Contents/Resources/Java/repo/org/basex/basex/$version/basex-$version.jar");
+  $zip->addTree("mac/dist", "");
 
   # save the zip file
   unless ($zip->writeToFileNamed("release/BaseX.app.zip") == AZ_OK ) {
