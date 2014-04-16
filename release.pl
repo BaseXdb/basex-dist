@@ -68,9 +68,8 @@ sub prepare {
     binmode $out;
     while(my $l = <$in>) {
       # replace "target/classes"
-      $l =~ s|%PWD%/\.\./\.\./basex/target/classes|%LIB%/basex-api.jar|;
       $l =~ s|target/classes|BaseX.jar|;
-      next if $l =~ m|\.\./\.\./basex|;
+      next if $l =~ m|/\.\./basex-core|;
       print $out $l;
     }
     close($in);
