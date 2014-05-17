@@ -27,8 +27,8 @@ my $full = "";
 prepare();
 # create zip file
 zip();
-# create app file
-app();
+# create app.zip file
+#app();
 # create installer
 exe();
 # create war file
@@ -121,46 +121,58 @@ sub version {
 sub zip {
   print "* Create ZIP file\n";
 
-  my $zip = Archive::Zip->new();
-
-  # Add files from disk
-  $zip->addFile("release/basex.jar", "basex/BaseX.jar");
-  $zip->addFile("../basex/license.txt", "basex/license.txt");
-  $zip->addFile("../basex/changelog.txt", "basex/changelog.txt");
-  $zip->addFile("readme.txt", "basex/readme.txt");
-  $zip->addString("", "basex/.basexhome");
-
-  # Add scripts
-  foreach my $file(glob("release/bin/*")) {
-    (my $target = $file) =~ s|.*/|basex/bin/|;
-    my $m = $zip->addFile($file, $target);
-    $m->unixFileAttributes($file =~ /.bat$/ ? 0644 : 0755);
-  }
-  # Add database directory
-  $zip->addDirectory("basex/data");
-  # Add etc directory
-  $zip->addTree("etc", "basex/etc");
-  # Add libraries
-  $zip->addDirectory("basex/lib");
+  my $source = "release/";
+  my $target = "release/basex";
+  mkdir "$source/basex";
+  rcopy("$source/basex.jar", "$target/BaseX.jar");
+  rcopy("../basex/license.txt", $target);
+  rcopy("../basex/changelog.txt", $target);
+  rcopy("readme.txt", $target);
+  rcopy(".basexhome", $target);
+  mkdir "$target/bin";
+  rcopy("$source/bin/", "$target/bin");
+  mkdir "$target/data/";
+  mkdir "$target/etc/";
+  rcopy("etc/", "$target/etc/");
+  mkdir "$target/lib/";
   foreach my $file(
     glob("../basex/basex-core/lib/*"),
     glob("../basex/basex-api/lib/*"),
     glob("lib/*")
   ) {
-    next if $file =~ m|/lib/basex-$version|;
-    (my $target = $file) =~ s|.*/||;
-    $zip->addFile($file, "basex/lib/$target");
+    rcopy($file, "$target/lib") if $file !~ m|/lib/basex-$version|;
   }
-  $zip->addFile("release/basex-api.jar", "basex/lib/basex-api.jar");
-  # Add repository directory
-  $zip->addDirectory("basex/repo");
-  # Add webapp directory
-  $zip->addTree("release/webapp", "basex/webapp");
+  rcopy("$source/basex-api.jar", "$target/lib/basex-api.jar");
+  mkdir "$target/repo";
+  mkdir "$target/webapp/";
+  rcopy("$source/webapp/", "$target/webapp");
 
+  my $zip = Archive::Zip->new();
+  zip_rec($zip, $target, "basex");
   # save the zip file
   $zip->writeToFileNamed("release/BaseX.zip") == AZ_OK or
     die "Could not write ZIP file.";
 }
+
+# recursively add zip files
+sub zip_rec {
+  my $zip = shift;
+  my $source = shift;
+  my $target = shift;
+  # Parse files
+  foreach my $file(glob("$source/.* $source/*")) {
+    next if $file =~ /\.$/;
+    my $trg = "$target/".basename($file);
+    if(-d $file) {
+      $zip->addDirectory($trg);
+      zip_rec($zip, $file, $trg);
+    } else {
+      my $f = $zip->addFile($file, $trg);
+      $f->unixFileAttributes($file =~ /\./ ? 0644 : 0755);
+    }
+  }
+};
+
 
 # creates the war file
 sub war {
@@ -276,6 +288,7 @@ sub finish {
   move("release/basex.war", "release/BaseX$v.war");
   move("release/BaseX.exe", "release/BaseX$v.exe");
   unlink("release/basex-api.jar");
+  rmtree("release/basex");
   rmtree("release/bin");
   rmtree("release/webapp");
 }

@@ -9,13 +9,13 @@
 
 CONTENTS ---------------------------------------------------------------
 
- This distribution contains the following directory:
+ This distribution contains the following directories:
 
    bin/      start scripts
    data/     database directory
-   etc/      examples, catalog files and module declarations (optional)
+   etc/      examples, catalog files and zipped module signatures (optional)
    lib/      Java libraries, referenced by the start scripts
-   repo/     user-defined XQuery modules
+   repo/     repository directory for XQuery modules
    webapp/   contents for web applications, including RESTXQ scripts
 
  To improve your workflows with BaseX, just add the bin/ directory to
@@ -38,6 +38,6 @@ HELP -------------------------------------------------------------------
    https://github.com/BaseXdb/BaseX/issues
 
  Have fun,
- BaseX Team, 2013
+ BaseX Team, 2014
 
 ========================================================================
