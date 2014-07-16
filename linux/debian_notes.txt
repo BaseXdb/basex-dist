@@ -43,7 +43,6 @@ $ cd ../basex-7.7.2
 * Debuild: Build package w/o signing source and changes
   - /etc/devscripts.conf needs to be configured 
   http://www.debian.org/doc/maint-guide/build.en.html#completebuild
- $ debuild -us -uc
  $ dpkg-buildpackage -us -uc -rfakeroot
 
 * Quick check generated files
@@ -73,6 +72,7 @@ $ cd ../basex-7.7.2
   $ sudo dpkg -i ../basex_7.0-1_all.deb
 
 * Build and sign package
+  $ ssh -X ...
   $ dpkg-buildpackage -k79967C5F
 
 * Commit debian/ to basex-dist
