@@ -67,7 +67,7 @@ declare %private function _:functions(
 {
   for $table in $xml//table[preceding::h2]
   let $summary := $table/tr[td[1]/b = ('Summary', 'Properties')]/td[2]
-  let $errors := $table/tr[td[1]/b = 'Errors']/td[2]/code
+  let $errors := $table/tr[td[1]/b = 'Errors']/td[2]/code[b]
   for $signature in $table/tr[td[1]/b = 'Signatures']/td[2]/code
   return (
     '(:~' || out:nl() || string-join(
@@ -78,11 +78,14 @@ declare %private function _:functions(
     ) ||
     (if($errors) then ' :' || out:nl() else ()) ||
     string-join(
-      for $e in $errors
-      return ' : @error ' || $prefixes[2] || ':' ||
-        $e/b || ' ' ||
-        replace(_:serialize($e/following-sibling::node()[1]), '^: ', '') ||
-        out:nl()
+      for $error in $errors
+      let $code := string($error/b)
+      let $desc := _:serialize(
+        let $br := $error/following-sibling::br[1]
+        return $error/following-sibling::node()[empty($br) or . << $br]
+      )
+      return ' : @error ' || $prefixes[2] || ':' || $code || ' ' ||
+        replace($desc, '^: ', '') || out:nl()
     ) ||
     ' :)' || out:nl() ||
     'declare function ' || replace($signature, ', \.\.\.', '') || ' external;' || out:nl()
