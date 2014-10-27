@@ -4,6 +4,7 @@
 *.DS_Store
 *.swp
 *.out
+.basex*
 
 # Java classfiles
 *.class
