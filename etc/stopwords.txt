@@ -17,7 +17,6 @@ always
 am
 among
 amongst
-amoungst
 amount
 an
 and
@@ -59,14 +58,11 @@ can
 cannot
 cant
 co
-computer
 con
 could
 couldnt
 cry
 de
-describe
-detail
 do
 done
 down
@@ -91,7 +87,6 @@ everywhere
 except
 few
 fifteen
-fify
 fill
 find
 fire
@@ -112,7 +107,6 @@ give
 go
 had
 has
-hasnt
 have
 he
 hence
@@ -123,9 +117,7 @@ hereby
 herein
 hereupon
 hers
-herse
 him
-himse
 his
 how
 however
@@ -145,7 +137,6 @@ itse
 keep
 last
 latter
-latterly
 least
 less
 ltd
@@ -165,7 +156,6 @@ move
 much
 must
 my
-myse
 name
 namely
 neither
@@ -217,8 +207,6 @@ serious
 several
 she
 should
-show
-side
 since
 sincere
 six
@@ -243,7 +231,6 @@ their
 them
 themselves
 then
-thence
 there
 thereafter
 thereby
