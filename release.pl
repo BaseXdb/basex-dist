@@ -125,8 +125,8 @@ sub zip {
   my $target = "release/basex";
   mkdir "$source/basex";
   rcopy("$source/basex.jar", "$target/BaseX.jar");
-  rcopy("../basex/license.txt", $target);
-  rcopy("../basex/changelog.txt", $target);
+  rcopy("../basex/LICENSE", $target);
+  rcopy("../basex/CHANGELOG", $target);
   rcopy("readme.txt", $target);
   rcopy(".basexhome", $target);
   mkdir "$target/bin";

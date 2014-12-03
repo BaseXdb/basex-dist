@@ -1,11 +1,9 @@
-======================================================= BASEX README ===
+WELCOME! ---------------------------------------------------------------
 
- Welcome to BaseX!
-
- BaseX is a light-weight, high-performance and scalable XML Database
- engine and XPath/XQuery 3.0 Processor, including full support for the
- W3C Update and Full Text extensions. An user-friendly GUI provides
- interactive access to your XML documents and queries.
+BaseX is a light-weight, high-performance and scalable XML Database
+engine and XPath/XQuery 3.1 Processor, which includes full support for
+the W3C Update and Full Text extensions. An interactive and user-
+friendly GUI frontend gives you great insight into your XML documents.
 
 CONTENTS ---------------------------------------------------------------
 
@@ -13,7 +11,7 @@ CONTENTS ---------------------------------------------------------------
 
    bin/      start scripts
    data/     database directory
-   etc/      examples, catalog files and zipped module signatures (optional)
+   etc/      examples, catalog files, zipped modules (optional)
    lib/      Java libraries, referenced by the start scripts
    repo/     repository directory for XQuery modules
    webapp/   contents for web applications, including RESTXQ scripts
@@ -29,15 +27,15 @@ HELP -------------------------------------------------------------------
    http://docs.basex.org
 
  BaseX is an Open Source project and BSD-licensed. You are welcome
- to join our mailing lists and give all kinds of feedback:
+ to join our basex-talk mailing list and give all kinds of feedback:
 
    http://basex.org/open-source
 
- You may as well contribute to our bug tracker: 
+ You may as fork our BaseX repository and send pull requests:
 
    https://github.com/BaseXdb/BaseX/issues
 
  Have fun,
- BaseX Team, 2014
+ Your BaseX Team
 
-========================================================================
+------------------------------------------------------------------------

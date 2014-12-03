@@ -39,7 +39,7 @@ Pop "${Var}"
 Page custom CheckInstalledJRE
 ; License page
 !define MUI_LICENSEPAGE_RADIOBUTTONS
-!insertmacro MUI_PAGE_LICENSE "..\license.txt"
+!insertmacro MUI_PAGE_LICENSE "..\..\basex\LICENSE"
 ; Directory page
 !insertmacro MUI_PAGE_DIRECTORY
 ; Custom page
@@ -142,8 +142,8 @@ Section "Hauptgruppe" SEC01
   SetOverwrite ifnewer
   File "..\release\BaseX.exe"
   File "..\release\${JAR}"
-  File "..\..\basex\license.txt"
-  File "..\..\basex\changelog.txt"
+  File "..\..\basex\LICENSE"
+  File "..\..\basex\CHANGELOG"
   File "..\readme.txt"
   File ".basexhome"
   CreateDirectory "$INSTDIR\bin"
