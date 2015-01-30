@@ -1,10 +1,10 @@
--------------------------
- Information about BaseX
--------------------------
+Information about basex
+------------------------------
 
-BaseX is an XML database system and XPath/XQuery processor.
-Homepage: www.basex.org
+This package was debianized using the mh_make command
+from the maven-debian-helper package.
 
+<<<<<<< HEAD
 This package was debianized by Alexander Holupirek <alex@holupirek.de> using
 the mh_make command from the maven-debian-helper package.
 
@@ -17,3 +17,8 @@ Things to patch:
 - AutoUpdate
 
 - StartUp Java Class
+=======
+The build system uses Maven but prevents it from downloading
+anything from the Internet, making the build compliant with
+the Debian policy.
+>>>>>>> 9e4477c1fdde28816bdfeefc64d6acbb8cb96769

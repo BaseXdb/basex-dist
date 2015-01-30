@@ -1,6 +1,0 @@
-====================================================== BASEX RELEASE ===
-
- The release.pl script creates a "release" folder with various files
- needed for a new release.
-
-========================================================================

@@ -39,7 +39,7 @@ Pop "${Var}"
 Page custom CheckInstalledJRE
 ; License page
 !define MUI_LICENSEPAGE_RADIOBUTTONS
-!insertmacro MUI_PAGE_LICENSE "..\license.txt"
+!insertmacro MUI_PAGE_LICENSE "..\..\basex\LICENSE"
 ; Directory page
 !insertmacro MUI_PAGE_DIRECTORY
 ; Custom page
@@ -47,8 +47,8 @@ Page custom OptionsPage OptionsLeave
 ; Instfiles page
 !insertmacro MUI_PAGE_INSTFILES
 ; Finish page
-!define MUI_FINISHPAGE_RUN
-!define MUI_FINISHPAGE_RUN_FUNCTION run_basex
+;!define MUI_FINISHPAGE_RUN
+;!define MUI_FINISHPAGE_RUN_FUNCTION run_basex
 !insertmacro MUI_PAGE_FINISH
 
 Function run_basex
@@ -98,69 +98,16 @@ Function OptionsPage
 FunctionEnd
 
 Function OptionsLeave
-# Get the user entered values.
-# first password field
-!insertmacro MUI_INSTALLOPTIONS_READ $R0 "Options" "Field 7" "State"
-# second password field
-!insertmacro MUI_INSTALLOPTIONS_READ $R1 "Options" "Field 8" "State"
-# serverport field
-!insertmacro MUI_INSTALLOPTIONS_READ $R2 "Options" "Field 9" "State"
-# Event port field
-!insertmacro MUI_INSTALLOPTIONS_READ $R3 "Options" "Field 10" "State"
-# dbpath field
-!insertmacro MUI_INSTALLOPTIONS_READ $R4 "Options" "Field 6" "State"
-# Admin password modification
-${If} $R1 == $R0
-  Push "$R1"
-  Push "${ALPHA}"
-  Call Validate
-  Pop $0
-  ${If} $0 == 0
-    MessageBox MB_OK "Passwords contain invalid characters."
-    Abort    
-  ${EndIf}
-${Else}
-  MessageBox MB_OK "Passwords do not match."
-  Abort
-${EndIf}
-# Server port check
-${If} $R2 != "1984"
-  Push "$R2"
-  Push "${NUMERIC}"
-  Call Validate
-  Pop $0
-  ${If} $0 == 0
-    MessageBox MB_OK "Server port contains invalid characters."
-    Abort
-  ${EndIf}
-${EndIf}
-# Event port check
-${If} $R3 != "1985"
-  Push "$R3"
-  Push "${NUMERIC}"
-  Call Validate
-  Pop $0
-  ${If} $0 == 0
-    MessageBox MB_OK "Event port contains invalid characters."
-    Abort
-  ${EndIf}
-${EndIf}
-# DBPATH check
-${If} $R4 != "data"
-  Push "$R4"
-  Push "${BETA}"
-  Call Validate
-  Pop $0
-  ${If} $0 == 0
-    MessageBox MB_OK "Database path contains invalid characters."
-    Abort
-  ${EndIf}
-${EndIf}
 # xq field
 !insertmacro MUI_INSTALLOPTIONS_READ $R5 "Options" "Field 3" "State"
 # xml field
 !insertmacro MUI_INSTALLOPTIONS_READ $R6 "Options" "Field 5" "State"
 # .xq file Association
+  ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".bxs" "BaseX Command Script"
+  ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".basex" "BaseX Configuration"
+  ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".basexhome" "BaseX Configuration"
+  ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".basexgui" "BaseX Configuration"
+  ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".basexperm" "BaseX Configuration"
   ${If} $R5 == 1
     ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xq"     "XQuery File"
     ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xqu"    "XQuery File"
@@ -172,7 +119,6 @@ ${EndIf}
 # .xml file Association
   ${If} $R6 == 1
     ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xml" "XML Document"
-    ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".bxs" "BaseX Command Script"
   ${EndIf}
   ${RefreshShellIcons}
 FunctionEnd
@@ -196,56 +142,32 @@ Section "Hauptgruppe" SEC01
   SetOverwrite ifnewer
   File "..\release\BaseX.exe"
   File "..\release\${JAR}"
-  File "..\..\basex\license.txt"
-  File "..\..\basex\changelog.txt"
+  File "..\..\basex\LICENSE"
+  File "..\..\basex\CHANGELOG"
   File "..\readme.txt"
-  File ".basex"
+  File ".basexhome"
   CreateDirectory "$INSTDIR\bin"
   SetOutPath "$INSTDIR\bin"
   File "..\release\bin\*.bat"
   CreateDirectory "$INSTDIR\etc"
   SetOutPath "$INSTDIR\etc"
-  File "..\etc\*"
+  File /r "..\etc\*"
   CreateDirectory "$INSTDIR\ico"
   SetOutPath "$INSTDIR\ico"
   File "..\images\*.ico"
   CreateDirectory "$INSTDIR\lib"
   SetOutPath "$INSTDIR\lib"
   File "..\release\basex-api.jar"
-  File "..\..\basex-dist\lib\*"
-  File /x basex-*.jar "..\..\basex-api\lib\*"
-  File "..\..\basex-api\lib\basex-xqj*.*"
-  File "..\..\basex\lib\*"
+  File "..\lib\*"
+  File /x basex-*.jar "..\..\basex\basex-api\lib\*"
+  File "..\..\basex\basex-api\lib\basex-xqj*.*"
+  File "..\..\basex\basex-core\lib\*"
   CreateDirectory "$INSTDIR\repo"
   CreateDirectory "$INSTDIR\webapp"
   SetOutPath "$INSTDIR\webapp"
-  File /r "..\webapp\*"
+  File /r "..\release\webapp\*"
 
   AccessControl::GrantOnFile "$INSTDIR" "(S-1-1-0)" "GenericRead + GenericWrite + GenericExecute + Delete"
-  # set dbpath, port and webport
-  StrLen $0 $R4
-  IntOp $0 $0 - 1
-  StrCpy $2 $R4 1 $0
-  ${If} $2 == "\"
-    StrCpy $R4 $R4 -1
-  ${EndIf}
-  !insertmacro IndexOf $9 "$R4" ":"
-  ${If} $9 == -1
-    CreateDirectory "$INSTDIR\$R4"
-    nsExec::Exec '"$INSTDIR\bin\basex.bat" "-Wc" "set dbpath \"$INSTDIR\$R4\"'
-    # nsExec::Exec '"$INSTDIR\bin\basex.bat" "-Wc" "set dbpath \"$INSTDIR\$R4\"; set webpath \"$INSTDIR\webapp\"; set repopath \"$INSTDIR\repo\""'
-  ${Else}
-    # store absolute path
-    CreateDirectory "$R4"
-    nsExec::Exec '"$INSTDIR\bin\basex.bat" "-Wc" "set dbpath \"$R4\";'
-    #nsExec::Exec '"$INSTDIR\bin\basex.bat" "-Wc" "set dbpath \"$R4\"; set webpath \"$INSTDIR\webapp\"; set repopath \"$INSTDIR\repo\""'
-  ${EndIf}
-  nsExec::Exec '"$INSTDIR\bin\basex.bat" "-Wc" "set port $R2; set serverport $R2; set eventport $R3"'
-
-  md5dll::GetMD5String "$R0"
-  Pop $0
-  # change admin password
-  nsExec::Exec '"$INSTDIR\bin\basex.bat" "-c" "alter user admin $0"'
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BaseX" "DisplayName" "BaseX"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BaseX" "DisplayIcon" "$\"$INSTDIR\BaseX.ico$\""
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BaseX" "UninstallString" "$\"$INSTDIR\uninstall.exe$\""
@@ -304,14 +226,18 @@ Section Uninstall
   DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
   DeleteRegKey HKLM "${PRODUCT_DIR_REGKEY}"
   ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "$INSTDIR\bin"
-  ${unregisterExtension} ".xq"     "XQuery File"
-  ${unregisterExtension} ".xqu"    "XQuery File"
-  ${unregisterExtension} ".xqy"    "XQuery File"
-  ${unregisterExtension} ".xquery" "XQuery File"
-  ${unregisterExtension} ".xqm"    "XQuery File"
-  ${unregisterExtension} ".xql"    "XQuery File"
-  ${unregisterExtension} ".xml"    "XML Document"
-  ${unregisterExtension} ".bxs"    "BaseX Command Script"
+  ${unregisterExtension} ".xq"        "XQuery File"
+  ${unregisterExtension} ".xqu"       "XQuery File"
+  ${unregisterExtension} ".xqy"       "XQuery File"
+  ${unregisterExtension} ".xquery"    "XQuery File"
+  ${unregisterExtension} ".xqm"       "XQuery File"
+  ${unregisterExtension} ".xql"       "XQuery File"
+  ${unregisterExtension} ".xml"       "XML Document"
+  ${unregisterExtension} ".bxs"       "BaseX Command Script"
+  ${unregisterExtension} ".basex"     "BaseX Configuration"
+  ${unregisterExtension} ".basexgui"  "BaseX Configuration"
+  ${unregisterExtension} ".basexhome" "BaseX Configuration"
+  ${unregisterExtension} ".basexperm" "BaseX Configuration"
   ${RefreshShellIcons}
   SetAutoClose true
 SectionEnd

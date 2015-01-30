@@ -1,1 +1,0 @@
-@basex -w xml2wiki.xq

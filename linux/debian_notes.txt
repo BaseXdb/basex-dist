@@ -1,4 +1,214 @@
-==================================================== BASEX ON DEBIAN ===
+==================================================== BASEX ON DEBIAN ====
+
+-------------------------------------------------------------------------
+Update Debian/Ubuntu package to a new version:
+-------------------------------------------------------------------------
+
+* Get basex source and package stub
+
+$ mkdir build
+$ cd build
+$ apt-get source basex
+$ ls
+basex-7.6  basex_7.6-1.debian.tar.gz  basex_7.6-1.dsc  basex_7.6.orig.tar.gz
+$ cd basex-7.6
+$ uscan
+basex: Newer version (7.7.2) available on remote site:
+  http://githubredir.debian.net/github/BaseXdb/basex/7.7.2.tar.gz
+  (local version is 7.6)
+basex: Successfully downloaded updated package 7.7.2.tar.gz
+    and symlinked basex_7.7.2.orig.tar.gz to it
+$ ls ../
+7.7.2.tar.gz  basex-7.6  basex_7.6-1.debian.tar.gz  basex_7.6-1.dsc  basex_7.6.orig.tar.gz  basex_7.7.2.orig.tar.gz
+$ uupdate -v 7.7.2 ../basex_7.7.2.orig.tar.gz 
+New Release will be 7.7.2-1.
+-- Untarring the new sourcecode archive ../basex_7.7.2.orig.tar.gz
+Unpacking the debian/ directory from version 7.6-1 worked fine.
+Remember: Your current directory is the OLD sourcearchive!
+Do a "cd ../basex-7.7.2" to see the new package
+$ cd ../basex-7.7.2
+
+  $ dch -e (! Change: UNRELEASED -> unstable)
+* Check author list
+ $ grep -hr '@author' . | grep -v BaseX  | grep -v : | awk '{print $3, $4 }' | tr -d '\r' | sort | uniq
+* Check copyright file (does not seem to work anymore)
+ $ config-edit -application dpkg-copyright -ui none
+
+  ...
+  [ man pages (!! RESTORE and missing hyphen), new commands, new examples, patches OK, new authors ... ]
+  ...
+
+-------------------------------------------------------------------------
+
+* Debuild: Build package w/o signing source and changes
+  - /etc/devscripts.conf needs to be configured 
+  http://www.debian.org/doc/maint-guide/build.en.html#completebuild
+ $ dpkg-buildpackage -us -uc -rfakeroot
+
+* Quick check generated files
+ $ tree debian/basex
+
+* Lintian check
+ $ lintian -i -I --show-overrides --pedantic ../basex_7.7.2-1_all.deb 
+
+* Clean build
+ $ fakeroot ./debian/rules clean
+
+* Build in chroot'ed environment
+  http://www.debian.org/doc/maint-guide/build.en.html#pbuilder
+  $ sudo pbuilder --update
+  $ sudo pbuilder --build --debbuildopts -sa ../basex_7.7.2-1.dsc
+  ( $ script -c 'sudo pbuilder --build --debbuildopts -sa basex_7.0-1.dsc' build.log )
+  Results are placed in:
+  $ ll /var/cache/pbuilder/result/
+
+* Verify package installation
+  $ sudo debi ../basex_7.0-1_i386.changes
+  $ sudo debi /var/cache/pbuilder/result/basex_7.0-1_i386.changes
+
+* Check maintainer scripts
+  $ sudo dpkg -r basex
+  $ sudo dpkg -P basex
+  $ sudo dpkg -i ../basex_7.0-1_all.deb
+
+* Build and sign package
+  $ ssh -X ...
+  $ dpkg-buildpackage -k79967C5F
+
+* Commit debian/ to basex-dist
+  $ fakeroot ./debian/rules clean
+  $ cd ~/code/basex-dist
+  $ git pull
+  $ rm -rf ~/basex-dist/linux/debian/ 
+  $ cp -r ~/build/basex-X.X/debian/ ~/basex-dist/linux/
+  $ git commit -am 'Updated debian packaging to X.X'
+  $ git push origin master
+
+* Upload to mentors
+
+ (  - Configure upload  ~/.dput.cf
+    http://mentors.debian.net/cgi-bin/maintainer-intro
+
+    ----- 8< ------
+    [mentors]
+    fqdn = mentors.debian.net
+    method = ftp
+    login = anonymous
+    incoming = .
+    allow_unsigned_uploads = 0
+    run_dinstall = 0
+    progress_indicator = 2
+    passive_ftp = 1
+    ----- 8< ------
+  )
+
+  - Perform mentors upload
+  $ dput mentors ../basex_7.0.1-1_i386.changes
+  
+  - Verify upload
+  $ vim ../basex_6.7-1_i386.upload
+
+  - Wait for e-mail to arrive, then check 
+  http://mentors.debian.net/debian/pool/main/b/basex
+
+- Upload to phobos103.inf.uni-konstanz.de
+
+  (
+    - Configure ~/.mini-dinstall
+    http://upsilon.cc/~zack/blog/posts/2009/04/howto:_uploading_to_people.d.o_using_dput/
+    ----- 8< ------
+    [DEFAULT]
+    mail_to = alex@holupirek.de
+    incoming_permissions = 0750
+    architectures = all
+    archive_style = flat
+    dynamic_reindex = 1
+    archivedir = /var/www/debian
+    generate_release = 1
+    release_origin = BaseX
+    release_label = BaseX
+    release_description = Unofficial Debian BaseX packages maintained by Alexander Holupirek
+  
+    [unstable]
+    release_suite = unstable
+    ----- 8< ------
+
+    - Configure ~/.dput.cf
+    ----- 8< ------
+    [phobos103]
+    fqdn = phobos103.inf.uni-konstanz.de
+    method = scp
+    login = *
+    incoming = /var/www//debian/mini-dinstall/incoming
+    post_upload_command = ssh phobos103.inf.uni-konstanz.de mini-dinstall -b
+    ----- 8< ------
+   )
+
+   - Upload
+   $ dput phobos103 ../basex_7.0.1-1_i386.changes
+   
+   - Sign Release
+   $ cd /var/www/debian
+   $ gpg --detach-sign -o Release.gpg unstable/Release
+
+* Sync it to files.basex.org
+   $ scp Release.gpg basex-web:~/files/debian 
+   $ scp -r unstable basex-web:~/files/debian/
+   $ ssh basex-web
+   $ cd files/debian
+   $ chmod a+r Release.gpg
+   $ chmod a+r unstable/*
+
+* People can update their /etc/apt/sources.list
+
+   deb     http://phobos103.inf.uni-konstanz.de/debian unstable/
+   deb-src http://phobos103.inf.uni-konstanz.de/debian unstable/ 
+
+   deb     http://files.basex.org/debian unstable/
+   deb-src http://files.basex.org/debian unstable/
+
+* Kindly ask Tony Mancill <tmancill/debian/org> to be so kind to upload basex to ftp.debian.org for us
+
+	Hi Tony,
+
+	yet another BaseX release happened today.
+
+	Please find the new Debian package at the mentors site:
+	http://mentors.debian.net/package/basex
+
+	The respective dsc file can be found at:
+	http://mentors.debian.net/debian/pool/main/b/basex/basex_7.X.X-1.dsc
+
+
+TODO
+====
+
+[X] screenshot: http://screenshots.debian.net/package/basex
+[X] Tagging with debtags: http://debtags.alioth.debian.org/edit.html?pkg=basex
+[X] basex (6.7.1-1) Info PTS Bugs
+    W syntax-error-in-dep5-copyright
+    syntax error in section 4 after the tag license: 2. Redistributions in binary form must reproduce the above copyright\n
+[ ] Get rid of warnings:
+    dpkg-gencontrol: warning: package basex: unused substitution variable ${maven:CompileDepends}
+    dpkg-gencontrol: warning: package basex: unused substitution variable ${maven:TestDepends}
+[ ] Think about what to do if a basex server is running while installing a new version?
+
+SCRATCHPAD
+==========
+
+* Check DEP5
+http://ddumont.wordpress.com/2011/01/13/debian-copyright-dep5-parsereditorvalidatormigrator-is-released/
+$ aptitude install libconfig-model-perl
+$ config-edit -application dpkg-copyright -ui none
+* uscan
+http://files.basex.org/releases/(\d\.\d)/BaseX-source-(\d\.\d).tar.gz
+========================================================================
+
+http://raphaelhertzog.com/2011/07/04/how-to-prepare-patches-for-debian-packages/
+
+-------------------------------------------------------------------------
+
+General notes:
 
 In general, follow advice from
 http://www.debian.org/doc/maint-guide/update.en.html#newupstream
@@ -87,186 +297,5 @@ copyright
 README.source
 
 $ dpkg-buildpackage 
-
--------------------------------------------------------------------------
-B. Build from existing package 
-* Get basex source and package stub
-
-  $ mkdir build
-  $ cd build
-  $ apt-get source basex
-  $ ls
-  basex-6.7.1  basex_6.7.1-1.debian.tar.gz  basex_6.7.1-1.dsc  basex_6.7.1.orig.tar.gz
-  $ cd basex-6.7.1
-  $ uscan
-  basex: Newer version (7.0) available on remote site:
-    http://phobos103.inf.uni-konstanz.de/tst/7.0.tar.gz
-    (local version is 6.7.1)
-  basex: Successfully downloaded updated package 7.0.tar.gz
-    and symlinked basex_7.0.orig.tar.gz to it
-  $ ls ../
-  7.0.tar.gz
-  basex_6.7.1.orig.tar.gz
-  basex_6.7.1-1.debian.tar.gz
-  basex-6.7.1
-  basex_6.7.1-1.dsc
-  basex_7.0.orig.tar.gz -> 7.0.tar.gz
-  $ uupdate -v 7.0 ../basex_7.0.orig.tar.gz 
-  New Release will be 7.0-1.
-  -- Untarring the new sourcecode archive ../basex_7.0.orig.tar.gz
-  Unpacking the debian/ directory from version 6.7.1-1 worked fine.
-  Remember: Your current directory is the OLD sourcearchive!
-  Do a "cd ../basex-7.0" to see the new package
-  $ cd ../basex-7.0
-  $ dch -e
-  ...
-  [ man pages (!! RESTORE and missing hyphen), new commands, new examples, patches OK, new authors ... ]
-  ...
-* Check author list
- $ grep -hr '@author' . | grep -v BaseX | awk '{print $3, $4 }' | tr -d '\r' | sort | uniq
-
-* Check copyright file
- $ config-edit -application dpkg-copyright -ui none
 -------------------------------------------------------------------------
 
-* Debuild: Build package w/o signing source and changes
-  - /etc/devscripts.conf needs to be configured 
-  http://www.debian.org/doc/maint-guide/build.en.html#completebuild
- $ debuild -us -uc
-
-* Quick check generated files
- $ tree debian/basex
-
-* Lintian check
- $ lintian -i -I --show-overrides --pedantic ../basex_7.0-1_all.deb
-
-* Clean build
- $ fakeroot ./debian/rules clean
-
-* Build in chroot'ed environment
-  http://www.debian.org/doc/maint-guide/build.en.html#pbuilder
-  $ sudo pbuilder --update
-  $ sudo pbuilder --build --debbuildopts -sa ../basex_7.0-1.dsc
-  ( $ script -c 'sudo pbuilder --build --debbuildopts -sa basex_7.0-1.dsc' build.log )
-  Results are placed in:
-  $ ll /var/cache/pbuilder/result/
-
-* Verify package installation
-  $ sudo debi ../basex_7.0-1_i386.changes
-  $ sudo debi /var/cache/pbuilder/result/basex_7.0-1_i386.changes
-
-* Check maintainer scripts
-  $ sudo dpkg -r basex
-  $ sudo dpkg -P basex
-  $ sudo dpkg -i ../basex_7.0-1_all.deb
-
-* Build and sign package
-  $ dpkg-buildpackage -k79967C5F
-
-* Commit debian/ to basex-dist
-  $ fakeroot ./debian/rules clean
-  $ cd ~/basex-dist
-  $ git pull
-  $ rm -rf ~/basex-dist/linux/debian/ 
-  $ cp -r debian/ ~/basex-dist/linux/
-  $ git commit -a 
-  $ git push origin master
-
-* Upload to mentors
-  - Configure upload  ~/.dput.cf
-  http://mentors.debian.net/cgi-bin/maintainer-intro
-
-  ----- 8< ------
-  [mentors]
-  fqdn = mentors.debian.net
-  method = ftp
-  login = anonymous
-  incoming = .
-  allow_unsigned_uploads = 0
-  run_dinstall = 0
-  progress_indicator = 2
-  passive_ftp = 1
-  ----- 8< ------
-
-  - Perform mentors upload
-  $ dput mentors ../basex_7.0.1-1_i386.changes
-  
-  - Verify upload
-  $ vim ../basex_6.7-1_i386.upload
-
-- Upload to phobos103.inf.uni-konstanz.de
-  - Configure ~/.mini-dinstall
-  http://upsilon.cc/~zack/blog/posts/2009/04/howto:_uploading_to_people.d.o_using_dput/
-  ----- 8< ------
-  [DEFAULT]
-  mail_to = alex@holupirek.de
-  incoming_permissions = 0750
-  architectures = all
-  archive_style = flat
-  dynamic_reindex = 1
-  archivedir = /var/www/debian
-  generate_release = 1
-  release_origin = BaseX
-  release_label = BaseX
-  release_description = Unofficial Debian BaseX packages maintained by Alexander Holupirek
-  
-  [unstable]
-  release_suite = unstable
-  ----- 8< ------
-
-  - Configure ~/.dput.cf
-  ----- 8< ------
-  [phobos103]
-  fqdn = phobos103.inf.uni-konstanz.de
-  method = scp
-  login = *
-  incoming = /var/www//debian/mini-dinstall/incoming
-  post_upload_command = ssh phobos103.inf.uni-konstanz.de mini-dinstall -b
-  ----- 8< ------
-
-   - Upload
-   $ dput phobos103 ../basex_7.0.1-1_i386.changes
-   
-   - Sign Release
-   $ cd /var/www/debian
-   $ gpg --detach-sign -o Release.gpg unstable/Release
-
-* Sync it to files.basex.org
-   $ scp Release.gpg basex:~/files/debian 
-   $ scp -r unstable basex:~/files/debian/
-
-* People can update their /etc/apt/sources.list
-
-   deb     http://phobos103.inf.uni-konstanz.de/debian unstable/
-   deb-src http://phobos103.inf.uni-konstanz.de/debian unstable/ 
-
-   deb     http://files.basex.org/debian unstable/
-   deb-src http://files.basex.org/debian unstable/
-
-* Kindly ask Tony Mancill to be so kind to upload basex to ftp.debian.org for us
-
-TODO
-====
-
-[X] screenshot: http://screenshots.debian.net/package/basex
-[X] Tagging with debtags: http://debtags.alioth.debian.org/edit.html?pkg=basex
-[X] basex (6.7.1-1) Info PTS Bugs
-    W syntax-error-in-dep5-copyright
-    syntax error in section 4 after the tag license: 2. Redistributions in binary form must reproduce the above copyright\n
-[ ] Get rid of warnings:
-    dpkg-gencontrol: warning: package basex: unused substitution variable ${maven:CompileDepends}
-    dpkg-gencontrol: warning: package basex: unused substitution variable ${maven:TestDepends}
-[ ] Think about what to do if a basex server is running while installing a new version?
-
-SCRATCHPAD
-==========
-
-* Check DEP5
-http://ddumont.wordpress.com/2011/01/13/debian-copyright-dep5-parsereditorvalidatormigrator-is-released/
-$ aptitude install libconfig-model-perl
-$ config-edit -application dpkg-copyright -ui none
-* uscan
-http://files.basex.org/releases/(\d\.\d)/BaseX-source-(\d\.\d).tar.gz
-========================================================================
-
-http://raphaelhertzog.com/2011/07/04/how-to-prepare-patches-for-debian-packages/
