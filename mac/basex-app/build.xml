@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- http://docs.oracle.com/javase/7/docs/technotes/guides/jweb/packagingAppsForMac.html -->
+<project name="BaseXApp" default="default" basedir=".">
+    <property environment="env"/>
+    <taskdef name="bundleapp"
+             classname="com.oracle.appbundler.AppBundlerTask"
+             classpath="lib/appbundler-1.0.jar" />
+
+    <target name="bundle-basex">
+        <bundleapp
+            outputdirectory="app"
+            name="BaseX"
+            displayname="BaseX"
+            identifier="org.basex"
+            copyright="BaseX Team, see http://www.basex.org"
+            icon="dist/BaseX.icns"
+            mainclassname="org.basex.BaseXGUI">
+            <runtime dir="${env.JAVA_HOME}"/>
+            <classpath file="dist/BaseX-latest.jar" />
+        </bundleapp>
+    </target>
+
+</project>
