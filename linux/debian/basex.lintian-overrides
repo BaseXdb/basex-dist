@@ -1,0 +1,2 @@
+# BaseX requires Java 7
+basex: incompatible-java-bytecode-format Java7 version (Class format: 51)
