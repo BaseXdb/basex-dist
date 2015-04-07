@@ -16,7 +16,7 @@
             icon="dist/BaseX.icns"
             mainclassname="org.basex.BaseXGUI">
             <runtime dir="${env.JAVA_HOME}"/>
-            <classpath file="dist/BaseX-latest.jar" />
+            <classpath file="dist/BaseX*.jar" />
         </bundleapp>
     </target>
 

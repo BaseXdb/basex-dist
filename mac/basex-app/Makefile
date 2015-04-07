@@ -1,4 +1,4 @@
-# Build BaseX.app from BaseX-latest.jar
+# Build BaseX.app from ${BASEX}.jar
 #
 # Links:
 # - http://docs.oracle.com/javase/8/docs/technotes/guides/deploy/package_for_mac.html
@@ -9,15 +9,17 @@
 # Internal Certificate:
 # BaseX-Intern/GmbH/Accounts/MacDev/developerID_application_basexgmbh.cer
 #
-# (c) Copyright 2014 Alexander Holupirek <alex@holupirek.de>
+# (c) Copyright 2015 Alexander Holupirek <alex@holupirek.de>
 # BSD licensed
 
 .PHONY: files
+#BASEX=BaseX
+BASEX=BaseX-latest
 
 help:
 	@echo 'clean            : remove previous builds'
 	@echo 'clean-app        : remove app build only'
-	@echo 'get              : download BaseX-latest'
+	@echo 'get              : download ${BaseX}'
 	@echo 'diff             : instructions about the diff file for next patch step'
 	@echo 'pkg              : build BaseX.app'
 	@echo 'patch            : patch .app to support Retina'
@@ -31,7 +33,9 @@ help:
 	@echo 'info-java-update : show info about what to do in case of java update'
 	@echo 'all              : one run deployment'
 
-all: clean get pkg patch sign files upload tree www
+all: clean-all get pkg patch sign files upload tree www
+
+build: clean-all get pkg patch sign 
 
 clean:
 	@echo '****** [CLEAN] removing previous builds'
@@ -44,14 +48,16 @@ clean:
 clean-app:
 	@rm -rf app
 
-get:
-	@echo '****** [DOWNLOAD] BaseX-latest'
-	@curl -o dist/BaseX-latest.jar "http://files.basex.org/releases/BaseX-latest.jar"
-	@md5 dist/BaseX-latest.jar >dist/BaseX-latest.jar.md5
-	@tree dist
-	@cat dist/BaseX-latest.jar.md5
+clean-all: clean-app clean
 
-dist/BaseX-latest.jar:
+get:
+	@echo '****** [DOWNLOAD] ${BASEX}'
+	@curl -o dist/${BASEX}.jar "http://files.basex.org/releases/${BASEX}.jar"
+	@md5 dist/${BASEX}.jar >dist/${BASEX}.jar.md5
+	@tree dist
+	@cat dist/${BASEX}.jar.md5
+
+dist/${BASEX}.jar:
 	make get
 
 diff:
@@ -60,10 +66,15 @@ diff:
 	@echo '   diffs/BaseX.app/Contents/Info.plist'
 	@echo '>>CFBundleVersion<< is the current build, which is the git commit piece in following string:'
 	@echo '>>CFBundleShortVersionString<< is the ‘marketing’ BaseX version, e.g. 7.9, 8.0'
-	@java -cp dist/BaseX-latest.jar org.basex.BaseX -h 2>&1 | head -n 1
+	@java -cp dist/${BASEX}.jar org.basex.BaseX -h 2>&1 | head -n 1 >/dev/null
+	@java -cp dist/${BASEX}.jar org.basex.BaseX -h 2>&1 | head -n 1
 	@echo 'Once done proceed with patch'
+	# get git version from basex command line version and patch CFBundleVersion in Info.plist
+	java -cp dist/${BASEX}.jar org.basex.BaseX -u -bver="`java -cp dist/${BASEX}.jar org.basex.BaseX -h 2>&1 | head -n 1 | cut -d\  -f4`" 'declare variable $$ver external := "GIT_VERSION_NOT_SET"; let $$src := doc("diffs/BaseX.app/Contents/Info.plist") return (replace value of node $$src//key[. = "CFBundleVersion"]/(following-sibling::string)[1] with $$ver)'
+	# get basex version from basex command line version and patch CFBundleShortVersionString in Info.plist
+	java -cp dist/${BASEX}.jar org.basex.BaseX -u -bver="${BASEX}-`java -cp dist/${BASEX}.jar org.basex.BaseX -h 2>&1 | head -n 1 | cut -d\  -f2`" 'declare variable $$ver external := "GIT_VERSION_NOT_SET"; let $$src := doc("diffs/BaseX.app/Contents/Info.plist") return (replace value of node $$src//key[. = "CFBundleShortVersionString"]/(following-sibling::string)[1] with $$ver)'
 
-pkg: dist/BaseX-latest.jar
+pkg: dist/${BASEX}.jar
 	@echo '****** [PACKAGING]'
 	@mkdir app || exit 0
 	@java -jar /Applications/oxygen/tools/ant/lib/ant-launcher.jar bundle-basex
@@ -96,16 +107,16 @@ open:
 files:
 	@echo '****** [FILES] tar app and create version file for upload'
 	@rm -rf files && mkdir files
-	(cd app; tar cjf ../files/BaseX-latest.app.tar.bz2  BaseX.app)
-	@md5 app/BaseX.app/Contents/Java/BaseX-latest.jar >>files/BaseX-latest.app.info.txt
-	@md5 files/BaseX-latest.app.tar.bz2 >>files/BaseX-latest.app.info.txt
-	java -cp app/BaseX.app/Contents/Java/BaseX-latest.jar org.basex.BaseX -h 2>&1 | head -n 1 >>files/BaseX-latest.app.info.txt
-	ls app/BaseX.app/Contents/PlugIns/ >>files/BaseX-latest.app.info.txt
+	(cd app; tar cjf ../files/${BASEX}.app.tar.bz2  BaseX.app)
+	@md5 app/BaseX.app/Contents/Java/${BASEX}.jar >>files/${BASEX}.app.info.txt
+	@md5 files/${BASEX}.app.tar.bz2 >>files/${BASEX}.app.info.txt
+	java -cp app/BaseX.app/Contents/Java/${BASEX}.jar org.basex.BaseX -h 2>&1 | head -n 1 >>files/${BASEX}.app.info.txt
+	ls app/BaseX.app/Contents/PlugIns/ >>files/${BASEX}.app.info.txt
 	tree files
-	@cat files/BaseX-latest.app.info.txt
+	@cat files/${BASEX}.app.info.txt
 
 upload:
-	scp files/BaseX-latest.app.* basex-web:files/releases
+	scp files/${BASEX}.app.* basex-web:files/releases
 
 www:
 	@echo '****** [BROWSER] open browser'
