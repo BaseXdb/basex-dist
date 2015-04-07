@@ -115,7 +115,7 @@ file:create-dir($TARGET-DIR),
 
 (: Loop over all modules :)
 let $url := $ROOT-URL || '/wiki/Module_Library'
-let $xml := html:parse(fetch:binary($url), map { 'nons' := true() })
+let $xml := html:parse(fetch:binary($url))
 let $table := $xml//table
 let $trs := $table/tr
 for $tr in $trs[td]
@@ -123,7 +123,7 @@ let $prefix := normalize-space($tr/td[3])
 where empty($PREFIX) or $prefix = $PREFIX
 return
   let $link := $ROOT-URL || $tr/td[1]/a/@href
-  let $xml := html:parse(fetch:binary($link), map { 'nons' := true() })
+  let $xml := html:parse(fetch:binary($link))
   let $xqdoc := _:create($url, $xml)
   let $uri := normalize-space($tr/td[4])
   return (

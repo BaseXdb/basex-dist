@@ -79,15 +79,15 @@
 		<Application_URLs>
 			<Application_Info_URL>http://basex.org</Application_Info_URL>
 			<Application_Order_URL />
-			<Application_Screenshot_URL>http://files.basex.org/BaseX_Screenshot.png</Application_Screenshot_URL>
-			<Application_Icon_URL>http://files.basex.org/BaseX_Icon.png</Application_Icon_URL>
+			<Application_Screenshot_URL>http://files.basex.org/BaseX-Screenshot.png</Application_Screenshot_URL>
+			<Application_Icon_URL>http://files.basex.org/BaseX-Icon.png</Application_Icon_URL>
 			<Application_XML_File_URL>http://files.basex.org/BaseXPADFile.xml</Application_XML_File_URL>
 		</Application_URLs>
 		<Download_URLs>
 			<Primary_Download_URL>http://files.basex.org/releases/BaseX.zip</Primary_Download_URL>
 			<Secondary_Download_URL>http://files.basex.org/releases/BaseX.exe</Secondary_Download_URL>
 			<Additional_Download_URL_1>http://files.basex.org/releases/BaseX.jar</Additional_Download_URL_1>
-			<Additional_Download_URL_2>http://files.basex.org/releases/BaseX.app.zip</Additional_Download_URL_2>
+			<Additional_Download_URL_2>http://files.basex.org/releases/BaseX.war</Additional_Download_URL_2>
 		</Download_URLs>
 	</Web_Info>
 	<Permissions>

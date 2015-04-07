@@ -1,3 +1,73 @@
+basex (8.0.3-1) unstable; urgency=medium
+
+  * New upstream release
+    VERSION 8.0.3 (March 19, 2015) -----------------------------------------
+
+     Various bug fixes (all minor)
+
+    VERSION 8.0.2 (March 9, 2015) ------------------------------------------
+    
+     REST
+     - Better support for concurrent read and write operations
+    
+     XQUERY
+     - Speed up wildcard queries without wildcards
+     - XQUnit: compare error codes as QNames
+     - Fix: process each single flwor clause when removing variables
+     - Fix: consider xml:space='preserve' during serialization
+    
+     CORE
+     - Fix: consider case when pinning databases
+    
+     HTTP:
+     - Fix: digest authentication, correct quoting
+    
+    VERSION 8.0.1 (February 22, 2015) --------------------------------------
+    
+     XQUERY
+     - Faster execution of single, index-based results
+     - Iterative evaluation of steps with multiple predicates
+    
+     Minor bug fixes:
+     - WebDAV locking
+     - Archive Module
+     - Adaptive serialization of arrays and maps
+     - Digest Authentication
+     - Save command-line history
+    
+    VERSION 8.0 (February 9, 2015) -----------------------------------------
+    
+     XQUERY
+     - Support for XQuery 3.1 (nearly complete)
+     - New default serialization ("adaptive")
+     - MIXUPDATES option: update items and return results at the same time
+     - Improved index rewritings, more precise cost estimations
+     - New modules: Array and User Module
+     - New annotations: %basex:inline, %basex:lazy
+     - 13 of our modules were updated and extended
+    
+     STORAGE
+     - Existing documents will be overwritten in-place whenever possible
+     - Updatable index structures now take much less space
+     - Faster document index (storing paths to all XML documents)
+     - AUTOOPTIMIZE option: optimize after each update
+     - XINCLUDE option: resolve or ignore XInclude tags
+    
+     SECURITY
+     - Revised user management; users are stored as XML
+     - Digest authentication, Salted SHA256
+     - Language bindings updated
+    
+     WEB APPLICATIONS
+     - Integrated application: DBA, Database Administration
+     - AUTHMETHOD option: Basic vs. Digest authentication
+     - RESTXQ: regular expressions in paths, quality factor support
+    
+     GUI
+     - Better code completions
+
+ -- Alexander Holupirek <alex@holupirek.de>  Tue, 17 Mar 2015 15:52:07 +0100
+
 basex (7.9-1) unstable; urgency=medium
 
   * New upstream release

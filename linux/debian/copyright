@@ -4,7 +4,7 @@ Upstream-Contact: BaseX Core Developers <core@basex.org>
 Source: https://github.com/BaseXdb/basex
 
 Files: *
-Copyright: 2005-13, BaseX Team <info@basex.org>
+Copyright: 2005-15, BaseX Team <info@basex.org>
 License: BSD-3-clause
 Comment: 
  Following persons contributed to the project and form the 
@@ -15,6 +15,8 @@ Comment:
  Andreas Weiler
  Andria Arisal
  Bastian Lemke
+ Charles Foster
+ Christian Gruen
  Dimitar Popov
  Dirk Kirsten
  Jens Erat
@@ -25,6 +27,7 @@ Comment:
  Masoumeh Seydi
  Michael Hedenus
  Michael Seiferle
+ Milton Development
  Priscilla Walmsley
  Roman Raedle
  Rositsa Shadura
@@ -35,11 +38,11 @@ Comment:
  Wolfgang Miller
 
 Files: debian/*
-Copyright: 2011-13, Alexander Holupirek <alex@holupirek.de>
+Copyright: 2011-15, Alexander Holupirek <alex@holupirek.de>
 License: BSD-3-clause
 
 License: BSD-3-clause
- Copyright (c) 2005-13, BaseX Team <info@basex.org>
+ Copyright (c) 2005-15, BaseX Team <info@basex.org>
  All rights reserved.
  . 
  Redistribution and use in source and binary forms, with or without
