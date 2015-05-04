@@ -189,16 +189,13 @@ sub exe {
   my $cc = "<classPath>\n".
     "    <mainClass>$main</mainClass>\n";
   foreach my $file(glob("../basex/basex-core/lib/*")) {
-    $file =~ s|.*/|lib/|;
+    $file =~ s|.*/|%EXEDIR%/lib/|;
     $cc .= "    <cp>$file</cp>\n";
   }
   foreach my $file(glob("../basex/basex-api/lib/*")) {
-    $file =~ s|.*/|lib/|;
+    $file =~ s|.*/|%EXEDIR%/lib/|;
     $cc .= "    <cp>$file</cp>\n";
   }
-  # add basex-api to find additional libraries
-  #$cc .= "    <cp>lib/basex-api.jar</cp>\n";
-  #$cc .= "    <cp>lib/basex.jar</cp>\n";
   $cc .= "  </classPath>";
 
   # prepare launch script

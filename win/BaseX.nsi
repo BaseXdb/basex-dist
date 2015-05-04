@@ -123,10 +123,10 @@ Function OptionsLeave
   ${RefreshShellIcons}
 FunctionEnd
 
-; Language files
-!insertmacro MUI_LANGUAGE "English"
 ; Uninstaller pages
 !insertmacro MUI_UNPAGE_INSTFILES
+; Language files
+!insertmacro MUI_LANGUAGE "English"
 
 ; MUI end ------
 
