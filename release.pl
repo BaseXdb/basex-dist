@@ -1,5 +1,5 @@
 # Creates all files for a new release.
-# 
+#
 # (C) BaseX Team 2005-12, BSD License
 
 use warnings;
@@ -9,7 +9,7 @@ use File::Copy;
 use File::Path;
 use Archive::Zip qw( :ERROR_CODES :CONSTANTS );
 use File::Copy::Recursive qw(rcopy);
- 
+
 # path to main class
 my $main = "org.basex.BaseXGUI";
 
@@ -27,8 +27,6 @@ my $full = "";
 prepare();
 # create zip file
 zip();
-# create app.zip file
-#app();
 # create installer
 exe();
 # create war file
@@ -51,8 +49,8 @@ sub prepare {
 
   # create artifacts
   artifacts();
-  copy("../basex/basex-core/target/basex-$version.jar", "release/basex.jar");
-  copy("../basex/basex-api/target/basex-api-$version.jar", "release/basex-api.jar");
+  copy("../basex/basex-core/target/basex-$version.jar", "release/BaseX.jar");
+  copy("../basex/basex-api/target/basex-api-$version.jar", "release/basex-api-$version.jar");
 
   # prepare start scripts
   mkdir "release/bin";
@@ -124,7 +122,7 @@ sub zip {
   my $source = "release/";
   my $target = "release/basex";
   mkdir "$source/basex";
-  rcopy("$source/basex.jar", "$target/BaseX.jar");
+  rcopy("$source/BaseX.jar", "$target/BaseX.jar");
   rcopy("../basex/LICENSE", $target);
   rcopy("../basex/CHANGELOG", $target);
   rcopy("readme.txt", $target);
@@ -142,7 +140,7 @@ sub zip {
   ) {
     rcopy($file, "$target/lib") if $file !~ m|/lib/basex-$version|;
   }
-  rcopy("$source/basex-api.jar", "$target/lib/basex-api.jar");
+  rcopy("$source/basex-api-$version.jar", "$target/lib/basex-api-$version.jar");
   mkdir "$target/repo";
   mkdir "$target/webapp/";
   rcopy("$source/webapp/", "$target/webapp");
@@ -183,22 +181,6 @@ sub war {
   move("../basex/basex-api/target/basex-api-$version.war", "release/basex.war");
 }
 
-# creates the app archive
-sub app {
-  print "* Create APP file\n";
-
-  # create WAR file
-  system("cd mac && ant");
-
-  my $zip = Archive::Zip->new();
-  $zip->addTree("mac/dist", "");
-
-  # save the zip file
-  unless ($zip->writeToFileNamed("release/BaseX.app.zip") == AZ_OK ) {
-    die "Could not write APP file.";
-  }
-}
-
 # creates the installer
 sub exe {
   print "* Create EXE file\n";
@@ -211,12 +193,12 @@ sub exe {
     $cc .= "    <cp>$file</cp>\n";
   }
   foreach my $file(glob("../basex/basex-api/lib/*")) {
-    next if $file =~ /basex-\d/;
     $file =~ s|.*/|lib/|;
     $cc .= "    <cp>$file</cp>\n";
   }
   # add basex-api to find additional libraries
-  $cc .= "    <cp>lib/basex-api.jar</cp>\n";
+  #$cc .= "    <cp>lib/basex-api.jar</cp>\n";
+  #$cc .= "    <cp>lib/basex.jar</cp>\n";
   $cc .= "  </classPath>";
 
   # prepare launch script
@@ -284,10 +266,10 @@ sub finish {
   (my $v = $version) =~ s/\.//g;
   move("release/BaseX.app.zip", "release/BaseX$v.app.zip");
   move("release/BaseX.zip", "release/BaseX$v.zip");
-  move("release/basex.jar", "release/BaseX$v.jar");
+  move("release/BaseX.jar", "release/BaseX$v.jar");
   move("release/basex.war", "release/BaseX$v.war");
   move("release/BaseX.exe", "release/BaseX$v.exe");
-  unlink("release/basex-api.jar");
+  unlink("release/basex-api-$version.jar");
   rmtree("release/basex");
   rmtree("release/bin");
   rmtree("release/webapp");

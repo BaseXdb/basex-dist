@@ -1,7 +1,6 @@
 <launch4jConfig>
-  <dontWrapJar>false</dontWrapJar>
+  <dontWrapJar>true</dontWrapJar>
   <headerType>gui</headerType>
-  <jar>BaseX.jar</jar>
   <outfile>BaseX.exe</outfile>
   <errTitle></errTitle>
   <cmdLine></cmdLine>
@@ -14,9 +13,14 @@
   <manifest></manifest>
   <icon>../images/BaseX.ico</icon>
   $classpath
+  <!-- Problem: arguments cannot be passed to running instance
+  <singleInstance>
+    <mutexName>BaseX</mutexName>
+  </singleInstance>
+  -->
   <jre>
     <path></path>
-    <minVersion>1.6.0</minVersion>
+    <minVersion>1.7.0</minVersion>
     <maxVersion></maxVersion>
     <jdkPreference>preferJre</jdkPreference>
     <maxHeapSize>512</maxHeapSize>
@@ -24,8 +28,8 @@
   <versionInfo>
     <fileVersion>$full</fileVersion>
     <txtFileVersion>BaseX $version</txtFileVersion>
-    <fileDescription>XML Database and XPath/XQuery 3.0 Processor</fileDescription>
-    <copyright>(c) BaseX Team, 2013</copyright>
+    <fileDescription>XML Database and XPath/XQuery 3.1 Processor</fileDescription>
+    <copyright>(c) BaseX Team, 2015</copyright>
     <productVersion>$full</productVersion>
     <txtProductVersion>BaseX $version</txtProductVersion>
     <productName>BaseX</productName>
