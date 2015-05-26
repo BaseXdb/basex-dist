@@ -142,6 +142,7 @@ Section "Hauptgruppe" SEC01
   SetOverwrite ifnewer
   Delete "basex.jar"
   File "..\release\BaseX.exe"
+  File "..\release\BaseX.jar"
   File "..\..\basex\LICENSE"
   File "..\..\basex\CHANGELOG"
   File "..\readme.txt"
@@ -163,7 +164,8 @@ Section "Hauptgruppe" SEC01
   SetOutPath "$INSTDIR\lib"
   File "..\release\basex-api-*.jar"
   File "..\lib\*"
-  File "..\..\basex\basex-api\lib\*"
+; exclude main jar, add xqj
+  File /x basex-*.jar "..\..\basex\basex-api\lib\*"
   File "..\..\basex\basex-api\lib\basex-xqj*.*"
   File "..\..\basex\basex-core\lib\*"
   CreateDirectory "$INSTDIR\repo"

@@ -196,6 +196,7 @@ sub exe {
     $file =~ s|.*/|%EXEDIR%/lib/|;
     $cc .= "    <cp>$file</cp>\n";
   }
+	$cc .= "    <cp>BaseX.jar</cp>\n";
   $cc .= "  </classPath>";
 
   # prepare launch script
