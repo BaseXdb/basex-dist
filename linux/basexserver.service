@@ -1,0 +1,13 @@
+[Unit]
+Description=BaseX database server
+
+[Service]
+User=basex
+Group=basex
+WorkingDirectory=/var/basex
+ProtectSystem=full
+ExecStart=/usr/bin/basexserver
+ExecStop=/usr/bin/basexserver stop
+
+[Install]
+WantedBy=multi-user.target
