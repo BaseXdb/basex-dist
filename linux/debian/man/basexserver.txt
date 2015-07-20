@@ -2,7 +2,7 @@ NAME
   basexserver - XML database system and XPath/XQuery processor (server mode)
 
 SYNOPSIS
-  basexserver [-cdeipSz] [stop]
+  basexserver [-cdinpSz] [stop]
 
 DESCRIPTION
   basexserver starts the server mode of the native XML database system basex(1) on default port 1984.

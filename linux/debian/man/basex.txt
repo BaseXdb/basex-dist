@@ -2,7 +2,7 @@ NAME
   basex - XML database system and XPath/XQuery processor (command line mode)
 
 SYNOPSIS
-  basex [-qbcdiLosuvVwxz] [input]
+  basex [-bcdiIoqrRstuvVwxXz] [input]
 
 DESCRIPTION
   basex is a fast and powerful, yet light-weight and platform independent XML
@@ -29,7 +29,7 @@ EXAMPLES
 
    $ basex 19+23
    42
-   $ basex \-Lq "<answer>{ 23+19 }</answer>"
+   $ basex -q "<answer>{ 23+19 }</answer>"
    <answer>42</answer>
 
   * Import an XML file into database, output its content (query its root) and be verbose:
@@ -75,12 +75,12 @@ EXAMPLES
 
   * XPath evaluation (with existing database):
 
-    $ basex \-Lc "OPEN input; XQUERY //li[1]"
+    $ basex \-c "OPEN input; XQUERY //li[1]"
     <li>Exercise 1</li>
 
   * Retrieve XML from the web and perform XPath query: 
 
-    $ basex \-Lq "doc('http://files.basex.org/examples/input.xml')//li"
+    $ basex \-q "doc('http://files.basex.org/examples/input.xml')//li"
     <li>Exercise 1</li>
     <li>Exercise 2</li>
 
@@ -112,7 +112,7 @@ EXAMPLES
 
   * Open an input xml file, execute a query and write result into file:
 
-    $ basex \-Li /usr/share/doc/basex/examples/input.xml \-q //div \-o out.xml
+    $ basex \-i /usr/share/doc/basex/examples/input.xml \-q //div \-o out.xml
     $ cat out.xml
     <div align="right">
       <b>Assignments</b>
@@ -124,7 +124,7 @@ EXAMPLES
    
   * Query an already existing database called 'input'. If a file named 'input' exists in current working directory it takes precedence:
 
-    $ basex \-Li input \-q //div
+    $ basex \-i input \-q //div
     <div align="right">
       <b>Assignments</b>
       <ul>
@@ -135,7 +135,7 @@ EXAMPLES
 
   * Let basex process query input from standard in:
 
-   $ echo '19+23' | basex \-Lq\-
+   $ echo '19+23' | basex \-q\-
    42
 
   * Execute commands from script file:
@@ -144,7 +144,7 @@ EXAMPLES
    create db debian <debian_db/>
    xquery /
    list
-   $ basex \-LC commands.txt | grep debian
+   $ basex \-C commands.txt | grep debian
    <debian_db/>
    debian              1          4639       debian.xml
 
