@@ -46,7 +46,6 @@ basex (8.2.3-1) unstable; urgency=medium
      - event handling (will be replaced by database triggers)
 
   * Packaging:
-    - Removed Java 7 lintian override.
     - Added jing as recommended package. Updated startup scripts accordingly.
 
  -- Alexander Holupirek <alex@holupirek.de>  Fri, 17 Jul 2015 09:03:33 +0200

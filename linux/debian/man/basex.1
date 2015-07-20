@@ -45,7 +45,7 @@ XQuery evaluation (no database, no interaction, script mode):
 .fam C
    $ basex 19+23
    42
-   $ basex -q "<answer>{ 23+19 }</answer>"
+   $ basex \-q "<answer>{ 23+19 }</answer>"
    <answer>42</answer>
 
 .fam T
@@ -237,7 +237,7 @@ Parse non well-formed HTML (needs libtagsoup-java installed):
 
    Alternative:
 
-   $ basex -q 'declare option db:parser "html"; doc("bad.html")' 
+   $ basex \-q 'declare option db:parser "html"; doc("bad.html")' 
    <html xmlns="http://www.w3.org/1999/xhtml">
      <body>
        <ul>
