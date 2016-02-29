@@ -67,7 +67,12 @@ sub prepare {
     while(my $l = <$in>) {
       # replace "target/classes"
       $l =~ s|target/classes|BaseX.jar|;
-      next if $l =~ m|/\.\./basex-core|;
+      # remove references to basex-core project
+      if($l =~ m|/\.\./basex-core|) {
+        # windows scripts: remove classpath extension in next line
+        $l = <$in> if $f =~ /.bat$/;
+        next;
+      }
       print $out $l;
     }
     close($in);
@@ -196,7 +201,7 @@ sub exe {
     $file =~ s|.*/|%EXEDIR%/lib/|;
     $cc .= "    <cp>$file</cp>\n";
   }
-	$cc .= "    <cp>BaseX.jar</cp>\n";
+  $cc .= "    <cp>BaseX.jar</cp>\n";
   $cc .= "  </classPath>";
 
   # prepare launch script
