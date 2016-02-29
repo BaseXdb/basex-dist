@@ -2,7 +2,7 @@ NAME
   basexclient - XML database system and XPath/XQuery processor (client mode)
 
 SYNOPSIS
-  basexclient [-bcdiLnopPsUvVwxz] [query] 
+  basexclient [-bcdiInopPqrRsUvVwxXz] [input]
 
 DESCRIPTION
   basexclient starts a basex(1) XML database client in order to connect to a

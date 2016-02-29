@@ -1,2 +1,2 @@
 version=3
-http://githubredir.debian.net/github/BaseXdb/basex/ (.*).tar.gz
+https://github.com/BaseXdb/basex/releases /BaseXdb/basex/archive/(\d[\d\.]*)\.tar\.gz
