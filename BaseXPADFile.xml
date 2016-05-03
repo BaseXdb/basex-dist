@@ -49,7 +49,7 @@
 		<Program_Change_Info />
 		<Program_Specific_Category>Business</Program_Specific_Category>
 		<Program_Category_Class>Business::Databases &amp; Tools</Program_Category_Class>
-		<Program_System_Requirements>Java 6 or later</Program_System_Requirements>
+		<Program_System_Requirements>Java 7 or later</Program_System_Requirements>
 		<File_Info>
 			<File_Size_Bytes>$bytes</File_Size_Bytes>
 			<File_Size_K>$kb</File_Size_K>
