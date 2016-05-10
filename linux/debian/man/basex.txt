@@ -13,9 +13,7 @@ OPTIONS
 
     $ basex \-h
 
-  or by browsing http://docs.basex.org/wiki/Startup_Options#BaseX_Standalone
-
-  Note: -q (provide query as string) is currently missing in the official documentation
+  or by browsing http://docs.basex.org/wiki/Command-Line_Options#Standalone
 
 DATABASE COMMANDS
   A list of supported Database commands can be obtained from

@@ -12,7 +12,7 @@ OPTIONS
 
     $ basexserver \-h
 
-  or by browsing http://docs.basex.org/wiki/Startup_Options#BaseX_Server
+  or by browsing http://docs.basex.org/wiki/Command-Line_Options#HTTP_Server
 
 USER MANAGEMENT
   On first startup a user 'admin' with default password 'admin' exists (make sure to change this)!

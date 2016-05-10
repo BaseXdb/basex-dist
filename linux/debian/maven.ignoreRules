@@ -1,6 +1,7 @@
 
 org.basex basex-api jar * * *
 com.thaiopensource jing * * * *
+jline jline * * * *
 jp.sourceforge.igo igo * * * *
 junit junit * * * *
 org.apache lucene-stemmers * * * *

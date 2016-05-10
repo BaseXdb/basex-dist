@@ -4,6 +4,13 @@ NAME
 SYNOPSIS
   basexclient [-bcdiInopPqrRsUvVwxXz] [input]
 
+OPTIONS
+  A short description of option can be obtained from
+
+    $ basexclient \-h
+
+  or by browsing http://docs.basex.org/wiki/Command-Line_Options#Client
+
 DESCRIPTION
   basexclient starts a basex(1) XML database client in order to connect to a
   running instance of basexserver(1).

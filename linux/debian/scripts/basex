@@ -1,7 +1,7 @@
 #!/bin/sh
 # Wrapper to start basex in command line mode.
 #
-# (c) 2011-15 Alexander Holupirek <alex@holupirek.de>, BSD
+# (c) 2011-16 Alexander Holupirek <alex@holupirek.de>, BSD
 #
 
 #DEBUG_WRAPPER=1
@@ -9,12 +9,11 @@
 . /usr/lib/java-wrappers/java-wrappers.sh
 find_java_runtime java7
 find_jars /usr/share/java/basex.jar
-# Next jars are helpful (and therefore recommended by the package),
-# but they are not necessary at all to run basex. As such, there is no
-# need to print a warning message, if they are not found
-find_jars /usr/share/java/tagsoup.jar 2>/dev/null 
-find_jars /usr/share/java/jline.jar 2>/dev/null
-find_jars /usr/share/java/xml-resolver.jar 2>/dev/null 
-find_jars /usr/share/java/jing.jar 2>/dev/null
+# Recommended
+find_jars /usr/share/java/jline2.jar
+# Suggested
+find_jars /usr/share/java/tagsoup.jar
+find_jars /usr/share/java/xml-resolver.jar
+find_jars /usr/share/java/jing.jar
 
 run_java org.basex.BaseX "$@"

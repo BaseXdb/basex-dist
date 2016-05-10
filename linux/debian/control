@@ -12,8 +12,8 @@ Homepage: http://basex.org
 Package: basex
 Architecture: all
 Depends: ${misc:Depends}, ${maven:Depends}, java-wrappers, default-jre | java7-runtime
-Recommends: ${maven:OptionalDepends}
-Suggests: libtagsoup-java, libxml-commons-resolver1.1-java, libjline2-java, libjing-java
+Recommends: ${maven:OptionalDepends}, libjline2-java
+Suggests: libtagsoup-java, libxml-commons-resolver1.1-java, libjing-java
 Description: XML database and XPath/XQuery processor
  BaseX is a very fast and light-weight, yet powerful XML database and
  XPath/XQuery processor, including support for the latest W3C Full Text and

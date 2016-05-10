@@ -2,7 +2,14 @@ NAME
   basexgui - XML database system and XPath/XQuery processor (graphical mode)
 
 SYNOPSIS
-  basexgui [file]
+  basexgui [-d] [file]
+
+OPTIONS
+  A short description of option can be obtained from
+
+    $ basexgui \-h
+
+  or by browsing http://docs.basex.org/wiki/Command-Line_Options#GUI
 
 DESCRIPTION
   basexgui starts a standalone locally running instance of the BaseX database system.

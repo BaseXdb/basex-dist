@@ -1,3 +1,4 @@
 
 org.basex basex-parent pom s/7\..*/7.x/ * *
 org.basex basex jar s/7\..*/7.x/ * *
+org.eclipse.jetty jetty-* * s/.*/9.x/ * *

@@ -1,5 +1,7 @@
 ==================================================== BASEX ON DEBIAN ====
 
+# apt-get install devscripts
+
 -------------------------------------------------------------------------
 Update Debian/Ubuntu package to a new version:
 -------------------------------------------------------------------------
@@ -20,7 +22,7 @@ basex: Successfully downloaded updated package 7.7.2.tar.gz
     and symlinked basex_7.7.2.orig.tar.gz to it
 $ ls ../
 7.7.2.tar.gz  basex-7.6  basex_7.6-1.debian.tar.gz  basex_7.6-1.dsc  basex_7.6.orig.tar.gz  basex_7.7.2.orig.tar.gz
-$ uupdate -v 7.7.2 ../basex_7.7.2.orig.tar.gz 
+$ uupdate -v 7.7.2 ../basex_7.7.2.orig.tar.gz
 New Release will be 7.7.2-1.
 -- Untarring the new sourcecode archive ../basex_7.7.2.orig.tar.gz
 Unpacking the debian/ directory from version 7.6-1 worked fine.
@@ -41,15 +43,18 @@ $ cd ../basex-7.7.2
 -------------------------------------------------------------------------
 
 * Debuild: Build package w/o signing source and changes
-  - /etc/devscripts.conf needs to be configured 
+  - /etc/devscripts.conf needs to be configured
   http://www.debian.org/doc/maint-guide/build.en.html#completebuild
+  - the build-essential package,
+  - packages listed in the Build-Depends field (see Section 4.1, “control”), and
+  - packages listed in the Build-Depends-indep field (see Section 4.1, “control”).
  $ dpkg-buildpackage -us -uc -rfakeroot
 
 * Quick check generated files
  $ tree debian/basex
 
 * Lintian check
- $ lintian -i -I --show-overrides --pedantic ../basex_7.7.2-1_all.deb 
+ $ lintian -i -I --show-overrides --pedantic ../basex_7.7.2-1_all.deb
 
 * Clean build
  $ fakeroot ./debian/rules clean
@@ -79,7 +84,7 @@ $ cd ../basex-7.7.2
   $ fakeroot ./debian/rules clean
   $ cd ~/code/basex-dist
   $ git pull
-  $ rm -rf ~/basex-dist/linux/debian/ 
+  $ rm -rf ~/code/basex-dist/linux/debian/
   $ cp -r ~/build/basex-X.X/debian/ ~/basex-dist/linux/
   $ git commit -am 'Updated debian packaging to X.X'
   $ git push origin master
@@ -104,11 +109,11 @@ $ cd ../basex-7.7.2
 
   - Perform mentors upload
   $ dput mentors ../basex_7.0.1-1_i386.changes
-  
+
   - Verify upload
   $ vim ../basex_6.7-1_i386.upload
 
-  - Wait for e-mail to arrive, then check 
+  - Wait for e-mail to arrive, then check
   http://mentors.debian.net/debian/pool/main/b/basex
 
 - Upload to phobos103.inf.uni-konstanz.de
@@ -128,7 +133,7 @@ $ cd ../basex-7.7.2
     release_origin = BaseX
     release_label = BaseX
     release_description = Unofficial Debian BaseX packages maintained by Alexander Holupirek
-  
+
     [unstable]
     release_suite = unstable
     ----- 8< ------
@@ -146,13 +151,13 @@ $ cd ../basex-7.7.2
 
    - Upload
    $ dput phobos103 ../basex_7.0.1-1_i386.changes
-   
+
    - Sign Release
    $ cd /var/www/debian
    $ gpg --detach-sign -o Release.gpg unstable/Release
 
 * Sync it to files.basex.org
-   $ scp Release.gpg basex-web:~/files/debian 
+   $ scp Release.gpg basex-web:~/files/debian
    $ scp -r unstable basex-web:~/files/debian/
    $ ssh basex-web
    $ cd files/debian
@@ -162,7 +167,7 @@ $ cd ../basex-7.7.2
 * People can update their /etc/apt/sources.list
 
    deb     http://phobos103.inf.uni-konstanz.de/debian unstable/
-   deb-src http://phobos103.inf.uni-konstanz.de/debian unstable/ 
+   deb-src http://phobos103.inf.uni-konstanz.de/debian unstable/
 
    deb     http://files.basex.org/debian unstable/
    deb-src http://files.basex.org/debian unstable/
@@ -219,7 +224,7 @@ http://www.debian.org/doc/maint-guide/update.en.html#newupstream
   $ git push --tags
 
 * Tag a previous commit (if we forgot it during release)
-  
+
   $ git tag -a 7.1 7165a07
 
 * Modify tag message
@@ -232,7 +237,7 @@ http://www.debian.org/doc/maint-guide/update.en.html#newupstream
   Deleted tag 'help' (was 961dfe0)
   $ git push origin :7.1
   To git@github.com:BaseXdb/basex.git
-  - [deleted]     7.1 
+  - [deleted]     7.1
 
 * Check tags
 
@@ -245,7 +250,7 @@ $ mkdir new && cd new
 
 * Get tagged code from github (download)
   $ wget https://github.com/BaseXdb/basex/tarball/7.1
-  $ tar xvzf 7.1 
+  $ tar xvzf 7.1
   $ mv BaseXdb-basex-fa64da8/ basex
   $ tar cvzf basex.tar.gz basex/
 
@@ -263,9 +268,9 @@ $ mh_make
 > ignore deploy plugin
 > ignore wagon plugin
 
-$ ./debian/rules get-orig-source 
+$ ./debian/rules get-orig-source
 	Prerequisite:
-	$ scp ../BaseXdb-basex-7.0-0-gff26ab6.tar.gz basex:~/files/releases/7.0/BaseX-source-7.0.tar.gz 
+	$ scp ../BaseXdb-basex-7.0-0-gff26ab6.tar.gz basex:~/files/releases/7.0/BaseX-source-7.0.tar.gz
 
 * Copy additional files to debian/ (we should place those on github and nothing else TODO)
 
@@ -285,7 +290,7 @@ scripts/
 
 changelog (and update using $ dch)
 
-* Merge old with new 
+* Merge old with new
 
 control
 copyright
@@ -296,6 +301,6 @@ copyright
 	$ config-edit -application dpkg-copyright -ui none
 README.source
 
-$ dpkg-buildpackage 
+$ dpkg-buildpackage
 -------------------------------------------------------------------------
 
