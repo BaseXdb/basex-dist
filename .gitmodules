@@ -1,0 +1,3 @@
+[submodule "basex"]
+	path = basex
+	url = https://github.com/BaseXdb/basex.git
