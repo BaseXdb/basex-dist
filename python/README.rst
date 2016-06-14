@@ -10,27 +10,139 @@ The Python Client provides access to the BaseX features from within python. This
 Creating a new database
 -----------------------
 
-.. include:: ../basex/basex-api/src/main/python/CreateExample.py
-   :code: python
-   :number-lines:
+.. code:: python
+
+    # -*- coding: utf-8 -*-
+    # This example shows how new databases can be created.
+    #
+    # Documentation: http://docs.basex.org/wiki/Clients
+    #
+    # (C) BaseX Team 2005-12, BSD License
+
+    import BaseXClient
+
+    # create session
+    session = BaseXClient.Session('localhost', 1984, 'admin', 'admin')
+
+    try:
+        # create new database
+        session.create("database", "<x>Hello World!</x>")
+        print(session.info())
+
+        # run query on database
+        print("\n" + session.execute("xquery doc('database')"))
+
+        # drop database
+        session.execute("drop db database")
+        print(session.info())
+
+    finally:
+        # close session
+        if session:
+            session.close()
+
+
 
 Query Example
 -------------
 
-.. include:: ../basex/basex-api/src/main/python/QueryExample.py
-   :code: python
-   :number-lines:
+.. code:: python
+
+    # -*- coding: utf-8 -*-
+    # This example shows how queries can be executed in an iterative manner.
+    # Iterative evaluation will be slower, as more server requests are performed.
+    #
+    # Documentation: http://docs.basex.org/wiki/Clients
+    #
+    # (C) BaseX Team 2005-12, BSD License
+
+    import BaseXClient
+
+    # create session
+    session = BaseXClient.Session('localhost', 1984, 'admin', 'admin')
+
+    try:
+        # create query instance
+        input = "for $i in 1 to 10 return <xml>Text { $i }</xml>"
+        query = session.query(input)
+
+        # loop through all results
+        for typecode, item in query.iter():
+            print("typecode=%d" % typecode)
+            print("item=%s" % item)
+
+        # close query object
+        query.close()
+
+    finally:
+        # close session
+        if session:
+            session.close()
 
 Add Example
 -----------
 
-.. include:: ../basex/basex-api/src/main/python/AddExample.py
-   :code: python
-   :number-lines:
+.. code:: python
+
+    # -*- coding: utf-8 -*-
+    # This example shows how new databases can be created.
+    #
+    # Documentation: http://docs.basex.org/wiki/Clients
+    #
+    # (C) BaseX Team 2005-12, BSD License
+
+    import BaseXClient
+
+    # create session
+    session = BaseXClient.Session('localhost', 1984, 'admin', 'admin')
+
+    try:
+        # create new database
+        session.create("database", "<x>Hello World!</x>")
+        print(session.info())
+
+        # run query on database
+        print("\n" + session.execute("xquery doc('database')"))
+
+        # drop database
+        session.execute("drop db database")
+        print(session.info())
+
+    finally:
+        # close session
+        if session:
+            session.close()
 
 Query Bind Example
 ------------------
 
-.. include:: ../basex/basex-api/src/main/python/QueryBindExample.py
-   :code: python
-   :number-lines:
+.. code:: python
+
+    # -*- coding: utf-8 -*-
+    # This example shows how new databases can be created.
+    #
+    # Documentation: http://docs.basex.org/wiki/Clients
+    #
+    # (C) BaseX Team 2005-12, BSD License
+
+    import BaseXClient
+
+    # create session
+    session = BaseXClient.Session('localhost', 1984, 'admin', 'admin')
+
+    try:
+        # create new database
+        session.create("database", "<x>Hello World!</x>")
+        print(session.info())
+
+        # run query on database
+        print("\n" + session.execute("xquery doc('database')"))
+
+        # drop database
+        session.execute("drop db database")
+        print(session.info())
+
+    finally:
+        # close session
+        if session:
+            session.close()
