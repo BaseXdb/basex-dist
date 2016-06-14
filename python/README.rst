@@ -11,18 +11,26 @@ Creating a new database
 -----------------------
 
 .. include:: ../basex/basex-api/src/main/python/CreateExample.py
+   :code: python
+   :number-lines:
 
 Query Example
 -------------
 
 .. include:: ../basex/basex-api/src/main/python/QueryExample.py
+   :code: python
+   :number-lines:
 
 Add Example
 -----------
 
 .. include:: ../basex/basex-api/src/main/python/AddExample.py
+   :code: python
+   :number-lines:
 
 Query Bind Example
 ------------------
 
 .. include:: ../basex/basex-api/src/main/python/QueryBindExample.py
+   :code: python
+   :number-lines:
