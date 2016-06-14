@@ -4,6 +4,7 @@
 *.DS_Store
 *.swp
 *.out
+*.pyc
 
 # Java classfiles
 *.class
@@ -12,3 +13,7 @@
 /release
 
 /mac/dist/BaseX.app/
+
+/python/dist
+/python/build
+/python/*.egg-info/
