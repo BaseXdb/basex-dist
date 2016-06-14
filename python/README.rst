@@ -1,24 +1,28 @@
-A sample Python project
-=======================
+A Python Client API for BaseX
+=============================
 
-A sample project that exists as an aid to the `Python Packaging User Guide
-<https://packaging.python.org>`_'s `Tutorial on Packaging and Distributing
-Projects <https://packaging.python.org/en/latest/distributing.html>`_.
+BaseX is a light-weight, high-performance and scalable XML Database engine and XPath/XQuery 3.1 Processor, which includes full support for the W3C Update and Full Text extensions. An interactive and user-friendly GUI frontend gives you great insight into your XML documents.
 
-This projects does not aim to cover best practices for Python project
-development as a whole. For example, it does not provide guidance or tool
-recommendations for version control, documentation, or testing.
+The Python Client provides access to the BaseX features from within python. This enables records to be read and written from/to BaseX. Full support for FLOWR is provided as well as DB admin features.
 
 ----
 
-This is the README file for the project.
+Creating a new database
+-----------------------
 
-The file should use UTF-8 encoding and be written using ReStructured Text. It
-will be used to generate the project webpage on PyPI and will be displayed as
-the project homepage on common code-hosting services, and should be written for
-that purpose.
+.. include:: ../basex/basex-api/src/main/python/CreateExample.py
 
-Typical contents for this file would include an overview of the project, basic
-usage examples, etc. Generally, including the project changelog in here is not
-a good idea, although a simple "What's New" section for the most recent version
-may be appropriate.
+Query Example
+-------------
+
+.. include:: ../basex/basex-api/src/main/python/QueryExample.py
+
+Add Example
+-----------
+
+.. include:: ../basex/basex-api/src/main/python/AddExample.py
+
+Query Bind Example
+------------------
+
+.. include:: ../basex/basex-api/src/main/python/QueryBindExample.py

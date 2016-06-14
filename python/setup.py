@@ -29,11 +29,11 @@ setup(
     long_description=long_description,
 
     # The project's main homepage.
-    url='https://github.com/pypa/sampleproject',
+    url='http://basex.org',
 
     # Author details
     author='Ben Greene',
-    author_email='BenJGreene+basex@gmail.com,
+    author_email='BenJGreene+basex@gmail.com',
 
     # Choose your license
     license='MIT',
