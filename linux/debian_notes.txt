@@ -85,7 +85,7 @@ $ cd ../basex-7.7.2
   $ cd ~/code/basex-dist
   $ git pull
   $ rm -rf ~/code/basex-dist/linux/debian/
-  $ cp -r ~/build/basex-X.X/debian/ ~/basex-dist/linux/
+  $ cp -r ~/build/basex-X.X/debian/ ~/code/basex-dist/linux/
   $ git commit -am 'Updated debian packaging to X.X'
   $ git push origin master
 
