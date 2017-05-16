@@ -168,6 +168,7 @@ Section "Hauptgruppe" SEC01
   File /x basex-*.jar "..\..\basex\basex-api\lib\*"
   File "..\..\basex\basex-api\lib\basex-xqj*.*"
   File "..\..\basex\basex-core\lib\*"
+  CreateDirectory "$INSTDIR\lib\custom"
   CreateDirectory "$INSTDIR\repo"
   CreateDirectory "$INSTDIR\webapp"
   SetOutPath "$INSTDIR\webapp"

@@ -66,13 +66,10 @@ sub prepare {
     binmode $out;
     while(my $l = <$in>) {
       # replace "target/classes"
+      next if $l =~ m|^CORE=|;
       $l =~ s|target/classes|BaseX.jar|;
-      # remove references to basex-core project
-      if($l =~ m|/\.\./basex-core|) {
-        # windows scripts: remove classpath extension in next line
-        $l = <$in> if $f =~ /.bat$/;
-        next;
-      }
+      $l =~ s|;%MAIN%/\.\./basex-core/lib/\*||;
+      $l =~ s|:\$CORE/lib/\*||;
       print $out $l;
     }
     close($in);
@@ -97,7 +94,7 @@ sub artifacts {
   print "* Create BaseX artifacts\n";
   rmtree("../basex/basex-core/lib/");
   rmtree("../basex/basex-api/lib/");
-  system("cd ../basex && mvn install -q -DskipTests");
+  system('cd ../basex && set "JAVA_HOME=c:/Program Files/Java/jdk7/" && mvn install -q -DskipTests');
 }
 
 # gets version from pom file
@@ -145,6 +142,7 @@ sub zip {
   ) {
     rcopy($file, "$target/lib") if $file !~ m|/lib/basex-$version|;
   }
+  mkdir "$target/lib/custom";
   rcopy("$source/basex-api-$version.jar", "$target/lib/basex-api-$version.jar");
   mkdir "$target/repo";
   mkdir "$target/webapp/";
@@ -182,7 +180,7 @@ sub war {
   print "* Create WAR file\n";
 
   # create WAR file
-  system("cd ../basex/basex-api && mvn compile war:war");
+  system("cd ../basex/basex-api && mvn war:war");
   move("../basex/basex-api/target/basex-api-$version.war", "release/basex.war");
 }
 
