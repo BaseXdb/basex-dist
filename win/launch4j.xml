@@ -20,16 +20,16 @@
   -->
   <jre>
     <path></path>
-    <minVersion>1.7.0</minVersion>
+    <minVersion>1.8.0</minVersion>
     <maxVersion></maxVersion>
     <jdkPreference>preferJre</jdkPreference>
-    <maxHeapSize>512</maxHeapSize>
+    <maxHeapSize>1400</maxHeapSize>
   </jre>
   <versionInfo>
     <fileVersion>$full</fileVersion>
     <txtFileVersion>BaseX $version</txtFileVersion>
     <fileDescription>XML Database and XPath/XQuery 3.1 Processor</fileDescription>
-    <copyright>(c) BaseX Team, 2015</copyright>
+    <copyright>(c) BaseX Team, 2017</copyright>
     <productVersion>$full</productVersion>
     <txtProductVersion>BaseX $version</txtProductVersion>
     <productName>BaseX</productName>

@@ -94,7 +94,7 @@ sub artifacts {
   print "* Create BaseX artifacts\n";
   rmtree("../basex/basex-core/lib/");
   rmtree("../basex/basex-api/lib/");
-  system('cd ../basex && set "JAVA_HOME=c:/Program Files/Java/jdk7/" && mvn install -q -DskipTests');
+  system('cd ../basex && set "JAVA_HOME=c:/Program Files/Java/jdk8/" && mvn install -q -DskipTests');
 }
 
 # gets version from pom file
