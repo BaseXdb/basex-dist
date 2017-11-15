@@ -23,7 +23,7 @@
     <minVersion>1.8.0</minVersion>
     <maxVersion></maxVersion>
     <jdkPreference>preferJre</jdkPreference>
-    <maxHeapSize>1400</maxHeapSize>
+    <maxHeapSize>1200</maxHeapSize>
   </jre>
   <versionInfo>
     <fileVersion>$full</fileVersion>
