@@ -1,0 +1,86 @@
+===================================================================================================
+Update homebrew recipe of BaseX
+https://brew.sh/
+===================================================================================================
+
+# Bump stable or latest version:
+
+## Check
+
+  $ brew update
+  $ brew upgrade
+  $ brew info basex
+
+## Produce update info
+
+  $ cd /Users/holu/workbench/open-source/basex-homebrew
+  ### For latest
+  $ ./homebrew-basex.sh
+  ### For stable version
+  $ ./homebrew-basex.sh 8.6.7
+
+
+## Edit
+
+  $ brew edit basex
+  or
+  $ vim /usr/local/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/basex.rb
+
+
+## Commit
+
+  $ cd /usr/local/Homebrew/Library/Taps/homebrew/homebrew-core/
+  $ git commit -am 'basex-devel: 9.0-rc20171222.150150'
+  or
+  $ git commit -am 'basex: 8.6.7'
+  $ git push holu master
+
+
+## PR
+
+https://github.com/holu/homebrew-core
+
+===================================================================================================
+
+# Bump stable version (alternative):
+
+```
+$ brew bump-formula-pr --dry-run --strict --url=http://files.basex.org/releases/8.6.6/BaseX866.zip --sha265=8b1f50dab764a3d1d9e7aff8895270c88aba20e0 --version=8.6.6 basex
+==> Downloading http://files.basex.org/releases/8.6.6/BaseX866.zip
+Already downloaded: /Users/holu/Library/Caches/Homebrew/basex-8.6.6.zip
+==> brew update
+==> replace "http://files.basex.org/releases/8.6.5/BaseX865.zip" with "http://files.basex.org/releases/8.6.6/BaseX866.zip"
+==> replace "da6668646646f58640fde0e54d2296a3f10d2c75361f3ef540bb80c71fe1709b" with "a41a6cc365741b8ee796ad22ce4acbe9f319059c5bca08fd094a351db9369acf"
+==> replace "8.6.5" with "8.6.6"
+==> brew audit --strict basex.rb
+==> git checkout --no-track -b basex-8.6.6 origin/master
+==> git commit --no-edit --verbose --message='basex 8.6.6' -- /usr/local/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/basex.rb
+==> hub fork # read $HUB_REMOTE
+==> git push --set-upstream $HUB_REMOTE basex-8.6.6:basex-8.6.6
+==> hub pull-request --browse -m 'basex 8.6.6'
+==> git checkout -
+```
+
+===================================================================================================
+
+# Random notes
+
+```
+$ shasum -a 256 BaseX867-20170824.195627.zip 
+290dd9d0917318e4971b5d412986b7272b042bc7ab4cc249964baaabf788cb65  BaseX867-20170824.195627.zip
+```
+
+```
+$ vim ./Library/Taps/homebrew/homebrew-core/Formula/basex.rb
+```
+
+```
+$ brew audit --strict --online basex
+basex:
+  * C: 24: col 1: Extra blank line detected.
+  * Devel: version (latest) is set to a string without a digit
+  * devel version latest is older than stable version 8.6.5
+Error: 3 problems in 1 formula
+```
+
+===================================================================================================
