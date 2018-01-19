@@ -19,6 +19,10 @@ https://brew.sh/
   ### For stable version
   $ ./homebrew-basex.sh 8.6.7
 
+## Prepare git
+
+  $ cd /usr/local/Homebrew/Library/Taps/homebrew/homebrew-core/
+  $ git checkout -b 9.0-rc20171222.150150
 
 ## Edit
 
@@ -26,19 +30,22 @@ https://brew.sh/
   or
   $ vim /usr/local/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/basex.rb
 
+## Audit
+
+  $ brew audit --strict --online basex
 
 ## Commit
 
-  $ cd /usr/local/Homebrew/Library/Taps/homebrew/homebrew-core/
   $ git commit -am 'basex-devel: 9.0-rc20171222.150150'
   or
   $ git commit -am 'basex: 8.6.7'
-  $ git push holu master
+  $ git push holu 9.0-rc20171222.150150
+  $ git checkout master
 
 
 ## PR
 
-https://github.com/holu/homebrew-core
+  $ open https://github.com/holu/homebrew-core
 
 ===================================================================================================
 
