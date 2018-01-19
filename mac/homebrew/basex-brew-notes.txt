@@ -36,9 +36,9 @@ https://brew.sh/
 
 ## Commit
 
-  $ git commit -am 'basex-devel: 9.0-rc20171222.150150'
+  $ git commit -am 'basex 9.0-rc20171222.150150 (devel)'
   or
-  $ git commit -am 'basex: 8.6.7'
+  $ git commit -am 'basex 8.6.7'
   $ git push holu 9.0-rc20171222.150150
   $ git checkout master
 
