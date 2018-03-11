@@ -190,17 +190,11 @@ sub exe {
 
   # add start class and libraries
   my $cc = "<classPath>\n".
-    "    <mainClass>$main</mainClass>\n";
-  foreach my $file(glob("../basex/basex-core/lib/*")) {
-    $file =~ s|.*/|%EXEDIR%/lib/|;
-    $cc .= "    <cp>$file</cp>\n";
-  }
-  foreach my $file(glob("../basex/basex-api/lib/*")) {
-    $file =~ s|.*/|%EXEDIR%/lib/|;
-    $cc .= "    <cp>$file</cp>\n";
-  }
-  $cc .= "    <cp>BaseX.jar</cp>\n";
-  $cc .= "  </classPath>";
+    "    <mainClass>$main</mainClass>\n".
+    "    <cp>%EXEDIR%/BaseX.jar</cp>\n".
+    "    <cp>%EXEDIR%/lib/*</cp>\n".
+    "    <cp>%EXEDIR%/lib/custom/*</cp>\n".
+    "  </classPath>";
 
   # prepare launch script
   open(my $in, "win/launch4j.xml");
