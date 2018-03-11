@@ -67,9 +67,9 @@ sub prepare {
     while(my $l = <$in>) {
       # replace "target/classes"
       next if $l =~ m|^CORE=|;
-      $l =~ s|target/classes|BaseX.jar|;
-      $l =~ s|;%MAIN%/\.\./basex-core/lib/\*||;
-      $l =~ s|:\$CORE/lib/\*||;
+      $l =~ s|target[/\\]classes|BaseX.jar|;
+      $l =~ s|;%MAIN%[/\\]\.\.[/\\]basex-core[/\\]lib[/\\]\*||;
+      $l =~ s|:\$CORE[/\\]lib[/\\]\*||;
       print $out $l;
     }
     close($in);
