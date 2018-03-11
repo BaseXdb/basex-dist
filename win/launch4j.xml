@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <launch4jConfig>
   <dontWrapJar>true</dontWrapJar>
   <headerType>gui</headerType>
@@ -8,10 +9,10 @@
   <priority>normal</priority>
   <downloadUrl></downloadUrl>
   <supportUrl></supportUrl>
-  <customProcName>false</customProcName>
   <stayAlive>false</stayAlive>
+  <restartOnCrash>false</restartOnCrash>
   <manifest></manifest>
-  <icon>../images/BaseX.ico</icon>
+  <icon>..\images\BaseX.ico</icon>
   $classpath
   <!-- Problem: arguments cannot be passed to running instance
   <singleInstance>
@@ -20,21 +21,25 @@
   -->
   <jre>
     <path></path>
+    <bundledJre64Bit>false</bundledJre64Bit>
+    <bundledJreAsFallback>false</bundledJreAsFallback>
     <minVersion>1.8.0</minVersion>
     <maxVersion></maxVersion>
     <jdkPreference>preferJre</jdkPreference>
-    <maxHeapSize>1200</maxHeapSize>
+    <runtimeBits>64/32</runtimeBits>
   </jre>
   <versionInfo>
     <fileVersion>$full</fileVersion>
     <txtFileVersion>BaseX $version</txtFileVersion>
     <fileDescription>XML Database and XPath/XQuery 3.1 Processor</fileDescription>
-    <copyright>(c) BaseX Team, 2017</copyright>
+    <copyright>BaseX Team, BSD 3-Clause License</copyright>
     <productVersion>$full</productVersion>
     <txtProductVersion>BaseX $version</txtProductVersion>
     <productName>BaseX</productName>
-    <companyName>BaseX Team</companyName>
+    <companyName>BaseX GmbH</companyName>
     <internalName>BaseX GUI</internalName>
     <originalFilename>BaseX.exe</originalFilename>
+    <trademarks></trademarks>
+    <language>ENGLISH_US</language>
   </versionInfo>
 </launch4jConfig>
