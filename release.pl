@@ -42,7 +42,7 @@ sub prepare {
 
   # delete old release files
   rmtree("release");
-  mkdir "release";
+  mkdir "release/";
 
   # extract pom version
   version();
@@ -53,7 +53,7 @@ sub prepare {
   copy("../basex/basex-api/target/basex-api-$version.jar", "release/basex-api-$version.jar");
 
   # prepare start scripts
-  mkdir "release/bin";
+  mkdir "release/bin/";
   for my $f(
     glob("../basex/basex-core/etc/*"),
     glob("../basex/basex-api/etc/*")
@@ -77,7 +77,7 @@ sub prepare {
   }
 
   # assemble webapp files
-  rcopy("../basex/basex-api/src/main/webapp", "release/webapp");
+  rcopy("../basex/basex-api/src/main/webapp/", "release/webapp/");
   unlink("release/webapp/.gitignore");
   rmtree("release/webapp/WEB-INF/data");
   rmtree("release/webapp/WEB-INF/repo");
@@ -123,14 +123,14 @@ sub zip {
 
   my $source = "release/";
   my $target = "release/basex";
-  mkdir "$source/basex";
+  mkdir "$source/basex/";
   rcopy("$source/BaseX.jar", "$target/BaseX.jar");
   rcopy("../basex/LICENSE", $target);
   rcopy("../basex/CHANGELOG", $target);
   rcopy("readme.txt", $target);
   rcopy(".basexhome", $target);
-  mkdir "$target/bin";
-  rcopy("$source/bin/", "$target/bin");
+  mkdir "$target/bin/";
+  rcopy("$source/bin/", "$target/bin/");
   mkdir "$target/data/";
   mkdir "$target/etc/";
   rcopy("etc/", "$target/etc/");
@@ -142,11 +142,13 @@ sub zip {
   ) {
     rcopy($file, "$target/lib") if $file !~ m|/lib/basex-$version|;
   }
-  mkdir "$target/lib/custom";
+  mkdir "$target/lib/custom/";
   rcopy("$source/basex-api-$version.jar", "$target/lib/basex-api-$version.jar");
-  mkdir "$target/repo";
+  mkdir "$target/repo/";
+  rcopy("$source/repo/", "$target/repo/");
+  mkdir "$target/src/";
   mkdir "$target/webapp/";
-  rcopy("$source/webapp/", "$target/webapp");
+  rcopy("$source/webapp/", "$target/webapp/");
 
   my $zip = Archive::Zip->new();
   zip_rec($zip, $target, "basex");

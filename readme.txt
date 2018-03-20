@@ -11,10 +11,11 @@ CONTENTS ---------------------------------------------------------------
 
    bin/      start scripts
    data/     database directory
-   etc/      examples, catalog files, zipped modules (optional)
+   etc/      examples, catalog files, zipped modules
    lib/      Java libraries, referenced by the start scripts
    repo/     repository directory for XQuery modules
-   webapp/   contents for web applications, including RESTXQ scripts
+   src/      directory for your XQuery files
+   webapp/   contents for RESTXQ web applications and REST scripts
 
  To improve your workflows with BaseX, just add the bin/ directory to
  your PATH variable, or move the start scripts to an already added
