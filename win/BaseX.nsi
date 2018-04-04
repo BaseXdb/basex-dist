@@ -35,8 +35,6 @@ Pop "${Var}"
 
 ; Welcome page
 !insertmacro MUI_PAGE_WELCOME
-; check jre page
-Page custom CheckInstalledJRE
 ; License page
 !define MUI_LICENSEPAGE_RADIOBUTTONS
 !insertmacro MUI_PAGE_LICENSE "..\..\basex\LICENSE"
@@ -53,18 +51,6 @@ Page custom OptionsPage OptionsLeave
 
 Function run_basex
   nsExec::Exec '"$INSTDIR\BaseX.exe"'
-FunctionEnd
-
-Function CheckInstalledJRE
-  ReadRegStr $1 HKLM "SOFTWARE\JavaSoft\Java Runtime Environment" "CurrentVersion"
-  ${If} $1 == ""
-    SetRegView 64 
-    ReadRegStr $1 HKLM "SOFTWARE\JavaSoft\Java Runtime Environment" "CurrentVersion"
-    ${If} $1 == ""
-      MessageBox MB_OK "Please install Java before executing the installer."
-      Quit
-    ${EndIf}
-  ${EndIf}
 FunctionEnd
 
 Function WriteToFile
