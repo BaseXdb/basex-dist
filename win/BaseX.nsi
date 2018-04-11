@@ -156,6 +156,7 @@ Section "Hauptgruppe" SEC01
   File "..\..\basex\basex-core\lib\*"
   CreateDirectory "$INSTDIR\lib\custom"
   CreateDirectory "$INSTDIR\repo"
+  RMDir /r "$INSTDIR\webapp\dba"
   CreateDirectory "$INSTDIR\webapp"
   SetOutPath "$INSTDIR\webapp"
   File /r "..\release\webapp\*"
