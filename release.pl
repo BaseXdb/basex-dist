@@ -145,8 +145,9 @@ sub zip {
   mkdir "$target/lib/custom/";
   rcopy("$source/basex-api-$version.jar", "$target/lib/basex-api-$version.jar");
   mkdir "$target/repo/";
-  rcopy("$source/repo/", "$target/repo/");
+  rcopy("repo/", "$target/repo/");
   mkdir "$target/src/";
+  rcopy("src/", "$target/src/");
   mkdir "$target/webapp/";
   rcopy("$source/webapp/", "$target/webapp/");
 
