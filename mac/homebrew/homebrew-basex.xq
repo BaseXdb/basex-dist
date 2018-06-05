@@ -4,7 +4,7 @@
  :)
 declare namespace _ = 'http://basex.org/homebrew-basex';
 
-declare variable $basex-version external := "latest";
+declare variable $basex-version external := "homebrew-snapshot";
 
 (: Produce snippet to insert into stable/devel section in homebrew recipe.
  :
@@ -21,7 +21,7 @@ declare function _:recipe-section(
   let $url := $info/url
   let $basex-version := $info/basex-version
   return
-    if ($basex-version eq 'latest')
+    if ($basex-version eq 'homebrew-snapshot')
     then
       concat(
         '  devel do&#xa;',
@@ -69,7 +69,7 @@ declare function _:homebrew-version(
       $info as element(basex)
   ) as xs:string
 {
-  if ($info/basex-version ne 'latest') then $info/basex-version else
+  if ($info/basex-version ne 'homebrew-snapshot') then $info/basex-version else
   let $fname := $info/name
   let $v :=
     $fname
@@ -88,8 +88,8 @@ declare function _:homebrew-version(
 
 (:
  : List release information.
- : by listing the location and filename of basex snapshot or stable zip.
- : @param basex version, e.g., 'latest', '8.6.7'
+ : by listing the location and filename of basex homebrew-snapshot or stable zip.
+ : @param basex version, e.g., 'homebrew-snapshot', '8.6.7'
  :)
 declare function _:release-info(
     $bxv as xs:string

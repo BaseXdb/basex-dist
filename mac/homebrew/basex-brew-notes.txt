@@ -3,6 +3,15 @@ Update homebrew recipe of BaseX
 https://brew.sh/
 ===================================================================================================
 
+# WIP
+
+## Create 'stable' snapshot
+
+$ cp /www/249056_70794/rp-hosting/10674/11674/files/releases/latest/*.zip /www/249056_70794/rp-hosting/10674/11674/files/releases/snapshot
+$ chmod a+r /www/249056_70794/rp-hosting/10674/11674/files/releases/snapshot/*
+
+===================================================================================================
+
 # Bump stable or latest version:
 
 ## Check
@@ -13,7 +22,7 @@ https://brew.sh/
 
 ## Produce update info
 
-  $ cd /Users/holu/workbench/open-source/basex-homebrew
+  $ cd /Users/holu/workbench/open-source/basex-dist/mac/homebrew
   ### For latest
   $ ./homebrew-basex.sh
   ### For stable version
@@ -36,11 +45,14 @@ https://brew.sh/
 
 ## Commit
 
-  $ git commit -am 'basex 9.0-rc20171222.150150 (devel)'
+  # https://github.com/Homebrew/homebrew-core/pull/23512#issuecomment-362203937
+    $ git commit -am 'basex 9.0-rc20171222.150150 (devel)'
   or
-  $ git commit -am 'basex 8.6.7'
+    $ git commit -am 'basex 8.6.7'
+  or
+    $ git commit -am 'basex 9.0.2, 9.0.3-rc20180531.140617 (devel)'
   $ git push holu 9.0-rc20171222.150150
-  $ git checkout master
+! $ git checkout master
 
 
 ## PR

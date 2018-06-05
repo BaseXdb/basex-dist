@@ -38,6 +38,7 @@ $ cd ../basex-7.7.2
 
   ...
   [ man pages (!! RESTORE and missing hyphen), new commands, new examples, patches OK, new authors ... ]
+  $ man -l ./basex.1 # view local file in man pager
   ...
 
 -------------------------------------------------------------------------
@@ -55,7 +56,7 @@ $ cd ../basex-7.7.2
 
 * Lintian check
  $ lintian -i -I --show-overrides --pedantic ../basex_7.7.2-1_all.deb
-
+  
 * Clean build
  $ fakeroot ./debian/rules clean
 
@@ -108,7 +109,7 @@ $ cd ../basex-7.7.2
   )
 
   - Perform mentors upload
-  $ dput mentors ../basex_7.0.1-1_i386.changes
+  $ dput -l mentors ../basex_7.0.1-1_i386.changes
 
   - Verify upload
   $ vim ../basex_6.7-1_i386.upload
