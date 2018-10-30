@@ -12,6 +12,7 @@
 
 # Maven target dir
 /release
+/xqdoc
 
 /mac/dist/BaseX.app/
 
