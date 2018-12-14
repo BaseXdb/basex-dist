@@ -7,8 +7,8 @@ https://brew.sh/
 
 ## Create 'stable' snapshot
 
-$ cp /www/249056_70794/rp-hosting/10674/11674/files/releases/latest/*.zip /www/249056_70794/rp-hosting/10674/11674/files/releases/snapshot
-$ chmod a+r /www/249056_70794/rp-hosting/10674/11674/files/releases/snapshot/*
+$ cp /www/249056_70794/rp-hosting/10674/11674/files/releases/latest/*.zip /www/249056_70794/rp-hosting/10674/11674/files/releases/homebrew-snapshot/
+$ chmod a+r /www/249056_70794/rp-hosting/10674/11674/files/releases/homebrew-snapshot/*
 
 ===================================================================================================
 
@@ -41,6 +41,7 @@ $ chmod a+r /www/249056_70794/rp-hosting/10674/11674/files/releases/snapshot/*
 
 ## Audit
 
+  $ brew install --build-from-source basex
   $ brew audit --strict --online basex
 
 ## Commit
@@ -48,10 +49,10 @@ $ chmod a+r /www/249056_70794/rp-hosting/10674/11674/files/releases/snapshot/*
   # https://github.com/Homebrew/homebrew-core/pull/23512#issuecomment-362203937
     $ git commit -am 'basex 9.0-rc20171222.150150 (devel)'
   or
-    $ git commit -am 'basex 8.6.7'
+    $ git commit -am 'basex 9.1.1'
   or
     $ git commit -am 'basex 9.0.2, 9.0.3-rc20180531.140617 (devel)'
-  $ git push holu 9.0-rc20171222.150150
+  $ git push holu 9.1.1
 ! $ git checkout master
 
 
@@ -103,3 +104,23 @@ Error: 3 problems in 1 formula
 ```
 
 ===================================================================================================
+
+
+Downloading and testing the latest snapshot is always very welcome.
+
+A convenient way for macOS users can be via homebrew[1], as snapshots are frequently released there as well.
+
+So after the initial installation of the development/snapshot version using:
+
+  $ brew install --devel basex
+
+A subsequent:
+
+  $ brew update
+  $ brew upgrade
+
+.. will bring a new snapshot version to your system.
+
+Anything that does not behave as expected can be filed as an issue on github using the labels 'macOS' and 'gui'
+
+[1] https://brew.sh/index_de
