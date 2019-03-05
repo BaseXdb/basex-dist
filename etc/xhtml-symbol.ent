@@ -1,4 +1,4 @@
-<!-- Mathematical, Greek and Symbolic characters for HTML -->
+<!-- Mathematical, Greek and Symbolic characters for XHTML -->
 
 <!-- Character entity set. Typical invocation:
      <!ENTITY % HTMLsymbol PUBLIC
@@ -22,7 +22,7 @@
 -->
 
 <!-- Latin Extended-B -->
-<!ENTITY fnof     "&#402;"> <!-- latin small f with hook = function
+<!ENTITY fnof     "&#402;"> <!-- latin small letter f with hook = function
                                     = florin, U+0192 ISOtech -->
 
 <!-- Greek -->
@@ -39,7 +39,7 @@
                                     U+0398 ISOgrk3 -->
 <!ENTITY Iota     "&#921;"> <!-- greek capital letter iota, U+0399 -->
 <!ENTITY Kappa    "&#922;"> <!-- greek capital letter kappa, U+039A -->
-<!ENTITY Lambda   "&#923;"> <!-- greek capital letter lambda,
+<!ENTITY Lambda   "&#923;"> <!-- greek capital letter lamda,
                                     U+039B ISOgrk3 -->
 <!ENTITY Mu       "&#924;"> <!-- greek capital letter mu, U+039C -->
 <!ENTITY Nu       "&#925;"> <!-- greek capital letter nu, U+039D -->
@@ -77,7 +77,7 @@
 <!ENTITY iota     "&#953;"> <!-- greek small letter iota, U+03B9 ISOgrk3 -->
 <!ENTITY kappa    "&#954;"> <!-- greek small letter kappa,
                                     U+03BA ISOgrk3 -->
-<!ENTITY lambda   "&#955;"> <!-- greek small letter lambda,
+<!ENTITY lambda   "&#955;"> <!-- greek small letter lamda,
                                     U+03BB ISOgrk3 -->
 <!ENTITY mu       "&#956;"> <!-- greek small letter mu, U+03BC ISOgrk3 -->
 <!ENTITY nu       "&#957;"> <!-- greek small letter nu, U+03BD ISOgrk3 -->
@@ -97,7 +97,7 @@
 <!ENTITY psi      "&#968;"> <!-- greek small letter psi, U+03C8 ISOgrk3 -->
 <!ENTITY omega    "&#969;"> <!-- greek small letter omega,
                                     U+03C9 ISOgrk3 -->
-<!ENTITY thetasym "&#977;"> <!-- greek small letter theta symbol,
+<!ENTITY thetasym "&#977;"> <!-- greek theta symbol,
                                     U+03D1 NEW -->
 <!ENTITY upsih    "&#978;"> <!-- greek upsilon with hook symbol,
                                     U+03D2 NEW -->
@@ -119,9 +119,9 @@
 <!-- Letterlike Symbols -->
 <!ENTITY weierp   "&#8472;"> <!-- script capital P = power set
                                      = Weierstrass p, U+2118 ISOamso -->
-<!ENTITY image    "&#8465;"> <!-- blackletter capital I = imaginary part,
+<!ENTITY image    "&#8465;"> <!-- black-letter capital I = imaginary part,
                                      U+2111 ISOamso -->
-<!ENTITY real     "&#8476;"> <!-- blackletter capital R = real part symbol,
+<!ENTITY real     "&#8476;"> <!-- black-letter capital R = real part symbol,
                                      U+211C ISOamso -->
 <!ENTITY trade    "&#8482;"> <!-- trade mark sign, U+2122 ISOnum -->
 <!ENTITY alefsym  "&#8501;"> <!-- alef symbol = first transfinite cardinal,
@@ -139,14 +139,14 @@
                                      = carriage return, U+21B5 NEW -->
 <!ENTITY lArr     "&#8656;"> <!-- leftwards double arrow, U+21D0 ISOtech -->
 <!-- Unicode does not say that lArr is the same as the 'is implied by' arrow
-    but also does not have any other character for that function. So ? lArr can
+    but also does not have any other character for that function. So lArr can
     be used for 'is implied by' as ISOtech suggests -->
 <!ENTITY uArr     "&#8657;"> <!-- upwards double arrow, U+21D1 ISOamsa -->
 <!ENTITY rArr     "&#8658;"> <!-- rightwards double arrow,
                                      U+21D2 ISOtech -->
 <!-- Unicode does not say this is the 'implies' character but does not have 
-     another character with this function so ?
-     rArr can be used for 'implies' as ISOtech suggests -->
+     another character with this function so rArr can be used for 'implies'
+     as ISOtech suggests -->
 <!ENTITY dArr     "&#8659;"> <!-- downwards double arrow, U+21D3 ISOamsa -->
 <!ENTITY hArr     "&#8660;"> <!-- left right double arrow,
                                      U+21D4 ISOamsa -->
@@ -155,19 +155,17 @@
 <!ENTITY forall   "&#8704;"> <!-- for all, U+2200 ISOtech -->
 <!ENTITY part     "&#8706;"> <!-- partial differential, U+2202 ISOtech  -->
 <!ENTITY exist    "&#8707;"> <!-- there exists, U+2203 ISOtech -->
-<!ENTITY empty    "&#8709;"> <!-- empty set = null set = diameter,
-                                     U+2205 ISOamso -->
+<!ENTITY empty    "&#8709;"> <!-- empty set = null set, U+2205 ISOamso -->
 <!ENTITY nabla    "&#8711;"> <!-- nabla = backward difference,
                                      U+2207 ISOtech -->
 <!ENTITY isin     "&#8712;"> <!-- element of, U+2208 ISOtech -->
 <!ENTITY notin    "&#8713;"> <!-- not an element of, U+2209 ISOtech -->
 <!ENTITY ni       "&#8715;"> <!-- contains as member, U+220B ISOtech -->
-<!-- should there be a more memorable name than 'ni'? -->
 <!ENTITY prod     "&#8719;"> <!-- n-ary product = product sign,
                                      U+220F ISOamsb -->
 <!-- prod is NOT the same character as U+03A0 'greek capital letter pi' though
      the same glyph might be used for both -->
-<!ENTITY sum      "&#8721;"> <!-- n-ary sumation, U+2211 ISOamsb -->
+<!ENTITY sum      "&#8721;"> <!-- n-ary summation, U+2211 ISOamsb -->
 <!-- sum is NOT the same character as U+03A3 'greek capital letter sigma'
      though the same glyph might be used for both -->
 <!ENTITY minus    "&#8722;"> <!-- minus sign, U+2212 ISOtech -->
@@ -197,9 +195,6 @@
                                      U+2265 ISOtech -->
 <!ENTITY sub      "&#8834;"> <!-- subset of, U+2282 ISOtech -->
 <!ENTITY sup      "&#8835;"> <!-- superset of, U+2283 ISOtech -->
-<!-- note that nsup, 'not a superset of, U+2283' is not covered by the Symbol 
-     font encoding and is not included. Should it be, for symmetry?
-     It is in ISOamsn  --> 
 <!ENTITY nsub     "&#8836;"> <!-- not a subset of, U+2284 ISOamsn -->
 <!ENTITY sube     "&#8838;"> <!-- subset of or equal to, U+2286 ISOtech -->
 <!ENTITY supe     "&#8839;"> <!-- superset of or equal to,
@@ -214,19 +209,19 @@
 <!-- dot operator is NOT the same character as U+00B7 middle dot -->
 
 <!-- Miscellaneous Technical -->
-<!ENTITY lceil    "&#8968;"> <!-- left ceiling = apl upstile,
+<!ENTITY lceil    "&#8968;"> <!-- left ceiling = APL upstile,
                                      U+2308 ISOamsc  -->
 <!ENTITY rceil    "&#8969;"> <!-- right ceiling, U+2309 ISOamsc  -->
-<!ENTITY lfloor   "&#8970;"> <!-- left floor = apl downstile,
+<!ENTITY lfloor   "&#8970;"> <!-- left floor = APL downstile,
                                      U+230A ISOamsc  -->
 <!ENTITY rfloor   "&#8971;"> <!-- right floor, U+230B ISOamsc  -->
 <!ENTITY lang     "&#9001;"> <!-- left-pointing angle bracket = bra,
                                      U+2329 ISOtech -->
-<!-- lang is NOT the same character as U+003C 'less than' 
+<!-- lang is NOT the same character as U+003C 'less than sign' 
      or U+2039 'single left-pointing angle quotation mark' -->
 <!ENTITY rang     "&#9002;"> <!-- right-pointing angle bracket = ket,
                                      U+232A ISOtech -->
-<!-- rang is NOT the same character as U+003E 'greater than' 
+<!-- rang is NOT the same character as U+003E 'greater than sign' 
      or U+203A 'single right-pointing angle quotation mark' -->
 
 <!-- Geometric Shapes -->

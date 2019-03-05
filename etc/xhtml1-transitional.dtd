@@ -1,9 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- saved from url=(0055)http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd -->
-<HTML><HEAD>
-<META http-equiv=Content-Type content="text/html; charset=windows-1252">
-<META content="MSHTML 5.50.4522.1800" name=GENERATOR></HEAD>
-<BODY><XMP><!--
+<!--
    Extensible HTML version 1.0 Transitional DTD
 
    This is the same as HTML 4.0 Transitional except for
@@ -1199,4 +1194,3 @@ several semantically related columns together.
   height      %Pixels;       #IMPLIED
   >
 
-</XMP></BODY></HTML>
