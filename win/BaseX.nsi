@@ -50,7 +50,7 @@ Page custom OptionsPage OptionsLeave
 !insertmacro MUI_PAGE_FINISH
 
 Function run_basex
-  nsExec::Exec '"$INSTDIR\BaseX.exe"'
+  nsExec::Exec '"$INSTDIR\bin\basexgui.bat"'
 FunctionEnd
 
 Function WriteToFile
@@ -125,9 +125,6 @@ ShowUnInstDetails show
 
 Section "Hauptgruppe" SEC01
   SetOutPath "$INSTDIR"
-  SetOverwrite ifnewer
-  Delete "basex.jar"
-  File "..\release\BaseX.exe"
   File "..\release\BaseX.jar"
   File "..\..\basex\LICENSE"
   File "..\..\basex\CHANGELOG"
@@ -145,9 +142,10 @@ Section "Hauptgruppe" SEC01
   CreateDirectory "$INSTDIR\ico"
   SetOutPath "$INSTDIR\ico"
   File "..\images\*.ico"
-  RMDir /r "$INSTDIR\lib"
+;  RMDir /r "$INSTDIR\lib"
   CreateDirectory "$INSTDIR\lib"
   SetOutPath "$INSTDIR\lib"
+  Delete "*.jar"
   File "..\release\basex-api-*.jar"
   File "..\lib\*"
 ; exclude main jar, add xqj
@@ -182,17 +180,19 @@ Section -AdditionalIcons
   # startmenu
   !insertmacro MUI_INSTALLOPTIONS_READ $R8 "Options" "Field 4" "State"
   ${If} $R7 == 1
-    CreateShortCut "$DESKTOP\BaseX GUI.lnk" "$INSTDIR\BaseX.exe" "" "$INSTDIR\ico\BaseX.ico" 0
+    CreateShortCut "$DESKTOP\BaseX GUI.lnk" "$INSTDIR\bin\basexgui.bat" "" "$INSTDIR\ico\BaseX.ico" 0
   ${EndIf}
   ${If} $R8 == 1
+    RMDir /r "$SMPROGRAMS\BaseX"
     CreateDirectory "$SMPROGRAMS\BaseX"
-    CreateShortCut "$SMPROGRAMS\BaseX\BaseX GUI.lnk" "$INSTDIR\BaseX.exe" "" "$INSTDIR\ico\BaseX.ico" 0
-    CreateShortCut "$SMPROGRAMS\BaseX\BaseX Server (Start).lnk" "$INSTDIR\bin\basexhttp.bat" "-S" "$INSTDIR\ico\start.ico" 0
-    CreateShortCut "$SMPROGRAMS\BaseX\BaseX Server (Stop).lnk" "$INSTDIR\bin\basexhttp.bat" "stop" "$INSTDIR\ico\stop.ico" 0
-    CreateShortCut "$SMPROGRAMS\BaseX\BaseX Client.lnk" "$INSTDIR\bin\basexclient.bat" "" "$INSTDIR\ico\shell.ico" 0
-    CreateShortCut "$SMPROGRAMS\BaseX\BaseX Standalone.lnk" "$INSTDIR\bin\basex.bat" "" "$INSTDIR\ico\shell.ico" 0
-    WriteINIStr "$SMPROGRAMS\BaseX\BaseX Documentation.url" "InternetShortcut" "URL" "${PRODUCT_WEB_DOCS}"
-    CreateShortCut "$SMPROGRAMS\BaseX\Uninstall BaseX.lnk" "$INSTDIR\uninst.exe"
+    SetOutPath "$SMPROGRAMS\BaseX"
+    CreateShortCut "BaseX GUI.lnk" "$INSTDIR\bin\basexgui.bat" "" "$INSTDIR\ico\BaseX.ico" 0
+    CreateShortCut "BaseX HTTP Server (Start).lnk" "$INSTDIR\bin\basexhttp.bat" "-S" "$INSTDIR\ico\start.ico" 0
+    CreateShortCut "BaseX HTTP Server (Stop).lnk" "$INSTDIR\bin\basexhttp.bat" "stop" "$INSTDIR\ico\stop.ico" 0
+    CreateShortCut "BaseX Client.lnk" "$INSTDIR\bin\basexclient.bat" "" "$INSTDIR\ico\shell.ico" 0
+    CreateShortCut "BaseX Standalone.lnk" "$INSTDIR\bin\basex.bat" "" "$INSTDIR\ico\shell.ico" 0
+    WriteINIStr "BaseX Documentation.url" "InternetShortcut" "URL" "${PRODUCT_WEB_DOCS}"
+    CreateShortCut "Uninstall BaseX.lnk" "$INSTDIR\uninst.exe"
   ${EndIf}
 SectionEnd
 

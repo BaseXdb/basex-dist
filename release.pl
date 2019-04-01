@@ -13,8 +13,6 @@ use File::Copy::Recursive qw(rcopy);
 # path to main class
 my $main = "org.basex.BaseXGUI";
 
-# home of launch4j
-my $launch4j = "win/launch4j/launch4jc.exe";
 # home of nsis
 my $nsis = "win/nsis/makensis.exe /V1";
 
@@ -198,28 +196,6 @@ sub exe {
     "    <cp>%EXEDIR%/lib/*</cp>\n".
     "    <cp>%EXEDIR%/lib/custom/*</cp>\n".
     "  </classPath>";
-
-  # prepare launch script
-  open(my $in, "win/launch4j.xml");
-  my @raw = <$in>;
-  open(my $out, ">release/launch4j.xml");
-  (my $ff = $full) =~ s/-.*//;
-  (my $vv = $version) =~ s/-.*//;
-  foreach my $line (@raw) {
-    $line =~ s/\$full/$ff/g;
-    $line =~ s/\$version/$vv/g; 
-    $line =~ s/\$classpath/$cc/g; 
-    print $out $line;
-  }
-  close($in);
-  close($out);
-
-  # create executable
-  system("$launch4j release/launch4j.xml");
-  # remove launch script
-  unlink("release/launch4j.xml");
-  # move executable to final destination
-  move("BaseX.exe", "release/BaseX.exe");
 
   # create installer
   system("$nsis win/BaseX.nsi");
