@@ -1,11 +1,11 @@
-ï»¿# Header, don't edit
+# Header, don't edit
 NLF v6
 # Language ID
 1053
 # Font and size - dash (-) means default
 -
 -
-# Codepage - dash (-) means ASCII code page
+# Codepage - dash (-) means ANSI code page
 1252
 # RTL - anything else than RTL means LTR
 -
@@ -25,27 +25,27 @@ $(^Name) Avinstallation
 # ^InstallingSubCaption
 : Installerar
 # ^CompletedSubCaption
-: SlutfÃ¶rd
+: Slutförd
 # ^UnComponentsSubCaption
 : Avinstallationsval
 # ^UnDirSubCaption
 : Avinstallationskatalog
 # ^ConfirmSubCaption
-: BekrÃ¤ftelse
+: Bekräftelse
 # ^UninstallingSubCaption
 : Avinstallerar
 # ^UnCompletedSubCaption
-: SlutfÃ¶rd
+: Slutförd
 # ^BackBtn
 < &Tillbaka
 # ^NextBtn
-&NÃ¤sta >
+&Nästa >
 # ^AgreeBtn
-Jag &GodkÃ¤nner
+Jag &Godkänner
 # ^AcceptBtn
-Jag &GodkÃ¤nner villkoren i licensavtalet
+Jag &Godkänner villkoren i licensavtalet
 # ^DontAcceptBtn
-Jag &GodkÃ¤nner inte villkoren i licensavtalet
+Jag &Godkänner inte villkoren i licensavtalet
 # ^InstallBtn
 &Installera
 # ^UninstallBtn
@@ -53,75 +53,75 @@ Jag &GodkÃ¤nner inte villkoren i licensavtalet
 # ^CancelBtn
 Avbryt
 # ^CloseBtn
-&StÃ¤ng
+&Stäng
 # ^BrowseBtn
-B&lÃ¤ddra...
+B&läddra...
 # ^ShowDetailsBtn
 Visa &detaljer
 # ^ClickNext
-Klicka pÃ¥ NÃ¤sta fÃ¶r att fortsÃ¤tta.
+Klicka på Nästa för att fortsätta.
 # ^ClickInstall
-Klicka pÃ¥ Installera fÃ¶r att starta installationen.
+Klicka på Installera för att starta installationen.
 # ^ClickUninstall
-Klicka pÃ¥ Avinstallera fÃ¶r att starta avinstallationen.
+Klicka på Avinstallera för att starta avinstallationen.
 # ^Name
 Namn
 # ^Completed
-SlutfÃ¶rd
+Slutförd
 # ^LicenseText
-Var vÃ¤nlig lÃ¤s igenom licensvillkoren innan du installerar $(^NameDA). Om du accepterar villkoren i avtalet, klicka Jag GodkÃ¤nner.
+Var vänlig läs igenom licensvillkoren innan du installerar $(^NameDA). Om du accepterar villkoren i avtalet, klicka Jag Godkänner.
 # ^LicenseTextCB
-Var vÃ¤nlig lÃ¤s igenom licensvillkoren innan du installerar $(^NameDA). Om du accepterar villkoren i avtalet, klicka i checkrutan nedan. $_CLICK
+Var vänlig läs igenom licensvillkoren innan du installerar $(^NameDA). Om du accepterar villkoren i avtalet, klicka i checkrutan nedan. $_CLICK
 # ^LicenseTextRB
-Var vÃ¤nlig lÃ¤s igenom licensvillkoren innan du installerar $(^NameDA). Om du accepterar villkoren i avtalet, vÃ¤lj det fÃ¶rsta alternativet nedan. $_CLICK
+Var vänlig läs igenom licensvillkoren innan du installerar $(^NameDA). Om du accepterar villkoren i avtalet, välj det första alternativet nedan. $_CLICK
 # ^UnLicenseText
-Var vÃ¤nlig lÃ¤s igenom licensvillkoren innan du avinstallerar $(^NameDA). Om du accepterar villkoren i avtalet, klicka Jag GodkÃ¤nner.
+Var vänlig läs igenom licensvillkoren innan du avinstallerar $(^NameDA). Om du accepterar villkoren i avtalet, klicka Jag Godkänner.
 # ^UnLicenseTextCB
-Var vÃ¤nlig lÃ¤s igenom licensvillkoren innan du avinstallerar $(^NameDA). Om du accepterar villkoren i avtalet, klicka i checkrutan nedan. $_CLICK
+Var vänlig läs igenom licensvillkoren innan du avinstallerar $(^NameDA). Om du accepterar villkoren i avtalet, klicka i checkrutan nedan. $_CLICK
 # ^UnLicenseTextRB
-Var vÃ¤nlig lÃ¤s igenom licensvillkoren innan du avinstallerar $(^NameDA). Om du accepterar villkoren i avtalet, vÃ¤lj det fÃ¶rsta alternativet nedan. $_CLICK
+Var vänlig läs igenom licensvillkoren innan du avinstallerar $(^NameDA). Om du accepterar villkoren i avtalet, välj det första alternativet nedan. $_CLICK
 # ^Custom
 Valfri
 # ^ComponentsText
 Markera de komponenter du vill installera och avmarkera de komponenter du inte vill installera. $_CLICK
 # ^ComponentsSubText1
-VÃ¤lj typ av installation:
+Välj typ av installation:
 # ^ComponentsSubText2_NoInstTypes
-VÃ¤lj komponenter att installera:
+Välj komponenter att installera:
 # ^ComponentsSubText2
-Eller, vÃ¤lj de alternativa komponenter du Ã¶nskar installera:
+Eller, välj de alternativa komponenter du önskar installera:
 # ^UnComponentsText
 Markera de komponenter du vill avinstallera och avmarkera de komponenter du inte vill avinstallera. $_CLICK
 # ^UnComponentsSubText1
-VÃ¤lj typ av avinstallation:
+Välj typ av avinstallation:
 # ^UnComponentsSubText2_NoInstTypes
-VÃ¤lj komponenter att avinstallera:
+Välj komponenter att avinstallera:
 # ^UnComponentsSubText2
-Eller, vÃ¤lj de alternativa komponenter du Ã¶nskar avinstallera:
+Eller, välj de alternativa komponenter du önskar avinstallera:
 # ^DirText
-Guiden kommer att installera $(^NameDA) i fÃ¶ljande katalog. FÃ¶r att installera i en annan katalog, klicka BlÃ¤ddra och vÃ¤lj en alternativ katalog. $_CLICK
+Guiden kommer att installera $(^NameDA) i följande katalog. För att installera i en annan katalog, klicka Bläddra och välj en alternativ katalog. $_CLICK
 # ^DirSubText
-MÃ¥lkatalog
+Målkatalog
 # ^DirBrowseText
-VÃ¤lj katalog att installera $(^NameDA) i:
+Välj katalog att installera $(^NameDA) i:
 # ^UnDirText
-Installationsguiden kommer att avinstallera $(^NameDA) frÃ¥n fÃ¶ljande katalog. FÃ¶r att avinstallera frÃ¥n en annan katalog, klicka BlÃ¤ddra och vÃ¤lj en annan katalog. $_CLICK
+Installationsguiden kommer att avinstallera $(^NameDA) från följande katalog. För att avinstallera från en annan katalog, klicka Bläddra och välj en annan katalog. $_CLICK
 # ^UnDirSubText
 ""
 # ^UnDirBrowseText
-VÃ¤lj katalog att avinstallera $(^NameDA) frÃ¥n:
+Välj katalog att avinstallera $(^NameDA) från:
 # ^SpaceAvailable
-"Utrymme tillgÃ¤ngligt: "
+"Utrymme tillgängligt: "
 # ^SpaceRequired
-"Utrymme som behÃ¶vs: "
+"Utrymme som behövs: "
 # ^UninstallingText
-$(^NameDA) kommer att avinstalleras frÃ¥n fÃ¶ljande katalog. $_CLICK
+$(^NameDA) kommer att avinstalleras från följande katalog. $_CLICK
 # ^UninstallingSubText
-Avinstallerar frÃ¥n:
+Avinstallerar från:
 # ^FileError
-Fel vid Ã–ppning av fil fÃ¶r skrivning: \r\n\t"$0"\r\nKlicka pÃ¥ avbryt fÃ¶r att avbryta installationen,\r\nfÃ¶rsÃ¶k igen fÃ¶r att fÃ¶rsÃ¶ka skriva till filen igen, eller\r\nIgnorera fÃ¶r att skippa denna fil
+Fel vid Öppning av fil för skrivning: \r\n\t"$0"\r\nKlicka på avbryt för att avbryta installationen,\r\nförsök igen för att försöka skriva till filen igen, eller\r\nIgnorera för att skippa denna fil
 # ^FileError_NoIgnore
-Fel vid Ã–ppning av fil fÃ¶r skrivning: \r\n\t"$0"\r\nKlicka pÃ¥ fÃ¶rsÃ¶k igen fÃ¶r att skriva till filen igen, eller\r\navbryt fÃ¶r att avbryta installationen
+Fel vid Öppning av fil för skrivning: \r\n\t"$0"\r\nKlicka på försök igen för att skriva till filen igen, eller\r\navbryt för att avbryta installationen
 # ^CantWrite
 "Kan inte skriva: "
 # ^CopyFailed
@@ -139,7 +139,7 @@ Kopiering misslyckades
 # ^CreateFolder
 "Skapa katalog: "
 # ^CreateShortcut
-"Skapa genvÃ¤g: "
+"Skapa genväg: "
 # ^CreatedUninstaller
 "Skapade avinstallationsprogram: "
 # ^Delete
@@ -147,7 +147,7 @@ Kopiering misslyckades
 # ^DeleteOnReboot
 "Radera vid omstart: "
 # ^ErrorCreatingShortcut
-"Fel vid skapande av genvÃ¤g: "
+"Fel vid skapande av genväg: "
 # ^ErrorCreating
 "Fel vid skapande: "
 # ^ErrorDecompressing
@@ -157,7 +157,7 @@ Fel vid registrering av DLL
 # ^ExecShell
 "ExecShell: "
 # ^Exec
-"KÃ¶r: "
+"Kör: "
 # ^Extract
 "Extrahera: "
 # ^ErrorWriting
@@ -165,26 +165,26 @@ Fel vid registrering av DLL
 # ^InvalidOpcode
 Installationspaket skadat: ogiltig opcode
 # ^NoOLE
-"Ingen OLE fÃ¶r: "
+"Ingen OLE för: "
 # ^OutputFolder
-"MÃ¥lkatalog: "
+"Målkatalog: "
 # ^RemoveFolder
 "Ta bort katalog: "
 # ^RenameOnReboot
-"DÃ¶p om vid omstart: "
+"Döp om vid omstart: "
 # ^Rename
-"DÃ¶p om: "
+"Döp om: "
 # ^Skipped
 "Ignorerad: "
 # ^CopyDetails
 Kopiera detaljinformation till klippbordet
 # ^LogInstall
-Logga installationsfÃ¶rfarandet
+Logga installationsförfarandet
 # ^Byte
 B
 # ^Kilo
- K
+K
 # ^Mega
- M
+M
 # ^Giga
- G
+G

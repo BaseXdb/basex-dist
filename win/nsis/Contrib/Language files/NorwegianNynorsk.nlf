@@ -1,15 +1,15 @@
-ï»¿# Header, don't edit
+# Header, don't edit
 NLF v6
 # Language ID
 2068
 # Font and size - dash (-) means default
 -
 -
-# Codepage - dash (-) means ASCII code page
+# Codepage - dash (-) means ANSI code page
 1252
 # RTL - anything else than RTL means LTR
 -
-# Translation by VebjÃ¸rn Sture, vsture gmail com
+# Translation by Vebjørn Sture, vsture gmail com
 # ^Branding
 Nullsoft Install System %s
 # ^SetupCaption
@@ -43,9 +43,9 @@ $(^Name) avinstallasjon
 # ^AgreeBtn
 &Godta
 # ^AcceptBtn
-Eg &godtek vilkÃ¥ra i lisensavtalen
+Eg &godtek vilkåra i lisensavtalen
 # ^DontAcceptBtn
-Eg godtek &ikkje vilkÃ¥ra i lisensavtalen
+Eg godtek &ikkje vilkåra i lisensavtalen
 # ^InstallBtn
 &Installer
 # ^UninstallBtn
@@ -59,69 +59,69 @@ Bla &gjennom ...
 # ^ShowDetailsBtn
 Syn &detaljar
 # ^ClickNext
-Trykk Neste for Ã¥ halda fram.
+Trykk Neste for å halda fram.
 # ^ClickInstall
-Trykk Installer for Ã¥ starta installasjonen.
+Trykk Installer for å starta installasjonen.
 # ^ClickUninstall
-Trykk Avinstaller for Ã¥ starta avinstallasjonen.
+Trykk Avinstaller for å starta avinstallasjonen.
 # ^Name
 Namn
 # ^Completed
 Ferdig
 # ^LicenseText
-Ver grei og les gjennom lisensavtalen fÃ¸r du installerer $(^NameDA). Dersom du godtek vilkÃ¥ra i avtalen, trykk pÃ¥ Godta.
+Ver grei og les gjennom lisensavtalen før du installerer $(^NameDA). Dersom du godtek vilkåra i avtalen, trykk på Godta.
 # ^LicenseTextCB
-Ver grei og les gjennom lisensavtalen fÃ¸r du installerer $(^NameDA). Dersom du godtek vilkÃ¥ra i avtalen, merk av under. $_CLICK
+Ver grei og les gjennom lisensavtalen før du installerer $(^NameDA). Dersom du godtek vilkåra i avtalen, merk av under. $_CLICK
 # ^LicenseTextRB
-Ver grei og les gjennom lisensavtalen fÃ¸r du installerer $(^NameDA). Dersom du godtek vilkÃ¥ra i avtalen, vel det fyrste alternativet. $_CLICK
+Ver grei og les gjennom lisensavtalen før du installerer $(^NameDA). Dersom du godtek vilkåra i avtalen, vel det fyrste alternativet. $_CLICK
 # ^UnLicenseText
-Ver grei og les gjennom lisensavtalen fÃ¸r du avinstallerer $(^NameDA). Dersom du godtek vilkÃ¥ra i avtalen, trykk pÃ¥ Godta.
+Ver grei og les gjennom lisensavtalen før du avinstallerer $(^NameDA). Dersom du godtek vilkåra i avtalen, trykk på Godta.
 # ^UnLicenseTextCB
-Ver grei og les gjennom lisensavtalen fÃ¸r du avinstallerer $(^NameDA). Dersom du godtek vilkÃ¥ra i avtalen, merk av under. $_CLICK
+Ver grei og les gjennom lisensavtalen før du avinstallerer $(^NameDA). Dersom du godtek vilkåra i avtalen, merk av under. $_CLICK
 # ^UnLicenseTextRB
-Ver grei og les gjennom lisensavtalen fÃ¸r du avinstallerer $(^NameDA). Dersom du godtek vilkÃ¥ra i avtalen, vel det fyrste alternativet. $_CLICK
+Ver grei og les gjennom lisensavtalen før du avinstallerer $(^NameDA). Dersom du godtek vilkåra i avtalen, vel det fyrste alternativet. $_CLICK
 # ^Custom
 Eigendefinert
 # ^ComponentsText
 Merk komponentane du vil installera og fjern merkinga for dei du ikkje vil installera. $_CLICK
 # ^ComponentsSubText1
-Vel kva mÃ¥te du vil installera pÃ¥:
+Vel kva måte du vil installera på:
 # ^ComponentsSubText2_NoInstTypes
 Merk komponentar du vil installera:
 # ^ComponentsSubText2
-Eller merk dei valfrie komponentane du ynskjer Ã¥ installera:
+Eller merk dei valfrie komponentane du ynskjer å installera:
 # ^UnComponentsText
-Merk komponentane du vil avinstallera og fjern merkinga for dei du vil ta vare pÃ¥. $_CLICK
+Merk komponentane du vil avinstallera og fjern merkinga for dei du vil ta vare på. $_CLICK
 # ^UnComponentsSubText1
-Vel kva mÃ¥te du vil avinstallera pÃ¥:
+Vel kva måte du vil avinstallera på:
 # ^UnComponentsSubText2_NoInstTypes
 Merk komponentar du vil avinstallera:
 # ^UnComponentsSubText2
-Eller merk dei valfrie komponentane du ynskjer Ã¥ avinstallera:
+Eller merk dei valfrie komponentane du ynskjer å avinstallera:
 # ^DirText
-$(^NameDA) vil verta installert i fylgjande mappe. For Ã¥ velja ei anna mappe, trykk Bla gjennom. $_CLICK
+$(^NameDA) vil verta installert i fylgjande mappe. For å velja ei anna mappe, trykk Bla gjennom. $_CLICK
 # ^DirSubText
-MÃ¥lmappe
+Målmappe
 # ^DirBrowseText
 Vel mappe du vil installera $(^NameDA) i:
 # ^UnDirText
-$(^NameDA) i fylgjande mappe vil verta avinstallert. For Ã¥ velja ei anna mappe, trykk Bla gjennom. $_CLICK
+$(^NameDA) i fylgjande mappe vil verta avinstallert. For å velja ei anna mappe, trykk Bla gjennom. $_CLICK
 # ^UnDirSubText
 ""
 # ^UnDirBrowseText
-Vel mappe du vil avinstallera $(^NameDA) frÃ¥:
+Vel mappe du vil avinstallera $(^NameDA) frå:
 # ^SpaceAvailable
 "Ledig plass: "
 # ^SpaceRequired
 "Naudsynt plass: "
 # ^UninstallingText
-Denne vegvisaren vil avinstallera $(^NameDA) frÃ¥ din datamaskin. $_CLICK
+Denne vegvisaren vil avinstallera $(^NameDA) frå din datamaskin. $_CLICK
 # ^UninstallingSubText
-Avinstallerer frÃ¥:
+Avinstallerer frå:
 # ^FileError
-Feil under opning av fil for skriving: \r\n\t\"$0\"\r\nTrykk Avbryt for Ã¥ avbryta installasjonen,\r\nPrÃ¸v igjen for Ã¥ prÃ¸va igjen, eller\r\nIgnorer for Ã¥ hoppa over denne fila
+Feil under opning av fil for skriving: \r\n\t\"$0\"\r\nTrykk Avbryt for å avbryta installasjonen,\r\nPrøv igjen for å prøva igjen, eller\r\nIgnorer for å hoppa over denne fila
 # ^FileError_NoIgnore
-Feil under opning av fil for skriving: \r\n\t\"$0\"\r\nTrykk PrÃ¸v igjen for Ã¥ prÃ¸va igjen, or\r\neller Avbryt for Ã¥ avbryta installasjonen
+Feil under opning av fil for skriving: \r\n\t\"$0\"\r\nTrykk Prøv igjen for å prøva igjen, or\r\neller Avbryt for å avbryta installasjonen
 # ^CantWrite
 "Kan ikkje skriva: "
 # ^CopyFailed
@@ -157,7 +157,7 @@ Feil under registrering av DLL
 # ^ExecShell
 "ExecShell: "
 # ^Exec
-"KÃ¸yra: "
+"Køyra: "
 # ^Extract
 "Pakk ut: "
 # ^ErrorWriting
@@ -179,13 +179,13 @@ Installasjonsprogrammet er skadd: ukjend kode
 # ^CopyDetails
 Kopier detaljar til utklyppstavla
 # ^LogInstall
-LoggfÃ¸r installasjonsprosessen
+Loggfør installasjonsprosessen
 # ^Byte
 B
 # ^Kilo
- K
+K
 # ^Mega
- M
+M
 # ^Giga
- G
+G
 

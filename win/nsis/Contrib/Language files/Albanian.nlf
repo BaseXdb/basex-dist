@@ -1,4 +1,4 @@
-ï»¿# Header, don't edit
+# Header, don't edit
 NLF v6
 # Start editing here
 # Language ID
@@ -6,37 +6,37 @@ NLF v6
 # Font and size - dash (-) means default
 -
 -
-# Codepage - dash (-) means ASCII code page
+# Codepage - dash (-) means ANSI code page
 1250
 # RTL - anything else than RTL means LTR
 -
-# PÃ«rkthimi nga Besnik Bleta, besnik@programeshqip.org
+# Përkthimi nga Besnik Bleta, besnik@programeshqip.org
 # ^Branding
-Nullsoft Install System %s
+Sistemi Nullsoft për Instalime %s
 # ^SetupCaption
 Rregullimi i $(^Name)
 # ^UninstallCaption
-Ã‡instalimi i $(^Name)
+Çinstalimi i $(^Name)
 # ^LicenseSubCaption
-: MarrÃ«veshje Licence
+: Marrëveshje Licence
 # ^ComponentsSubCaption
-: MundÃ«si Instalimi
+: Mundësi Instalimi
 # ^DirSubCaption
 : Dosje Instalimi
 # ^InstallingSubCaption
 : Po instalohet
 # ^CompletedSubCaption
-: U plotÃ«sua
+: U plotësua
 # ^UnComponentsSubCaption
-: MundÃ«si Ã‡instalimi
+: Mundësi Çinstalimi
 # ^UnDirSubCaption
-: Dosje Ã‡instalimi
+: Dosje Çinstalimi
 # ^ConfirmSubCaption
 : Ripohim
 # ^UninstallingSubCaption
-: Po Ã§instalohet
+: Po çinstalohet
 # ^UnCompletedSubCaption
-: U plotÃ«sua
+: U plotësua
 # ^BackBtn
 < &Mbrapsht
 # ^NextBtn
@@ -44,13 +44,13 @@ Rregullimi i $(^Name)
 # ^AgreeBtn
 &Pajtohem
 # ^AcceptBtn
-&I pranoj kushtet e MarrÃ«veshjes sÃ« LicensÃ«s
+&I pranoj kushtet e Marrëveshjes së Licensës
 # ^DontAcceptBtn
-&Nuk i pranoj kushtet e MarrÃ«veshjes sÃ« LicensÃ«s
+&Nuk i pranoj kushtet e Marrëveshjes së Licensës
 # ^InstallBtn
 &Instaloje
 # ^UninstallBtn
-&Ã‡instaloje
+&Çinstaloje
 # ^CancelBtn
 Anuloje
 # ^CloseBtn
@@ -58,81 +58,81 @@ Anuloje
 # ^BrowseBtn
 Sh&fletoni...
 # ^ShowDetailsBtn
-Shfaq &hollÃ«si
+Shfaq &hollësi
 # ^ClickNext
-Klikoni Tjetri pÃ«r tÃ« vazhduar.
+Klikoni Tjetri për të vazhduar.
 # ^ClickInstall
-PÃ«r tÃ« filluar instalimin klikoni Instaloje.
+Për të filluar instalimin klikoni Instaloje.
 # ^ClickUninstall
-PÃ«r tÃ« filluar Ã§instalimin klikoni Ã‡instaloje.
+Për të filluar çinstalimin klikoni Çinstaloje.
 # ^Name
-EmÃ«r
+Emër
 # ^Completed
-U plotÃ«sua
+U plotësua
 # ^LicenseText
-Ju lutem, para instalimit tÃ« $(^NameDA), shqyrtoni marrÃ«veshjen e licencÃ«s. NÃ«se i pranoni tÃ«rÃ« kushtet e marrÃ«veshjes, klikoni Pajtohem.
+Ju lutem, para instalimit të $(^NameDA), shqyrtoni marrëveshjen e licencës. Nëse i pranoni tërë kushtet e marrëveshjes, klikoni Pajtohem.
 # ^LicenseTextCB
-Ju lutem, para instalimit tÃ« $(^NameDA), shqyrtoni marrÃ«veshjen e licensÃ«s. NÃ«se i pranoni tÃ«rÃ« kushtet e marrÃ«veshjes, klikoni kutizÃ«n mÃ« poshtÃ«. $_CLICK
+Ju lutem, para instalimit të $(^NameDA), shqyrtoni marrëveshjen e licensës. Nëse i pranoni tërë kushtet e marrëveshjes, klikoni kutizën më poshtë. $_CLICK
 # ^LicenseTextRB
-Ju lutem, para instalimit tÃ« $(^NameDA), shqyrtoni marrÃ«veshjen e licensÃ«s. NÃ«se i pranoni tÃ«rÃ« kushtet e marrÃ«veshjes, pÃ«rzgjidhni mundÃ«sinÃ« e parÃ« mÃ« poshtÃ«. $_CLICK
+Ju lutem, para instalimit të $(^NameDA), shqyrtoni marrëveshjen e licensës. Nëse i pranoni tërë kushtet e marrëveshjes, përzgjidhni mundësinë e parë më poshtë. $_CLICK
 # ^UnLicenseText
-Ju lutem, para Ã§instalimit tÃ« $(^NameDA), shqyrtoni marrÃ«veshjen e licensÃ«s. NÃ«se i pranoni tÃ«rÃ« kushtet e marrÃ«veshjes, klikoni Pajtohem.
+Ju lutem, para çinstalimit të $(^NameDA), shqyrtoni marrëveshjen e licensës. Nëse i pranoni tërë kushtet e marrëveshjes, klikoni Pajtohem.
 # ^UnLicenseTextCB
-Ju lutem, para Ã§instalimit tÃ« $(^NameDA), shqyrtoni marrÃ«veshjen e licensÃ«s. NÃ«se i pranoni tÃ«rÃ« kushtet e marrÃ«veshjes, klikoni kutizÃ«n mÃ« poshtÃ«. $_CLICK
+Ju lutem, para çinstalimit të $(^NameDA), shqyrtoni marrëveshjen e licensës. Nëse i pranoni tërë kushtet e marrëveshjes, klikoni kutizën më poshtë. $_CLICK
 # ^UnLicenseTextRB
-Ju lutem, para Ã§instalimit tÃ« $(^NameDA), shqyrtoni marrÃ«veshjen e licensÃ«s. NÃ«se i pranoni tÃ«rÃ« kushtet e marrÃ«veshjes, pÃ«rzgjidhni mundÃ«sinÃ« e parÃ« mÃ« poshtÃ«. $_CLICK
+Ju lutem, para çinstalimit të $(^NameDA), shqyrtoni marrëveshjen e licensës. Nëse i pranoni tërë kushtet e marrëveshjes, përzgjidhni mundësinë e parë më poshtë. $_CLICK
 # ^Custom
 Vetjake
 # ^ComponentsText
-U vini shenjÃ« pÃ«rbÃ«rÃ«sve qÃ« doni tÃ« instalohen dhe hiquani shenjÃ«n  pÃ«rbÃ«rÃ«svet qÃ« nuk doni tÃ« instalohen. $_CLICK
+U vini shenjë përbërësve që doni të instalohen dhe hiquani shenjën  përbërësvet që nuk doni të instalohen. $_CLICK
 # ^ComponentsSubText1
-PÃ«rzgjidhni llojin e instalimit:
+Përzgjidhni llojin e instalimit:
 # ^ComponentsSubText2_NoInstTypes
-PÃ«rzgjidhni pÃ«rbÃ«rÃ«sit pÃ«r instalim:
+Përzgjidhni përbërësit për instalim:
 # ^ComponentsSubText2
-Ose, pÃ«rzgjidhni pÃ«rbÃ«rÃ«sit e mundshÃ«m qÃ« doni tÃ« instalohen:
+Ose, përzgjidhni përbërësit e mundshëm që doni të instalohen:
 # ^UnComponentsText
-U vini shenjÃ« pÃ«rbÃ«rÃ«sve qÃ« doni tÃ« Ã§instalohen dhe hiquni shenjÃ«n pÃ«rbÃ«rÃ«sve qÃ« nuk doni tÃ« Ã§instalohen. $_CLICK
+U vini shenjë përbërësve që doni të çinstalohen dhe hiquni shenjën përbërësve që nuk doni të çinstalohen. $_CLICK
 # ^UnComponentsSubText1
-PÃ«rzgjidhni llojin e Ã§instalimit:
+Përzgjidhni llojin e çinstalimit:
 # ^UnComponentsSubText2_NoInstTypes
-PÃ«rzgjidhni pÃ«rbÃ«rÃ«sit pÃ«r Ã§instalim:
+Përzgjidhni përbërësit për çinstalim:
 # ^UnComponentsSubText2
-Ose, pÃ«rzgjidhni pÃ«rbÃ«rÃ«sit e mundshÃ«m qÃ« doni tÃ« Ã§instalohen:
+Ose, përzgjidhni përbërësit e mundshëm që doni të çinstalohen:
 # ^DirText
-Rregullimi do ta instalojÃ« $(^NameDA) nÃ« dosjen vijuese. PÃ«r instalim nÃ« njÃ« dosje tjetÃ«r, klikoni Shfletoni dhe pÃ«rzgjidhni njÃ« tjetÃ«r dosje. $_CLICK
+Rregullimi do ta instalojë $(^NameDA) në dosjen vijuese. Për instalim në një dosje tjetër, klikoni Shfletoni dhe përzgjidhni një tjetër dosje. $_CLICK
 # ^DirSubText
-Dosje VendmbÃ«rritje
+Dosje Vendmbërritje
 # ^DirBrowseText
-PÃ«rzgjidhni dosjen ku tÃ« instalohet $(^NameDA):
+Përzgjidhni dosjen ku të instalohet $(^NameDA):
 # ^UnDirText
-Rregullimi do tÃ« Ã§instalojÃ« $(^NameDA) prej dosjes vijuese. PÃ«r Ã§instalim prej njÃ« dosjeje tjetÃ«r, klikoni Shfletoni dhe pÃ«rzgjidhni njÃ« tjetÃ«r dosje. $_CLICK
+Rregullimi do të çinstalojë $(^NameDA) prej dosjes vijuese. Për çinstalim prej një dosjeje tjetër, klikoni Shfletoni dhe përzgjidhni një tjetër dosje. $_CLICK
 # ^UnDirSubText
 ""
 # ^UnDirBrowseText
-PÃ«rzgjidhni dosjen prej nga ku tÃ« Ã§instalohet $(^NameDA):
+Përzgjidhni dosjen prej nga ku të çinstalohet $(^NameDA):
 # ^SpaceAvailable
-"HapÃ«sirÃ« e mundshme: "
+"Hapësirë e mundshme: "
 # ^SpaceRequired
-"HapÃ«sirÃ« e nevojshme: "
+"Hapësirë e nevojshme: "
 # ^UninstallingText
-$(^NameDA) do tÃ« Ã§instalohet prej dosjes vijuese. $_CLICK
+$(^NameDA) do të çinstalohet prej dosjes vijuese. $_CLICK
 # ^UninstallingSubText
-Po Ã§instalohet prej:
+Po çinstalohet prej:
 # ^FileError
-Gabim nÃ« hapje kartele pÃ«r shkrim: \r\n\r\n$0\r\n\r\nKlikoni NdÃ«rprite pÃ«r tÃ« ndalur instalimin,\r\nRiprovo pÃ«r tÃ« provuar sÃ«rish, ose\r\nShpÃ«rfille pÃ«r tÃ« sanashkaluar kÃ«tÃ« kartelÃ«.
+Gabim në hapje kartele për shkrim: \r\n\r\n$0\r\n\r\nKlikoni Ndërprite për të ndalur instalimin,\r\nRiprovo për të provuar sërish, ose\r\nShpërfille për të sanashkaluar këtë kartelë.
 # ^FileError_NoIgnore
-Gabim nÃ« hapje kartele pÃ«r shkrim: \r\n\r\n$0\r\n\r\nKlikoni Riprovo pÃ«r tÃ« provuar sÃ«rish, ose\r\nAnulo pÃ«r tÃ« ndalur instalimin.
+Gabim në hapje kartele për shkrim: \r\n\r\n$0\r\n\r\nKlikoni Riprovo për të provuar sërish, ose\r\nAnulo për të ndalur instalimin.
 # ^CantWrite
 "S'shkruaj dot: "
 # ^CopyFailed
-Kopjimi dÃ«shtoi
+Kopjimi dështoi
 # ^CopyTo
 "Kopjo tek "
 # ^Registering
 "Regjistrim: "
 # ^Unregistering
-"Ã‡regjistrim: "
+"Çregjistrim: "
 # ^SymbolNotFound
 "S'u gjet dot simbol: "
 # ^CouldNotLoad
@@ -142,50 +142,50 @@ Kopjimi dÃ«shtoi
 # ^CreateShortcut
 "Krijo shkurtore: "
 # ^CreatedUninstaller
-"Krijo Ã§instalues: "
+"Krijo çinstalues: "
 # ^Delete
-"Fshi kartelÃ«: "
+"Fshi kartelë: "
 # ^DeleteOnReboot
-"Fshi gjatÃ« rinisjes: "
+"Fshi gjatë rinisjes: "
 # ^ErrorCreatingShortcut
-"Gabim nÃ« krijim shkurtoresh: "
+"Gabim në krijim shkurtoresh: "
 # ^ErrorCreating
-"Gabim nÃ« krijimin e: "
+"Gabim në krijimin e: "
 # ^ErrorDecompressing
-Gabim nÃ« Ã§ngjeshje tÃ« dhÃ«nash! Instalues i dÃ«mtuar?
+Gabim në çngjeshje të dhënash! Instalues i dëmtuar?
 # ^ErrorRegistering
-Gabim nÃ« regjistrim DLL-je
+Gabim në regjistrim DLL-je
 # ^ExecShell
 "ExecShell: "
 # ^Exec
 "Ekzekuto: "
 # ^Extract
-"PÃ«rfto: "
+"Përfto: "
 # ^ErrorWriting
-"PÃ«rftim: gabim nÃ« shkrim te kartela "
+"Përftim: gabim në shkrim te kartela "
 # ^InvalidOpcode
-Instalues i dÃ«mtuar: opcode i pavlefshÃ«m
+Instalues i dëmtuar: opcode i pavlefshëm
 # ^NoOLE
-"Pa OLE pÃ«r: "
+"Pa OLE për: "
 # ^OutputFolder
-"Dosje pÃ«rfundimesh: "
+"Dosje përfundimesh: "
 # ^RemoveFolder
 "Hiq dosjen: "
 # ^RenameOnReboot
-"RiemÃ«rtoje gjatÃ« rinisjes: "
+"Riemërtoje gjatë rinisjes: "
 # ^Rename
-"RiemÃ«rtoje: "
+"Riemërtoje: "
 # ^Skipped
 "U anashkalua: "
 # ^CopyDetails
-Kopjo HollÃ«sira Te Clipboard
+Kopjo Hollësira Te Clipboard
 # ^LogInstall
 Regjistro procesin e instalimit
 # ^Byte
 B
 # ^Kilo
- K
+K
 # ^Mega
- M
+M
 # ^Giga
- G
+G

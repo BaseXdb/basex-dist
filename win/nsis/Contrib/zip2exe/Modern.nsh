@@ -1,6 +1,6 @@
 ;Change this file to customize zip2exe generated installers with a modern interface
 
-!include "MUI2.nsh"
+!include "MUI.nsh"
 
 !insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_INSTFILES

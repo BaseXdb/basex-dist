@@ -1,12 +1,12 @@
-ï»¿# Header, don't edit
+# Header, don't edit
 NLF v6
 # Start editing here
 # Language ID
-1039
+15
 # Font and size - dash (-) means default
 -
 -
-# Codepage - dash (-) means ASCII code page
+# Codepage - dash (-) means ANSI code page
 1252
 # RTL - anything else than RTL means LTR
 -
@@ -16,176 +16,176 @@ Nullsoft Install System %s
 # ^SetupCaption
 $(^Name) Uppsetning
 # ^UninstallCaption
-$(^Name) FjarlÃ¦ging
+$(^Name) Fjarlæging
 # ^LicenseSubCaption
 : Notandaleyfissamningur
 # ^ComponentsSubCaption
-: UppsetningarvalmÃ¶guleikar
+: Uppsetningarvalmöguleikar
 # ^DirSubCaption
-: UppsetningarskrÃ¡arsafn
+: Uppsetningarskráarsafn
 # ^InstallingSubCaption
 : Set upp
 # ^CompletedSubCaption
-: LokiÃ°
+: Lokiğ
 # ^UnComponentsSubCaption
-: FjarlÃ¦gingarvalmÃ¶guleikar
+: Fjarlægingarvalmöguleikar
 # ^UnDirSubCaption
-: FjarlÃ¦gingarskrÃ¡arsafn
+: Fjarlægingarskráarsafn
 # ^ConfirmSubCaption
-: StaÃ°festing
+: Stağfesting
 # ^UninstallingSubCaption
-: FjarlÃ¦gi
+: Fjarlægi
 # ^UnCompletedSubCaption
-: LokiÃ°
+: Lokiğ
 # ^BackBtn
 < &Til baka
 # ^NextBtn
-&Ãfram >
+&Áfram >
 # ^AgreeBtn
-Ã‰g &SamÃ¾ykki
+Ég &Samşykki
 # ^AcceptBtn
-Ã‰g &samÃ¾ykki skilmÃ¡la leyfissamningsins
+Ég &samşykki skilmála leyfissamningsins
 # ^DontAcceptBtn
-Ã‰g samÃ¾ykki &ekki skilmÃ¡la leyfissamningsins
+Ég samşykki &ekki skilmála leyfissamningsins
 # ^InstallBtn
 &Setja upp
 # ^UninstallBtn
-&FjarlÃ¦gja
+&Fjarlægja
 # ^CancelBtn
-HÃ¦tta viÃ°
+Hætta viğ
 # ^CloseBtn
 &Loka
 # ^BrowseBtn
 &Vafra...
 # ^ShowDetailsBtn
-SÃ½na &upplÃ½singar
+Sına &upplısingar
 # ^ClickNext
-Smelltu Ã¡ 'Ãfram' til aÃ° halda Ã¡fram.
+Smelltu á 'Áfram' til ağ halda áfram.
 # ^ClickInstall
-Smelltu Ã¡ 'Setja upp' til Ã¾ess aÃ° hefja uppsetninguna.
+Smelltu á 'Setja upp' til şess ağ hefja uppsetninguna.
 # ^ClickUninstall
-Smelltu Ã¡ 'FjarlÃ¦gja' til aÃ° hefja fjarlÃ¦gingar ferliÃ°.
+Smelltu á 'Fjarlægja' til ağ hefja fjarlægingar ferliğ.
 # ^Name
 Nafn
 # ^Completed
-LokiÃ°
+Lokiğ
 # ^LicenseText
-Vinsamlegast skoÃ°aÃ°u notandaleyfissamninginn vel Ã¡Ã°ur en uppsetning Ã¡ $(^NameDA) hefst. Ef Ã¾Ãº samÃ¾ykkir skilmÃ¡la samningsins, smelltu Ã¾Ã¡ Ã¡ 'Ã‰g samÃ¾ykki'.
+Vinsamlegast skoğağu notandaleyfissamninginn vel áğur en uppsetning á $(^NameDA) hefst. Ef şú samşykkir skilmála samningsins, smelltu şá á 'Ég samşykki'.
 # ^LicenseTextCB
-Vinsamlegast skoÃ°aÃ°u notandaleyfissamninginn vel Ã¡Ã°ur en uppsetning Ã¡ $(^NameDA) hefst. Ef Ã¾Ãº samÃ¾ykkir skilmÃ¡la samningsins, hakaÃ°u Ã¾Ã¡ Ã­ kassann hÃ©r aÃ° neÃ°an. $_CLICK
+Vinsamlegast skoğağu notandaleyfissamninginn vel áğur en uppsetning á $(^NameDA) hefst. Ef şú samşykkir skilmála samningsins, hakağu şá í kassann hér ağ neğan. $_CLICK
 # ^LicenseTextRB
-Vinsamlegast skoÃ°aÃ°u notandaleyfissamninginn vel Ã¡Ã°ur en uppsetning Ã¡ $(^NameDA) hefst. Ef Ã¾Ãº samÃ¾ykkir skilmÃ¡la samningsins, veldu Ã¾Ã¡ fyrsta valmÃ¶guleikann hÃ©r aÃ° neÃ°an. $_CLICK
+Vinsamlegast skoğağu notandaleyfissamninginn vel áğur en uppsetning á $(^NameDA) hefst. Ef şú samşykkir skilmála samningsins, veldu şá fyrsta valmöguleikann hér ağ neğan. $_CLICK
 # ^UnLicenseText
-Vinsamlegast skoÃ°aÃ°u notandaleyfissamninginn vel Ã¡Ã°ur en uppsetning Ã¡ $(^NameDA) hefst. Ef Ã¾Ãº samÃ¾ykkir skilmÃ¡la samningsins, smelltu Ã¾Ã¡ Ã¡ 'Ã‰g samÃ¾ykki'.
+Vinsamlegast skoğağu notandaleyfissamninginn vel áğur en uppsetning á $(^NameDA) hefst. Ef şú samşykkir skilmála samningsins, smelltu şá á 'Ég samşykki'.
 # ^UnLicenseTextCB
-Vinsamlegast skoÃ°aÃ°u notandaleyfissamninginn vel Ã¡Ã°ur en uppsetning Ã¡ $(^NameDA) hefst. Ef Ã¾Ãº samÃ¾ykkir skilmÃ¡la samningsins, hakaÃ°u Ã¾Ã¡ Ã­ kassann hÃ©r aÃ° neÃ°an. $_CLICK
+Vinsamlegast skoğağu notandaleyfissamninginn vel áğur en uppsetning á $(^NameDA) hefst. Ef şú samşykkir skilmála samningsins, hakağu şá í kassann hér ağ neğan. $_CLICK
 # ^UnLicenseTextRB
-Vinsamlegast skoÃ°aÃ°u notandaleyfissamninginn vel Ã¡Ã°ur en uppsetning Ã¡ $(^NameDA) hefst. Ef Ã¾Ãº samÃ¾ykkir skilmÃ¡la samningsins, veldu Ã¾Ã¡ fyrsta valmÃ¶guleikann hÃ©r aÃ° neÃ°an. $_CLICK
+Vinsamlegast skoğağu notandaleyfissamninginn vel áğur en uppsetning á $(^NameDA) hefst. Ef şú samşykkir skilmála samningsins, veldu şá fyrsta valmöguleikann hér ağ neğan. $_CLICK
 # ^Custom
-SjÃ¡lfval
+Sjálfval
 # ^ComponentsText
-HakaÃ°u viÃ° Ã¾Ã¡ Ã­hluti sem Ã¾Ãº vilt setja upp og taktu hakiÃ° af Ã¾eim Ã­hlutum sem Ã¾Ãº vilt ekki setja upp. $_CLICK
+Hakağu viğ şá íhluti sem şú vilt setja upp og taktu hakiğ af şeim íhlutum sem şú vilt ekki setja upp. $_CLICK
 # ^ComponentsSubText1
 Veldu tegund uppsetningar:
 # ^ComponentsSubText2_NoInstTypes
-Veldu Ã¾Ã¡ Ã­hluti sem Ã¡ aÃ° setja upp:
+Veldu şá íhluti sem á ağ setja upp:
 # ^ComponentsSubText2
-EÃ°a, veldu valfrjÃ¡lsa Ã­hluti Ã¡ aÃ° setja upp:
+Eğa, veldu valfrjálsa íhluti á ağ setja upp:
 # ^UnComponentsText
-HakaÃ°u viÃ° Ã¾Ã¡ Ã­hluti sem Ã¾Ãº vilt fjarlÃ¦gja og taktu hakiÃ° af Ã¾eim Ã­hlutum sem Ã¾Ãº vilt ekki fjarlÃ¦gja. $_CLICK
+Hakağu viğ şá íhluti sem şú vilt fjarlægja og taktu hakiğ af şeim íhlutum sem şú vilt ekki fjarlægja. $_CLICK
 # ^UnComponentsSubText1
-Veldu tegund fjarlÃ¦gingar:
+Veldu tegund fjarlægingar:
 # ^UnComponentsSubText2_NoInstTypes
-Veldu Ã­hluti sem Ã¡ aÃ° fjarlÃ¦gja:
+Veldu íhluti sem á ağ fjarlægja:
 # ^UnComponentsSubText2
-EÃ°a, veldu valfrjÃ¡lsa Ã­hluti sem Ã¡ aÃ° fjarlÃ¦gja:
+Eğa, veldu valfrjálsa íhluti sem á ağ fjarlægja:
 # ^DirText
-Uppsetningin mun setja $(^NameDA) upp Ã­ eftirfarandi skrÃ¡arsafn. Til aÃ° setja forritiÃ° upp Ã­ annaÃ° skrÃ¡arsafn, smelltu Ã¡ 'Vafra...' og veldu annaÃ° skrÃ¡arsafn. $_CLICK
+Uppsetningin mun setja $(^NameDA) upp í eftirfarandi skráarsafn. Til ağ setja forritiğ upp í annağ skráarsafn, smelltu á 'Vafra...' og veldu annağ skráarsafn. $_CLICK
 # ^DirSubText
-UppsetningarskrÃ¡arsafn
+Uppsetningarskráarsafn
 # ^DirBrowseText
-Veldu Ã¾aÃ° skrÃ¡arsafn sem Ã¾Ãº vilt setja $(^NameDA) upp Ã­:
+Veldu şağ skráarsafn sem şú vilt setja $(^NameDA) upp í:
 # ^UnDirText
-Uppsetningin mun fjarlÃ¦gja $(^NameDA) Ãºr eftirfarandi skrÃ¡arsafni. Til aÃ° fjarlÃ¦gja forritiÃ° Ãºr Ã¶Ã°ru skrÃ¡arsafni, smelltu Ã¡ 'Vafra...' og veldu annaÃ° skrÃ¡arsafn. $_CLICK
+Uppsetningin mun fjarlægja $(^NameDA) úr eftirfarandi skráarsafni. Til ağ fjarlægja forritiğ úr öğru skráarsafni, smelltu á 'Vafra...' og veldu annağ skráarsafn. $_CLICK
 # ^UnDirSubText
-"FjarlÃ¦gingarskrÃ¡arsafn"
+"Fjarlægingarskráarsafn"
 # ^UnDirBrowseText
-Veldu Ã¾aÃ° skrÃ¡arsafn sem Ã¾Ãº vilt fjarlÃ¦gja $(^NameDA) Ãºr:
+Veldu şağ skráarsafn sem şú vilt fjarlægja $(^NameDA) úr:
 # ^SpaceAvailable
-"TiltÃ¦kt rÃ½mi: "
+"Tiltækt rımi: "
 # ^SpaceRequired
-"NauÃ°synlegt rÃ½mi: "
+"Nauğsynlegt rımi: "
 # ^UninstallingText
-$(^NameDA) verÃ°ur fjarlÃ¦gt Ãºr eftirfarandi skrÃ¡arsafni. $_CLICK
+$(^NameDA) verğur fjarlægt úr eftirfarandi skráarsafni. $_CLICK
 # ^UninstallingSubText
-FjarlÃ¦gi Ãºr:
+Fjarlægi úr:
 # ^FileError
-Villa viÃ° aÃ° skrifa Ã­ skrÃ¡: \r\n\r\n$0\r\n\r\nSmelltu Ã¡ 'HÃ¦tta viÃ°' til aÃ° stoppa uppsetninguna,\r\n'Reyna aftur' til aÃ° gera aÃ°ra tilraun, eÃ°a\r\n'Hunsa' til sleppa Ã¾essari skrÃ¡.
+Villa viğ ağ skrifa í skrá: \r\n\r\n$0\r\n\r\nSmelltu á 'Hætta viğ' til ağ stoppa uppsetninguna,\r\n'Reyna aftur' til ağ gera ağra tilraun, eğa\r\n'Hunsa' til sleppa şessari skrá.
 # ^FileError_NoIgnore
-Villa viÃ° aÃ° skrifa Ã­ skrÃ¡: \r\n\r\n$0\r\n\r\nSmelltu Ã¡ 'Reyna aftur' til aÃ° gera aÃ°ra tilraun, eÃ°a\r\n'HÃ¦tta viÃ°' til aÃ° stoppa uppsetninguna.
+Villa viğ ağ skrifa í skrá: \r\n\r\n$0\r\n\r\nSmelltu á 'Reyna aftur' til ağ gera ağra tilraun, eğa\r\n'Hætta viğ' til ağ stoppa uppsetninguna.
 # ^CantWrite
-"Get ei skrifaÃ°: "
+"Get ei skrifağ: "
 # ^CopyFailed
-Afritun mistÃ³kst
+Afritun mistókst
 # ^CopyTo
 "Afrita til "
 # ^Registering
-"SkrÃ¡setja: "
+"Skrásetja: "
 # ^Unregistering
-"AfskrÃ¡: "
+"Afskrá: "
 # ^SymbolNotFound
-"Fann ekki tÃ¡kn: "
+"Fann ekki tákn: "
 # ^CouldNotLoad
-"Gat ekki hlaÃ°iÃ° inn: "
+"Gat ekki hlağiğ inn: "
 # ^CreateFolder
-"BÃºa til skrÃ¡arsafn: "
+"Búa til skráarsafn: "
 # ^CreateShortcut
-"BÃºa til flÃ½tileiÃ°: "
+"Búa til flıtileiğ: "
 # ^CreatedUninstaller
-"BjÃ³ til fjarlÃ¦gingarhjÃ¡lp: "
+"Bjó til fjarlægingarhjálp: "
 # ^Delete
-"EyÃ°a skrÃ¡: "
+"Eyğa skrá: "
 # ^DeleteOnReboot
-"EyÃ°a viÃ° endurrÃ¦singu: "
+"Eyğa viğ endurræsingu: "
 # ^ErrorCreatingShortcut
-"Villa viÃ° gerÃ° flÃ½tileiÃ°ar: "
+"Villa viğ gerğ flıtileiğar: "
 # ^ErrorCreating
-"Villa viÃ° gerÃ°: "
+"Villa viğ gerğ: "
 # ^ErrorDecompressing
-Villa viÃ° afÃ¾jÃ¶ppun gagna! BiluÃ° uppsetningarhjÃ¡lp?
+Villa viğ afşjöppun gagna! Biluğ uppsetningarhjálp?
 # ^ErrorRegistering
-Villa viÃ° skrÃ¡setningu DLL
+Villa viğ skrásetningu DLL
 # ^ExecShell
 "Keyrslugluggi: "
 # ^Exec
 "Keyra: "
 # ^Extract
-"FÃ¦ra Ãºt: "
+"Færa út: "
 # ^ErrorWriting
-"FÃ¦ra Ãºt: villa viÃ° aÃ° skrifa Ã­ skrÃ¡ "
+"Færa út: villa viğ ağ skrifa í skrá "
 # ^InvalidOpcode
-UppsetningarhjÃ¡lp biluÃ°: rangur stÃ½rikÃ³Ã°i
+Uppsetningarhjálp biluğ: rangur stırikóği
 # ^NoOLE
 "Engin OLE fyrir: "
 # ^OutputFolder
-"ÃštskrÃ¡arsafn: "
+"Útskráarsafn: "
 # ^RemoveFolder
-"FjarlÃ¦gja skrÃ¡arsafn: "
+"Fjarlægja skráarsafn: "
 # ^RenameOnReboot
-"EndurskÃ­ra viÃ° endurrÃ¦singu: "
+"Endurskíra viğ endurræsingu: "
 # ^Rename
-"EndurskÃ­ra: "
+"Endurskíra: "
 # ^Skipped
 "Sleppt: "
 # ^CopyDetails
-Afrita upplÃ½singar til skrifbrettis
+Afrita upplısingar til skrifbrettis
 # ^LogInstall
-SkrÃ¡ uppsetningarferli
+Skrá uppsetningarferli
 # ^Byte
 B
 # ^Kilo
- K
+K
 # ^Mega
- M
+M
 # ^Giga
- G
+G

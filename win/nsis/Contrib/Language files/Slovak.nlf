@@ -1,190 +1,190 @@
-ï»¿# Header, don't edit
+# Header, don't edit
 NLF v6
 # Language ID
 1051
 # Font and size - dash (-) means default
 -
 -
-# Codepage - dash (-) means ASCII code page
+# Codepage - dash (-) means ANSI code page
 1250
 # RTL - anything else than RTL means LTR
 -
-#Translated by: Kypec (peter.dzugas@mahe.sk); edited by: MariÃ¡n HikanÃ­k (podnety@mojepreklady.net), Ivan MasÃ¡r <helix84@centrum.sk>, 2008.
+#Translated by: Kypec (peter.dzugas@mahe.sk); edited by: Marián Hikaník (podnety@mojepreklady.net), Ivan Masár <helix84@centrum.sk>, 2008.
 # ^Branding
 Nullsoft Install System %s
 # ^SetupCaption
-InÅ¡talÃ¡cia programu $(^Name)
+Inštalácia programu $(^Name)
 # ^UninstallCaption
-OdinÅ¡talovanie programu $(^Name)
+Odinštalovanie programu $(^Name)
 # ^LicenseSubCaption
-: LicenÄnÃ¡ zmluva
+: Licenèná zmluva
 # ^ComponentsSubCaption
-: MoÅ¾nosti inÅ¡talÃ¡cie
+: Monosti inštalácie
 # ^DirSubCaption
-: InÅ¡talaÄnÃ½ prieÄinok
+: Inštalaènı prieèinok
 # ^InstallingSubCaption
-: Prebieha inÅ¡talÃ¡cia
+: Prebieha inštalácia
 # ^CompletedSubCaption
 : Hotovo
 # ^UnComponentsSubCaption
-: MoÅ¾nosti odinÅ¡talovania
+: Monosti odinštalovania
 # ^UnDirSubCaption
-: PrieÄinok s informÃ¡ciami pre odinÅ¡talovanie
+: Prieèinok s informáciami pre odinštalovanie
 # ^ConfirmSubCaption
 : Potvrdenie
 # ^UninstallingSubCaption
-: Prebieha odinÅ¡talÃ¡cia
+: Prebieha odinštalácia
 # ^UnCompletedSubCaption
 : Hotovo
 # ^BackBtn
-< &SpÃ¤Å¥
+< &Spä
 # ^NextBtn
-Ä&alej >
+Ï&alej >
 # ^AgreeBtn
-&SÃºhlasÃ­m
+&Súhlasím
 # ^AcceptBtn
-&SÃºhlasÃ­m s podmienkami licenÄnej zmluvy
+&Súhlasím s podmienkami licenènej zmluvy
 # ^DontAcceptBtn
-N&esÃºhlasÃ­m s podmienkami licenÄnej zmluvy
+N&esúhlasím s podmienkami licenènej zmluvy
 # ^InstallBtn
-&NainÅ¡talovaÅ¥
+&Nainštalova
 # ^UninstallBtn
-&OdinÅ¡talovaÅ¥
+&Odinštalova
 # ^CancelBtn
-ZruÅ¡iÅ¥
+Zruši
 # ^CloseBtn
-&ZatvoriÅ¥
+&Zatvori
 # ^BrowseBtn
-&PrehÄ¾adÃ¡vaÅ¥...
+&Preh¾adáva...
 # ^ShowDetailsBtn
 &Podrobnosti
 # ^ClickNext
-V inÅ¡talÃ¡cii pokraÄujte kliknutÃ­m na tlaÄidlo Äalej.
+V inštalácii pokraèujte kliknutím na tlaèidlo Ïalej.
 # ^ClickInstall
-Pre spustenie inÅ¡talÃ¡cie kliknite na tlaÄidlo NainÅ¡talovaÅ¥.
+Pre spustenie inštalácie kliknite na tlaèidlo Nainštalova.
 # ^ClickUninstall
-Pre spustenie procesu odinÅ¡talovania kliknite na tlaÄidlo OdinÅ¡talovaÅ¥.
+Pre spustenie procesu odinštalovania kliknite na tlaèidlo Odinštalova.
 # ^Name
-NÃ¡zov
+Názov
 # ^Completed
 Hotovo
 # ^LicenseText
-Pred inÅ¡talÃ¡ciou programu si prosÃ­m dÃ´kladne preÄÃ­tajte licenÄnÃº zmluvu $(^NameDA). Ak sÃºhlasÃ­te so vÅ¡etkÃ½mi jej podmienkami, kliknite na tlaÄidlo SÃºhlasÃ­m.
+Pred inštaláciou programu si prosím dôkladne preèítajte licenènú zmluvu $(^NameDA). Ak súhlasíte so všetkımi jej podmienkami, kliknite na tlaèidlo Súhlasím.
 # ^LicenseTextCB
-Pred inÅ¡talÃ¡ciou programu si prosÃ­m dÃ´kladne preÄÃ­tajte licenÄnÃº zmluvu $(^NameDA). Ak sÃºhlasÃ­te so vÅ¡etkÃ½mi jej podmienkami, zaÅ¡krtnite nasledujÃºce polÃ­Äko. $_CLICK
+Pred inštaláciou programu si prosím dôkladne preèítajte licenènú zmluvu $(^NameDA). Ak súhlasíte so všetkımi jej podmienkami, zaškrtnite nasledujúce políèko. $_CLICK
 # ^LicenseTextRB
-Pred inÅ¡talÃ¡ciou programu si prosÃ­m dÃ´kladne preÄÃ­tajte licenÄnÃº zmluvu $(^NameDA). Ak sÃºhlasÃ­te so vÅ¡etkÃ½mi jej podmienkami, oznaÄte prvÃº z nasledujÃºcich moÅ¾nostÃ­. $_CLICK
+Pred inštaláciou programu si prosím dôkladne preèítajte licenènú zmluvu $(^NameDA). Ak súhlasíte so všetkımi jej podmienkami, oznaète prvú z nasledujúcich moností. $_CLICK
 # ^UnLicenseText
-Pred odinÅ¡talovanÃ­m programu si prosÃ­m dÃ´kladne preÄÃ­tajte licenÄnÃº zmluvu $(^NameDA). Ak sÃºhlasÃ­te so vÅ¡etkÃ½mi jej podmienkami, kliknite na tlaÄidlo SÃºhlasÃ­m.
+Pred odinštalovaním programu si prosím dôkladne preèítajte licenènú zmluvu $(^NameDA). Ak súhlasíte so všetkımi jej podmienkami, kliknite na tlaèidlo Súhlasím.
 # ^UnLicenseTextCB
-Pred odinÅ¡talovanÃ­m programu si prosÃ­m dÃ´kladne preÄÃ­tajte licenÄnÃº zmluvu $(^NameDA). Ak sÃºhlasÃ­te so vÅ¡etkÃ½mi jej podmienkami, zaÅ¡krtnite nasledujÃºce polÃ­Äko. $_CLICK
+Pred odinštalovaním programu si prosím dôkladne preèítajte licenènú zmluvu $(^NameDA). Ak súhlasíte so všetkımi jej podmienkami, zaškrtnite nasledujúce políèko. $_CLICK
 # ^UnLicenseTextRB
-Pred odinÅ¡talovanÃ­m programu si prosÃ­m dÃ´kladne preÄÃ­tajte licenÄnÃº zmluvu $(^NameDA). Ak sÃºhlasÃ­te so vÅ¡etkÃ½mi jej podmienkami, oznaÄte prvÃº z nasledujÃºcich moÅ¾nostÃ­. $_CLICK
+Pred odinštalovaním programu si prosím dôkladne preèítajte licenènú zmluvu $(^NameDA). Ak súhlasíte so všetkımi jej podmienkami, oznaète prvú z nasledujúcich moností. $_CLICK
 # ^Custom
-VoliteÄ¾nÃ¡
+Volite¾ná
 # ^ComponentsText
-OznaÄte sÃºÄasti programu, ktorÃ© chcete nainÅ¡talovaÅ¥ a odznaÄte tie, ktorÃ© nainÅ¡talovaÅ¥ nechcete. $_CLICK
+Oznaète súèasti programu, ktoré chcete nainštalova a odznaète tie, ktoré nainštalova nechcete. $_CLICK
 # ^ComponentsSubText1
-Vyberte si typ inÅ¡talÃ¡cie:
+Vyberte si typ inštalácie:
 # ^ComponentsSubText2_NoInstTypes
-Vyberte si tie sÃºÄasti programu, ktorÃ© chcete nainÅ¡talovaÅ¥:
+Vyberte si tie súèasti programu, ktoré chcete nainštalova:
 # ^ComponentsSubText2
-Alebo oznaÄte voliteÄ¾nÃ© doplnky, ktorÃ© chcete nainÅ¡talovaÅ¥:
+Alebo oznaète volite¾né doplnky, ktoré chcete nainštalova:
 # ^UnComponentsText
-OznaÄte sÃºÄasti programu, ktorÃ© chcete odinÅ¡talovaÅ¥ a odznaÄte tie, ktorÃ© chcete ponechaÅ¥ nainÅ¡talovanÃ©. $_CLICK
+Oznaète súèasti programu, ktoré chcete odinštalova a odznaète tie, ktoré chcete ponecha nainštalované. $_CLICK
 # ^UnComponentsSubText1
-ZvoÄ¾te typ deinÅ¡talÃ¡cie:
+Zvo¾te typ deinštalácie:
 # ^UnComponentsSubText2_NoInstTypes
-Vyberte sÃºÄasti, ktorÃ© chcete odinÅ¡talovaÅ¥:
+Vyberte súèasti, ktoré chcete odinštalova:
 # ^UnComponentsSubText2
-Alebo oznaÄte voliteÄ¾nÃ© sÃºÄasti, ktorÃ© chcete odinÅ¡talovaÅ¥:
+Alebo oznaète volite¾né súèasti, ktoré chcete odinštalova:
 # ^DirText
-$(^NameDA) bude nainÅ¡talovanÃ½ do nasledujÃºceho prieÄinka. InÅ¡talovaÅ¥ do inÃ©ho prieÄinka mÃ´Å¾ete po kliknutÃ­ na tlaÄidlo PrehÄ¾adÃ¡vaÅ¥ a vybranÃ­ inÃ©ho prieÄinka. $_CLICK
+$(^NameDA) bude nainštalovanı do nasledujúceho prieèinka. Inštalova do iného prieèinka môete po kliknutí na tlaèidlo Preh¾adáva a vybraní iného prieèinka. $_CLICK
 # ^DirSubText
-CieÄ¾ovÃ½ prieÄinok
+Cie¾ovı prieèinok
 # ^DirBrowseText
-ZvoÄ¾te prieÄinok, do ktorÃ©ho sa nainÅ¡taluje program $(^NameDA):
+Zvo¾te prieèinok, do ktorého sa nainštaluje program $(^NameDA):
 # ^UnDirText
-InÅ¡talÃ¡tor odinÅ¡taluje program $(^NameDA) z nasledovnÃ©ho prieÄinka. Ak ho chcete odinÅ¡talovaÅ¥ z inÃ©ho prieÄinka, kliknite na tlaÄidlo PrehÄ¾adÃ¡vaÅ¥ a vyberte inÃ½ prieÄinok. $_CLICK
+Inštalátor odinštaluje program $(^NameDA) z nasledovného prieèinka. Ak ho chcete odinštalova z iného prieèinka, kliknite na tlaèidlo Preh¾adáva a vyberte inı prieèinok. $_CLICK
 # ^UnDirSubText
 ""
 # ^UnDirBrowseText
-ZvoÄ¾te prieÄinok, z ktorÃ©ho sa odinÅ¡taluje program $(^NameDA):
+Zvo¾te prieèinok, z ktorého sa odinštaluje program $(^NameDA):
 # ^SpaceAvailable
-"VoÄ¾nÃ© miesto na disku: "
+"Vo¾né miesto na disku: "
 # ^SpaceRequired
-"PotrebnÃ© miesto na disku: "
+"Potrebné miesto na disku: "
 # ^UninstallingText
-Program $(^NameDA) sa odinÅ¡taluje z nasledovnÃ©ho prieÄinka. $_CLICK
+Program $(^NameDA) sa odinštaluje z nasledovného prieèinka. $_CLICK
 # ^UninstallingSubText
-Prebieha odinÅ¡talovanie z:
+Prebieha odinštalovanie z:
 # ^FileError
-Chyba pri otvÃ¡ranÃ­ sÃºboru na zÃ¡pis: \r\n\r\n$0\r\n\r\n. Ak chcete inÅ¡talÃ¡ciu ukonÄiÅ¥, kliknite na tlaÄidlo UkonÄiÅ¥,\r\ ak chcete zÃ¡pis sÃºboru zopakovaÅ¥, kliknite na tlaÄidlo OpakovaÅ¥ alebo kliknite na tlaÄidlo \r\nIgnorovaÅ¥, ak chcete inÅ¡talÃ¡ciu tohto sÃºboru vynechaÅ¥.
+Chyba pri otváraní súboru na zápis: \r\n\r\n$0\r\n\r\n. Ak chcete inštaláciu ukonèi, kliknite na tlaèidlo Ukonèi,\r\ ak chcete zápis súboru zopakova, kliknite na tlaèidlo Opakova alebo kliknite na tlaèidlo \r\nIgnorova, ak chcete inštaláciu tohto súboru vynecha.
 # ^FileError_NoIgnore
-Chyba pri otvÃ¡ranÃ­ sÃºboru na zÃ¡pis: \r\n\r\n$0\r\n\r\n. Ak chcete zopakovaÅ¥ zÃ¡pis sÃºboru, kliknite na tlaÄidlo OpakovaÅ¥, alebo kliknite na tlaÄidlo \r\nZruÅ¡iÅ¥, v prÃ­pade, Å¾e chcete inÅ¡talÃ¡ciu ukonÄiÅ¥.
+Chyba pri otváraní súboru na zápis: \r\n\r\n$0\r\n\r\n. Ak chcete zopakova zápis súboru, kliknite na tlaèidlo Opakova, alebo kliknite na tlaèidlo \r\nZruši, v prípade, e chcete inštaláciu ukonèi.
 # ^CantWrite
-"NemoÅ¾no zapÃ­saÅ¥ sÃºbor: "
+"Nemono zapísa súbor: "
 # ^CopyFailed
-KopÃ­rovanie zlyhalo.
+Kopírovanie zlyhalo.
 # ^CopyTo
-"KopÃ­rovaÅ¥ do "
+"Kopírova do "
 # ^Registering
 "Registruje sa: "
 # ^Unregistering
-"VymazÃ¡va sa z registra: "
+"Vymazáva sa z registra: "
 # ^SymbolNotFound
-"NemoÅ¾no nÃ¡jsÅ¥ symbol: "
+"Nemono nájs symbol: "
 # ^CouldNotLoad
-"NemoÅ¾no naÄÃ­taÅ¥: "
+"Nemono naèíta: "
 # ^CreateFolder
-"VytvorenÃ½ prieÄinok: "
+"Vytvorenı prieèinok: "
 # ^CreateShortcut
-"VytvorenÃ½ odkaz: "
+"Vytvorenı odkaz: "
 # ^CreatedUninstaller
-"Program pre odinÅ¡talovanie: "
+"Program pre odinštalovanie: "
 # ^Delete
-"VymazanÃ½ sÃºbor: "
+"Vymazanı súbor: "
 # ^DeleteOnReboot
-"VymazaÅ¥ po reÅ¡tartovanÃ­ systÃ©mu: "
+"Vymaza po reštartovaní systému: "
 # ^ErrorCreatingShortcut
-"Chyba pri vytvÃ¡ranÃ­ odkazu: "
+"Chyba pri vytváraní odkazu: "
 # ^ErrorCreating
-"Chyba pri vytvÃ¡ranÃ­: "
+"Chyba pri vytváraní: "
 # ^ErrorDecompressing
-Chyba pri dekomprimovanÃ­ dÃ¡t! InÅ¡talÃ¡tor je pravdepodobne poÅ¡kodenÃ½...
+Chyba pri dekomprimovaní dát! Inštalátor je pravdepodobne poškodenı...
 # ^ErrorRegistering
-Chyba pri registrÃ¡cii sÃºÄasti
+Chyba pri registrácii súèasti
 # ^ExecShell
-"VykonaÅ¥ prÃ­kaz: "
+"Vykona príkaz: "
 # ^Exec
-"SpustiÅ¥: "
+"Spusti: "
 # ^Extract
 "Extrahuje sa: "
 # ^ErrorWriting
-"Chyba pri zÃ¡pise do sÃºboru "
+"Chyba pri zápise do súboru "
 # ^InvalidOpcode
-InÅ¡talÃ¡tor je pravdepodobne poÅ¡kodenÃ½, pretoÅ¾e obsahuje neplatnÃ½ operaÄnÃ½ kÃ³d.
+Inštalátor je pravdepodobne poškodenı, pretoe obsahuje neplatnı operaènı kód.
 # ^NoOLE
-"Å½iadny zÃ¡pis OLE pre: "
+"iadny zápis OLE pre: "
 # ^OutputFolder
-"VÃ½stupnÃ½ prieÄinok: "
+"Vıstupnı prieèinok: "
 # ^RemoveFolder
-"OdstrÃ¡niÅ¥ prieÄinok: "
+"Odstráni prieèinok: "
 # ^RenameOnReboot
-"PremenovaÅ¥ po reÅ¡tartovanÃ­ systÃ©mu: "
+"Premenova po reštartovaní systému: "
 # ^Rename
-"PremenovaÅ¥: "
+"Premenova: "
 # ^Skipped
-"VynechanÃ©: "
+"Vynechané: "
 # ^CopyDetails
-SkopÃ­rovaÅ¥ podrobnosti do schrÃ¡nky
+Skopírova podrobnosti do schránky
 # ^LogInstall
-ZaznamenaÅ¥ priebeh inÅ¡talÃ¡cie
+Zaznamena priebeh inštalácie
 # ^Byte
 B
 # ^Kilo
- K
+K
 # ^Mega
- M
+M
 # ^Giga
- G
+G

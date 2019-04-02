@@ -60,30 +60,26 @@ Example:
   ;Advance counter
 
   StrCpy $R0 0
-  ReadRegDWORD $R0 HKLM "Software\NSIS.Library.RegTool.v3\UpgradeDLLSession" "count"
+  ReadRegDWORD $R0 HKLM "Software\NSIS.Library.RegTool.v2\UpgradeDLLSession" "count"
   IntOp $R0 $R0 + 1
-  WriteRegDWORD HKLM "Software\NSIS.Library.RegTool.v3\UpgradeDLLSession" "count" "$R0"
+  WriteRegDWORD HKLM "Software\NSIS.Library.RegTool.v2\UpgradeDLLSession" "count" "$R0"
 
   ;------------------------
   ;Setup RegTool
 
-  !if ! /FileExists "${NSISDIR}\Bin\RegTool-${NSIS_CPU}.bin"
-    !error "Missing RegTool for ${NSIS_CPU}!"
-  !endif
-
-  ReadRegStr $R3 HKLM "Software\Microsoft\Windows\CurrentVersion\RunOnce" "NSIS.Library.RegTool.v3"
+  ReadRegStr $R3 HKLM "Software\Microsoft\Windows\CurrentVersion\RunOnce" "NSIS.Library.RegTool.v2"
   StrCpy $R3 $R3 -4 1
   IfFileExists $R3 +3
 
-    File /oname=$R2\NSIS.Library.RegTool.v3.$HWNDPARENT.exe "${NSISDIR}\Bin\RegTool-${NSIS_CPU}.bin"
+    File /oname=$R2\NSIS.Library.RegTool.v2.$HWNDPARENT.exe "${NSISDIR}\Bin\RegTool.bin"
     WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\RunOnce" \
-      "NSIS.Library.RegTool.v3" '"$R2\NSIS.Library.RegTool.v3.$HWNDPARENT.exe" /S'
+      "NSIS.Library.RegTool.v2" '"$R2\NSIS.Library.RegTool.v2.$HWNDPARENT.exe" /S'
 
   ;------------------------
   ;Add RegTool entry
 
-  WriteRegStr HKLM "Software\NSIS.Library.RegTool.v3\UpgradeDLLSession" "$R0.file" "$R1"
-  WriteRegStr HKLM "Software\NSIS.Library.RegTool.v3\UpgradeDLLSession" "$R0.mode" "${mode}"
+  WriteRegStr HKLM "Software\NSIS.Library.RegTool.v2\UpgradeDLLSession" "$R0.file" "$R1"
+  WriteRegStr HKLM "Software\NSIS.Library.RegTool.v2\UpgradeDLLSession" "$R0.mode" "${mode}"
 
   Pop $R3
   Pop $R2
@@ -106,8 +102,8 @@ Example:
   SetOverwrite try
 
   ;------------------------
-  ;Copy the macro parameters to a run-time to a variable, 
-  ;this allows the usage of variables as parameter
+  ;Copy the parameters used on run-time to a variable
+  ;This allows the usage of variables as paramter
 
   StrCpy $R4 "${DESTFILE}"
   StrCpy $R5 "${TEMPBASEDIR}"

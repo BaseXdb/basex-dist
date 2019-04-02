@@ -1,21 +1,21 @@
-ï»¿# Header, don't edit
+# Header, don't edit
 NLF v6
 # Language ID
 1031
 # Font and size - dash (-) means default
 -
 -
-# Codepage - dash (-) means ASCII code page
+# Codepage - dash (-) means ANSI code page
 1252
 # RTL - anything else than RTL means LTR
 -
-# Translation by L.King, changes by R. Bisswanger, Tim Kosse, Frederik Schwarzer
+# Translation by L.King, changes by R. Bisswanger, Tim Kosse
 # ^Branding
 Nullsoft Install System %s
 # ^SetupCaption
-Installation von $(^Name)
+$(^Name) Installation
 # ^UninstallCaption
-Deinstallation von $(^Name)
+$(^Name) Deinstallation
 # ^LicenseSubCaption
 : Lizenzabkommen
 # ^ComponentsSubCaption
@@ -23,7 +23,7 @@ Deinstallation von $(^Name)
 # ^DirSubCaption
 : Zielverzeichnis
 # ^InstallingSubCaption
-: Wird installiert
+: Installiere
 # ^CompletedSubCaption
 : Fertig
 # ^UnComponentsSubCaption
@@ -31,21 +31,21 @@ Deinstallation von $(^Name)
 # ^UnDirSubCaption
 : Quellverzeichnis
 # ^ConfirmSubCaption
-: BestÃ¤tigung
+: Bestätigung
 # ^UninstallingSubCaption
-: Wird entfernt
+: Entferne
 # ^UnCompletedSubCaption
 : Fertig
 # ^BackBtn
-< &ZurÃ¼ck
+< &Zurück
 # ^NextBtn
 &Weiter >
 # ^AgreeBtn
 &Annehmen
 # ^AcceptBtn
-Lizenzabkommen &akzeptieren
+Ich &akzeptiere das Lizenzabkommen.
 # ^DontAcceptBtn
-Lizenzabkommen ab&lehnen
+Ich &lehne das Lizenzabkommen ab.
 # ^InstallBtn
 &Installieren
 # ^UninstallBtn
@@ -55,7 +55,7 @@ Abbrechen
 # ^CloseBtn
 &Beenden
 # ^BrowseBtn
-&Durchsuchen ...
+&Durchsuchen...
 # ^ShowDetailsBtn
 &Details anzeigen
 # ^ClickNext
@@ -71,111 +71,111 @@ Fertig
 # ^LicenseText
 Bitte lesen Sie das Lizenzabkommen, bevor Sie $(^NameDA) installieren. Wenn Sie alle Bedingungen des Abkommens akzeptieren, klicken Sie auf Annehmen.
 # ^LicenseTextCB
-Bitte lesen Sie das Lizenzabkommen, bevor Sie $(^NameDA) installieren. Wenn Sie alle Bedingungen des Abkommens akzeptieren, aktivieren Sie das KontrollkÃ¤stchen. $_CLICK
+Bitte lesen Sie das Lizenzabkommen, bevor Sie $(^NameDA) installieren. Wenn Sie alle Bedingungen des Abkommens akzeptieren, aktivieren Sie das Kontrollkästchen. $_CLICK
 # ^LicenseTextRB
-Bitte lesen Sie das Lizenzabkommen, bevor Sie $(^NameDA) installieren. Wenn Sie alle Bedingungen des Abkommens akzeptieren, wÃ¤hlen Sie die entsprechende Option. $_CLICK
+Bitte lesen Sie das Lizenzabkommen, bevor Sie $(^NameDA) installieren. Wenn Sie alle Bedingungen des Abkommens akzeptieren, wählen Sie die entsprechende Option. $_CLICK
 # ^UnLicenseText
 Bitte lesen Sie das Lizenzabkommen, bevor Sie $(^NameDA) entfernen. Wenn Sie alle Bedingungen des Abkommens akzeptieren, klicken Sie auf Annehmen.
 # ^UnLicenseTextCB
-Bitte lesen Sie das Lizenzabkommen, bevor Sie $(^NameDA) entfernen. Wenn Sie alle Bedingungen des Abkommens akzeptieren, aktivieren Sie das KontrollkÃ¤stchen. $_CLICK
+Bitte lesen Sie das Lizenzabkommen, bevor Sie $(^NameDA) entfernen. Wenn Sie alle Bedingungen des Abkommens akzeptieren, aktivieren Sie das Kontrollkästchen. $_CLICK
 # ^UnLicenseTextRB
-Bitte lesen Sie das Lizenzabkommen, bevor Sie $(^NameDA) entfernen. Wenn Sie alle Bedingungen des Abkommens akzeptieren, wÃ¤hlen Sie die entsprechende Option. $_CLICK
+Bitte lesen Sie das Lizenzabkommen, bevor Sie $(^NameDA) entfernen. Wenn Sie alle Bedingungen des Abkommens akzeptieren, wählen Sie die entsprechende Option. $_CLICK
 # ^Custom
 Benutzerdefiniert
 # ^ComponentsText
-WÃ¤hlen Sie die Komponenten aus, die Sie installieren mÃ¶chten, und wÃ¤hlen Sie diejenigen ab, die Sie nicht installiert werden sollen. $_CLICK
+Wählen Sie die Komponenten aus, die Sie installieren möchten und wählen Sie diejenigen ab, die Sie nicht installieren wollen. $_CLICK
 # ^ComponentsSubText1
 Installations-Typ bestimmen:
 # ^ComponentsSubText2_NoInstTypes
-WÃ¤hlen Sie die Komponenten aus, die Sie installieren mÃ¶chten:
+Wählen Sie die Komponenten aus, die Sie installieren möchten:
 # ^ComponentsSubText2
-oder wÃ¤hlen Sie zusÃ¤tzliche Komponenten aus, die Sie installieren mÃ¶chten:
+oder wählen Sie zusätzliche Komponenten aus, die Sie installieren möchten:
 # ^UnComponentsText
-WÃ¤hlen Sie die Komponenten aus, die Sie entfernen mÃ¶chten, und wÃ¤hlen Sie diejenigen ab, die Sie nicht entfernt werden sollen. $_CLICK
+Wählen Sie die Komponenten aus, die Sie entfernen möchten und wählen Sie diejenigen ab, die Sie nicht entfernen wollen. $_CLICK
 # ^UnComponentsSubText1
 Deinstallations-Typ bestimmen:
 # ^UnComponentsSubText2_NoInstTypes
-WÃ¤hlen Sie die Komponenten aus, die Sie entfernen mÃ¶chten:
+Wählen Sie die Komponenten aus, die Sie entfernen möchten:
 # ^UnComponentsSubText2
-oder wÃ¤hlen Sie zusÃ¤tzliche Komponenten aus, die Sie entfernen mÃ¶chten:
+oder wählen Sie zusätzliche Komponenten aus, die Sie entfernen möchten:
 # ^DirText
-$(^NameDA) wird in das unten angegebene Verzeichnis installiert. Falls Sie in ein anderes Verzeichnis installieren mÃ¶chten, klicken Sie auf Durchsuchen und wÃ¤hlen Sie ein anderes Verzeichnis aus. $_CLICK
+$(^NameDA) wird in das unten angegebene Verzeichnis installiert. Falls Sie in ein anderes Verzeichnis installieren möchten, klicken Sie auf Durchsuchen und wählen Sie ein anderes Verzeichnis aus. $_CLICK
 # ^DirSubText
 Zielverzeichnis
 # ^DirBrowseText
-WÃ¤hlen Sie das Verzeichnis aus, in das Sie $(^NameDA) installieren mÃ¶chten:
+Wählen Sie das Verzeichnis aus, in das Sie $(^NameDA) installieren möchten:
 # ^UnDirText
-$(^NameDA) wird aus dem unten angegebenen Verzeichnis entfernt. Falls sich $(^NameDA) in einem anderen Verzeichnis befindet, klicken Sie auf Durchsuchen und wÃ¤hlen Sie das richtige Verzeichnis aus. $_CLICK
+$(^NameDA) wird aus dem unten angegebenen Verzeichnis entfernt. Falls sich $(^NameDA) in einem anderen Verzeichnis befindet, klicken Sie auf Durchsuchen und wählen Sie das richtige Verzeichnis aus. $_CLICK
 # ^UnDirSubText
 ""
 # ^UnDirBrowseText
-WÃ¤hlen Sie das Verzeichnis aus, in dem sich $(^NameDA) befindet:
+Wählen Sie das Verzeichnis aus, in dem sich $(^NameDA) befindet:
 # ^SpaceAvailable
-"VerfÃ¼gbarer Speicher: "
+"Verfügbarer Speicher: "
 # ^SpaceRequired
-"BenÃ¶tigter Speicher: "
+"Benötigter Speicher: "
 # ^UninstallingText
 $(^NameDA) wird aus dem unten angegebenen Verzeichnis entfernt. $_CLICK
 # ^UninstallingSubText
-Wird entfernt aus:
+Entferne aus:
 # ^FileError
-Fehler beim Ãœberschreiben der Datei: \r\n\t"$0"\r\nKlicken Sie auf Abbrechen, um abzubrechen,\r\nauf Wiederholen, um den Schreibvorgang erneut zu versuchen,\r\noder auf Ignorieren, um diese Datei zu Ã¼berspringen.
+Fehler beim Überschreiben der Datei: \r\n\t"$0"\r\nKlicken Sie auf Abbrechen, um abzubrechen,\r\nauf Wiederholen, um den Schreibvorgang erneut zu versuchen\r\noder auf Ignorieren, um diese Datei zu überspringen.
 # ^FileError_NoIgnore
-Fehler beim Ãœberschreiben der Datei: \r\n\t"$0"\r\nKlicken Sie auf Wiederholen, um den Schreibvorgang erneut zu versuchen,\r\noder auf Abbrechen, um die Installation zu beenden.
+Fehler beim Überschreiben der Datei: \r\n\t"$0"\r\nKlicken Sie auf Wiederholen, um den Schreibvorgang erneut zu versuchen\r\noder auf Abbrechen, um die Installation zu beenden.
 # ^CantWrite
 "Fehler beim Schreiben: "
 # ^CopyFailed
 Kopieren fehlgeschlagen
 # ^CopyTo
-"Wird kopiert nach "
+"Kopiere nach "
 # ^Registering
-"Wird registriert: "
+"Registriere: "
 # ^Unregistering
-"Wird deregistriert: "
+"Deregistriere: "
 # ^SymbolNotFound
 "Symbol ist nicht vorhanden: "
 # ^CouldNotLoad
 "Fehler beim Laden von "
 # ^CreateFolder
-"Verzeichnis wird erstellt: "
+"Erstelle Verzeichnis: "
 # ^CreateShortcut
-"VerknÃ¼pfung wird erstellt: "
+"Erstelle Verknüpfung: "
 # ^CreatedUninstaller
-"Deinstallations-Programm wird erstellt: "
+"Erstelle Deinstallations-Programm: "
 # ^Delete
-"Datei wird gelÃ¶scht: "
+"Lösche Datei: "
 # ^DeleteOnReboot
-"Datei wird nach Neustart gelÃ¶scht: "
+"Lösche Datei nach Neustart: "
 # ^ErrorCreatingShortcut
-"Fehler beim Erstellen der VerknÃ¼pfung: "
+"Fehler beim Erstellen der Verknüpfung: "
 # ^ErrorCreating
 "Fehler beim Erstellen: "
 # ^ErrorDecompressing
-Fehler beim Entpacken. Ist das Installations-Programm beschÃ¤digt?
+Fehler beim Dekomprimieren. Beschädigtes Installations-Programm?
 # ^ErrorRegistering
 Fehler beim Registrieren der DLL
 # ^ExecShell
 "ExecShell: "
 # ^Exec
-"Wird gestartet: "
+"Starte: "
 # ^Extract
-"Wird entpackt: "
+"Dekomprimiere: "
 # ^ErrorWriting
-"Entpacken: Fehler beim Schreiben der Datei "
+"Dekomprimierung: Fehler beim Schreiben der Datei "
 # ^InvalidOpcode
-BeschÃ¤digtes Installations-Programm: ungÃ¼ltiger Befehlscode
+Beschädigtes Installations-Programm: ungültiger Befehlscode
 # ^NoOLE
-"Kein OLE fÃ¼r: "
+"Kein OLE für: "
 # ^OutputFolder
 "Zielverzeichnis: "
 # ^RemoveFolder
-"Verzeichnis wird entfernt: "
+"Entferne Verzeichnis: "
 # ^RenameOnReboot
 "Umbenennen nach Neustart: "
 # ^Rename
 "Umbenennen: "
 # ^Skipped
-"Ãœbersprungen: "
+"Übersprungen: "
 # ^CopyDetails
 Details in die Zwischenablage kopieren
 # ^LogInstall
@@ -183,8 +183,8 @@ Installationsverlauf protokollieren
 # ^Byte
 B
 # ^Kilo
- K
+K
 # ^Mega
- M
+M
 # ^Giga
- G
+G

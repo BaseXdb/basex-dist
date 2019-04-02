@@ -189,18 +189,20 @@ sub war {
 sub exe {
   print "* Create EXE file\n";
 
-  # add start class and libraries
-  my $cc = "<classPath>\n".
-    "    <mainClass>$main</mainClass>\n".
-    "    <cp>%EXEDIR%/BaseX.jar</cp>\n".
-    "    <cp>%EXEDIR%/lib/*</cp>\n".
-    "    <cp>%EXEDIR%/lib/custom/*</cp>\n".
-    "  </classPath>";
+  # prepare installer
+  open(my $in, "win/BaseX.nsi");
+  open(my $out, ">win/tmp.nsi");
+  foreach my $line (<$in>) {
+    $line =~ s/0\.0\.0\.0/$full/;
+    print $out $line;
+  }
+  close($in);
+  close($out);
 
   # create installer
-  system("$nsis win/BaseX.nsi");
-  # move installer to final destination
+  system("$nsis win/tmp.nsi");
   move("win/Setup.exe", "release/BaseX.exe");
+  unlink("win/tmp.nsi");
 }
 
 # write PAD file

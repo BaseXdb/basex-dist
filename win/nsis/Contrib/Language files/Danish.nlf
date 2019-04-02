@@ -1,16 +1,15 @@
-ï»¿# Header, don't edit
+# Header, don't edit
 NLF v6
-# Start editing here
 # Language ID
 1030
 # Font and size - dash (-) means default
 -
 -
-# Codepage - dash (-) means ASCII code page
+# Codepage - dash (-) means ANSI code page
 1252
 # RTL - anything else than RTL means LTR
 -
-# Translation by Claus Futtrup, scootergrisen
+# Translation by Claus Futtrup
 # ^Branding
 Nullsoft Install System %s
 # ^SetupCaption
@@ -20,39 +19,39 @@ $(^Name) Afinstallation
 # ^LicenseSubCaption
 : Licensaftale
 # ^ComponentsSubCaption
-: Installationsvalgmuligheder
+: Installationsmuligheder
 # ^DirSubCaption
 : Installationsmappe
 # ^InstallingSubCaption
 : Installerer
 # ^CompletedSubCaption
-: GennemfÃ¸rt
+: Gennemført
 # ^UnComponentsSubCaption
-: Afinstallationsvalgmuligheder
+: Afinstallationsmuligheder
 # ^UnDirSubCaption
 : Afinstallationsmappe
 # ^ConfirmSubCaption
-: BekrÃ¦ft
+: Bekræft
 # ^UninstallingSubCaption
 : Afinstallerer
 # ^UnCompletedSubCaption
-: GennemfÃ¸rt
+: Gennemført
 # ^BackBtn
 < &Tilbage
 # ^NextBtn
-&NÃ¦ste >
+&Næste >
 # ^AgreeBtn
 Jeg &accepterer
 # ^AcceptBtn
-Jeg &accepterer vilkÃ¥rene i licensaftalen
+Jeg &accepterer vilkårene i licensaftalen
 # ^DontAcceptBtn
-Jeg &accepterer ikke vilkÃ¥rene i licensaftalen
+Jeg &accepterer ikke vilkårene i licensaftalen
 # ^InstallBtn
 &Installer
 # ^UninstallBtn
 &Afinstaller
 # ^CancelBtn
-Annuller
+Afbryd
 # ^CloseBtn
 &Luk
 # ^BrowseBtn
@@ -60,69 +59,69 @@ G&ennemse...
 # ^ShowDetailsBtn
 Vis &detaljer
 # ^ClickNext
-Tryk pÃ¥ NÃ¦ste for at fortsÃ¦tte.
+Tryk Næste for at fortsætte.
 # ^ClickInstall
-Tryk pÃ¥ Installer for at starte installationen.
+Tryk Installer for at starte installationen.
 # ^ClickUninstall
-Tryk pÃ¥ Afinstaller for at starte afinstallationen.
+Tryk Afinstaller for at starte afinstallationen.
 # ^Name
 Navn
 # ^Completed
-GennemfÃ¸rt
+Gennemført
 # ^LicenseText
-GennemlÃ¦s venligst licensaftalen fÃ¸r installationen af $(^NameDA). Hvis du accepterer alle vilkÃ¥r i aftalen, skal du klikke pÃ¥ Jeg accepterer.
+Læs venligst licensaftalen før installationen af $(^NameDA). Hvis du accepterer alle betingelser i aftalen, skal du trykke 'Jeg accepterer'.
 # ^LicenseTextCB
-GennemlÃ¦s venligst licensaftalen fÃ¸r installationen af $(^NameDA). Hvis du accepterer alle vilkÃ¥r i aftalen, skal du klikke pÃ¥ afkrydsningsfeltet nedenfor. $_CLICK
+Læs venligst licensaftalen før installationen af $(^NameDA). Hvis du accepterer alle betingelser i aftalen, skal du markere afkrydsningsfeltet nedenfor. $_CLICK
 # ^LicenseTextRB
-GennemlÃ¦s venligst licensaftalen fÃ¸r installationen af $(^NameDA). Hvis du accepterer alle vilkÃ¥r i aftalen, skal du vÃ¦lge den fÃ¸rste valgmulighed nedenfor. $_CLICK
+Læs venligst licensaftalen før installationen af $(^NameDA). Hvis du accepterer alle betingelser i aftalen, skal du vælge den første mulighed nedenfor. $_CLICK
 # ^UnLicenseText
-GennemlÃ¦s venligst licensaftalen fÃ¸r afinstallationen af $(^NameDA). Hvis du accepterer alle vilkÃ¥r i aftalen, skal du trykke pÃ¥ Jeg accepterer.
+Læs venligst licensaftalen før afinstallationen af $(^NameDA). Hvis du accepterer alle betingelser i aftalen, skal du trykke 'Jeg accepterer'
 # ^UnLicenseTextCB
-GennemlÃ¦s venligst licensaftalen fÃ¸r afinstallationen af $(^NameDA). Hvis du accepterer alle vilkÃ¥r i aftalen, skal du klikke pÃ¥ afkrydsningsfeltet nedenfor. $_CLICK
+Læs venligst licensaftalen før afinstallationen af $(^NameDA). Hvis du accepterer alle betingelser i aftalen, skal du markere afkrydsningsfeltet nedenfor. $_CLICK
 # ^UnLicenseTextRB
-GennemlÃ¦s venligst licensaftalen fÃ¸r afinstallationen af $(^NameDA). Hvis du accepterer alle vilkÃ¥r i aftalen, skal du vÃ¦lge den fÃ¸rste valgmulighed nedenfor. $_CLICK
+Læs venligst licensaftalen før afinstallationen af $(^NameDA). Hvis du accepterer alle betingelser i aftalen, skal du vælge den første mulighed nedenfor $_CLICK
 # ^Custom
 Brugerdefineret
 # ^ComponentsText
-TilvÃ¦lg de komponenter du vil installere, og fravÃ¦lg de komponenter du ikke vil installere. $_CLICK
+Marker de komponenter du vil installere, og fjern markeringen af de komponenter du ikke vil installere. $_CLICK
 # ^ComponentsSubText1
-VÃ¦lg installationstype:
+Vælg installationstype:
 # ^ComponentsSubText2_NoInstTypes
-VÃ¦lg de komponenter der skal installeres:
+Vælg de komponenter der skal installeres:
 # ^ComponentsSubText2
-Eller vÃ¦lg de valgfrie komponenter du Ã¸nsker at installere:
+Eller vælg de tillægskomponenter komponenter du ønsker at installere:
 # ^UnComponentsText
-TilvÃ¦lg de komponenter du vil afinstallere, og fravÃ¦lg de komponenter du ikke vil afinstallere. $_CLICK
+Marker de komponenter du vil afinstallere, og fjern markeringen af de komponenter du ikke vil afinstallere. $_CLICK
 # ^UnComponentsSubText1
-VÃ¦lg afinstallationstype:
+Vælg afinstallationstype:
 # ^UnComponentsSubText2_NoInstTypes
-VÃ¦lg de komponenter der skal afinstalleres:
+Vælg de komponenter der skal afinstalleres:
 # ^UnComponentsSubText2
-Eller vÃ¦lg de valgfrie komponenter du Ã¸nsker at afinstallere:
+Eller vælg de tillægskomponenter du ønsker at afinstallere:
 # ^DirText
-Installationsguiden vil installere $(^NameDA) i fÃ¸lgende mappe. For at installere i en anden mappe, tryk pÃ¥ Gennemse og vÃ¦lg en anden mappe. $_CLICK
+Installationsguiden vil installere $(^NameDA) i følgende mappe. For at installere i en anden mappe, tryk Gennemse og vælg en anden mappe. $_CLICK
 # ^DirSubText
 Destinationsmappe
 # ^DirBrowseText
-VÃ¦lg den mappe hvori $(^NameDA) skal installeres:
+Vælg den mappe $(^NameDA) skal installeres i:
 # ^UnDirText
-Installationsguiden vil afinstallere $(^NameDA) fra fÃ¸lgende mappe. For at afinstallere fra en anden mappe, tryk pÃ¥ Gennemse og vÃ¦lg en anden mappe. $_CLICK
+Installationsguiden vil afinstallere $(^NameDA) fra følgende mappe. For at afinstallere fra en anden mappe, tryk Gennemse og vælg en anden mappe. $_CLICK
 # ^UnDirSubText
 ""
 # ^UnDirBrowseText
-VÃ¦lg den mappe hvorfra $(^NameDA) skal afinstalleres:
+Vælg den mappe hvorfra $(^NameDA) skal afinstalleres:
 # ^SpaceAvailable
 "Ledig plads: "
 # ^SpaceRequired
-"NÃ¸dvendig plads: "
+"Nødvendig plads: "
 # ^UninstallingText
-$(^NameDA) vil blive afinstalleret fra fÃ¸lgende mappe. $_CLICK
+$(^NameDA) vil blive afinstalleret fra følgende mappe. $_CLICK
 # ^UninstallingSubText
 Afinstallerer fra:
 # ^FileError
-Fejl ved skrivning af fil til skrivning: \r\n\r\n$0\r\n\r\nTryk pÃ¥ Annuller for at stoppe installationen,\r\nPrÃ¸v igen for at prÃ¸ve igen, eller\r\nIgnorer for at springe over denne fil.
+Fejl ved skrivning af fil: \r\n\t"$0"\r\nTryk Afbryd for at afbryde installationen,\r\nPrøv Igen for at prøve at skrive til filen, eller\r\nIgnorer for at springe over denne fil
 # ^FileError_NoIgnore
-Fejl ved Ã¥bning af fil til skrivning: \r\n\r\n$0\r\n\r\nTryk pÃ¥ PrÃ¸v igen for at prÃ¸ve igen, eller\r\nAnnuller for at stoppe installationen.
+Fejl ved åbning af fil: \r\n\t"$0"\r\nTryk Prøv Igen for at prøve at skrive til filen, eller\r\nAfbryd for at afbryde installationen
 # ^CantWrite
 "Kan ikke skrive: "
 # ^CopyFailed
@@ -136,7 +135,7 @@ Kopiering mislykkedes
 # ^SymbolNotFound
 "Kunne ikke finde symbol: "
 # ^CouldNotLoad
-"Kunne ikke indlÃ¦se: "
+"Kunne ikke hente: "
 # ^CreateFolder
 "Opret mappe: "
 # ^CreateShortcut
@@ -152,19 +151,19 @@ Kopiering mislykkedes
 # ^ErrorCreating
 "Fejl ved oprettelse: "
 # ^ErrorDecompressing
-Fejl ved udpakning af data! Beskadiget installationsguide?
+Fejl ved udpakning af data! Installationsguiden skadet?
 # ^ErrorRegistering
 Fejl ved registrering af DLL
 # ^ExecShell
 "ExecShell: "
 # ^Exec
-"KÃ¸r: "
+"Kør: "
 # ^Extract
 "Udpak: "
 # ^ErrorWriting
-"Udpak: fejl ved skrivning til fil "
+"Udpak: Fejl ved skrivning til fil "
 # ^InvalidOpcode
-Beskadiget installationsguide: ugyldig opcode
+Installationsguide i stykker: Ugyldig opcode
 # ^NoOLE
 "Ingen OLE for: "
 # ^OutputFolder
@@ -172,9 +171,9 @@ Beskadiget installationsguide: ugyldig opcode
 # ^RemoveFolder
 "Slet mappe: "
 # ^RenameOnReboot
-"OmdÃ¸b ved genstart: "
+"Omdøb ved genstart: "
 # ^Rename
-"OmdÃ¸b: "
+"Omdøb: "
 # ^Skipped
 "Sprunget over: "
 # ^CopyDetails
@@ -184,8 +183,8 @@ Log installationsproces
 # ^Byte
 B
 # ^Kilo
- K
+K
 # ^Mega
- M
+M
 # ^Giga
- G
+G

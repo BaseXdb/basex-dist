@@ -1,7 +1,7 @@
-﻿;Language: Esperanto (0)
+;Language: Esperanto (0)
 ;By Felipe Castro <fefcas@gmail.com>
 
-!insertmacro LANGFILE "Esperanto" = "Esperanto" =
+!insertmacro LANGFILE "Esperanto" "Esperanto"
 
 !ifdef MUI_WELCOMEPAGE
   ${LangFileString} MUI_TEXT_WELCOME_INFO_TITLE "Bonvenon al la Gvidilo por Instalado de $(^NameDA)"
@@ -48,7 +48,7 @@
   !ifndef NSIS_CONFIG_COMPONENTPAGE_ALTERNATIVE
     ${LangFileString} MUI_INNERTEXT_COMPONENTS_DESCRIPTION_INFO "Poziciu la muson sur konsistero por rigardi ties priskribon."
   !else
-    #FIXME:MUI_INNERTEXT_COMPONENTS_DESCRIPTION_INFO 
+    ${LangFileString} MUI_INNERTEXT_COMPONENTS_DESCRIPTION_INFO "Poziciu la muson sur konsistero por rigardi ties priskribon."
   !endif
 !endif
 

@@ -1,194 +1,190 @@
-﻿# Header, don't edit
+# Header, don't edit
 NLF v6
 # Language ID
 1028
-# Font and size - dash (-) means default 字型名稱與大小
-新細明體
+# Font and size - dash (-) means default �r���W�ٻP�j�p
+�s�ө���
 9
-# Codepage - dash (-) means ASCII code page ASCII 字碼頁
+# Codepage - dash (-) means ANSI code page ANSI �r�X��
 950
-# RTL - anything else than RTL means LTR 由右至左書寫
+# RTL - anything else than RTL means LTR �ѥk�ܥ��Ѽg
 -
-# Revision date: 2017-03-17
-# Translators:
-## Kii Ali <kiiali@cpatch.org>, <kiiali@ms1.url.com.tw>, <kiiali@pchome.com.tw>
-## Walter Cheuk <wwycheuk@gamil.com>
-#
+# Translator: Kii Ali <kiiali@cpatch.org>;Revision date: 2004-12-14
 # ^Branding
 Nullsoft Install System %s
 # ^SetupCaption
-$(^Name) 安裝
+$(^Name) �w��
 # ^UninstallCaption
-$(^Name) 解除安裝
+$(^Name) �Ѱ��w��
 # ^LicenseSubCaption
-: 授權協議
+: ���v��ĳ
 # ^ComponentsSubCaption
-: 安裝選項
+: �w�˿ﶵ
 # ^DirSubCaption
-: 安裝資料夾
+: �w�˸�Ƨ�
 # ^InstallingSubCaption
-: 正在安裝
+: ���b�w��
 # ^CompletedSubCaption
-: 已完成
+: �w����
 # ^UnComponentsSubCaption
-: 解除安裝選項
+: �Ѱ��w�˿ﶵ
 # ^UnDirSubCaption
-: 解除安裝資料夾
+: �Ѱ��w�˸�Ƨ�
 # ^ConfirmSubCaption
-: 確認
+: �T�{
 # ^UninstallingSubCaption
-: 正在解除安裝
+: ���b�Ѱ��w��
 # ^UnCompletedSubCaption
-: 完成
+: ����
 # ^BackBtn
-< 上一步(&B)
+< �W�@�B(&P)
 # ^NextBtn
-下一步(&N) >
+�U�@�B(&N) >
 # ^AgreeBtn
-我同意(&A)
+�ڱ���(&I)
 # ^AcceptBtn
-我接受「授權協議」的條款(&A)
+�ڱ����u���v��ĳ�v��������(&A)
 # ^DontAcceptBtn
-我不接受「授權協議」的條款(&D)
+�ڤ������u���v��ĳ�v��������(&N)
 # ^InstallBtn
-安裝(&I)
+�w��(&I)
 # ^UninstallBtn
-解除安裝(&U)
+����(&U)
 # ^CancelBtn
-取消
+����(&C)
 # ^CloseBtn
-關閉(&C)
+����(&L)
 # ^BrowseBtn
-瀏覽(&R)...
+�s��(&B)...
 # ^ShowDetailsBtn
-顯示細節(&D)
+��ܲӸ`(&D)
 # ^ClickNext
-按「下一步(N)」繼續。
+���@�U [�U�@�B(N)] �~��C
 # ^ClickInstall
-按「安裝(I)」開始安裝。
+���@�U [�w��(I)] �}�l�w�˶i�{�C
 # ^ClickUninstall
-按「解除安裝(U)」開始解除安裝。
+���@�U [�Ѱ��w��(U)] �}�l�Ѱ��w�˶i�{�C
 # ^Name
-名稱
+�W��
 # ^Completed
-已完成
+�w����
 # ^LicenseText
-在安裝 $(^NameDA) 之前請檢閱授權協議。如果接受協議所有條款，按「我同意(A)」。
+�b�w�� $(^NameDA) ���e���˾\���v��ĳ�C�p�G�A������ĳ���Ҧ����ڡA���@�U [�ڦP�N(I)] �C
 # ^LicenseTextCB
-在安裝 $(^NameDA) 之前請檢閱授權協議。如果接受協議所有條款，按下方的勾選框。 $_CLICK
+�b�w�� $(^NameDA) ���e���˾\���v��ĳ�C�p�G�A������ĳ���Ҧ����ڡA���@�U�U�誺�Ŀ�ءC $_CLICK
 # ^LicenseTextRB
-在安裝 $(^NameDA) 之前請檢閱授權協議。如果接受協議所有條款，選擇下方的第一個選項。 $_CLICK
+�b�w�� $(^NameDA) ���e���˾\���v��ĳ�C�p�G�A������ĳ���Ҧ����ڡA��ܤU�誺�Ĥ@�ӿﶵ�C $_CLICK
 # ^UnLicenseText
-在解除安裝 $(^NameDA) 之前請檢閱授權協議。如果接受協議中所有條款，按「我同意(A)」。
+�b�Ѱ��w�� $(^NameDA) ���e���˾\���v��ĳ�C�p�G�A������ĳ���Ҧ����ڡA���@�U [�ڦP�N(I)] �C
 # ^UnLicenseTextCB
-在解除安裝 $(^NameDA) 之前請檢閱授權協議。如果接受協議中所有條款，按下方的勾選框。 $_CLICK
+�b�Ѱ��w�� $(^NameDA) ���e���˾\���v��ĳ�C�p�G�A������ĳ���Ҧ����ڡA���@�U�U�誺�Ŀ�ءC $_CLICK
 # ^UnLicenseTextRB
-在解除安裝 $(^NameDA) 之前請檢閱授權協議。如果接受協議中所有條款，選擇的第一個選項。 $_CLICK
+�b�Ѱ��w�� $(^NameDA) ���e���˾\���v��ĳ�C�p�G�A������ĳ���Ҧ����ڡA��ܤU�誺�Ĥ@�ӿﶵ�C $_CLICK
 # ^Custom
-自訂
+�ۭq
 # ^ComponentsText
-勾選想要安裝的元件，並解除勾選不想安裝的元件。 $_CLICK
+�Ŀ�A�Q�n�w�˪�����A�øѰ��Ŀ�A���Ʊ�w�˪�����C $_CLICK
 # ^ComponentsSubText1
-選取安裝的類型: 
+����w�˪�����: 
 # ^ComponentsSubText2_NoInstTypes
-選取安裝的元件: 
+����w�˪�����: 
 # ^ComponentsSubText2
-又或者，自訂選取想安裝的元件: 
+�Ϊ̡A�ۭq����Q�w�˪�����: 
 # ^UnComponentsText
-勾選想要解除安裝的元件，並解除勾選不想解除安裝的元件。 $_CLICK
+�Ŀ�A�Q�n�Ѱ��w�˪�����A�øѰ��Ŀ�A���Ʊ�Ѱ��w�˪�����C $_CLICK
 # ^UnComponentsSubText1
-選取解除安裝的類型: 
+��ܸѰ��w�˪�����: 
 # ^UnComponentsSubText2_NoInstTypes
-選取要解除安裝的元件: 
+��ܭn�Ѱ��w�˪�����: 
 # ^UnComponentsSubText2
-又或者，選擇想要解除安裝的可選項元件: 
+�άO�A��ܷQ�n�Ѱ��w�˪��i�ﶵ����: 
 # ^DirText
-安裝程式會將 $(^NameDA) 安裝在以下資料夾。要安裝到不同的資料夾，按「瀏覽(B)...」並選擇其他資料夾。 $_CLICK
+Setup �N�w�� $(^NameDA) �b�U�C��Ƨ��C�n�w�˨줣�P��Ƨ��A���@�U [�s��(B)] �ÿ�ܨ�L����Ƨ��C $_CLICK
 # ^DirSubText
-目標資料夾
+�ؼи�Ƨ�
 # ^DirBrowseText
-選取要安裝 $(^NameDA) 的資料夾: 
+��ܭn�w�� $(^NameDA) ����Ƨ���m: 
 # ^UnDirText
-安裝程式會自以下資料夾解除安裝 $(^NameDA) 。要解除安裝不同的資料夾，按「瀏覽(B)...」並選擇其他資料夾。 $_CLICK
+Setup �N�Ѱ��w�� $(^NameDA) �b�U�C��Ƨ��C�n�Ѱ��w�˨줣�P��Ƨ��A���@�U [�s��(B)] �ÿ�ܨ�L����Ƨ��C $_CLICK
 # ^UnDirSubText
 ""
 # ^UnDirBrowseText
-選取要解除安裝 $(^NameDA) 的資料夾: 
+��ܭn�Ѱ��w�� $(^NameDA) ����Ƨ���m: 
 # ^SpaceAvailable
-"可用空間: "
+"�i�ΪŶ�: "
 # ^SpaceRequired
-"所需空間: "
+"�һݪŶ�: "
 # ^UninstallingText
-會自以下資料夾解除安裝 $(^NameDA) 。 $_CLICK
+�o�Ӻ��F�N�q�A���q���Ѱ��w�� $(^NameDA) �C $_CLICK
 # ^UninstallingSubText
-解除安裝目錄: 
+�Ѱ��w�˥ؿ�: 
 # ^FileError
-無法開啟要寫入的檔案: \r\n\t"$0"\r\n按「中止」停止安裝，\r\n「重試」重新嘗試寫入檔案，或\r\n「忽略」略過此檔案。
+�L�k�}�ҭn�g�J���ɮ�: \r\n\t"$0"\r\n���@�U [Abort] ���w�ˡA\r\n [Retry] ���s���ռg�J�ɮסA��\r\n [Ignore] �����o���ɮסC
 # ^FileError_NoIgnore
-無法開啟要寫入的檔案: \r\n\t"$0"\r\n按「重試」重新嘗試寫入檔案，或\r\n「取消」停止安裝。
+�L�k�}�ҭn�g�J���ɮ�: \r\n\t"$0"\r\n���@�U [Retry] ���s���ռg�J�ɮסA��\r\n [Cancel] �����w�ˡC
 # ^CantWrite
-"無法寫入: "
+"�L�k�g�J: "
 # ^CopyFailed
-"複製失敗 "
+"�ƻs���� "
 # ^CopyTo
-"複製到: "
+"�ƻs��: "
 # ^Registering
-"正在註冊: "
+"���b���U: "
 # ^Unregistering
-"正在解除註冊: "
+"���b�Ѱ����U: "
 # ^SymbolNotFound
-"無法找到符號: "
+"�L�k���Ÿ�: "
 # ^CouldNotLoad
-"無法載入: "
+"�L�k���J: "
 # ^CreateFolder
-"建立資料夾: " 
+"�إ߸�Ƨ�: " 
 # ^CreateShortcut
-"建立捷徑: "
+"�إ߱��|: "
 # ^CreatedUninstaller
-"建立解除安裝程式: "
+"�إ߸Ѱ��w�˵{��: "
 # ^Delete
-"刪除檔案: "
+"�R���ɮ�: "
 # ^DeleteOnReboot
-"重新開機後刪除: "
+"���s�Ұʫ�R��: "
 # ^ErrorCreatingShortcut
-"建立捷徑時發生錯誤: "
+"���b�إ߱��|�ɵo�Ϳ��~: "
 # ^ErrorCreating
-"建立時發生錯誤: "
+"���b�إ߮ɵo�Ϳ��~: "
 # ^ErrorDecompressing
-"解壓縮資料發生錯誤！安裝程式是否已損壞？"
+"���b�����Y��Ƶo�Ϳ��~�I�w�l�a���w�˵{���H"
 # ^ErrorRegistering
-"註冊 DLL 時發生錯誤"
+"���b���U DLL �ɵo�Ϳ��~"
 # ^ExecShell
-"執行殼層程式: "
+"����~���{��: "
 # ^Exec
-"執行: "
+"����: "
 # ^Extract
-"抽取: "
+"���: "
 # ^ErrorWriting
-"抽取: 無法寫入檔案 "
+"���: �L�k�g�J�ɮ� "
 # ^InvalidOpcode
-"安裝程式損毀: 無效的作業代碼 "
+"�w�˷l��: �L�Ī��@�~�N�X "
 # ^NoOLE
-"沒有 OLE 用於: "
+"�S�� OLE �Ω�: "
 # ^OutputFolder
-"輸出資料夾: "
+"��X�ؿ�: "
 # ^RemoveFolder
-"移除資料夾: "
+"�����ؿ�: "
 # ^RenameOnReboot
-"重新開機後重新命名: "
+"���s�Ұʫ᭫�s�R�W: "
 # ^Rename
-"重新命名: "
+"���s�R�W: "
 # ^Skipped
-"已略過: "
+"�w���L: "
 # ^CopyDetails
-"複製細節到剪貼簿 "
+"�ƻs�Ӹ`��ŶKï "
 # ^LogInstall
-"將安裝進程記入日誌"
-# ^Byte
+"��x�w�˶i�{"
+# byte
 B
-# ^Kilo
- K
-# ^Mega
- M
-# ^Giga
- G
+# kilo
+K
+# mega
+M
+# giga
+G

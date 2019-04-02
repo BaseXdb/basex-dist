@@ -4,7 +4,7 @@ MultiUser.nsh
 
 Installer configuration for multi-user Windows environments
 
-Copyright 2008-2018 Joost Verburg
+Copyright 2008-2009 Joost Verburg
 
 */
 
@@ -68,9 +68,6 @@ Var MultiUser.InstallMode
   !define MULTIUSER_EXECUTIONLEVEL_ALLUSERS
 !else
   RequestExecutionLevel user
-  !ifndef MULTIUSER_EXECUTIONLEVEL
-    !warning "MULTIUSER_EXECUTIONLEVEL not set!"
-  !endif
 !endif
 
 /*
@@ -94,11 +91,7 @@ Install modes
     !if "${UNINSTALLER_PREFIX}" != UN
       ;Set default installation location for installer
       !ifdef MULTIUSER_INSTALLMODE_INSTDIR
-        !ifdef MULTIUSER_USE_PROGRAMFILES64
-          StrCpy $INSTDIR "$PROGRAMFILES64\${MULTIUSER_INSTALLMODE_INSTDIR}"
-        !else
-          StrCpy $INSTDIR "$PROGRAMFILES\${MULTIUSER_INSTALLMODE_INSTDIR}"
-        !endif
+        StrCpy $INSTDIR "$PROGRAMFILES\${MULTIUSER_INSTALLMODE_INSTDIR}"
       !endif
     !endif
   
@@ -195,27 +188,19 @@ Installer/uninstaller initialization
 
 !macroend
 
-!macro MULTIUSER_INIT_TEXTS UNINSTALLER_PREFIX
-
-  !if "${UNINSTALLER_PREFIX}" == ""
-    !define /ReDef MULTIUSER_TMPSTR_CAPTION "$(^SetupCaption)"
-  !else
-    !define /ReDef MULTIUSER_TMPSTR_CAPTION "$(^Name)"
-  !endif
+!macro MULTIUSER_INIT_TEXTS
 
   !ifndef MULTIUSER_INIT_TEXT_ADMINREQUIRED
-    !define MULTIUSER_INIT_TEXT_ADMINREQUIRED "${MULTIUSER_TMPSTR_CAPTION} requires administrator privileges."
+    !define MULTIUSER_INIT_TEXT_ADMINREQUIRED "$(^Caption) requires administrator priviledges."
   !endif
 
   !ifndef MULTIUSER_INIT_TEXT_POWERREQUIRED
-    !define MULTIUSER_INIT_TEXT_POWERREQUIRED "${MULTIUSER_TMPSTR_CAPTION} requires at least Power User privileges."
+    !define MULTIUSER_INIT_TEXT_POWERREQUIRED "$(^Caption) requires at least Power User priviledges."
   !endif
 
   !ifndef MULTIUSER_INIT_TEXT_ALLUSERSNOTPOSSIBLE
-    !define MULTIUSER_INIT_TEXT_ALLUSERSNOTPOSSIBLE "Your user account does not have sufficient privileges to install $(^Name) for all users of this computer."
+    !define MULTIUSER_INIT_TEXT_ALLUSERSNOTPOSSIBLE "Your user account does not have sufficient privileges to install $(^Name) for all users of this compuetr."
   !endif
-
-  !undef MULTIUSER_TMPSTR_CAPTION
 
 !macroend
 
@@ -223,7 +208,7 @@ Installer/uninstaller initialization
 
   ;Installer initialization - check privileges and set install mode
 
-  !insertmacro MULTIUSER_INIT_TEXTS "${UNINSTALLER_PREFIX}"
+  !insertmacro MULTIUSER_INIT_TEXTS
 
   UserInfo::GetAccountType
   Pop $MultiUser.Privileges
@@ -323,14 +308,13 @@ Installer/uninstaller initialization
       ${endif}
   
     !endif
-
-  !if ${NSIS_PTR_SIZE} <= 4
+    
   ${else}
   
     ;Not running Windows NT, per-user installation not supported
+    
     Call ${UNINSTALLER_FUNCPREFIX}MultiUser.InstallMode.AllUsers
-
-  !endif
+  
   ${endif}
 
 !macroend
@@ -445,7 +429,7 @@ Modern UI 2 page
     nsDialogs::Create 1018
     Pop $MultiUser.InstallModePage
 
-    ${NSD_CreateLabel} 0u 0u 300u 40u "${MULTIUSER_INSTALLMODEPAGE_TEXT_TOP}"
+    ${NSD_CreateLabel} 0u 0u 300u 20u "${MULTIUSER_INSTALLMODEPAGE_TEXT_TOP}"
     Pop $MultiUser.InstallModePage.Text
 
     ${NSD_CreateRadioButton} 20u 50u 280u 10u "${MULTIUSER_INSTALLMODEPAGE_TEXT_ALLUSERS}"
@@ -462,7 +446,6 @@ Modern UI 2 page
     
     !insertmacro MUI_PAGE_FUNCTION_CUSTOM SHOW
     nsDialogs::Show
-    !insertmacro MUI_PAGE_FUNCTION_CUSTOM DESTROYED
     
   FunctionEnd
 

@@ -80,6 +80,8 @@ License page
     !insertmacro MUI_UNSET MUI_LICENSEPAGE_CHECKBOX_TEXT_ACCEPT
     !insertmacro MUI_UNSET MUI_LICENSEPAGE_CHECKBOX_TEXT_DECLINE
 
+  !verbose pop
+
 !macroend
 
 !macro MUI_PAGE_LICENSE LICENSEDATA
@@ -121,7 +123,7 @@ License page
 
   Function "${SHOW}"
 
-    ;Get control handles
+    ;Get conrol handles
     FindWindow $mui.LicensePage "#32770" "" $HWNDPARENT
     GetDlgItem $mui.LicensePage.TopText $mui.LicensePage 1040
     GetDlgItem $mui.LicensePage.Text $mui.LicensePage 1006
