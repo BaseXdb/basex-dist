@@ -89,22 +89,22 @@ Function OptionsLeave
 # xml field
 !insertmacro MUI_INSTALLOPTIONS_READ $R6 "Options" "Field 5" "State"
 # .xq file Association
-  ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".bxs" "BaseX Command Script"
-  ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".basex" "BaseX Configuration"
-  ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".basexhome" "BaseX Configuration"
-  ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".basexgui" "BaseX Configuration"
-  ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".basexperm" "BaseX Configuration"
+  ${registerExtension} "$INSTDIR\bin\basexgui.bat" ".bxs" "BaseX Command Script"
+  ${registerExtension} "$INSTDIR\bin\basexgui.bat" ".basex" "BaseX Configuration"
+  ${registerExtension} "$INSTDIR\bin\basexgui.bat" ".basexhome" "BaseX Configuration"
+  ${registerExtension} "$INSTDIR\bin\basexgui.bat" ".basexgui" "BaseX Configuration"
+  ${registerExtension} "$INSTDIR\bin\basexgui.bat" ".basexperm" "BaseX Configuration"
   ${If} $R5 == 1
-    ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xq"     "XQuery File"
-    ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xqu"    "XQuery File"
-    ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xqy"    "XQuery File"
-    ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xquery" "XQuery File"
-    ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xqm"    "XQuery File"
-    ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xql"    "XQuery File"
+    ${registerExtension} "$INSTDIR\bin\basexgui.bat" ".xq"     "XQuery File"
+    ${registerExtension} "$INSTDIR\bin\basexgui.bat" ".xqu"    "XQuery File"
+    ${registerExtension} "$INSTDIR\bin\basexgui.bat" ".xqy"    "XQuery File"
+    ${registerExtension} "$INSTDIR\bin\basexgui.bat" ".xquery" "XQuery File"
+    ${registerExtension} "$INSTDIR\bin\basexgui.bat" ".xqm"    "XQuery File"
+    ${registerExtension} "$INSTDIR\bin\basexgui.bat" ".xql"    "XQuery File"
   ${EndIf}
 # .xml file Association
   ${If} $R6 == 1
-    ${registerExtension} "$INSTDIR\${PRODUCT_NAME}.exe" ".xml" "XML Document"
+    ${registerExtension} "$INSTDIR\bin\basexgui.bat" ".xml" "XML Document"
   ${EndIf}
   ${RefreshShellIcons}
 FunctionEnd
@@ -187,7 +187,7 @@ Section -AdditionalIcons
   # startmenu
   !insertmacro MUI_INSTALLOPTIONS_READ $R8 "Options" "Field 4" "State"
   ${If} $R7 == 1
-    CreateShortCut "$DESKTOP\BaseX GUI.lnk" "$INSTDIR\BaseX.exe" "" "$INSTDIR\ico\BaseX.ico" 0
+    CreateShortCut "$DESKTOP\BaseX GUI.lnk" "$INSTDIR\bin\basexgui.bat" "" "$INSTDIR\ico\BaseX.ico" 0
   ${EndIf}
   ${If} $R8 == 1
     RMDir /r "$SMPROGRAMS\BaseX"
