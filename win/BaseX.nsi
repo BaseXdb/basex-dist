@@ -187,18 +187,18 @@ Section -AdditionalIcons
   # startmenu
   !insertmacro MUI_INSTALLOPTIONS_READ $R8 "Options" "Field 4" "State"
   ${If} $R7 == 1
-    CreateShortCut "$DESKTOP\BaseX GUI.lnk" "$INSTDIR\bin\basexgui.bat" "" "$INSTDIR\ico\BaseX.ico" 0
+    CreateShortCut "$DESKTOP\BaseX GUI.lnk" "cmd.exe" '/C "$INSTDIR\bin\basexgui.bat"' "$INSTDIR\ico\BaseX.ico" 0
   ${EndIf}
   ${If} $R8 == 1
     RMDir /r "$SMPROGRAMS\BaseX"
     CreateDirectory "$SMPROGRAMS\BaseX"
-    CreateShortCut "$SMPROGRAMS\BaseX\BaseX GUI.lnk" "$INSTDIR\bin\basexgui.bat" "" "$INSTDIR\ico\BaseX.ico" 0
-    CreateShortCut "$SMPROGRAMS\BaseX\BaseX HTTP Server (Start).lnk" "$INSTDIR\bin\basexhttp.bat" "-S" "$INSTDIR\ico\start.ico" 0
-    CreateShortCut "$SMPROGRAMS\BaseX\BaseX HTTP Server (Stop).lnk" "$INSTDIR\bin\basexhttp.bat" "stop" "$INSTDIR\ico\stop.ico" 0
-    CreateShortCut "$SMPROGRAMS\BaseX\BaseX Client.lnk" "$INSTDIR\bin\basexclient.bat" "" "$INSTDIR\ico\shell.ico" 0
-    CreateShortCut "$SMPROGRAMS\BaseX\BaseX Standalone.lnk" "$INSTDIR\bin\basex.bat" "" "$INSTDIR\ico\shell.ico" 0
-    WriteINIStr "$SMPROGRAMS\BaseX\BaseX Documentation.url" "InternetShortcut" "URL" "${PRODUCT_WEB_DOCS}"
+    CreateShortCut "$SMPROGRAMS\BaseX\BaseX GUI.lnk" "cmd.exe" '/C "$INSTDIR\bin\basexgui.bat"' "$INSTDIR\ico\BaseX.ico" 0
+    CreateShortCut "$SMPROGRAMS\BaseX\BaseX HTTP Server (Start).lnk" "cmd.exe" '/C "$INSTDIR\bin\basexhttp.bat" -S' "$INSTDIR\ico\start.ico" 0
+    CreateShortCut "$SMPROGRAMS\BaseX\BaseX HTTP Server (Stop).lnk" "cmd.exe" '/C "$INSTDIR\bin\basexhttp.bat" stop' "$INSTDIR\ico\stop.ico" 0
+    CreateShortCut "$SMPROGRAMS\BaseX\BaseX Client.lnk" "cmd.exe" '/C "$INSTDIR\bin\basexclient.bat"' "$INSTDIR\ico\shell.ico" 0
+    CreateShortCut "$SMPROGRAMS\BaseX\BaseX Standalone.lnk" "cmd.exe" '/C "$INSTDIR\bin\basex.bat"' "$INSTDIR\ico\shell.ico" 0
     CreateShortCut "$SMPROGRAMS\BaseX\Uninstall BaseX.lnk" "$INSTDIR\uninst.exe"
+    WriteINIStr "$SMPROGRAMS\BaseX\BaseX Documentation.url" "InternetShortcut" "URL" "${PRODUCT_WEB_DOCS}"
   ${EndIf}
 SectionEnd
 
