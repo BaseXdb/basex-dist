@@ -26,12 +26,16 @@ $ chmod a+r /www/249056_70794/rp-hosting/10674/11674/files/releases/homebrew-sna
   ### For latest
   $ ./homebrew-basex.sh
   ### For stable version
-  $ ./homebrew-basex.sh 8.6.7
+  $ ./homebrew-basex.sh 9.4.4
 
+  url "http://files.basex.org/releases/9.4.4/BaseX944.zip"
+  version "9.4.4"
+  sha256 "46bca04cc9ee3b2553a8015cbab9731bd74acc9343511530f374f287c69b6b35"
+  
 ## Prepare git
 
   $ cd /usr/local/Homebrew/Library/Taps/homebrew/homebrew-core/
-  $ git checkout -b 9.0-rc20171222.150150
+  $ git checkout -b 9.4.4
 
 ## Edit
 
@@ -49,10 +53,10 @@ $ chmod a+r /www/249056_70794/rp-hosting/10674/11674/files/releases/homebrew-sna
   # https://github.com/Homebrew/homebrew-core/pull/23512#issuecomment-362203937
     $ git commit -am 'basex 9.0-rc20171222.150150 (devel)'
   or
-    $ git commit -am 'basex 9.1.1'
+    $ git commit -am 'basex 9.2.4'
   or
     $ git commit -am 'basex 9.0.2, 9.0.3-rc20180531.140617 (devel)'
-  $ git push holu 9.1.1
+  $ git push holu 9.2.4
 ! $ git checkout master
 
 

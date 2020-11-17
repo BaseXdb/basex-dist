@@ -4,7 +4,7 @@
  :)
 declare namespace _ = 'http://basex.org/homebrew-basex';
 
-declare variable $basex-version external := "homebrew-snapshot";
+declare variable $basex-version external := "9.4.4"(: "homebrew-snapshot" :);
 
 (: Produce snippet to insert into stable/devel section in homebrew recipe.
  :
@@ -96,7 +96,7 @@ declare function _:release-info(
   )
 {
   let $ssh-r := proc:execute("/usr/bin/ssh"
-                             , ('basex-web', 'ls ~/files/releases/' || $bxv || '/*.zip'))
+                             , ('files.basex.org', 'ls /html/files.basex.org/releases/' || $bxv || '/*.zip'))
   where $ssh-r/code eq '0'
   return
     let $fpath := normalize-space($ssh-r/output/text())
