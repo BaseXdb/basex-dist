@@ -26,7 +26,7 @@
 <!ENTITY ordf   "&#170;"> <!-- feminine ordinal indicator, U+00AA ISOnum -->
 <!ENTITY laquo  "&#171;"> <!-- left-pointing double angle quotation mark
                                   = left pointing guillemet, U+00AB ISOnum -->
-<!ENTITY not    "&#172;"> <!-- not sign = discretionary hyphen,
+<!ENTITY not    "&#172;"> <!-- not sign = angled dash,
                                   U+00AC ISOnum -->
 <!ENTITY shy    "&#173;"> <!-- soft hyphen = discretionary hyphen,
                                   U+00AD ISOnum -->
@@ -190,7 +190,7 @@
                                   U+00FC ISOlat1 -->
 <!ENTITY yacute "&#253;"> <!-- latin small letter y with acute,
                                   U+00FD ISOlat1 -->
-<!ENTITY thorn  "&#254;"> <!-- latin small letter thorn with,
+<!ENTITY thorn  "&#254;"> <!-- latin small letter thorn,
                                   U+00FE ISOlat1 -->
 <!ENTITY yuml   "&#255;"> <!-- latin small letter y with diaeresis,
                                   U+00FF ISOlat1 -->

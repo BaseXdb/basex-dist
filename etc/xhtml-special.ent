@@ -1,4 +1,4 @@
-<!-- Special characters for HTML -->
+<!-- Special characters for XHTML -->
 
 <!-- Character entity set. Typical invocation:
      <!ENTITY % HTMLspecial PUBLIC
@@ -22,12 +22,11 @@
 -->
 
 <!-- C0 Controls and Basic Latin -->
-<!ENTITY quot    "&#34;"> <!--  quotation mark = APL quote,
-                                    U+0022 ISOnum -->
+<!ENTITY quot    "&#34;"> <!--  quotation mark, U+0022 ISOnum -->
 <!ENTITY amp     "&#38;#38;"> <!--  ampersand, U+0026 ISOnum -->
 <!ENTITY lt      "&#38;#60;"> <!--  less-than sign, U+003C ISOnum -->
 <!ENTITY gt      "&#62;"> <!--  greater-than sign, U+003E ISOnum -->
-<!ENTITY apos	 "&#39;"> <!--  apostrophe mark, U+0027 ISOnum -->
+<!ENTITY apos	 "&#39;"> <!--  apostrophe = APL quote, U+0027 ISOnum -->
 
 <!-- Latin Extended-A -->
 <!ENTITY OElig   "&#338;"> <!--  latin capital ligature OE,
@@ -76,4 +75,6 @@
 <!ENTITY rsaquo  "&#8250;"> <!-- single right-pointing angle quotation mark,
                                     U+203A ISO proposed -->
 <!-- rsaquo is proposed but not yet ISO standardized -->
+
+<!-- Currency Symbols -->
 <!ENTITY euro   "&#8364;"> <!--  euro sign, U+20AC NEW -->

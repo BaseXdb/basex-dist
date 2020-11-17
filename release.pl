@@ -13,8 +13,6 @@ use File::Copy::Recursive qw(rcopy);
 # path to main class
 my $main = "org.basex.BaseXGUI";
 
-# home of launch4j
-my $launch4j = "win/launch4j/launch4jc.exe";
 # home of nsis
 my $nsis = "win/nsis/makensis.exe /V1";
 
@@ -191,40 +189,20 @@ sub war {
 sub exe {
   print "* Create EXE file\n";
 
-  # add start class and libraries
-  my $cc = "<classPath>\n".
-    "    <mainClass>$main</mainClass>\n".
-    "    <cp>%EXEDIR%/BaseX.jar</cp>\n".
-    "    <cp>%EXEDIR%/lib/*</cp>\n".
-    "    <cp>%EXEDIR%/lib/custom/*</cp>\n".
-    "  </classPath>";
-
-  # prepare launch script
-  open(my $in, "win/launch4j.xml");
-  my @raw = <$in>;
-  open(my $out, ">release/launch4j.xml");
-  (my $ff = $full) =~ s/-.*//;
-  (my $vv = $version) =~ s/-.*//;
-  foreach my $line (@raw) {
-    $line =~ s/\$full/$ff/g;
-    $line =~ s/\$version/$vv/g; 
-    $line =~ s/\$classpath/$cc/g; 
+  # prepare installer
+  open(my $in, "win/BaseX.nsi");
+  open(my $out, ">win/tmp.nsi");
+  foreach my $line (<$in>) {
+    $line =~ s/0\.0\.0\.0/$full/;
     print $out $line;
   }
   close($in);
   close($out);
 
-  # create executable
-  system("$launch4j release/launch4j.xml");
-  # remove launch script
-  unlink("release/launch4j.xml");
-  # move executable to final destination
-  move("BaseX.exe", "release/BaseX.exe");
-
   # create installer
-  system("$nsis win/BaseX.nsi");
-  # move installer to final destination
+  system("$nsis win/tmp.nsi");
   move("win/Setup.exe", "release/BaseX.exe");
+  unlink("win/tmp.nsi");
 }
 
 # write PAD file
