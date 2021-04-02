@@ -3,12 +3,18 @@ Update homebrew recipe of BaseX
 https://brew.sh/
 ===================================================================================================
 
-# WIP
 
-## Create 'stable' snapshot
 
-$ cp /www/249056_70794/rp-hosting/10674/11674/files/releases/latest/*.zip /www/249056_70794/rp-hosting/10674/11674/files/releases/homebrew-snapshot/
-$ chmod a+r /www/249056_70794/rp-hosting/10674/11674/files/releases/homebrew-snapshot/*
+# Bump with `brew bump-formula-pr`
+
+```
+$ shasum -a 256 ~/Downloads/BaseX951.zip
+bfcb356c232fcc6bb14a875bc83f1ebeb6d4604c6aaae6d8bd63376b6b03b5f8
+```
+
+```
+$ brew bump-formula-pr --dry-run --no-browse --strict --online basex --version 9.5.1 --url "http://files.basex.org/releases/9.5.1/BaseX951.zip" --sha256 "bfcb356c232fcc6bb14a875bc83f1ebeb6d4604c6aaae6d8bd63376b6b03b5f8"
+```
 
 ===================================================================================================
 
@@ -35,7 +41,7 @@ $ chmod a+r /www/249056_70794/rp-hosting/10674/11674/files/releases/homebrew-sna
 ## Prepare git
 
   $ cd /usr/local/Homebrew/Library/Taps/homebrew/homebrew-core/
-  $ git checkout -b 9.4.4
+  $ git checkout -b bump-basex-9.5.1
 
 ## Edit
 
@@ -53,16 +59,21 @@ $ chmod a+r /www/249056_70794/rp-hosting/10674/11674/files/releases/homebrew-sna
   # https://github.com/Homebrew/homebrew-core/pull/23512#issuecomment-362203937
     $ git commit -am 'basex 9.0-rc20171222.150150 (devel)'
   or
-    $ git commit -am 'basex 9.2.4'
+    $ git commit -am 'basex 9.5.1'
   or
     $ git commit -am 'basex 9.0.2, 9.0.3-rc20180531.140617 (devel)'
-  $ git push holu 9.2.4
+  $ git push holu bump-basex-9.5.1
 ! $ git checkout master
 
 
 ## PR
 
   $ open https://github.com/holu/homebrew-core
+  $ Add message to PR
+    'bump basex 9.5.1'
+
+
+
 
 ===================================================================================================
 

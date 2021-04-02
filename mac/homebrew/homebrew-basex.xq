@@ -2,7 +2,7 @@
  :
  : /usr/local/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/basex.rb
  :)
-declare namespace _ = 'http://basex.org/homebrew-basex';
+declare namespace _ = 'https://basex.org/homebrew-basex';
 
 declare variable $basex-version external := "9.4.4"(: "homebrew-snapshot" :);
 
@@ -107,7 +107,7 @@ declare function _:release-info(
         element basex-version { $bxv },
         element path { $fdir },
         element name { $fname },
-        element url  { "http://files.basex.org/releases/" || $bxv || "/" || $fname }
+        element url  { "https://files.basex.org/releases/" || $bxv || "/" || $fname }
       }
 };
 
