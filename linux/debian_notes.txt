@@ -12,23 +12,26 @@ $ mkdir build
 $ cd build
 $ apt-get source basex
 $ ls
-basex-7.6  basex_7.6-1.debian.tar.gz  basex_7.6-1.dsc  basex_7.6.orig.tar.gz
-$ cd basex-7.6
+basex_9.0.1+ds-1.debian.tar.xz	basex_9.0.1+ds-1.dsc  basex_9.0.1+ds.orig.tar.xz
+$ tar xvf basex_9.0.1+ds-1.debian.tar.xz
 $ uscan
-basex: Newer version (7.7.2) available on remote site:
-  http://githubredir.debian.net/github/BaseXdb/basex/7.7.2.tar.gz
-  (local version is 7.6)
-basex: Successfully downloaded updated package 7.7.2.tar.gz
-    and symlinked basex_7.7.2.orig.tar.gz to it
-$ ls ../
-7.7.2.tar.gz  basex-7.6  basex_7.6-1.debian.tar.gz  basex_7.6-1.dsc  basex_7.6.orig.tar.gz  basex_7.7.2.orig.tar.gz
-$ uupdate -v 7.7.2 ../basex_7.7.2.orig.tar.gz
-New Release will be 7.7.2-1.
--- Untarring the new sourcecode archive ../basex_7.7.2.orig.tar.gz
-Unpacking the debian/ directory from version 7.6-1 worked fine.
-Remember: Your current directory is the OLD sourcearchive!
-Do a "cd ../basex-7.7.2" to see the new package
-$ cd ../basex-7.7.2
+uscan: Newest version of basex on remote site is 9.4, local version is 9.0.1+ds
+ (mangled local version is 9.0.1)
+uscan:  => Newer package available from
+        => https://github.com/BaseXdb/basex/archive/9.4.tar.gz
+Successfully repacked ../9.4.tar.gz as ../basex_9.4+ds.orig.tar.xz, deleting 495 files from it.
+$ ls ..
+9.4.tar.gz  basex_9.4+ds.orig.tar.xz  build
+uupdate -v 9.4 ../9.4.tar.gz
+uupdate: New Release will be 9.4-1.
+Symlinking to pristine source from basex_9.4.orig.tar.gz...
+uupdate: Untarring the new sourcecode archive ../9.4.tar.gz
+uupdate: debian/source/format is "3.0 (quilt)".
+uupdate: Auto-generating basex_9.0.1+ds-1.debian.tar.xz
+uupdate: Unpacking the debian/ directory from version 9.0.1+ds-1 worked fine.
+uupdate: Remember: Your current directory is the OLD sourcearchive!
+uupdate: Do a "cd ../basex-9.4" to see the new package
+$ cd ../basex-9.4
 
   $ dch -e (! Change: UNRELEASED -> unstable)
 * Check author list
