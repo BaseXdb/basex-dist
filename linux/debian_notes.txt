@@ -82,7 +82,7 @@ $ cd ../basex-9.4
 
 * Build and sign package
   $ ssh -X ...
-  $ dpkg-buildpackage -k79967C5F
+  $ dpkg-buildpackage -k88625CAF21B7BA9C18DC8A1B3E89E7DF79967C5F
 
 * Commit debian/ to basex-dist
   $ fakeroot ./debian/rules clean
