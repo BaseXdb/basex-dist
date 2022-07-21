@@ -130,6 +130,7 @@ sub zip {
   mkdir "$target/bin/";
   rcopy("$source/bin/", "$target/bin/");
   mkdir "$target/data/";
+  mkdir "$target/data/.logs/";
   mkdir "$target/etc/";
   rcopy("etc/", "$target/etc/");
   mkdir "$target/lib/";
