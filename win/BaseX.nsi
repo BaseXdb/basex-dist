@@ -84,6 +84,27 @@ Function OptionsPage
 FunctionEnd
 
 Function OptionsLeave
+# Check entered passwords
+!insertmacro MUI_INSTALLOPTIONS_READ $R0 "Options" "Field 6" "State"
+!insertmacro MUI_INSTALLOPTIONS_READ $R1 "Options" "Field 7" "State"
+${If} $R1 == $R0
+  ${If} $R1 == ''
+    MessageBox MB_OK "Password must not be empty."
+    Abort    
+  ${EndIf}
+  Push "$R1"
+  Push "${ALPHA}"
+  Call Validate
+  Pop $0
+  ${If} $0 == 0
+    MessageBox MB_OK "Passwords contain invalid characters."
+    Abort    
+  ${EndIf}
+${Else}
+  MessageBox MB_OK "Passwords do not match."
+  Abort
+${EndIf}
+
 # xq field
 !insertmacro MUI_INSTALLOPTIONS_READ $R5 "Options" "Field 3" "State"
 # xml field
@@ -170,11 +191,15 @@ Section "Hauptgruppe" SEC01
   CreateDirectory "$INSTDIR\webapp"
   SetOutPath "$INSTDIR\webapp"
   File /r "..\release\webapp\*"
-
   AccessControl::GrantOnFile "$INSTDIR" "(S-1-1-0)" "GenericRead + GenericWrite + GenericExecute + Delete"
+
+  # change admin password
+  nsExec::ExecToLog '"$INSTDIR\bin\basex.bat" "-vc" "PASSWORD $R0"'
+
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BaseX" "DisplayName" "BaseX"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BaseX" "DisplayIcon" "$\"$INSTDIR\BaseX.ico$\""
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BaseX" "UninstallString" "$\"$INSTDIR\uninstall.exe$\""
+
   ${EnvVarUpdate} $0 "PATH" "R" "HKLM" "$INSTDIR\bin"  ; Remove path of old rev
   ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$INSTDIR\bin"  ; Append the new one
 SectionEnd
