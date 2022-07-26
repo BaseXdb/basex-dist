@@ -20,7 +20,7 @@ RequestExecutionLevel admin
 ; MUI Settings
 !define MUI_ABORTWARNING
 !define MUI_ICON "..\images\BaseX.ico"
-!define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\modern-uninstall.ico"
+!define MUI_UNICON "..\images\BaseX.ico"
 !define MUI_FINISHPAGE_NOAUTOCLOSE
 Function .onInit
 !insertmacro MUI_INSTALLOPTIONS_EXTRACT_AS "Options.ini" "Options"
@@ -197,7 +197,7 @@ Section "Hauptgruppe" SEC01
   nsExec::ExecToLog '"$INSTDIR\bin\basex.bat" "-vc" "PASSWORD $R0"'
 
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BaseX" "DisplayName" "BaseX"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BaseX" "DisplayIcon" "$\"$INSTDIR\BaseX.ico$\""
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BaseX" "DisplayIcon" "$\"$INSTDIR\ico\BaseX.ico$\""
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BaseX" "UninstallString" "$\"$INSTDIR\uninstall.exe$\""
 
   ${EnvVarUpdate} $0 "PATH" "R" "HKLM" "$INSTDIR\bin"  ; Remove path of old rev
