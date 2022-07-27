@@ -11,30 +11,27 @@
 !define NUMERIC "1234567890"
 RequestExecutionLevel admin
 
-; MUI 1.67 compatible ------
-!include "MUI.nsh"
-!include "FileFunc.nsh"
-!include "FileAssociation.nsh"
-!include "Environment.nsh"
+!include MUI.nsh
+!include FileFunc.nsh
+!include FileAssociation.nsh
+!include Environment.nsh
+!include NSISpcre.nsh
 
-; MUI Settings
 !define MUI_ABORTWARNING
 !define MUI_ICON "..\images\BaseX.ico"
 !define MUI_UNICON "..\images\BaseX.ico"
 !define MUI_FINISHPAGE_NOAUTOCLOSE
+
+!insertmacro REReplace
+
 Function .onInit
 !insertmacro MUI_INSTALLOPTIONS_EXTRACT_AS "Options.ini" "Options"
 FunctionEnd
 
-!macro IndexOf Var Str Char
-Push "${Char}"
-Push "${Str}"
- Call IndexOf
-Pop "${Var}"
-!macroend
-
 ; Welcome page
 !insertmacro MUI_PAGE_WELCOME
+; check jre page
+Page custom CheckJava
 ; License page
 !define MUI_LICENSEPAGE_RADIOBUTTONS
 !insertmacro MUI_PAGE_LICENSE "..\..\basex\LICENSE"
@@ -42,41 +39,29 @@ Pop "${Var}"
 !insertmacro MUI_PAGE_DIRECTORY
 ; Custom page
 Page custom OptionsPage OptionsLeave
-; Instfiles page
+; Install files page
 !insertmacro MUI_PAGE_INSTFILES
 ; Finish page
-;!define MUI_FINISHPAGE_RUN
-;!define MUI_FINISHPAGE_RUN_FUNCTION run_basex
 !insertmacro MUI_PAGE_FINISH
-
-Function run_basex
-  nsExec::Exec '"$INSTDIR\bin\basexgui.bat"'
-FunctionEnd
-
-Function WriteToFile
- Exch $0 ;file to write to
- Exch
- Exch $1 ;text to write
- 
-  FileOpen $0 $0 a #open file
-   FileSeek $0 0 END #go to end
-   FileWrite $0 $1 #write to file
-  FileClose $0
- 
- Pop $1
- Pop $0
-FunctionEnd
- 
-!macro WriteToFile String File
- Push "${String}"
- Push "${File}"
-  Call WriteToFile
-!macroend
-!define WriteToFile "!insertmacro WriteToFile"
 
 # CUSTOM PAGE.
 # =========================================================================
-#
+
+# Raise error if 'java' command is not found, or if version is smaller than 11 
+Function CheckJava
+  nsExec::ExecToStack 'java -version'
+  Pop $0
+  Pop $1
+  ${REReplace} $1 "[^0-9.]" $1 "" 1
+  ${REReplace} $1 "[.].*" $1 "" 1
+  ${If} $0 != 0
+  ${OrIf} $1 < 11
+		MessageBox MB_OK "Please install Java 11 or higher before executing the installer."
+		Quit
+  ${EndIf}
+
+FunctionEnd
+
 Function OptionsPage
 !insertmacro MUI_HEADER_TEXT "Installation Options" "Choose optional settings for the BaseX installation."
 # Display the page.
@@ -314,26 +299,4 @@ Function Validate
   Pop $7
   Pop $8
   Exch $0
-FunctionEnd
-
-Function IndexOf
-Exch $0
-Exch
-Exch $1
-Push $2
-Push $3
- 
- StrCpy $3 $0
- StrCpy $0 -1
- IntOp $0 $0 + 1
-  StrCpy $2 $3 1 $0
-  StrCmp $2 "" +2
-  StrCmp $2 $1 +2 -3
- 
- StrCpy $0 -1
- 
-Pop $3
-Pop $2
-Pop $1
-Exch $0
 FunctionEnd
