@@ -92,7 +92,7 @@ sub artifacts {
   print "* Create BaseX artifacts\n";
   rmtree("../basex/basex-core/lib/");
   rmtree("../basex/basex-api/lib/");
-  system('cd ../basex && set "JAVA_HOME=c:/Program Files/Java/jdk8/" && mvn install -q -DskipTests');
+  system('cd ../basex && mvn install -q -DskipTests');
 }
 
 # gets version from pom file
@@ -202,8 +202,29 @@ sub exe {
 
   # create installer
   system("$nsis win/tmp.nsi");
+  sign();
   move("win/Setup.exe", "release/BaseX.exe");
   unlink("win/tmp.nsi");
+}
+
+# signs the installer
+sub sign {
+  print "* Sign EXE file\n";
+  system("signtool sign /a /tr http://time.certum.pl/ /td SHA256 /fd SHA256 win/Setup.exe");
+  if ($? == -1) {
+    # failed to execute the command
+    print "Failed to execute: $!\n";
+    exit 1;
+  } elsif ($? & 127) {
+    # command died with signal
+    printf "Command died with signal %d, %s coredump\n",
+      ($? & 127),  ($? & 128) ? 'with' : 'without';
+    exit 1;
+  } elsif ($? >> 8) {
+    # command exited with non-zero status
+    printf "Command exited with errorlevel %d\n", $? >> 8;
+    exit 1;
+  }
 }
 
 # write PAD file
