@@ -50,16 +50,21 @@ Page custom OptionsPage OptionsLeave
 # Raise error if 'java' command is not found, or if version is smaller than 11 
 Function CheckJava
   nsExec::ExecToStack 'java -version'
-  Pop $0
-  Pop $1
-  ${REReplace} $1 "[^0-9.]" $1 "" 1
-  ${REReplace} $1 "[.].*" $1 "" 1
+  Pop $0 ; Result code
+  Pop $1 ; Output of 'java -version'
   ${If} $0 != 0
-  ${OrIf} $1 < 11
-		MessageBox MB_OK "Please install Java 11 or higher before executing the installer."
-		Quit
+    MessageBox MB_ICONEXCLAMATION|MB_OK 'Please install Java 11 or higher before executing the installer.$\n$\nFailed to execute "java -version".$\nError code: $0.'
+    Quit
   ${EndIf}
 
+  # Extract version number
+  ${REReplace} $2 '^.+?(?:1\.)?([0-9]+).*' $1 '\1' 1
+  StrLen $3 $2
+  ${If} $3 = 0
+  ${OrIf} $2 < 11
+    MessageBox MB_ICONEXCLAMATION|MB_OK 'Please install Java 11 or higher before executing the installer.$\n$\nAnalyzed Java version string:$\n$\n$1'
+    Quit
+  ${EndIf}
 FunctionEnd
 
 Function OptionsPage
@@ -74,7 +79,7 @@ Function OptionsLeave
 !insertmacro MUI_INSTALLOPTIONS_READ $R1 "Options" "Field 7" "State"
 ${If} $R1 == $R0
   ${If} $R1 == ''
-    MessageBox MB_OK "Password must not be empty."
+    MessageBox MB_ICONEXCLAMATION|MB_OK "Password must not be empty."
     Abort    
   ${EndIf}
   Push "$R1"
@@ -82,11 +87,11 @@ ${If} $R1 == $R0
   Call Validate
   Pop $0
   ${If} $0 == 0
-    MessageBox MB_OK "Passwords contain invalid characters."
+    MessageBox MB_ICONEXCLAMATION|MB_OK "Passwords contain invalid characters."
     Abort    
   ${EndIf}
 ${Else}
-  MessageBox MB_OK "Passwords do not match."
+  MessageBox MB_ICONEXCLAMATION|MB_OK "Passwords do not match."
   Abort
 ${EndIf}
 

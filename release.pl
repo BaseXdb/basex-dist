@@ -202,7 +202,7 @@ sub exe {
 
   # create installer
   system("$nsis win/tmp.nsi");
-  sign();
+  #sign();
   move("win/Setup.exe", "release/BaseX.exe");
   unlink("win/tmp.nsi");
 }
