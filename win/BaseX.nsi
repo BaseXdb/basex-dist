@@ -57,8 +57,8 @@ Function CheckJava
     Quit
   ${EndIf}
 
-  # Extract version number
-  ${REReplace} $2 '^.+?(?:1\.)?([0-9]+).*' $1 '\1' 1
+  # Extract version number - modified to work with any text before version
+  ${REReplace} $2 '(?i).*version "(?:1\.)?([0-9]+).*' $1 '\1' 0
   StrLen $3 $2
   ${If} $3 = 0
   ${OrIf} $2 < 11
