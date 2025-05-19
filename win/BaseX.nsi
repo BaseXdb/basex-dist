@@ -47,13 +47,13 @@ Page custom OptionsPage OptionsLeave
 # CUSTOM PAGE.
 # =========================================================================
 
-# Raise error if 'java' command is not found, or if version is smaller than 11 
+# Raise error if 'java' command is not found, or if version is smaller than 17 
 Function CheckJava
   nsExec::ExecToStack 'java -version'
   Pop $0 ; Result code
   Pop $1 ; Output of 'java -version'
   ${If} $0 != 0
-    MessageBox MB_ICONEXCLAMATION|MB_OK 'Please install Java 11 or higher before executing the installer.$\n$\nFailed to execute "java -version".$\nError code: $0.'
+    MessageBox MB_ICONEXCLAMATION|MB_OK 'Please install Java 17 or higher before executing the installer.$\n$\nFailed to execute "java -version".$\nError code: $0.'
     Quit
   ${EndIf}
 
@@ -61,8 +61,8 @@ Function CheckJava
   ${REReplace} $2 '(?i).*version "(?:1\.)?([0-9]+).*' $1 '\1' 0
   StrLen $3 $2
   ${If} $3 = 0
-  ${OrIf} $2 < 11
-    MessageBox MB_ICONEXCLAMATION|MB_OK 'Please install Java 11 or higher before executing the installer.$\n$\nAnalyzed Java version string:$\n$\n$1'
+  ${OrIf} $2 < 17
+    MessageBox MB_ICONEXCLAMATION|MB_OK 'Please install Java 17 or higher before executing the installer.$\n$\nAnalyzed Java version string:$\n$\n$1'
     Quit
   ${EndIf}
 FunctionEnd

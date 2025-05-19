@@ -8,7 +8,7 @@ Academid Free License
   URL: http://ltstemmer.sf.net
 
 Apache License
-- commons, jetty, lucene-stemmers, milton, mime-util, xml-resolver, tagsoup
+- commons, jetty, lucene-stemmers, mime-util, xml-resolver, tagsoup
 
 JDOM License
 - jdom
