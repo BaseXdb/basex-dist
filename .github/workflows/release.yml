@@ -1,0 +1,100 @@
+# Build the full BaseX release set via release.pl and sign the Windows installer
+# through the SignPath GitHub Actions connector (test-signing until the OV cert
+# is issued). Needs secret SIGNPATH_API_TOKEN; without it, signing is skipped.
+
+name: Build and sign release
+
+on:
+  workflow_dispatch:
+    inputs:
+      basex-ref:
+        description: "Branch/tag/SHA of BaseXdb/basex to build against"
+        required: false
+        default: main
+
+permissions:
+  contents: read
+  actions: read   # SignPath connector reads the uploaded artifact
+
+jobs:
+  build-release:
+    runs-on: windows-latest
+
+    env:
+      # SignPath (BaseX [OSS]); switch to release-signing once the OV cert is issued.
+      SIGNPATH_ORGANIZATION_ID: 060434fa-7e50-47ef-a8ea-8e056eb58164
+      SIGNPATH_PROJECT_SLUG: basex
+      SIGNPATH_POLICY_SLUG: test-signing
+      SIGNPATH_ARTIFACT_CONFIG_SLUG: initial   # <zip-file> wrapping <pe-file path="*.exe">
+      HAS_SIGNPATH_TOKEN: ${{ secrets.SIGNPATH_API_TOKEN != '' }}
+
+    steps:
+      - name: Checkout basex-dist
+        uses: actions/checkout@v7
+        with:
+          path: basex-dist
+
+      # basex must sit next to basex-dist (release.pl references ../basex)
+      - name: Checkout basex
+        uses: actions/checkout@v7
+        with:
+          repository: BaseXdb/basex
+          ref: ${{ github.event.inputs.basex-ref }}
+          path: basex
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      - name: Install Perl modules used by release.pl
+        shell: cmd
+        run: cpanm --notest Archive::Zip File::Copy::Recursive || cpan -T Archive::Zip File::Copy::Recursive
+
+      - name: Build all release artifacts
+        shell: cmd
+        working-directory: basex-dist
+        run: perl release.pl
+
+      # Upload only the installer; its zip feeds the connector (matches path="*.exe")
+      - name: Upload installer for signing
+        id: upload-installer
+        if: env.HAS_SIGNPATH_TOKEN == 'true'
+        uses: actions/upload-artifact@v7
+        with:
+          name: installer-to-sign
+          path: basex-dist/release/*.exe
+          if-no-files-found: error
+          retention-days: 1   # transient signer input
+
+      - name: Submit signing request to SignPath
+        if: env.HAS_SIGNPATH_TOKEN == 'true'
+        uses: signpath/github-action-submit-signing-request@v2
+        with:
+          api-token: ${{ secrets.SIGNPATH_API_TOKEN }}
+          organization-id: ${{ env.SIGNPATH_ORGANIZATION_ID }}
+          project-slug: ${{ env.SIGNPATH_PROJECT_SLUG }}
+          signing-policy-slug: ${{ env.SIGNPATH_POLICY_SLUG }}
+          artifact-configuration-slug: ${{ env.SIGNPATH_ARTIFACT_CONFIG_SLUG }}
+          github-artifact-id: ${{ steps.upload-installer.outputs.artifact-id }}
+          wait-for-completion: true
+          output-artifact-directory: signed
+
+      # Move the signed installer back into release/
+      - name: Replace installer with signed version
+        if: env.HAS_SIGNPATH_TOKEN == 'true'
+        shell: pwsh
+        run: |
+          $signed = Get-ChildItem signed/*.exe | Select-Object -First 1
+          Copy-Item -Force $signed.FullName (Join-Path "basex-dist/release" $signed.Name)
+          $sig = Get-AuthenticodeSignature (Join-Path "basex-dist/release" $signed.Name)
+          "Status : $($sig.Status)"
+          "Signer : $($sig.SignerCertificate.Subject)"
+
+      - name: Upload release artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: BaseX-release
+          path: basex-dist/release/
+          if-no-files-found: error

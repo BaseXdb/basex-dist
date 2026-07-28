@@ -202,29 +202,8 @@ sub exe {
 
   # create installer
   system("$nsis win/tmp.nsi");
-  #sign();
   move("win/Setup.exe", "release/BaseX.exe");
   unlink("win/tmp.nsi");
-}
-
-# signs the installer
-sub sign {
-  print "* Sign EXE file\n";
-  system("signtool sign /a /tr http://time.certum.pl/ /td SHA256 /fd SHA256 win/Setup.exe");
-  if ($? == -1) {
-    # failed to execute the command
-    print "Failed to execute: $!\n";
-    exit 1;
-  } elsif ($? & 127) {
-    # command died with signal
-    printf "Command died with signal %d, %s coredump\n",
-      ($? & 127),  ($? & 128) ? 'with' : 'without';
-    exit 1;
-  } elsif ($? >> 8) {
-    # command exited with non-zero status
-    printf "Command exited with errorlevel %d\n", $? >> 8;
-    exit 1;
-  }
 }
 
 # write PAD file
@@ -261,12 +240,24 @@ sub pad {
 sub finish {
   print "* Finish release\n";
 
-  (my $v = $version) =~ s/\.//g;
-  move("release/BaseX.app.zip", "release/BaseX$v.app.zip");
-  move("release/BaseX.zip", "release/BaseX$v.zip");
-  move("release/BaseX.jar", "release/BaseX$v.jar");
-  move("release/basex.war", "release/BaseX$v.war");
-  move("release/BaseX.exe", "release/BaseX$v.exe");
+  # artifact base name: "BaseX124" for a release, "BaseX130-20260706.234438"
+  # for a snapshot (a version with a "-SNAPSHOT" qualifier gets a timestamp).
+  (my $digits = $version) =~ s/-.*//;   # strip qualifier: 13.0-SNAPSHOT -> 13.0
+  $digits =~ s/\.//g;                    # remove dots:      13.0        -> 130
+  my $name = "BaseX$digits";
+  if($version =~ /-/) {
+    my ($sec, $min, $hou, $day, $mon, $yr) = localtime();
+    $name .= sprintf("-%04d%02d%02d.%02d%02d%02d",
+      $yr + 1900, $mon + 1, $day, $hou, $min, $sec);
+  }
+  print "* Artifact name: $name\n";
+
+  # BaseX.app.zip is built on macOS only; skip the rename when it is absent.
+  move("release/BaseX.app.zip", "release/$name.app.zip") if -e "release/BaseX.app.zip";
+  move("release/BaseX.zip", "release/$name.zip");
+  move("release/BaseX.jar", "release/$name.jar");
+  move("release/basex.war", "release/$name.war");
+  move("release/BaseX.exe", "release/$name.exe");
   unlink("release/basex-api-$version.jar");
   rmtree("release/basex");
   rmtree("release/bin");

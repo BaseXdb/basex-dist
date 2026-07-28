@@ -1,0 +1,14 @@
+# Keep the GitHub Actions used by the release workflow up to date.
+# Dependabot scans .github/workflows/ and opens PRs when a newer action
+# release is available (e.g. the Node runtime bumps).
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    # Bundle all action bumps into a single PR instead of one per action.
+    groups:
+      github-actions:
+        patterns:
+          - "*"
