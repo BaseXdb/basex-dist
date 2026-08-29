@@ -1,32 +1,52 @@
 !define JAR "BaseX.jar"
 !define PRODUCT_NAME "BaseX"
+!define PRODUCT_VERSION "0.0.0.0"
 !define PRODUCT_PUBLISHER "BaseX GmbH"
-!define PRODUCT_WEB_SITE "http://basex.org"
-!define PRODUCT_WEB_DOCS "http://docs.basex.org"
+!define PRODUCT_WEB_SITE "https://basex.org"
+!define PRODUCT_WEB_DOCS "https://docs.basex.org"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\${JAR}"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
-!define ALPHA "abcdefghijklmnopqrstuvwxyz1234567890"
-!define BETA "abcdefghijklmnopqrstuvwxyz1234567890\/:"
-!define NUMERIC "1234567890"
+!define JAVA_VERSION 21
+; Printable ASCII characters, without double quote and space
+!define PASSWORD_CHARS "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!#$$%&'()*+,-./:;<=>?@[\]^_`{|}~"
+; Command script that assigns the admin password
+!define PASSWORD_SCRIPT "$PLUGINSDIR\password.bxs"
+; Access rights for directories that BaseX modifies at runtime
+!define WRITABLE "/grant *S-1-1-0:(OI)(CI)M /T /C /Q"
 RequestExecutionLevel admin
+Unicode true
+ManifestDPIAware true
+ManifestSupportedOS all
 
-!include MUI.nsh
+!include MUI2.nsh
 !include FileFunc.nsh
 !include FileAssociation.nsh
 !include Environment.nsh
-!include NSISpcre.nsh
+!include LogicLib.nsh
+!include nsDialogs.nsh
+!include WordFunc.nsh
 
 !define MUI_ABORTWARNING
 !define MUI_ICON "..\images\BaseX.ico"
 !define MUI_UNICON "..\images\BaseX.ico"
 !define MUI_FINISHPAGE_NOAUTOCLOSE
 
-!insertmacro REReplace
+!insertmacro WordFind
+!insertmacro WordFind2X
 
-Function .onInit
-!insertmacro MUI_INSTALLOPTIONS_EXTRACT_AS "Options.ini" "Options"
-FunctionEnd
+Var DesktopShortcut
+Var StartMenuShortcuts
+Var AssociateXQuery
+Var AssociateXML
+Var AdminPassword
+Var AdminPasswordRepeat
+Var DesktopShortcutControl
+Var StartMenuShortcutsControl
+Var AssociateXQueryControl
+Var AssociateXMLControl
+Var AdminPasswordControl
+Var AdminPasswordRepeatControl
 
 ; Welcome page
 !insertmacro MUI_PAGE_WELCOME
@@ -44,80 +64,85 @@ Page custom OptionsPage OptionsLeave
 ; Finish page
 !insertmacro MUI_PAGE_FINISH
 
-# CUSTOM PAGE.
-# =========================================================================
-
-# Raise error if 'java' command is not found, or if version is smaller than 17 
+; Reject installations without Java ${JAVA_VERSION} or newer.
 Function CheckJava
-  nsExec::ExecToStack 'java -version'
-  Pop $0 ; Result code
-  Pop $1 ; Output of 'java -version'
+  nsExec::ExecToStack "java -version"
+  Pop $0
+  Pop $1
   ${If} $0 != 0
-    MessageBox MB_ICONEXCLAMATION|MB_OK 'Please install Java 17 or higher before executing the installer.$\n$\nFailed to execute "java -version".$\nError code: $0.'
+    MessageBox MB_ICONEXCLAMATION|MB_OK "Please install Java ${JAVA_VERSION} or higher before executing the installer.$\n$\nFailed to execute $\"java -version$\".$\nError code: $0."
     Quit
   ${EndIf}
 
-  # Extract version number - modified to work with any text before version
-  ${REReplace} $2 '(?i).*version "(?:1\.)?([0-9]+).*' $1 '\1' 0
-  StrLen $3 $2
-  ${If} $3 = 0
-  ${OrIf} $2 < 17
-    MessageBox MB_ICONEXCLAMATION|MB_OK 'Please install Java 17 or higher before executing the installer.$\n$\nAnalyzed Java version string:$\n$\n$1'
+  ; Extract the major version from a string such as 'openjdk version "21.0.1" 2023-10-17'.
+  ; If a delimiter is missing, WordFind returns its input, which evaluates to 0 below.
+  ${WordFind2X} "$1" 'version $\"' '$\"' '+1' $2
+  ${WordFind} "$2" '.' '+1' $2
+  ${If} $2 < ${JAVA_VERSION}
+    MessageBox MB_ICONEXCLAMATION|MB_OK "Please install Java ${JAVA_VERSION} or higher before executing the installer.$\n$\nAnalyzed Java version string:$\n$\n$1"
     Quit
   ${EndIf}
 FunctionEnd
 
 Function OptionsPage
-!insertmacro MUI_HEADER_TEXT "Installation Options" "Choose optional settings for the BaseX installation."
-# Display the page.
-!insertmacro MUI_INSTALLOPTIONS_DISPLAY "Options"
+  !insertmacro MUI_HEADER_TEXT "Installation Options" "Choose optional settings for the BaseX installation."
+  nsDialogs::Create 1018
+  Pop $0
+  ${If} $0 == error
+    Abort
+  ${EndIf}
+
+  ${NSD_CreateGroupBox} 0 0 100% 100% "Shortcuts, File Types and Password"
+  Pop $0
+  ${NSD_CreateCheckbox} 3% 12u 44% 12u "Create desktop shortcut"
+  Pop $DesktopShortcutControl
+  ${NSD_Check} $DesktopShortcutControl
+  ${NSD_CreateCheckbox} 51% 12u 46% 12u "Associate with XQuery files"
+  Pop $AssociateXQueryControl
+  ${NSD_Check} $AssociateXQueryControl
+  ${NSD_CreateCheckbox} 3% 28u 44% 12u "Create Start menu entries"
+  Pop $StartMenuShortcutsControl
+  ${NSD_Check} $StartMenuShortcutsControl
+  ${NSD_CreateCheckbox} 51% 28u 46% 12u "Associate with XML documents"
+  Pop $AssociateXMLControl
+  ${NSD_Check} $AssociateXMLControl
+  ${NSD_CreateLabel} 3% 52u 94% 12u "Password of 'admin' user (enter twice):"
+  Pop $0
+  ${NSD_CreatePassword} 3% 68u 44% 12u ""
+  Pop $AdminPasswordControl
+  ${NSD_CreatePassword} 3% 84u 44% 12u ""
+  Pop $AdminPasswordRepeatControl
+  ${NSD_CreateLabel} 3% 100u 94% 20u "Letters, digits and punctuation marks are allowed, except double quotes and spaces."
+  Pop $0
+
+  nsDialogs::Show
 FunctionEnd
 
 Function OptionsLeave
-# Check entered passwords
-!insertmacro MUI_INSTALLOPTIONS_READ $R0 "Options" "Field 6" "State"
-!insertmacro MUI_INSTALLOPTIONS_READ $R1 "Options" "Field 7" "State"
-${If} $R1 == $R0
-  ${If} $R1 == ''
-    MessageBox MB_ICONEXCLAMATION|MB_OK "Password must not be empty."
-    Abort    
-  ${EndIf}
-  Push "$R1"
-  Push "${ALPHA}"
-  Call Validate
-  Pop $0
-  ${If} $0 == 0
-    MessageBox MB_ICONEXCLAMATION|MB_OK "Passwords contain invalid characters."
-    Abort    
-  ${EndIf}
-${Else}
-  MessageBox MB_ICONEXCLAMATION|MB_OK "Passwords do not match."
-  Abort
-${EndIf}
+  ${NSD_GetState} $DesktopShortcutControl $DesktopShortcut
+  ${NSD_GetState} $StartMenuShortcutsControl $StartMenuShortcuts
+  ${NSD_GetState} $AssociateXQueryControl $AssociateXQuery
+  ${NSD_GetState} $AssociateXMLControl $AssociateXML
+  ${NSD_GetText} $AdminPasswordControl $AdminPassword
+  ${NSD_GetText} $AdminPasswordRepeatControl $AdminPasswordRepeat
 
-# xq field
-!insertmacro MUI_INSTALLOPTIONS_READ $R5 "Options" "Field 3" "State"
-# xml field
-!insertmacro MUI_INSTALLOPTIONS_READ $R6 "Options" "Field 5" "State"
-# .xq file Association
-  ${registerExtension} "$INSTDIR\bin\basexgui.bat" ".bxs" "BaseX Command Script"
-  ${registerExtension} "$INSTDIR\bin\basexgui.bat" ".basex" "BaseX Configuration"
-  ${registerExtension} "$INSTDIR\bin\basexgui.bat" ".basexhome" "BaseX Configuration"
-  ${registerExtension} "$INSTDIR\bin\basexgui.bat" ".basexgui" "BaseX Configuration"
-  ${registerExtension} "$INSTDIR\bin\basexgui.bat" ".basexperm" "BaseX Configuration"
-  ${If} $R5 == 1
-    ${registerExtension} "$INSTDIR\bin\basexgui.bat" ".xq"     "XQuery File"
-    ${registerExtension} "$INSTDIR\bin\basexgui.bat" ".xqu"    "XQuery File"
-    ${registerExtension} "$INSTDIR\bin\basexgui.bat" ".xqy"    "XQuery File"
-    ${registerExtension} "$INSTDIR\bin\basexgui.bat" ".xquery" "XQuery File"
-    ${registerExtension} "$INSTDIR\bin\basexgui.bat" ".xqm"    "XQuery File"
-    ${registerExtension} "$INSTDIR\bin\basexgui.bat" ".xql"    "XQuery File"
+  ${If} $AdminPasswordRepeat == $AdminPassword
+    ${If} $AdminPasswordRepeat == ''
+      MessageBox MB_ICONEXCLAMATION|MB_OK "Password must not be empty."
+      Abort
+    ${EndIf}
+    Push "$AdminPasswordRepeat"
+    Push "${PASSWORD_CHARS}"
+    Call Validate
+    Pop $0
+    ${If} $0 == 0
+      MessageBox MB_ICONEXCLAMATION|MB_OK "Passwords contain invalid characters."
+      Abort
+    ${EndIf}
+  ${Else}
+    MessageBox MB_ICONEXCLAMATION|MB_OK "Passwords do not match."
+    Abort
   ${EndIf}
-# .xml file Association
-  ${If} $R6 == 1
-    ${registerExtension} "$INSTDIR\bin\basexgui.bat" ".xml" "XML Document"
-  ${EndIf}
-  ${RefreshShellIcons}
 FunctionEnd
 
 ; Uninstaller pages
@@ -127,11 +152,12 @@ FunctionEnd
 
 ; MUI end ------
 
-VIProductVersion "0.0.0.0"
+VIProductVersion "${PRODUCT_VERSION}"
 VIAddVersionKey "ProductName" "${PRODUCT_NAME}"
 VIAddVersionKey "CompanyName" "${PRODUCT_PUBLISHER}"
 VIAddVersionKey "FileDescription" "XML Database and XQuery Processor"
-VIAddVersionKey "FileVersion" "0.0.0.0"
+VIAddVersionKey "LegalCopyright" "Copyright ${PRODUCT_PUBLISHER}"
+VIAddVersionKey "FileVersion" "${PRODUCT_VERSION}"
 
 Name "${PRODUCT_NAME}"
 OutFile "Setup.exe"
@@ -140,7 +166,7 @@ InstallDirRegKey HKLM "${PRODUCT_DIR_REGKEY}" ""
 ShowInstDetails show
 ShowUnInstDetails show
 
-Section "Hauptgruppe" SEC01
+Section "BaseX" SEC01
   SetOutPath "$INSTDIR"
   SetOverwrite ifnewer
 
@@ -177,34 +203,72 @@ Section "Hauptgruppe" SEC01
   CreateDirectory "$INSTDIR\src"
   SetOutPath "$INSTDIR\src"
   File /r "..\src\*"
+; remove web applications of earlier installations that are now shipped as archives
+  RMDir /r "$INSTDIR\webapp\chat"
   RMDir /r "$INSTDIR\webapp\dba"
+  RMDir /r "$INSTDIR\webapp\webdav"
   CreateDirectory "$INSTDIR\webapp"
   SetOutPath "$INSTDIR\webapp"
   File /r "..\release\webapp\*"
-  AccessControl::GrantOnFile "$INSTDIR" "(S-1-1-0)" "GenericRead + GenericWrite + GenericExecute + Delete"
 
-  # change admin password
-  nsExec::ExecToLog '"$INSTDIR\bin\basex.bat" "-vc" "PASSWORD $R0"'
+  ; Assign the admin password. The password is passed in a command script to keep it
+  ; out of the process list and the installation log.
+  InitPluginsDir
+  FileOpen $0 "${PASSWORD_SCRIPT}" w
+  FileWrite $0 'PASSWORD "$AdminPassword"'
+  FileClose $0
+  nsExec::ExecToStack '"$INSTDIR\bin\basex.bat" "-C" "${PASSWORD_SCRIPT}"'
+  Pop $0
+  Pop $1
+  Delete "${PASSWORD_SCRIPT}"
+  ${If} $0 != 0
+    MessageBox MB_ICONEXCLAMATION|MB_OK "Failed to assign the password of the 'admin' user."
+  ${EndIf}
 
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BaseX" "DisplayName" "BaseX"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BaseX" "DisplayIcon" "$\"$INSTDIR\ico\BaseX.ico$\""
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BaseX" "UninstallString" "$\"$INSTDIR\uninstall.exe$\""
+  ; Grant all users write access to the directories and files that BaseX modifies at
+  ; runtime. Programs, libraries and scripts remain writable for administrators only.
+  CreateDirectory "$INSTDIR\data"
+  nsExec::ExecToLog '"$SYSDIR\icacls.exe" "$INSTDIR\data" ${WRITABLE}'
+  Pop $0
+  nsExec::ExecToLog '"$SYSDIR\icacls.exe" "$INSTDIR\repo" ${WRITABLE}'
+  Pop $0
+  nsExec::ExecToLog '"$SYSDIR\icacls.exe" "$INSTDIR\webapp" ${WRITABLE}'
+  Pop $0
+  nsExec::ExecToLog '"$SYSDIR\icacls.exe" "$INSTDIR\.basex" /grant *S-1-1-0:M /C /Q'
+  Pop $0
 
   ${EnvVarUpdate} $0 "PATH" "R" "HKLM" "$INSTDIR\bin"  ; Remove path of old rev
   ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$INSTDIR\bin"  ; Append the new one
 SectionEnd
 
+Section -FileAssociations
+  ${registerExtension} "$INSTDIR\bin\basexgui.bat" ".bxs" "BaseX Command Script"
+  ${registerExtension} "$INSTDIR\bin\basexgui.bat" ".basex" "BaseX Configuration"
+  ${registerExtension} "$INSTDIR\bin\basexgui.bat" ".basexhome" "BaseX Configuration"
+  ${registerExtension} "$INSTDIR\bin\basexgui.bat" ".basexgui" "BaseX Configuration"
+  ${registerExtension} "$INSTDIR\bin\basexgui.bat" ".basexperm" "BaseX Configuration"
+  ${If} $AssociateXQuery == ${BST_CHECKED}
+    ${registerExtension} "$INSTDIR\bin\basexgui.bat" ".xq" "XQuery File"
+    ${registerExtension} "$INSTDIR\bin\basexgui.bat" ".xqu" "XQuery File"
+    ${registerExtension} "$INSTDIR\bin\basexgui.bat" ".xqy" "XQuery File"
+    ${registerExtension} "$INSTDIR\bin\basexgui.bat" ".xquery" "XQuery File"
+    ${registerExtension} "$INSTDIR\bin\basexgui.bat" ".xqm" "XQuery File"
+    ${registerExtension} "$INSTDIR\bin\basexgui.bat" ".xql" "XQuery File"
+  ${EndIf}
+  ${If} $AssociateXML == ${BST_CHECKED}
+    ${registerExtension} "$INSTDIR\bin\basexgui.bat" ".xml" "XML Document"
+  ${EndIf}
+  ${RefreshShellIcons}
+SectionEnd
+
 Section -AdditionalIcons
   SetOutPath "$INSTDIR"
   SetOverwrite try
-  # desktop shortcut
-  !insertmacro MUI_INSTALLOPTIONS_READ $R7 "Options" "Field 2" "State"
-  # startmenu
-  !insertmacro MUI_INSTALLOPTIONS_READ $R8 "Options" "Field 4" "State"
-  ${If} $R7 == 1
+  ; Create the selected shortcuts.
+  ${If} $DesktopShortcut == ${BST_CHECKED}
     CreateShortCut "$DESKTOP\BaseX GUI.lnk" "cmd.exe" '/C "$INSTDIR\bin\basexgui.bat"' "$INSTDIR\ico\BaseX.ico" 0
   ${EndIf}
-  ${If} $R8 == 1
+  ${If} $StartMenuShortcuts == ${BST_CHECKED}
     RMDir /r "$SMPROGRAMS\BaseX"
     CreateDirectory "$SMPROGRAMS\BaseX"
     CreateShortCut "$SMPROGRAMS\BaseX\BaseX GUI.lnk" "cmd.exe" '/C "$INSTDIR\bin\basexgui.bat"' "$INSTDIR\ico\BaseX.ico" 0
@@ -220,7 +284,12 @@ SectionEnd
 Section -Post
   WriteUninstaller "$INSTDIR\uninst.exe"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayName" "$(^Name)"
-  WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "UninstallString" "$INSTDIR\uninst.exe"
+  WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayVersion" "${PRODUCT_VERSION}"
+  WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayIcon" "$INSTDIR\ico\BaseX.ico"
+  WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "InstallLocation" "$INSTDIR"
+  WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "UninstallString" '"$INSTDIR\uninst.exe"'
+  WriteRegDWORD ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "NoModify" 1
+  WriteRegDWORD ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "NoRepair" 1
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "URLInfoAbout" "${PRODUCT_WEB_SITE}"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "Publisher" "${PRODUCT_PUBLISHER}"
 SectionEnd
@@ -231,7 +300,7 @@ Function un.onUninstSuccess
 FunctionEnd
 
 Function un.onInit
-  MessageBox MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 "Uninstall all components of $(^Name) ?" IDYES +2
+  MessageBox MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 "Uninstall all components of $(^Name)?" IDYES +2
   Abort
 FunctionEnd
 
@@ -239,10 +308,6 @@ Section Uninstall
   Delete "$DESKTOP\BaseX GUI.lnk"
   RMDir /r "$SMPROGRAMS\BaseX"
   RMDir /r "$INSTDIR"
-  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BaseX"
-  DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
-  DeleteRegKey HKLM "${PRODUCT_DIR_REGKEY}"
-  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\BaseX"
   DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
   DeleteRegKey HKLM "${PRODUCT_DIR_REGKEY}"
   ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "$INSTDIR\bin"
