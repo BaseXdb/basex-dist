@@ -126,13 +126,6 @@ Page custom OptionsPage OptionsLeave
   DeleteRegKey /ifempty SHCTX "Software\Classes\${EXTENSION}"
 !macroend
 
-; Creates a shortcut. Windows marks shortcuts that are written by a downloaded installer as
-; unsafe; the mark is removed, as it would be reported on every start of the application.
-!macro Shortcut LINK TARGET PARAMETERS ICON
-  CreateShortCut "${LINK}" "${TARGET}" '${PARAMETERS}' "${ICON}" 0
-  System::Call 'kernel32::DeleteFileW(w "${LINK}:Zone.Identifier")'
-!macroend
-
 ; Creates a configuration file if it is missing and grants all users write access to it.
 !macro Writable FILE
   ${IfNot} ${FileExists} "$INSTDIR\${FILE}"
@@ -358,17 +351,17 @@ Section -AdditionalIcons
   SetOverwrite try
   ; Create the selected shortcuts.
   ${If} $DesktopShortcut == ${BST_CHECKED}
-    !insertmacro Shortcut "$DESKTOP\BaseX GUI.lnk" "cmd.exe" '/C "$INSTDIR\bin\basexgui.bat"' "$INSTDIR\ico\BaseX.ico"
+    CreateShortCut "$DESKTOP\BaseX GUI.lnk" "cmd.exe" '/C "$INSTDIR\bin\basexgui.bat"' "$INSTDIR\ico\BaseX.ico" 0
   ${EndIf}
   ${If} $StartMenuShortcuts == ${BST_CHECKED}
     RMDir /r "$SMPROGRAMS\BaseX"
     CreateDirectory "$SMPROGRAMS\BaseX"
-    !insertmacro Shortcut "$SMPROGRAMS\BaseX\BaseX GUI.lnk" "cmd.exe" '/C "$INSTDIR\bin\basexgui.bat"' "$INSTDIR\ico\BaseX.ico"
-    !insertmacro Shortcut "$SMPROGRAMS\BaseX\BaseX HTTP Server (Start).lnk" "cmd.exe" '/C "$INSTDIR\bin\basexhttp.bat" -S -L' "$INSTDIR\ico\start.ico"
-    !insertmacro Shortcut "$SMPROGRAMS\BaseX\BaseX HTTP Server (Stop).lnk" "cmd.exe" '/C "$INSTDIR\bin\basexhttp.bat" stop' "$INSTDIR\ico\stop.ico"
-    !insertmacro Shortcut "$SMPROGRAMS\BaseX\BaseX Client.lnk" "cmd.exe" '/C "$INSTDIR\bin\basexclient.bat"' "$INSTDIR\ico\shell.ico"
-    !insertmacro Shortcut "$SMPROGRAMS\BaseX\BaseX Standalone.lnk" "cmd.exe" '/C "$INSTDIR\bin\basex.bat"' "$INSTDIR\ico\shell.ico"
-    !insertmacro Shortcut "$SMPROGRAMS\BaseX\Uninstall BaseX.lnk" "$INSTDIR\uninst.exe" "" "$INSTDIR\ico\BaseX.ico"
+    CreateShortCut "$SMPROGRAMS\BaseX\BaseX GUI.lnk" "cmd.exe" '/C "$INSTDIR\bin\basexgui.bat"' "$INSTDIR\ico\BaseX.ico" 0
+    CreateShortCut "$SMPROGRAMS\BaseX\BaseX HTTP Server (Start).lnk" "cmd.exe" '/C "$INSTDIR\bin\basexhttp.bat" -S -L' "$INSTDIR\ico\start.ico" 0
+    CreateShortCut "$SMPROGRAMS\BaseX\BaseX HTTP Server (Stop).lnk" "cmd.exe" '/C "$INSTDIR\bin\basexhttp.bat" stop' "$INSTDIR\ico\stop.ico" 0
+    CreateShortCut "$SMPROGRAMS\BaseX\BaseX Client.lnk" "cmd.exe" '/C "$INSTDIR\bin\basexclient.bat"' "$INSTDIR\ico\shell.ico" 0
+    CreateShortCut "$SMPROGRAMS\BaseX\BaseX Standalone.lnk" "cmd.exe" '/C "$INSTDIR\bin\basex.bat"' "$INSTDIR\ico\shell.ico" 0
+    CreateShortCut "$SMPROGRAMS\BaseX\Uninstall BaseX.lnk" "$INSTDIR\uninst.exe"
     WriteINIStr "$SMPROGRAMS\BaseX\BaseX Documentation.url" "InternetShortcut" "URL" "${PRODUCT_WEB_DOCS}"
   ${EndIf}
 SectionEnd
