@@ -80,6 +80,13 @@ sub prepare {
   rmtree("release/webapp/WEB-INF/data");
   rmtree("release/webapp/WEB-INF/repo");
 
+  # ship web applications as archives, not as directories
+  for my $zip(glob("../basex/basex-api/target/webapp/*.zip")) {
+    my $app = basename($zip, ".zip");
+    rmtree("release/webapp/$app");
+    copy($zip, "release/webapp/$app.zip") or die "cannot copy $zip: $!";
+  }
+
   # write version file
   print "* Write version file\n";
   open(my $out, ">release/version.txt");
