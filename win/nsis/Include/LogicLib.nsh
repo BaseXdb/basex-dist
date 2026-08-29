@@ -47,15 +47,23 @@
 ;       Case-sensitive string tests:
 ;         a S== b; a S!= b
 ;       Standard (built-in) signed integer tests:
-;         a = b; a <> b; a < b; a >= b; a > b; a <= b
+;         a = b; a <> b; a < b; a >= b; a > b; a <= b; a & b
 ;       Standard (built-in) unsigned integer tests:
 ;         a U< b; a U>= b; a U> b; a U<= b
 ;       64-bit integer tests (using System.dll):
 ;         a L= b; a L<> b; a L< b; a L>= b; a L> b; a L<= b
+;       ptrdiff_t integer tests
+;         a P= b; a P<> b; a P< b; a P>= b; a P> b; a P<= b
+;       size_t integer tests
+;         a Z= b; a Z<> b; a Z< b; a Z>= b; a Z> b; a Z<= b
 ;       Built-in NSIS flag tests:
-;         ${Abort}; ${Errors}; ${RebootFlag}; ${Silent}
+;         ${Abort}; ${Errors}; ${RebootFlag}; ${Silent}; ${RtlLanguage};
+;         ${ShellVarContextAll}
 ;       Built-in NSIS other tests:
 ;         ${FileExists} a
+;       Complex string tests:
+;         a ${StartsWith} b; a ${StartsWithS} b; a ${EndsWith} b; a ${EndsWithS} b;
+;         a ${Contains} b; a ${ContainsS} b; ${IsLowerCase} b; ${IsUpperCase} b
 ;       Any conditional NSIS instruction test:
 ;         ${Cmd} a
 ;       Section flag tests:
@@ -63,6 +71,8 @@
 ;         ${SectionIsSectionGroupEnd} a; ${SectionIsBold} a;
 ;         ${SectionIsReadOnly} a; ${SectionIsExpanded} a;
 ;         ${SectionIsPartiallySelected} a
+;       Additional tests:
+;         HK ${RegKeyIsEmpty} SubKey
 ;
 ; Examples:
 ;   See LogicLib.nsi in the Examples folder for lots of example usage.
@@ -77,7 +87,7 @@
 !verbose ${_LOGICLIB_VERBOSITY}
 
 !ifndef LOGICLIB
-  !define LOGICLIB
+  !define LOGICLIB 20260419
   !define | "'"
   !define || "' '"
   !define LOGICLIB_COUNTER 0
@@ -91,11 +101,14 @@
     !endif
   !macroend
 
+  !macro LogicLib_JumpToBranch _Jump _Skip
+    !if `${_Jump}${_Skip}` != ``
+      StrCmp "" "" `${_Jump}` ${_Skip}
+    !endif
+  !macroend
+
   !macro _IncreaseCounter
-    !define _LOGICLIB_COUNTER ${LOGICLIB_COUNTER}
-    !undef LOGICLIB_COUNTER
-    !define /math LOGICLIB_COUNTER ${_LOGICLIB_COUNTER} + 1
-    !undef _LOGICLIB_COUNTER
+    !define /redef /math LOGICLIB_COUNTER `${LOGICLIB_COUNTER}` + 1
   !macroend
 
   !macro _PushLogic
@@ -123,7 +136,7 @@
     !ifndef _${Type}
       !error "Cannot use _Pop${Type} without a preceding _Push${Type}"
     !endif
-    !ifdef ${_${Type}}Prev${Type}                         ; If a previous statment was active then restore it
+    !ifdef ${_${Type}}Prev${Type}                         ; If a previous statement was active then restore it
       !define _Cur${Type} ${_${Type}}
       !undef _${Type}
       !define _${Type} ${${_Cur${Type}}Prev${Type}}
@@ -132,6 +145,13 @@
     !else
       !undef _${Type}
     !endif
+  !macroend
+
+  !macro _LogicLib_AlwaysTrue _a _b _t _f
+    !insertmacro LogicLib_JumpToBranch `${_t}` `${_f}`
+  !macroend
+  !macro _LogicLib_AlwaysFalse _a _b _t _f
+    !insertmacro LogicLib_JumpToBranch `${_f}` `${_t}`
   !macroend
 
   ; String tests
@@ -155,7 +175,7 @@
   ; Extra string tests (cannot do these case-sensitively - I tried and lstrcmp still ignored the case)
   !macro _StrCmpI _a _b _e _l _m
     !insertmacro _LOGICLIB_TEMP
-    System::Call `kernel32::lstrcmpiA(ts, ts) i.s` `${_a}` `${_b}`
+    System::Call `kernel32::lstrcmpi(ts, ts) i.s` `${_a}` `${_b}`
     Pop $_LOGICLIB_TEMP
     IntCmp $_LOGICLIB_TEMP 0 `${_e}` `${_l}` `${_m}`
   !macroend
@@ -199,6 +219,12 @@
 
   !macro _<= _a _b _t _f
     !insertmacro _> `${_a}` `${_b}` `${_f}` `${_t}`
+  !macroend
+
+  !macro _& _a _b _t _f
+    !insertmacro _LOGICLIB_TEMP
+    IntOp $_LOGICLIB_TEMP `${_a}` & `${_b}`
+    !insertmacro _<> $_LOGICLIB_TEMP 0 `${_t}` `${_f}`
   !macroend
 
   ; Unsigned integer tests (NB: no need for extra equality tests)
@@ -250,6 +276,52 @@
     !insertmacro _L> `${_a}` `${_b}` `${_f}` `${_t}`
   !macroend
 
+  ; ptrdiff_t & size_t tests
+  !macro LogicLib_PtrDiffTest _o _a _b _t _f
+    !if "${NSIS_PTR_SIZE}" <= 4
+      !insertmacro _${_o} `${_a}` `${_b}` `${_t}` `${_f}`
+    !else
+      !insertmacro _L${_o} `${_a}` `${_b}` `${_t}` `${_f}`
+    !endif
+  !macroend
+  !macro _P= _a _b _t _f
+    !insertmacro LogicLib_PtrDiffTest = `${_a}` `${_b}` `${_t}` `${_f}`
+  !macroend
+  !macro _P<> _a _b _t _f
+    !insertmacro LogicLib_PtrDiffTest <> `${_a}` `${_b}` `${_t}` `${_f}`
+  !macroend
+  !macro _P< _a _b _t _f
+    !insertmacro LogicLib_PtrDiffTest < `${_a}` `${_b}` `${_t}` `${_f}`
+  !macroend
+  !macro _P>= _a _b _t _f
+    !insertmacro LogicLib_PtrDiffTest >= `${_a}` `${_b}` `${_t}` `${_f}`
+  !macroend
+  !macro _P> _a _b _t _f
+    !insertmacro LogicLib_PtrDiffTest > `${_a}` `${_b}` `${_t}` `${_f}`
+  !macroend
+  !macro _P<= _a _b _t _f
+    !insertmacro LogicLib_PtrDiffTest <= `${_a}` `${_b}` `${_t}` `${_f}`
+  !macroend
+  !include Util.nsh
+  !macro _Z= _a _b _t _f
+    !insertmacro LogicLib_PtrDiffTest = `${_a}` `${_b}` `${_t}` `${_f}`
+  !macroend
+  !macro _Z<> _a _b _t _f
+    !insertmacro LogicLib_PtrDiffTest <> `${_a}` `${_b}` `${_t}` `${_f}`
+  !macroend
+  !macro _Z< _a _b _t _f
+    !insertmacro IntPtrCmpU `${_a}` `${_b}` `${_f}` `${_t}` `${_f}`
+  !macroend
+  !macro _Z>= _a _b _t _f
+    !insertmacro IntPtrCmpU `${_a}` `${_b}` `${_t}` `${_f}` `${_t}`
+  !macroend
+  !macro _Z> _a _b _t _f
+    !insertmacro IntPtrCmpU `${_a}` `${_b}` `${_f}` `${_f}` `${_t}`
+  !macroend
+  !macro _Z<= _a _b _t _f
+    !insertmacro IntPtrCmpU `${_a}` `${_b}` `${_t}` `${_t}` `${_f}`
+  !macroend
+
   ; Flag tests
   !macro _Abort _a _b _t _f
     IfAbort `${_t}` `${_f}`
@@ -275,6 +347,90 @@
     IfSilent `${_t}` `${_f}`
   !macroend
   !define Silent `"" Silent ""`
+
+  !macro _ShellVarContextAll _a _b _t _f
+    IfShellVarContextAll `${_t}` `${_f}`
+  !macroend
+  !define ShellVarContextAll `"" ShellVarContextAll ""`
+
+  !macro _RtlLanguage _a _b _t _f
+    IfRtlLanguage `${_t}` `${_f}`
+  !macroend
+  !define RtlLanguage `"" RtlLanguage ""`
+
+  !macro _AltRegView _a _b _t _f
+    IfAltRegView `${_t}` `${_f}`
+  !macroend
+  !define AltRegView `"" AltRegView ""`
+
+  ; Complex string tests
+  !macro _LL_StartsWith _op _a _b _t _f
+    !insertmacro _LOGICLIB_TEMP
+    StrLen $_LOGICLIB_TEMP `${_b}`
+    StrCpy $_LOGICLIB_TEMP `${_a}` $_LOGICLIB_TEMP
+    ${_op} $_LOGICLIB_TEMP `${_b}` `${_t}` `${_f}`
+  !macroend
+  !define StartsWith `"LL_StartsWith StrCmp"`
+  !define StartsWithS `"LL_StartsWith StrCmpS"`
+
+  !macro _LL_EndsWith _op _a _b _t _f
+    !insertmacro _LOGICLIB_TEMP
+    StrLen $_LOGICLIB_TEMP `${_b}`
+    StrCpy $_LOGICLIB_TEMP `${_a}` "" -$_LOGICLIB_TEMP
+    ${_op} $_LOGICLIB_TEMP `${_b}` `${_t}` `${_f}`
+  !macroend
+  !define EndsWith `"LL_EndsWith StrCmp"`
+  !define EndsWithS `"LL_EndsWith StrCmpS"`
+
+  !macro _LL_StrContains _op _a _b _t _f
+    !insertmacro _LOGICLIB_TEMP
+    Push $0
+    Push $1
+    Push $2
+    StrCpy $0 `${_b}`
+    StrCpy $1 `${_a}`
+    StrLen $_LOGICLIB_TEMP $0
+    _LL${LOGICLIB_COUNTER}_Loop:
+      StrCpy $2 $1 $_LOGICLIB_TEMP
+      StrCmp $2 "" _LL${LOGICLIB_COUNTER}_Done
+      StrCpy $1 $1 "" 1
+      ${_op} $2 $0 ""_LL${LOGICLIB_COUNTER}_Loop
+      StrCpy $_LOGICLIB_TEMP ""
+    _LL${LOGICLIB_COUNTER}_Done:
+    Pop $2
+    Pop $1
+    Pop $0
+    StrCmp $_LOGICLIB_TEMP "" `${_t}` `${_f}`
+    !insertmacro _IncreaseCounter
+  !macroend
+  !define Contains `"LL_StrContains StrCmp"`
+  !define ContainsS `"LL_StrContains StrCmpS"`
+
+  !macro _LL_IsCase _func _a _b _t _f
+    !insertmacro _LOGICLIB_TEMP
+    System::Call USER32::${_func}(tss) `${_b}`
+    Pop $_LOGICLIB_TEMP
+    StrCmpS $_LOGICLIB_TEMP `${_b}` `${_t}` `${_f}`
+  !macroend
+  !define IsLowerCase `"" "LL_IsCase CharLower"`
+  !define IsUpperCase `"" "LL_IsCase CharUpper"`
+
+  ; Registry tests
+  !macro _RegKeyIsEmpty _a _b _t _f
+    !insertmacro _LOGICLIB_TEMP
+    ClearErrors
+    EnumRegValue $_LOGICLIB_TEMP ${_a} `${_b}` ""
+    !if `${_f}` != ``
+    IfErrors "" `${_f}` ; Skip calls to EnumRegKey and _== if possible
+    !else
+    IfErrors +3
+    StrCpy $_LOGICLIB_TEMP "1" ; The default value is also named "", make sure we don't mistake it as empty
+    Goto +2
+    !endif
+    EnumRegKey $_LOGICLIB_TEMP ${_a} `${_b}` ""
+    !insertmacro _== $_LOGICLIB_TEMP "" `${_t}` `${_f}`
+  !macroend
+  !define RegKeyIsEmpty `RegKeyIsEmpty`
 
   ; "Any instruction" test
   !macro _Cmd _a _b _t _f
@@ -323,7 +479,7 @@
     !verbose ${LOGICLIB_VERBOSITY}
     !insertmacro _PushLogic
     !define ${_Logic}If
-    !define ${_Logic}Else _LogicLib_Label_${LOGICLIB_COUNTER}                    ; Get a label for the Else
+    !define ${_Logic}Else _LogicLib_ElseLabel_${LOGICLIB_COUNTER} ; Get a label for the Else
     !insertmacro _IncreaseCounter
     !define _c=${_c}
     !ifdef _c=true                                        ; If is true
@@ -369,12 +525,12 @@
     !ifndef ${_Logic}Else
       !error "Cannot use Or following an Else"
     !endif
-    !define _label _LogicLib_Label_${LOGICLIB_COUNTER}                           ; Skip this test as we already
+    !define _label _LogicLib_Label_${LOGICLIB_COUNTER}    ; Skip this test as we already
     !insertmacro _IncreaseCounter
     Goto ${_label}                                        ; have a successful result
     ${${_Logic}Else}:                                     ; Place the Else label
     !undef ${_Logic}Else                                  ; and remove it
-    !define ${_Logic}Else _LogicLib_Label_${LOGICLIB_COUNTER}                    ; Get a label for the next Else and perform the new If
+    !define ${_Logic}Else _LogicLib_ElseLabel_${LOGICLIB_COUNTER} ; Get a label for the next Else and perform the new If
     !insertmacro _IncreaseCounter
     !define _c=${_c}
     !ifdef _c=true                                        ; If is true
@@ -401,7 +557,7 @@
       !error "Cannot use Else following an Else"
     !endif
     !ifndef ${_Logic}EndIf                                ; First Else for this If?
-      !define ${_Logic}EndIf _LogicLib_Label_${LOGICLIB_COUNTER}                 ; Get a label for the EndIf
+      !define ${_Logic}EndIf _LogicLib_EndIfLabel_${LOGICLIB_COUNTER} ; Get a label for the EndIf
       !insertmacro _IncreaseCounter
     !endif
     Goto ${${_Logic}EndIf}                                ; Go to the EndIf
@@ -415,7 +571,7 @@
     !verbose push
     !verbose ${LOGICLIB_VERBOSITY}
     ${Else}                                               ; Perform the Else
-    !define ${_Logic}Else _LogicLib_Label_${LOGICLIB_COUNTER}                    ; Get a label for the next Else and perform the new If
+    !define ${_Logic}Else _LogicLib_ElseLabel_${LOGICLIB_COUNTER} ; Get a label for the next Else and perform the new If
     !insertmacro _IncreaseCounter
     !define _c=${_c}
     !ifdef _c=true                                        ; If is true
@@ -514,10 +670,10 @@
     !verbose push
     !verbose ${LOGICLIB_VERBOSITY}
     !insertmacro _PushLogic
-    !define ${_Logic}${_n} _LogicLib_Label_${LOGICLIB_COUNTER}                   ; Get a label for the start of the loop
+    !define ${_Logic}${_n} _LogicLib_Label_${LOGICLIB_COUNTER} ; Get a label for the start of the loop
     !insertmacro _IncreaseCounter
     ${${_Logic}${_n}}:
-    !insertmacro _PushScope Exit${_n} _LogicLib_Label_${LOGICLIB_COUNTER}        ; Get a label for the end of the loop
+    !insertmacro _PushScope Exit${_n} _LogicLib_Label_${LOGICLIB_COUNTER} ; Get a label for the end of the loop
     !insertmacro _IncreaseCounter
     !insertmacro _PushScope Break ${_Exit${_n}}           ; Break goes to the end of the loop
     !ifdef _DoLoopExpression
@@ -526,7 +682,7 @@
     !endif
     !define _c=${_c}
     !ifdef _c=                                            ; No starting condition
-      !insertmacro _PushScope Continue _LogicLib_Label_${LOGICLIB_COUNTER}       ; Get a label for Continue at the end of the loop
+      !insertmacro _PushScope Continue _LogicLib_Label_${LOGICLIB_COUNTER} ; Get a label for Continue at the end of the loop
       !insertmacro _IncreaseCounter
     !else
       !insertmacro _PushScope Continue ${${_Logic}${_n}}  ; Continue goes to the start of the loop
@@ -576,7 +732,7 @@
     !endif
     !undef _c=${_c}
     Goto ${_Continue}                                     ; Just to ensure it is referenced at least once
-	Goto ${_Exit${_n}}                                    ; Just to ensure it is referenced at least once
+    Goto ${_Exit${_n}}                                    ; Just to ensure it is referenced at least once
     ${_Exit${_n}}:                                        ; Place the loop exit point
     !undef ${_Logic}Condition
     !insertmacro _PopScope Continue
@@ -612,11 +768,12 @@
       !ifndef ${_Logic}Else
         !error "Cannot use Case following a CaseElse"
       !endif
-      Goto ${${_Logic}EndSelect}                          ; Go to the EndSelect
+      Goto ${${_Logic}EndSelect}                          ; Go to EndSelect (Ends the previous Case)
+      !define /IfNDef _LogicLib_EndSelectLabelUsed_${_Logic}
       ${${_Logic}Else}:                                   ; Place the Else label
       !undef ${_Logic}Else                                ; and remove it
     !else
-      !define ${_Logic}EndSelect _LogicLib_Label_${LOGICLIB_COUNTER}             ; Get a label for the EndSelect
+      !define ${_Logic}EndSelect _LogicLib_EndSelectLabel_${LOGICLIB_COUNTER} ; Get a label for the EndSelect
       !insertmacro _IncreaseCounter
     !endif
     !verbose pop
@@ -629,7 +786,7 @@
     !verbose push
     !verbose ${LOGICLIB_VERBOSITY}
     ${CaseElse}                                           ; Perform the CaseElse
-    !define ${_Logic}Else _LogicLib_Label_${LOGICLIB_COUNTER}                    ; Get a label for the next Else and perform the new Case
+    !define ${_Logic}Else _LogicLib_NextSelectCaseLabel_${LOGICLIB_COUNTER} ; Get a label for the next Else and perform the new Case
     !insertmacro _IncreaseCounter
     !insertmacro _== `${${_Logic}Select}` `${_a}` "" ${${_Logic}Else}
     !verbose pop
@@ -640,7 +797,7 @@
     !verbose push
     !verbose ${LOGICLIB_VERBOSITY}
     ${CaseElse}                                           ; Perform the CaseElse
-    !define ${_Logic}Else _LogicLib_Label_${LOGICLIB_COUNTER}                    ; Get a label for the next Else and perform the new Case
+    !define ${_Logic}Else _LogicLib_NextSelectCaseLabel_${LOGICLIB_COUNTER} ; Get a label for the next Else and perform the new Case
     !insertmacro _IncreaseCounter
     !insertmacro _== `${${_Logic}Select}` `${_a}` +2 ""
     !insertmacro _== `${${_Logic}Select}` `${_b}` "" ${${_Logic}Else}
@@ -652,7 +809,7 @@
     !verbose push
     !verbose ${LOGICLIB_VERBOSITY}
     ${CaseElse}                                           ; Perform the CaseElse
-    !define ${_Logic}Else _LogicLib_Label_${LOGICLIB_COUNTER}                    ; Get a label for the next Else and perform the new Case
+    !define ${_Logic}Else _LogicLib_NextSelectCaseLabel_${LOGICLIB_COUNTER} ; Get a label for the next Else and perform the new Case
     !insertmacro _IncreaseCounter
     !insertmacro _== `${${_Logic}Select}` `${_a}` +3 ""
     !insertmacro _== `${${_Logic}Select}` `${_b}` +2 ""
@@ -665,7 +822,7 @@
     !verbose push
     !verbose ${LOGICLIB_VERBOSITY}
     ${CaseElse}                                           ; Perform the CaseElse
-    !define ${_Logic}Else _LogicLib_Label_${LOGICLIB_COUNTER}                    ; Get a label for the next Else and perform the new Case
+    !define ${_Logic}Else _LogicLib_NextSelectCaseLabel_${LOGICLIB_COUNTER} ; Get a label for the next Else and perform the new Case
     !insertmacro _IncreaseCounter
     !insertmacro _== `${${_Logic}Select}` `${_a}` +4 ""
     !insertmacro _== `${${_Logic}Select}` `${_b}` +3 ""
@@ -679,7 +836,7 @@
     !verbose push
     !verbose ${LOGICLIB_VERBOSITY}
     ${CaseElse}                                           ; Perform the CaseElse
-    !define ${_Logic}Else _LogicLib_Label_${LOGICLIB_COUNTER}                    ; Get a label for the next Else and perform the new Case
+    !define ${_Logic}Else _LogicLib_NextSelectCaseLabel_${LOGICLIB_COUNTER} ; Get a label for the next Else and perform the new Case
     !insertmacro _IncreaseCounter
     !insertmacro _== `${${_Logic}Select}` `${_a}` +5 ""
     !insertmacro _== `${${_Logic}Select}` `${_b}` +4 ""
@@ -701,7 +858,10 @@
       !undef ${_Logic}Else                                ; and remove it
     !endif
     !ifdef ${_Logic}EndSelect                             ; This won't be set if there weren't any cases
-      ${${_Logic}EndSelect}:                              ; Place the EndSelect
+      !ifdef _LogicLib_EndSelectLabelUsed_${_Logic}                 ; There is no jump to ${${_Logic}EndSelect}: if there is only one Case
+        ${${_Logic}EndSelect}:                            ; Place the EndSelect
+        !undef _LogicLib_EndSelectLabelUsed_${_Logic}
+      !endif
       !undef ${_Logic}EndSelect                           ; and remove it
     !endif
     !undef ${_Logic}Select
@@ -715,11 +875,18 @@
     !verbose ${LOGICLIB_VERBOSITY}
     !insertmacro _PushLogic
     !insertmacro _PushScope Switch ${_Logic}              ; Keep a separate stack for switch data
-    !insertmacro _PushScope Break _LogicLib_Label_${LOGICLIB_COUNTER}            ; Get a lable for beyond the end of the switch
+    !insertmacro _PushScope Break _LogicLib_Label_${LOGICLIB_COUNTER} ; Get a label for beyond the end of the switch
     !insertmacro _IncreaseCounter
     !define ${_Switch}Var `${_a}`                         ; Remember the left hand side of the comparison
+    !ifdef LL_NOAPPENDMEMFILE
     !tempfile ${_Switch}Tmp                               ; Create a temporary file
-    !define ${_Logic}Switch _LogicLib_Label_${LOGICLIB_COUNTER}                  ; Get a label for the end of the switch
+    !if "${NSIS_CHAR_SIZE}" > 1
+      !appendfile /CHARSET=UTF8SIG "${${_Switch}Tmp}" ""  ; Make sure the file uses Unicode
+    !endif
+    !else
+    !appendmemfile ${_Switch}Tmp                          ; Create a temporary file
+    !endif
+    !define ${_Logic}Switch _LogicLib_Label_${LOGICLIB_COUNTER} ; Get a label for the end of the switch
     !insertmacro _IncreaseCounter
     Goto ${${_Logic}Switch}                               ; and go there
     !verbose pop
@@ -734,10 +901,14 @@
     !else ifndef _Switch                                  ; If not then check for an active Switch
       !error "Cannot use Case without a preceding Select or Switch"
     !else
-      !define _label _LogicLib_Label_${LOGICLIB_COUNTER}                         ; Get a label for this case,
+      !define _label _LogicLib_Label_${LOGICLIB_COUNTER}  ; Get a label for this case,
       !insertmacro _IncreaseCounter
       ${_label}:                                          ; place it and add it's check to the temp file
+      !ifdef LL_NOAPPENDMEMFILE
       !appendfile "${${_Switch}Tmp}" `!insertmacro _== $\`${${_Switch}Var}$\` $\`${_a}$\` ${_label} ""$\n`
+      !else
+      !appendmemfile ${_Switch}Tmp `!insertmacro _== $\`${${_Switch}Var}$\` $\`${_a}$\` ${_label} ""$\n`
+      !endif
       !undef _label
     !endif
     !verbose pop
@@ -753,7 +924,7 @@
     !else ifdef ${_Switch}Else                            ; Already had a default case?
       !error "Cannot use CaseElse following a CaseElse"
     !else
-      !define ${_Switch}Else _LogicLib_Label_${LOGICLIB_COUNTER}                 ; Get a label for the default case,
+      !define ${_Switch}Else _LogicLib_Label_${LOGICLIB_COUNTER} ; Get a label for the default case,
       !insertmacro _IncreaseCounter
       ${${_Switch}Else}:                                  ; and place it
     !endif
@@ -769,13 +940,18 @@
     Goto ${_Break}                                        ; Skip the jump table
     ${${_Logic}Switch}:                                   ; Place the end of the switch
     !undef ${_Logic}Switch
+    !ifdef LL_NOAPPENDMEMFILE
     !include "${${_Switch}Tmp}"                           ; Include the jump table
-    !delfile "${${_Switch}Tmp}"                           ; and clear it up
+    !delfile "${${_Switch}Tmp}"                           ; and delete it
+    !undef ${_Switch}Tmp
+    !else
+    !include /memfile ${_Switch}Tmp                       ; Include the jump table
+    !appendmemfile '' ${_Switch}Tmp                       ; and delete it
+    !endif
     !ifdef ${_Switch}Else                                 ; Was there a default case?
       Goto ${${_Switch}Else}                              ; then go there if all else fails
       !undef ${_Switch}Else
     !endif
-    !undef ${_Switch}Tmp
     !undef ${_Switch}Var
     ${_Break}:                                            ; Place the break label
     !insertmacro _PopScope Break
