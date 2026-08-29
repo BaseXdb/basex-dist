@@ -1,12 +1,12 @@
-!define JAR "BaseX.jar"
 !define PRODUCT_NAME "BaseX"
 !define PRODUCT_VERSION "0.0.0.0"
 !define PRODUCT_PUBLISHER "BaseX GmbH"
+!define PRODUCT_DESCRIPTION "XML Database and XQuery Processor"
 !define PRODUCT_WEB_SITE "https://basex.org"
 !define PRODUCT_WEB_DOCS "https://docs.basex.org"
-!define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\${JAR}"
+!define PRODUCT_REGKEY "Software\${PRODUCT_NAME}"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
-!define PRODUCT_UNINST_ROOT_KEY "HKLM"
+; Minimum Java version required to run BaseX
 !define JAVA_VERSION 21
 ; Printable ASCII characters, without double quote and space
 !define PASSWORD_CHARS "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!#$$%&'()*+,-./:;<=>?@[\]^_`{|}~"
@@ -14,15 +14,29 @@
 !define PASSWORD_SCRIPT "$PLUGINSDIR\password.bxs"
 ; Access rights for directories that BaseX modifies at runtime
 !define WRITABLE "/grant *S-1-1-0:(OI)(CI)M /T /C /Q"
-RequestExecutionLevel admin
+
 Unicode true
 ManifestDPIAware true
 ManifestSupportedOS all
+SetCompressor /SOLID lzma
+
+; Offer a per-machine and a per-user installation
+!define MULTIUSER_EXECUTIONLEVEL Highest
+!define MULTIUSER_MUI
+!define MULTIUSER_INSTALLMODE_COMMANDLINE
+!define MULTIUSER_USE_PROGRAMFILES64
+!define MULTIUSER_INSTALLMODE_INSTDIR "${PRODUCT_NAME}"
+!define MULTIUSER_INSTALLMODE_INSTDIR_REGISTRY_KEY "${PRODUCT_REGKEY}"
+!define MULTIUSER_INSTALLMODE_INSTDIR_REGISTRY_VALUENAME "InstallLocation"
+!define MULTIUSER_INSTALLMODE_DEFAULT_REGISTRY_KEY "${PRODUCT_REGKEY}"
+!define MULTIUSER_INSTALLMODE_DEFAULT_REGISTRY_VALUENAME "InstallMode"
 
 !include MUI2.nsh
-!include FileFunc.nsh
-!include FileAssociation.nsh
+; Environment.nsh declares StrFunc functions the legacy way and has to be included
+; before MultiUser.nsh, which switches StrFunc to its current calling convention.
 !include Environment.nsh
+!include MultiUser.nsh
+!include FileFunc.nsh
 !include LogicLib.nsh
 !include nsDialogs.nsh
 !include WordFunc.nsh
@@ -34,6 +48,7 @@ ManifestSupportedOS all
 
 !insertmacro WordFind
 !insertmacro WordFind2X
+!insertmacro GetSize
 
 Var DesktopShortcut
 Var StartMenuShortcuts
@@ -47,14 +62,15 @@ Var AssociateXQueryControl
 Var AssociateXMLControl
 Var AdminPasswordControl
 Var AdminPasswordRepeatControl
+Var KeepDatabases
 
 ; Welcome page
 !insertmacro MUI_PAGE_WELCOME
-; check jre page
-Page custom CheckJava
 ; License page
 !define MUI_LICENSEPAGE_RADIOBUTTONS
 !insertmacro MUI_PAGE_LICENSE "..\..\basex\LICENSE"
+; Per-machine or per-user page
+!insertmacro MULTIUSER_PAGE_INSTALLMODE
 ; Directory page
 !insertmacro MUI_PAGE_DIRECTORY
 ; Custom page
@@ -63,6 +79,50 @@ Page custom OptionsPage OptionsLeave
 !insertmacro MUI_PAGE_INSTFILES
 ; Finish page
 !insertmacro MUI_PAGE_FINISH
+
+; Uninstaller pages
+!insertmacro MUI_UNPAGE_CONFIRM
+!insertmacro MUI_UNPAGE_INSTFILES
+; Language files
+!insertmacro MUI_LANGUAGE "English"
+
+; MUI end ------
+
+; Registers a program identifier for a BaseX file type.
+!macro ProgId ID DESCRIPTION ICON
+  WriteRegStr SHCTX "Software\Classes\${ID}" "" "${DESCRIPTION}"
+  WriteRegStr SHCTX "Software\Classes\${ID}\DefaultIcon" "" "$INSTDIR\ico\${ICON}"
+  WriteRegStr SHCTX "Software\Classes\${ID}\shell\open\command" "" '"$INSTDIR\bin\basexgui.bat" "%1"'
+!macroend
+
+; Claims a file extension, remembering the handler that was registered before.
+!macro Associate EXTENSION ID
+  WriteRegStr SHCTX "Software\Classes\${EXTENSION}\OpenWithProgids" "${ID}" ""
+  WriteRegStr SHCTX "${PRODUCT_REGKEY}\Capabilities\FileAssociations" "${EXTENSION}" "${ID}"
+  ReadRegStr $0 SHCTX "Software\Classes\${EXTENSION}" ""
+  ${If} $0 != ""
+  ${AndIf} $0 != "${ID}"
+    WriteRegStr SHCTX "Software\Classes\${EXTENSION}" "BaseX.Backup" "$0"
+  ${EndIf}
+  WriteRegStr SHCTX "Software\Classes\${EXTENSION}" "" "${ID}"
+!macroend
+
+; Restores a file extension to the handler that was registered before.
+!macro Unassociate EXTENSION ID
+  DeleteRegValue SHCTX "Software\Classes\${EXTENSION}\OpenWithProgids" "${ID}"
+  DeleteRegKey /ifempty SHCTX "Software\Classes\${EXTENSION}\OpenWithProgids"
+  ReadRegStr $0 SHCTX "Software\Classes\${EXTENSION}" ""
+  ${If} $0 == "${ID}"
+    ReadRegStr $1 SHCTX "Software\Classes\${EXTENSION}" "BaseX.Backup"
+    ${If} $1 == ""
+      DeleteRegValue SHCTX "Software\Classes\${EXTENSION}" ""
+    ${Else}
+      WriteRegStr SHCTX "Software\Classes\${EXTENSION}" "" "$1"
+    ${EndIf}
+  ${EndIf}
+  DeleteRegValue SHCTX "Software\Classes\${EXTENSION}" "BaseX.Backup"
+  DeleteRegKey /ifempty SHCTX "Software\Classes\${EXTENSION}"
+!macroend
 
 ; Reject installations without Java ${JAVA_VERSION} or newer.
 Function CheckJava
@@ -82,6 +142,12 @@ Function CheckJava
     MessageBox MB_ICONEXCLAMATION|MB_OK "Please install Java ${JAVA_VERSION} or higher before executing the installer.$\n$\nAnalyzed Java version string:$\n$\n$1"
     Quit
   ${EndIf}
+FunctionEnd
+
+Function .onInit
+  SetRegView 64
+  Call CheckJava
+  !insertmacro MULTIUSER_INIT
 FunctionEnd
 
 Function OptionsPage
@@ -105,7 +171,6 @@ Function OptionsPage
   ${NSD_Check} $StartMenuShortcutsControl
   ${NSD_CreateCheckbox} 51% 28u 46% 12u "Associate with XML documents"
   Pop $AssociateXMLControl
-  ${NSD_Check} $AssociateXMLControl
   ${NSD_CreateLabel} 3% 52u 94% 12u "Password of 'admin' user (enter twice):"
   Pop $0
   ${NSD_CreatePassword} 3% 68u 44% 12u ""
@@ -145,24 +210,15 @@ Function OptionsLeave
   ${EndIf}
 FunctionEnd
 
-; Uninstaller pages
-!insertmacro MUI_UNPAGE_INSTFILES
-; Language files
-!insertmacro MUI_LANGUAGE "English"
-
-; MUI end ------
-
 VIProductVersion "${PRODUCT_VERSION}"
 VIAddVersionKey "ProductName" "${PRODUCT_NAME}"
 VIAddVersionKey "CompanyName" "${PRODUCT_PUBLISHER}"
-VIAddVersionKey "FileDescription" "XML Database and XQuery Processor"
+VIAddVersionKey "FileDescription" "${PRODUCT_DESCRIPTION}"
 VIAddVersionKey "LegalCopyright" "Copyright ${PRODUCT_PUBLISHER}"
 VIAddVersionKey "FileVersion" "${PRODUCT_VERSION}"
 
 Name "${PRODUCT_NAME}"
 OutFile "Setup.exe"
-InstallDir "$PROGRAMFILES\BaseX"
-InstallDirRegKey HKLM "${PRODUCT_DIR_REGKEY}" ""
 ShowInstDetails show
 ShowUnInstDetails show
 
@@ -225,39 +281,53 @@ Section "BaseX" SEC01
     MessageBox MB_ICONEXCLAMATION|MB_OK "Failed to assign the password of the 'admin' user."
   ${EndIf}
 
-  ; Grant all users write access to the directories and files that BaseX modifies at
-  ; runtime. Programs, libraries and scripts remain writable for administrators only.
   CreateDirectory "$INSTDIR\data"
-  nsExec::ExecToLog '"$SYSDIR\icacls.exe" "$INSTDIR\data" ${WRITABLE}'
-  Pop $0
-  nsExec::ExecToLog '"$SYSDIR\icacls.exe" "$INSTDIR\repo" ${WRITABLE}'
-  Pop $0
-  nsExec::ExecToLog '"$SYSDIR\icacls.exe" "$INSTDIR\webapp" ${WRITABLE}'
-  Pop $0
-  nsExec::ExecToLog '"$SYSDIR\icacls.exe" "$INSTDIR\.basex" /grant *S-1-1-0:M /C /Q'
-  Pop $0
-
-  ${EnvVarUpdate} $0 "PATH" "R" "HKLM" "$INSTDIR\bin"  ; Remove path of old rev
-  ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$INSTDIR\bin"  ; Append the new one
+  ${If} $MultiUser.InstallMode == "AllUsers"
+    ; Grant all users write access to the directories and files that BaseX modifies at
+    ; runtime. Programs, libraries and scripts remain writable for administrators only.
+    nsExec::ExecToLog '"$SYSDIR\icacls.exe" "$INSTDIR\data" ${WRITABLE}'
+    Pop $0
+    nsExec::ExecToLog '"$SYSDIR\icacls.exe" "$INSTDIR\repo" ${WRITABLE}'
+    Pop $0
+    nsExec::ExecToLog '"$SYSDIR\icacls.exe" "$INSTDIR\webapp" ${WRITABLE}'
+    Pop $0
+    nsExec::ExecToLog '"$SYSDIR\icacls.exe" "$INSTDIR\.basex" /grant *S-1-1-0:M /C /Q'
+    Pop $0
+    ${EnvVarUpdate} $0 "PATH" "R" "HKLM" "$INSTDIR\bin"  ; Remove path of old rev
+    ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$INSTDIR\bin"  ; Append the new one
+  ${Else}
+    ${EnvVarUpdate} $0 "PATH" "R" "HKCU" "$INSTDIR\bin"
+    ${EnvVarUpdate} $0 "PATH" "A" "HKCU" "$INSTDIR\bin"
+  ${EndIf}
 SectionEnd
 
-Section -FileAssociations
-  ${registerExtension} "$INSTDIR\bin\basexgui.bat" ".bxs" "BaseX Command Script"
-  ${registerExtension} "$INSTDIR\bin\basexgui.bat" ".basex" "BaseX Configuration"
-  ${registerExtension} "$INSTDIR\bin\basexgui.bat" ".basexhome" "BaseX Configuration"
-  ${registerExtension} "$INSTDIR\bin\basexgui.bat" ".basexgui" "BaseX Configuration"
-  ${registerExtension} "$INSTDIR\bin\basexgui.bat" ".basexperm" "BaseX Configuration"
+Section -FileTypes
+  !insertmacro ProgId "BaseX.Script" "BaseX Command Script" "BaseX.ico"
+  !insertmacro ProgId "BaseX.Config" "BaseX Configuration" "BaseX.ico"
+  !insertmacro Associate ".bxs" "BaseX.Script"
+  !insertmacro Associate ".basex" "BaseX.Config"
+  !insertmacro Associate ".basexhome" "BaseX.Config"
+  !insertmacro Associate ".basexgui" "BaseX.Config"
+  !insertmacro Associate ".basexperm" "BaseX.Config"
   ${If} $AssociateXQuery == ${BST_CHECKED}
-    ${registerExtension} "$INSTDIR\bin\basexgui.bat" ".xq" "XQuery File"
-    ${registerExtension} "$INSTDIR\bin\basexgui.bat" ".xqu" "XQuery File"
-    ${registerExtension} "$INSTDIR\bin\basexgui.bat" ".xqy" "XQuery File"
-    ${registerExtension} "$INSTDIR\bin\basexgui.bat" ".xquery" "XQuery File"
-    ${registerExtension} "$INSTDIR\bin\basexgui.bat" ".xqm" "XQuery File"
-    ${registerExtension} "$INSTDIR\bin\basexgui.bat" ".xql" "XQuery File"
+    !insertmacro ProgId "BaseX.XQuery" "XQuery File" "BaseX.ico"
+    !insertmacro Associate ".xq" "BaseX.XQuery"
+    !insertmacro Associate ".xqu" "BaseX.XQuery"
+    !insertmacro Associate ".xqy" "BaseX.XQuery"
+    !insertmacro Associate ".xquery" "BaseX.XQuery"
+    !insertmacro Associate ".xqm" "BaseX.XQuery"
+    !insertmacro Associate ".xql" "BaseX.XQuery"
   ${EndIf}
   ${If} $AssociateXML == ${BST_CHECKED}
-    ${registerExtension} "$INSTDIR\bin\basexgui.bat" ".xml" "XML Document"
+    !insertmacro ProgId "BaseX.XML" "XML Document" "xml.ico"
+    !insertmacro Associate ".xml" "BaseX.XML"
   ${EndIf}
+
+  ; Announce BaseX in the 'Default apps' dialog. Windows ignores a file extension that
+  ; the user has already assigned to another application.
+  WriteRegStr SHCTX "${PRODUCT_REGKEY}\Capabilities" "ApplicationName" "${PRODUCT_NAME}"
+  WriteRegStr SHCTX "${PRODUCT_REGKEY}\Capabilities" "ApplicationDescription" "${PRODUCT_DESCRIPTION}"
+  WriteRegStr SHCTX "Software\RegisteredApplications" "${PRODUCT_NAME}" "${PRODUCT_REGKEY}\Capabilities"
   ${RefreshShellIcons}
 SectionEnd
 
@@ -283,15 +353,20 @@ SectionEnd
 
 Section -Post
   WriteUninstaller "$INSTDIR\uninst.exe"
-  WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayName" "$(^Name)"
-  WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayVersion" "${PRODUCT_VERSION}"
-  WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayIcon" "$INSTDIR\ico\BaseX.ico"
-  WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "InstallLocation" "$INSTDIR"
-  WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "UninstallString" '"$INSTDIR\uninst.exe"'
-  WriteRegDWORD ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "NoModify" 1
-  WriteRegDWORD ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "NoRepair" 1
-  WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "URLInfoAbout" "${PRODUCT_WEB_SITE}"
-  WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "Publisher" "${PRODUCT_PUBLISHER}"
+  WriteRegStr SHCTX "${PRODUCT_REGKEY}" "InstallLocation" "$INSTDIR"
+  WriteRegStr SHCTX "${PRODUCT_REGKEY}" "InstallMode" "$MultiUser.InstallMode"
+  WriteRegStr SHCTX "${PRODUCT_UNINST_KEY}" "DisplayName" "$(^Name)"
+  WriteRegStr SHCTX "${PRODUCT_UNINST_KEY}" "DisplayVersion" "${PRODUCT_VERSION}"
+  WriteRegStr SHCTX "${PRODUCT_UNINST_KEY}" "DisplayIcon" "$INSTDIR\ico\BaseX.ico"
+  WriteRegStr SHCTX "${PRODUCT_UNINST_KEY}" "InstallLocation" "$INSTDIR"
+  WriteRegStr SHCTX "${PRODUCT_UNINST_KEY}" "UninstallString" '"$INSTDIR\uninst.exe"'
+  WriteRegDWORD SHCTX "${PRODUCT_UNINST_KEY}" "NoModify" 1
+  WriteRegDWORD SHCTX "${PRODUCT_UNINST_KEY}" "NoRepair" 1
+  WriteRegStr SHCTX "${PRODUCT_UNINST_KEY}" "URLInfoAbout" "${PRODUCT_WEB_SITE}"
+  WriteRegStr SHCTX "${PRODUCT_UNINST_KEY}" "Publisher" "${PRODUCT_PUBLISHER}"
+  ${GetSize} "$INSTDIR" "/S=0K" $0 $1 $2
+  IntFmt $0 "0x%08X" $0
+  WriteRegDWORD SHCTX "${PRODUCT_UNINST_KEY}" "EstimatedSize" "$0"
 SectionEnd
 
 Function un.onUninstSuccess
@@ -300,30 +375,66 @@ Function un.onUninstSuccess
 FunctionEnd
 
 Function un.onInit
-  MessageBox MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 "Uninstall all components of $(^Name)?" IDYES +2
-  Abort
+  SetRegView 64
+  !insertmacro MULTIUSER_UNINIT
 FunctionEnd
 
 Section Uninstall
+  ; Offer to preserve the databases of the installation.
+  StrCpy $KeepDatabases 0
+  IfFileExists "$INSTDIR\data\*.*" 0 DeleteFiles
+  MessageBox MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON1 \
+    "Keep the databases in $INSTDIR\data?" /SD IDNO IDNO DeleteFiles
+  StrCpy $KeepDatabases 1
+
+DeleteFiles:
   Delete "$DESKTOP\BaseX GUI.lnk"
   RMDir /r "$SMPROGRAMS\BaseX"
-  RMDir /r "$INSTDIR"
-  DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
-  DeleteRegKey HKLM "${PRODUCT_DIR_REGKEY}"
-  ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "$INSTDIR\bin"
-  ${unregisterExtension} ".xq"        "XQuery File"
-  ${unregisterExtension} ".xqu"       "XQuery File"
-  ${unregisterExtension} ".xqy"       "XQuery File"
-  ${unregisterExtension} ".xquery"    "XQuery File"
-  ${unregisterExtension} ".xqm"       "XQuery File"
-  ${unregisterExtension} ".xql"       "XQuery File"
-  ${unregisterExtension} ".xml"       "XML Document"
-  ${unregisterExtension} ".bxs"       "BaseX Command Script"
-  ${unregisterExtension} ".basex"     "BaseX Configuration"
-  ${unregisterExtension} ".basexgui"  "BaseX Configuration"
-  ${unregisterExtension} ".basexhome" "BaseX Configuration"
-  ${unregisterExtension} ".basexperm" "BaseX Configuration"
+  ${If} $KeepDatabases == 1
+    Delete "$INSTDIR\*.*"
+    RMDir /r "$INSTDIR\bin"
+    RMDir /r "$INSTDIR\etc"
+    RMDir /r "$INSTDIR\ico"
+    RMDir /r "$INSTDIR\lib"
+    RMDir /r "$INSTDIR\repo"
+    RMDir /r "$INSTDIR\src"
+    RMDir /r "$INSTDIR\webapp"
+    RMDir "$INSTDIR"
+  ${Else}
+    RMDir /r "$INSTDIR"
+  ${EndIf}
+
+  DeleteRegKey SHCTX "${PRODUCT_UNINST_KEY}"
+  ${If} $MultiUser.InstallMode == "AllUsers"
+    ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "$INSTDIR\bin"
+  ${Else}
+    ${un.EnvVarUpdate} $0 "PATH" "R" "HKCU" "$INSTDIR\bin"
+  ${EndIf}
+
+  !insertmacro Unassociate ".bxs" "BaseX.Script"
+  !insertmacro Unassociate ".basex" "BaseX.Config"
+  !insertmacro Unassociate ".basexhome" "BaseX.Config"
+  !insertmacro Unassociate ".basexgui" "BaseX.Config"
+  !insertmacro Unassociate ".basexperm" "BaseX.Config"
+  !insertmacro Unassociate ".xq" "BaseX.XQuery"
+  !insertmacro Unassociate ".xqu" "BaseX.XQuery"
+  !insertmacro Unassociate ".xqy" "BaseX.XQuery"
+  !insertmacro Unassociate ".xquery" "BaseX.XQuery"
+  !insertmacro Unassociate ".xqm" "BaseX.XQuery"
+  !insertmacro Unassociate ".xql" "BaseX.XQuery"
+  !insertmacro Unassociate ".xml" "BaseX.XML"
+  DeleteRegKey SHCTX "Software\Classes\BaseX.Script"
+  DeleteRegKey SHCTX "Software\Classes\BaseX.Config"
+  DeleteRegKey SHCTX "Software\Classes\BaseX.XQuery"
+  DeleteRegKey SHCTX "Software\Classes\BaseX.XML"
+  DeleteRegValue SHCTX "Software\RegisteredApplications" "${PRODUCT_NAME}"
+  DeleteRegKey SHCTX "${PRODUCT_REGKEY}"
   ${RefreshShellIcons}
+
+  ; Report files that were locked by a running BaseX instance.
+  IfFileExists "$INSTDIR\bin\*.*" 0 +2
+  MessageBox MB_ICONEXCLAMATION|MB_OK \
+    "Some files could not be removed. Please close all BaseX applications and delete $INSTDIR manually."
   SetAutoClose true
 SectionEnd
 
