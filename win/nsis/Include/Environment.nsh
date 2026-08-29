@@ -136,7 +136,43 @@ Function ${UN}EnvVarUpdate
     DetailPrint "ERROR: PathString is blank"
     Goto EnvVarUpdate_Restore_Vars
   ${EndIf}
- 
+
+  ; A value of more than ${NSIS_MAX_STRLEN} characters cannot be read: ReadRegStr returns
+  ; an empty string and raises an error, exactly as for a value that does not exist. Tell
+  ; the two apart by enumerating the key. Without this check, the empty result would be
+  ; written back and replace the entire variable with PathString.
+  ${If} ${Errors}
+    StrCpy $6 0
+    ${Do}
+      ${If} $3 == HKLM
+        EnumRegValue $7 ${hklm_all_users} $6
+      ${Else}
+        EnumRegValue $7 ${hkcu_current_user} $6
+      ${EndIf}
+      ${If} $7 == ""
+        ${ExitDo}
+      ${EndIf}
+      ${If} $7 == $1
+        SetErrors
+        DetailPrint "ERROR: $1 is too long to be modified and was left unchanged"
+        Goto EnvVarUpdate_Restore_Vars
+      ${EndIf}
+      IntOp $6 $6 + 1
+    ${Loop}
+  ${EndIf}
+  ClearErrors
+
+  ; Refuse an update that would push the result past the NSIS string limit
+  StrLen $6 $5
+  StrLen $7 $4
+  IntOp $6 $6 + $7
+  IntOp $6 $6 + 1                          ; separating semicolon
+  ${If} $6 >= ${NSIS_MAX_STRLEN}
+    SetErrors
+    DetailPrint "ERROR: $1 would exceed ${NSIS_MAX_STRLEN} characters and was left unchanged"
+    Goto EnvVarUpdate_Restore_Vars
+  ${EndIf}
+
   ; Make sure we've got some work to do
   ${If} $5 == ""
   ${AndIf} $2 == "R"
