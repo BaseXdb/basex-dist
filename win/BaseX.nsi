@@ -13,7 +13,9 @@
 ; Command script that assigns the admin password
 !define PASSWORD_SCRIPT "$PLUGINSDIR\password.bxs"
 ; Access rights for directories that BaseX modifies at runtime
-!define WRITABLE "/grant *S-1-1-0:(OI)(CI)M /T /C /Q"
+!define WRITABLE_DIR "/grant *S-1-1-0:(OI)(CI)M /T /C /Q"
+; Access rights for files that BaseX modifies at runtime
+!define WRITABLE_FILE "/grant *S-1-1-0:M /C /Q"
 
 Unicode true
 ManifestDPIAware true
@@ -122,6 +124,23 @@ Page custom OptionsPage OptionsLeave
   ${EndIf}
   DeleteRegValue SHCTX "Software\Classes\${EXTENSION}" "BaseX.Backup"
   DeleteRegKey /ifempty SHCTX "Software\Classes\${EXTENSION}"
+!macroend
+
+; Creates a shortcut. Windows marks shortcuts that are written by a downloaded installer as
+; unsafe; the mark is removed, as it would be reported on every start of the application.
+!macro Shortcut LINK TARGET PARAMETERS ICON
+  CreateShortCut "${LINK}" "${TARGET}" '${PARAMETERS}' "${ICON}" 0
+  System::Call 'kernel32::DeleteFileW(w "${LINK}:Zone.Identifier")'
+!macroend
+
+; Creates a configuration file if it is missing and grants all users write access to it.
+!macro Writable FILE
+  ${IfNot} ${FileExists} "$INSTDIR\${FILE}"
+    FileOpen $0 "$INSTDIR\${FILE}" w
+    FileClose $0
+  ${EndIf}
+  nsExec::ExecToLog '"$SYSDIR\icacls.exe" "$INSTDIR\${FILE}" ${WRITABLE_FILE}'
+  Pop $0
 !macroend
 
 ; Reject installations without Java ${JAVA_VERSION} or newer.
@@ -285,14 +304,17 @@ Section "BaseX" SEC01
   ${If} $MultiUser.InstallMode == "AllUsers"
     ; Grant all users write access to the directories and files that BaseX modifies at
     ; runtime. Programs, libraries and scripts remain writable for administrators only.
-    nsExec::ExecToLog '"$SYSDIR\icacls.exe" "$INSTDIR\data" ${WRITABLE}'
+    nsExec::ExecToLog '"$SYSDIR\icacls.exe" "$INSTDIR\data" ${WRITABLE_DIR}'
     Pop $0
-    nsExec::ExecToLog '"$SYSDIR\icacls.exe" "$INSTDIR\repo" ${WRITABLE}'
+    nsExec::ExecToLog '"$SYSDIR\icacls.exe" "$INSTDIR\repo" ${WRITABLE_DIR}'
     Pop $0
-    nsExec::ExecToLog '"$SYSDIR\icacls.exe" "$INSTDIR\webapp" ${WRITABLE}'
+    nsExec::ExecToLog '"$SYSDIR\icacls.exe" "$INSTDIR\webapp" ${WRITABLE_DIR}'
     Pop $0
-    nsExec::ExecToLog '"$SYSDIR\icacls.exe" "$INSTDIR\.basex" /grant *S-1-1-0:M /C /Q'
-    Pop $0
+    ; The configuration files are created here: a user without write access to the
+    ; installation directory can update them, but cannot add them later on.
+    !insertmacro Writable ".basex"
+    !insertmacro Writable ".basexgui"
+    !insertmacro Writable ".basexhistory"
     ${EnvVarUpdate} $0 "PATH" "R" "HKLM" "$INSTDIR\bin"  ; Remove path of old rev
     ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$INSTDIR\bin"  ; Append the new one
   ${Else}
@@ -336,17 +358,17 @@ Section -AdditionalIcons
   SetOverwrite try
   ; Create the selected shortcuts.
   ${If} $DesktopShortcut == ${BST_CHECKED}
-    CreateShortCut "$DESKTOP\BaseX GUI.lnk" "cmd.exe" '/C "$INSTDIR\bin\basexgui.bat"' "$INSTDIR\ico\BaseX.ico" 0
+    !insertmacro Shortcut "$DESKTOP\BaseX GUI.lnk" "cmd.exe" '/C "$INSTDIR\bin\basexgui.bat"' "$INSTDIR\ico\BaseX.ico"
   ${EndIf}
   ${If} $StartMenuShortcuts == ${BST_CHECKED}
     RMDir /r "$SMPROGRAMS\BaseX"
     CreateDirectory "$SMPROGRAMS\BaseX"
-    CreateShortCut "$SMPROGRAMS\BaseX\BaseX GUI.lnk" "cmd.exe" '/C "$INSTDIR\bin\basexgui.bat"' "$INSTDIR\ico\BaseX.ico" 0
-    CreateShortCut "$SMPROGRAMS\BaseX\BaseX HTTP Server (Start).lnk" "cmd.exe" '/C "$INSTDIR\bin\basexhttp.bat" -S -L' "$INSTDIR\ico\start.ico" 0
-    CreateShortCut "$SMPROGRAMS\BaseX\BaseX HTTP Server (Stop).lnk" "cmd.exe" '/C "$INSTDIR\bin\basexhttp.bat" stop' "$INSTDIR\ico\stop.ico" 0
-    CreateShortCut "$SMPROGRAMS\BaseX\BaseX Client.lnk" "cmd.exe" '/C "$INSTDIR\bin\basexclient.bat"' "$INSTDIR\ico\shell.ico" 0
-    CreateShortCut "$SMPROGRAMS\BaseX\BaseX Standalone.lnk" "cmd.exe" '/C "$INSTDIR\bin\basex.bat"' "$INSTDIR\ico\shell.ico" 0
-    CreateShortCut "$SMPROGRAMS\BaseX\Uninstall BaseX.lnk" "$INSTDIR\uninst.exe"
+    !insertmacro Shortcut "$SMPROGRAMS\BaseX\BaseX GUI.lnk" "cmd.exe" '/C "$INSTDIR\bin\basexgui.bat"' "$INSTDIR\ico\BaseX.ico"
+    !insertmacro Shortcut "$SMPROGRAMS\BaseX\BaseX HTTP Server (Start).lnk" "cmd.exe" '/C "$INSTDIR\bin\basexhttp.bat" -S -L' "$INSTDIR\ico\start.ico"
+    !insertmacro Shortcut "$SMPROGRAMS\BaseX\BaseX HTTP Server (Stop).lnk" "cmd.exe" '/C "$INSTDIR\bin\basexhttp.bat" stop' "$INSTDIR\ico\stop.ico"
+    !insertmacro Shortcut "$SMPROGRAMS\BaseX\BaseX Client.lnk" "cmd.exe" '/C "$INSTDIR\bin\basexclient.bat"' "$INSTDIR\ico\shell.ico"
+    !insertmacro Shortcut "$SMPROGRAMS\BaseX\BaseX Standalone.lnk" "cmd.exe" '/C "$INSTDIR\bin\basex.bat"' "$INSTDIR\ico\shell.ico"
+    !insertmacro Shortcut "$SMPROGRAMS\BaseX\Uninstall BaseX.lnk" "$INSTDIR\uninst.exe" "" "$INSTDIR\ico\BaseX.ico"
     WriteINIStr "$SMPROGRAMS\BaseX\BaseX Documentation.url" "InternetShortcut" "URL" "${PRODUCT_WEB_DOCS}"
   ${EndIf}
 SectionEnd
