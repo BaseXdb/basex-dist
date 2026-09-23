@@ -34,9 +34,6 @@ SetCompressor /SOLID lzma
 !define MULTIUSER_INSTALLMODE_DEFAULT_REGISTRY_VALUENAME "InstallMode"
 
 !include MUI2.nsh
-; Environment.nsh declares StrFunc functions the legacy way and has to be included
-; before MultiUser.nsh, which switches StrFunc to its current calling convention.
-!include Environment.nsh
 !include MultiUser.nsh
 !include FileFunc.nsh
 !include LogicLib.nsh
@@ -308,11 +305,14 @@ Section "BaseX" SEC01
     !insertmacro Writable ".basex"
     !insertmacro Writable ".basexgui"
     !insertmacro Writable ".basexhistory"
-    ${EnvVarUpdate} $0 "PATH" "R" "HKLM" "$INSTDIR\bin"  ; Remove path of old rev
-    ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$INSTDIR\bin"  ; Append the new one
+    EnVar::SetHKLM
   ${Else}
-    ${EnvVarUpdate} $0 "PATH" "R" "HKCU" "$INSTDIR\bin"
-    ${EnvVarUpdate} $0 "PATH" "A" "HKCU" "$INSTDIR\bin"
+    EnVar::SetHKCU
+  ${EndIf}
+  EnVar::AddValue "PATH" "$INSTDIR\bin"
+  Pop $0
+  ${If} $0 != 0
+    MessageBox MB_ICONEXCLAMATION|MB_OK "Failed to add $INSTDIR\bin to PATH (error code $0)."
   ${EndIf}
 SectionEnd
 
@@ -421,10 +421,12 @@ DeleteFiles:
 
   DeleteRegKey SHCTX "${PRODUCT_UNINST_KEY}"
   ${If} $MultiUser.InstallMode == "AllUsers"
-    ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "$INSTDIR\bin"
+    EnVar::SetHKLM
   ${Else}
-    ${un.EnvVarUpdate} $0 "PATH" "R" "HKCU" "$INSTDIR\bin"
+    EnVar::SetHKCU
   ${EndIf}
+  EnVar::DeleteValue "PATH" "$INSTDIR\bin"
+  Pop $0
 
   !insertmacro Unassociate ".bxs" "BaseX.Script"
   !insertmacro Unassociate ".basex" "BaseX.Config"
