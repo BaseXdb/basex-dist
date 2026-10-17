@@ -302,7 +302,6 @@
   !macro _P<= _a _b _t _f
     !insertmacro LogicLib_PtrDiffTest <= `${_a}` `${_b}` `${_t}` `${_f}`
   !macroend
-  !include Util.nsh
   !macro _Z= _a _b _t _f
     !insertmacro LogicLib_PtrDiffTest = `${_a}` `${_b}` `${_t}` `${_f}`
   !macroend
@@ -310,16 +309,16 @@
     !insertmacro LogicLib_PtrDiffTest <> `${_a}` `${_b}` `${_t}` `${_f}`
   !macroend
   !macro _Z< _a _b _t _f
-    !insertmacro IntPtrCmpU `${_a}` `${_b}` `${_f}` `${_t}` `${_f}`
+    IntPtrCmpU `${_a}` `${_b}` `${_f}` `${_t}` `${_f}`
   !macroend
   !macro _Z>= _a _b _t _f
-    !insertmacro IntPtrCmpU `${_a}` `${_b}` `${_t}` `${_f}` `${_t}`
+    IntPtrCmpU `${_a}` `${_b}` `${_t}` `${_f}` `${_t}`
   !macroend
   !macro _Z> _a _b _t _f
-    !insertmacro IntPtrCmpU `${_a}` `${_b}` `${_f}` `${_f}` `${_t}`
+    IntPtrCmpU `${_a}` `${_b}` `${_f}` `${_f}` `${_t}`
   !macroend
   !macro _Z<= _a _b _t _f
-    !insertmacro IntPtrCmpU `${_a}` `${_b}` `${_t}` `${_t}` `${_f}`
+    IntPtrCmpU `${_a}` `${_b}` `${_t}` `${_t}` `${_f}`
   !macroend
 
   ; Flag tests
@@ -394,7 +393,7 @@
       StrCpy $2 $1 $_LOGICLIB_TEMP
       StrCmp $2 "" _LL${LOGICLIB_COUNTER}_Done
       StrCpy $1 $1 "" 1
-      ${_op} $2 $0 ""_LL${LOGICLIB_COUNTER}_Loop
+      ${_op} $2 $0 "" _LL${LOGICLIB_COUNTER}_Loop
       StrCpy $_LOGICLIB_TEMP ""
     _LL${LOGICLIB_COUNTER}_Done:
     Pop $2

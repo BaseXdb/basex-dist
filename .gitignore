@@ -7,9 +7,6 @@
 /.basex
 /.basexgui
 
-# Java classfiles
-*.class
-
 # created files
 /release
 /deploy.last

@@ -80,7 +80,7 @@ declare %private function deploy:ssh(
   $commands  as xs:string+,
   $dry       as xs:boolean
 ) as empty-sequence() {
-  deploy:exec('ssh', ($deploy:SERVER, string-join($commands, ' &amp;&amp; ')), $dry)
+  deploy:exec('ssh', ($deploy:SERVER, string-join($commands, ` && `)), $dry)
 };
 
 (:~
@@ -242,12 +242,12 @@ declare %private function deploy:upload(
   $release  as xs:boolean,
   $dry      as xs:boolean
 ) as empty-sequence() {
-  let $names := sort(file:list($release:FILES)[matches(., '\d')])
-  return switch () {
-    case empty($names) return error((), 'No release files found.')
-    case $release return deploy:upload-release($names, $dry)
-    default return deploy:upload-snapshot($names, $dry)
-  }
+  let $names := $release:SUFFIXES ! `{ $release:NAME }.{ . }`
+  return if ($release) then (
+    deploy:upload-release($names, $dry)
+  ) else (
+    deploy:upload-snapshot($names, $dry)
+  )
 };
 
 (:~
@@ -269,14 +269,14 @@ declare %private function deploy:upload-snapshot(
       `mv { $tmp }/* { $latest }/`,
       `chmod 644 { $latest }/*`,
       `rm -f { $deploy:TARGET }/BaseX-latest.*`,
-      for $name in $names[starts-with(., 'BaseX')]
+      for $name in $names
       return `ln -s latest/{ $name } { $deploy:TARGET }/BaseX-latest.{ deploy:suffix($name) }`
     ), $dry)
   )
 };
 
 (:~
- : Uploads a release and links it as current version.
+ : Uploads a release, links it as current version and publishes the version file.
  : @param $names  names of the files
  : @param $dry    print the commands instead of executing them
  :)
@@ -290,9 +290,11 @@ declare %private function deploy:upload-release(
     deploy:scp($names, $remote, $dry),
     deploy:ssh((
       `rm -f { $deploy:TARGET }/BaseX.*`,
-      for $name in $names[starts-with(., 'BaseX')]
-      return `ln -s { $remote }/{ $name } { $deploy:TARGET }/BaseX.{ deploy:suffix($name) }`,
+      for $name in $names
+      return `ln -s { $release:VERSION }/{ $name } { $deploy:TARGET }/BaseX.{ deploy:suffix($name) }`,
       `chmod -R g+rX { $remote }`
-    ), $dry)
+    ), $dry),
+    (: version check of the GUI: root directory of the download server :)
+    deploy:scp('version.txt', `{ $deploy:TARGET }/..`, $dry)
   )
 };

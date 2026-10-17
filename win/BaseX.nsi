@@ -238,7 +238,7 @@ ShowUnInstDetails show
 
 Section "BaseX" SEC01
   SetOutPath "$INSTDIR"
-  SetOverwrite ifnewer
+  SetOverwrite on
 
   File "..\release\BaseX.jar"
   File "..\..\basex\LICENSE"
@@ -267,6 +267,8 @@ Section "BaseX" SEC01
   File "..\..\basex\basex-api\lib\basex-xqj*.*"
   File "..\..\basex\basex-core\lib\*"
   CreateDirectory "$INSTDIR\lib\custom"
+  ; Keep user modifications of modules, queries and web applications
+  SetOverwrite ifnewer
   CreateDirectory "$INSTDIR\repo"
   SetOutPath "$INSTDIR\repo"
   File /r "..\dist\basex\repo\*"

@@ -37,16 +37,21 @@ declare %private variable $release:STAMP    := if ($release:SNAPSHOT) {
 };
 (:~ Directory with the web application archives. :)
 declare %private variable $release:WEBAPPS  := $release:BASEX || 'basex-api/target/webapp/';
-(:~ Full version with four numbers. :)
+(:~ Full version with four numbers; days since 2000 for a snapshot (16 bits each). :)
 declare %private variable $release:FULL     := string-join((
   let $numbers := tokenize($release:PLAIN, '\.')
   return ($numbers, (count($numbers) to 2) ! '0'),
   if ($release:SNAPSHOT) then (
-    xs:integer((current-dateTime() - xs:dateTime('1970-01-01T00:00:00Z')) div seconds(1))
+    xs:integer((current-date() - xs:date('2000-01-01')) div xs:dayTimeDuration('P1D'))
   ) else (
     0
   )
 ), '.');
+
+(:~ Artifact name: "BaseX124" for a release, "BaseX130-20260706.234438" for a snapshot. :)
+declare variable $release:NAME     := `BaseX{ translate($release:PLAIN, '.', '') }{ $release:STAMP }`;
+(:~ Suffixes of the created release files. :)
+declare variable $release:SUFFIXES := ('zip', 'jar', 'war', 'exe');
 
 (:~
  : Creates all files for a new release.
@@ -273,14 +278,10 @@ declare %private function release:war(
  :)
 declare %private function release:finish() as empty-sequence() {
   message('* Finish release'),
-  (: artifact name: "BaseX124" for a release, "BaseX130-20260706.234438" for a snapshot :)
-  let $name := `BaseX{ translate($release:PLAIN, '.', '') }{ $release:STAMP }`
-  return (
-    message(`* Artifact name: { $name }`),
-    for $suffix in ('zip', 'jar', 'war', 'exe')
-    return file:move(`{ $release:FILES }BaseX.{ $suffix }`, `{ $release:FILES }{ $name }.{ $suffix }`),
-    file:delete(`{ $release:FILES }basex-api-{ $release:VERSION }.jar`),
-    for $dir in ('bin', 'webapp')
-    return file:delete($release:FILES || $dir, true())
-  )
+  message(`* Artifact name: { $release:NAME }`),
+  for $suffix in $release:SUFFIXES
+  return file:move(`{ $release:FILES }BaseX.{ $suffix }`, `{ $release:FILES }{ $release:NAME }.{ $suffix }`),
+  file:delete(`{ $release:FILES }basex-api-{ $release:VERSION }.jar`),
+  for $dir in ('bin', 'webapp')
+  return file:delete($release:FILES || $dir, true())
 };
