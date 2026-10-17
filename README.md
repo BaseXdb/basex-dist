@@ -21,10 +21,10 @@ The [release workflow](.github/workflows/release.yml) runs the same script on Gi
 ## Deploying a Snapshot or Release
 
 ```
-basex [-brelease=true] [-bdry=true] deploy.xq
+basex [-brelease=true] [-bdry=true] [-bclean=true] deploy.xq
 ```
 
-Deploys the Maven modules that changed since the last run, creates the release files from the built artifacts and uploads them as snapshot or, with `-brelease=true`, as release. The server login and target directory are read from the environment variables `BASEX_DEPLOY_SERVER` and `BASEX_DEPLOY_TARGET`; `-bdry=true` prints the commands without executing them.
+Deploys the Maven modules that changed since the last run, creates the release files from the built artifacts and uploads them as snapshot or, with `-brelease=true`, as release. The server login and target directory are read from the environment variables `BASEX_DEPLOY_SERVER` and `BASEX_DEPLOY_TARGET`; `-bdry=true` prints the commands without executing them. With `-bclean=true`, the archives and copied libraries of the deployed modules are removed before building; this is always done for releases.
 
 ## Contents
 

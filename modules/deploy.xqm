@@ -24,16 +24,18 @@ declare %private variable $deploy:STATE  := $release:DIST || 'deploy.last';
  : Deploys a new snapshot or release.
  : @param $release  deploy a release instead of a snapshot
  : @param $dry      print commands instead of executing them
+ : @param $clean    remove the archives and copied libraries before building
  :)
 declare function deploy:run(
   $release  as xs:boolean,
-  $dry      as xs:boolean
+  $dry      as xs:boolean,
+  $clean    as xs:boolean
 ) as empty-sequence() {
   message(`* Target: { $deploy:SERVER }:{ $deploy:TARGET }`),
   if ($release and $release:SNAPSHOT) {
     error((), `Not a release version: { $release:VERSION }`)
   },
-  deploy:maven($dry),
+  deploy:maven($dry, $release or $clean),
   if (not($dry)) {
     release:create('war')
   },
@@ -205,22 +207,26 @@ declare %private function deploy:modules(
 
 (:~
  : Deploys the Maven modules that changed since the last deployment.
- : @param $dry  print the command instead of executing it
+ : @param $dry    print the command instead of executing it
+ : @param $clean  remove the archives and copied libraries before building
  :)
 declare %private function deploy:maven(
-  $dry  as xs:boolean
+  $dry    as xs:boolean,
+  $clean  as xs:boolean
 ) as empty-sequence() {
   let $tree := deploy:tree()
   let $modules := deploy:modules($tree)
   let $args := (
-    'deploy', '-T', '4', '-DskipTests', '-Daether.checksums.algorithms=SHA-1',
+    'deploy', '-T', '8', '-DskipTests', '-Daether.checksums.algorithms=SHA-1',
+    (: existing libraries may be locked by the running JVM :)
+    '-DoverWriteIfNewer=false',
     '-pl', string-join($modules, ',')
   )
   return switch () {
     case empty($modules) return message('* No changes since last deployment')
     case $dry return message(`mvn { string-join($args, ' ') }`)
     default return (
-      release:clean($modules),
+      if ($clean) { release:clean($modules) },
       release:mvn($args),
       file:write-text($deploy:STATE, $tree)
     )
