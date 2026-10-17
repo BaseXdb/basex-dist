@@ -1,4 +1,4 @@
-# Build the full BaseX release set via release.pl and sign the Windows installer
+# Build the full BaseX release set via build.xq and sign the Windows installer
 # through the SignPath GitHub Actions connector (test-signing until the OV cert
 # is issued). Needs secret SIGNPATH_API_TOKEN; without it, signing is skipped.
 
@@ -34,7 +34,7 @@ jobs:
         with:
           path: basex-dist
 
-      # basex must sit next to basex-dist (release.pl references ../basex)
+      # basex must sit next to basex-dist (modules/release.xqm references ../basex)
       - name: Checkout basex
         uses: actions/checkout@v7
         with:
@@ -47,15 +47,18 @@ jobs:
         with:
           distribution: temurin
           java-version: "21"
+          cache: maven
 
-      - name: Install Perl modules used by release.pl
+      # build.xq is run by BaseX itself
+      - name: Compile BaseX
         shell: cmd
-        run: cpanm --notest Archive::Zip File::Copy::Recursive || cpan -T Archive::Zip File::Copy::Recursive
+        working-directory: basex
+        run: mvn -q -pl basex-core compile
 
       - name: Build all release artifacts
         shell: cmd
         working-directory: basex-dist
-        run: perl release.pl
+        run: java -cp ../basex/basex-core/target/classes org.basex.BaseX build.xq
 
       # Upload only the installer; its zip feeds the connector (matches path="*.exe")
       - name: Upload installer for signing

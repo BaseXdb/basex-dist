@@ -4,18 +4,12 @@
 *.DS_Store
 *.swp
 *.out
-*.pyc
-*.basex*
+/.basex
+/.basexgui
 
 # Java classfiles
 *.class
 
-# Maven target dir
+# created files
 /release
-/xqdoc
-
-/mac/dist/BaseX.app/
-
-/python/dist
-/python/build
-/python/*.egg-info/
+/deploy.last

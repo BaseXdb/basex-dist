@@ -1,5 +1,7 @@
 !define PRODUCT_NAME "BaseX"
-!define PRODUCT_VERSION "0.0.0.0"
+!ifndef PRODUCT_VERSION
+  !define PRODUCT_VERSION "0.0.0.0"
+!endif
 !define PRODUCT_PUBLISHER "BaseX GmbH"
 !define PRODUCT_DESCRIPTION "XML Database and XQuery Processor"
 !define PRODUCT_WEB_SITE "https://basex.org"
@@ -227,7 +229,10 @@ VIAddVersionKey "LegalCopyright" "Copyright ${PRODUCT_PUBLISHER}"
 VIAddVersionKey "FileVersion" "${PRODUCT_VERSION}"
 
 Name "${PRODUCT_NAME}"
-OutFile "Setup.exe"
+!ifndef OUTFILE
+  !define OUTFILE "Setup.exe"
+!endif
+OutFile "${OUTFILE}"
 ShowInstDetails show
 ShowUnInstDetails show
 
@@ -238,8 +243,8 @@ Section "BaseX" SEC01
   File "..\release\BaseX.jar"
   File "..\..\basex\LICENSE"
   File "..\..\basex\CHANGELOG"
-  File "..\readme.txt"
-  File ".basexhome"
+  File "..\dist\basex\readme.txt"
+  File "..\dist\basex\.basexhome"
   RMDir /r "$INSTDIR\bin"
   CreateDirectory "$INSTDIR\bin"
   SetOutPath "$INSTDIR\bin"
@@ -247,7 +252,7 @@ Section "BaseX" SEC01
   RMDir /r "$INSTDIR\etc"
   CreateDirectory "$INSTDIR\etc"
   SetOutPath "$INSTDIR\etc"
-  File /r "..\etc\*"
+  File /r "..\dist\basex\etc\*"
   RMDir /r "$INSTDIR\ico"
   CreateDirectory "$INSTDIR\ico"
   SetOutPath "$INSTDIR\ico"
@@ -256,7 +261,7 @@ Section "BaseX" SEC01
   SetOutPath "$INSTDIR\lib"
   Delete "*.jar"
   File "..\release\basex-api-*.jar"
-  File "..\lib\*"
+  File "..\dist\basex\lib\*"
 ; exclude main jar, add xqj
   File /x basex-*.jar "..\..\basex\basex-api\lib\*"
   File "..\..\basex\basex-api\lib\basex-xqj*.*"
@@ -264,14 +269,10 @@ Section "BaseX" SEC01
   CreateDirectory "$INSTDIR\lib\custom"
   CreateDirectory "$INSTDIR\repo"
   SetOutPath "$INSTDIR\repo"
-  File /r "..\repo\*"
+  File /r "..\dist\basex\repo\*"
   CreateDirectory "$INSTDIR\src"
   SetOutPath "$INSTDIR\src"
-  File /r "..\src\*"
-; remove web applications of earlier installations that are now shipped as archives
-  RMDir /r "$INSTDIR\webapp\chat"
-  RMDir /r "$INSTDIR\webapp\dba"
-  RMDir /r "$INSTDIR\webapp\webdav"
+  File /r "..\dist\basex\src\*"
   CreateDirectory "$INSTDIR\webapp"
   SetOutPath "$INSTDIR\webapp"
   File /r "..\release\webapp\*"
