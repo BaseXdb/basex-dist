@@ -32,7 +32,7 @@ Deploys the Maven modules that changed since the last run, creates the release f
 |-----------------|----------|
 | `dist/basex/`   | files copied unchanged into the distribution: readme, sample documents, catalog files, library licenses, XQuery modules |
 | `images/`       | icons |
-| `linux/`        | desktop entry, systemd service, Debian packaging |
+| `linux/`        | desktop entry, systemd service, Debian packaging notes |
 | `mac/`          | Homebrew update scripts |
 | `modules/`      | release and deployment modules |
 | `win/`          | NSIS installer script and compiler |
