@@ -23,7 +23,7 @@ declare variable $release:BASEX    := $release:DIST || '../basex/';
 (:~ Directory with the created files. :)
 declare variable $release:FILES    := $release:DIST || 'release/';
 (:~ Version, as found in the POM file. :)
-declare variable $release:VERSION  := string(doc($release:BASEX || 'pom.xml')/*:project/*:version);
+declare variable $release:VERSION  := string(doc($release:BASEX || 'pom.xml')/*:project/*:properties/*:revision);
 (:~ Maven modules. :)
 declare variable $release:MODULES  := release:modules('.');
 (:~ Indicates if the version is a snapshot. :)
@@ -277,12 +277,6 @@ declare %private function release:finish() as empty-sequence() {
   let $name := `BaseX{ translate($release:PLAIN, '.', '') }{ $release:STAMP }`
   return (
     message(`* Artifact name: { $name }`),
-    (: web applications as separate archives: "dba-13.0.zip" :)
-    for $zip in file:list($release:WEBAPPS, false(), '*.zip')
-    let $app := substring-before($zip, '.zip')
-    return file:copy(
-      $release:WEBAPPS || $zip, `{ $release:FILES }{ $app }-{ $release:PLAIN }{ $release:STAMP }.zip`
-    ),
     for $suffix in ('zip', 'jar', 'war', 'exe')
     return file:move(`{ $release:FILES }BaseX.{ $suffix }`, `{ $release:FILES }{ $name }.{ $suffix }`),
     file:delete(`{ $release:FILES }basex-api-{ $release:VERSION }.jar`),
