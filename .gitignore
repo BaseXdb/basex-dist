@@ -6,6 +6,7 @@
 *.out
 /.basex
 /.basexgui
+/*.bat
 
 # created files
 /release
