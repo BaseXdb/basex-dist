@@ -168,7 +168,12 @@ declare %private function release:prepare(
     release:mvn(('install', '-q', '-DskipTests'))
   },
   file:copy(`{ $release:BASEX }basex-core/target/basex-{ $release:VERSION }.jar`, $release:FILES || 'BaseX.jar'),
-  file:copy(`{ $release:BASEX }basex-api/target/basex-api-{ $release:VERSION }.jar`, $release:FILES),
+  (: libraries: lib directories of the modules may contain outdated files :)
+  release:mvn((
+    '-q', 'dependency:copy-dependencies', '-DexcludeArtifactIds=basex', '-pl', 'basex-core,basex-api',
+    `-Dproject.lib.directory={ file:path-to-native($release:FILES) }lib`
+  )),
+  file:copy(`{ $release:BASEX }basex-api/target/basex-api-{ $release:VERSION }.jar`, $release:FILES || 'lib/'),
 
   (: start scripts: replace class paths :)
   file:create-dir($release:FILES || 'bin'),
@@ -208,14 +213,8 @@ declare %private function release:zip() as empty-sequence() {
     { 'name': 'basex/data/' },
     { 'name': 'basex/data/.logs/' },
     release:entries($release:DIST || 'dist/basex/', 'basex')[?name != 'basex/'],
-    for $dir in ('basex-core', 'basex-api') ! `{ $release:BASEX }{ . }/lib/`
-    for $name in file:list($dir)[not(starts-with(., `basex-{ $release:VERSION }`))]
-    return { 'name': `basex/lib/{ $name }`, 'file': $dir || $name },
+    release:entries($release:FILES || 'lib/', 'basex/lib')[?name != 'basex/lib/'],
     { 'name': 'basex/lib/custom/' },
-    {
-      'name': `basex/lib/basex-api-{ $release:VERSION }.jar`,
-      'file': `{ $release:FILES }basex-api-{ $release:VERSION }.jar`
-    },
     release:entries($release:FILES || 'webapp/', 'basex/webapp')
   )
   return (
@@ -281,7 +280,6 @@ declare %private function release:finish() as empty-sequence() {
   message(`* Artifact name: { $release:NAME }`),
   for $suffix in $release:SUFFIXES
   return file:move(`{ $release:FILES }BaseX.{ $suffix }`, `{ $release:FILES }{ $release:NAME }.{ $suffix }`),
-  file:delete(`{ $release:FILES }basex-api-{ $release:VERSION }.jar`),
-  for $dir in ('bin', 'webapp')
+  for $dir in ('bin', 'lib', 'webapp')
   return file:delete($release:FILES || $dir, true())
 };

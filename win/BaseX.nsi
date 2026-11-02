@@ -260,12 +260,8 @@ Section "BaseX" SEC01
   CreateDirectory "$INSTDIR\lib"
   SetOutPath "$INSTDIR\lib"
   Delete "*.jar"
-  File "..\release\basex-api-*.jar"
+  File "..\release\lib\*"
   File "..\dist\basex\lib\*"
-; exclude main jar, add xqj
-  File /x basex-*.jar "..\..\basex\basex-api\lib\*"
-  File "..\..\basex\basex-api\lib\basex-xqj*.*"
-  File "..\..\basex\basex-core\lib\*"
   CreateDirectory "$INSTDIR\lib\custom"
   ; Keep user modifications of modules, queries and web applications
   SetOverwrite ifnewer
